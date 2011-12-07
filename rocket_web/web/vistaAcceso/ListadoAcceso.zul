@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <div align="center">
+        <window id="vtnGestionUsuarioAdministrador" style="margin-top:5px" use="sig.controladores.CtrlAccesoListado">                                
+            <hbox>
+                <button id="btnInicio"                  image="/Imagenes/icons/home14848.png"/>
+                <button id="btnAgregarUsuario"          image="/Imagenes/icons/list_add_user.png"/>                                                                                        
+                <button id="btnBuscarUsuario"           image="/Imagenes/icons/search4848.png" visible="false"/>                
+                <button id="btnActualizar" image="/Imagenes/iconosNuevos/actualizar48.png"/>     
+                <button id="btnRegistrar" image="/Imagenes/iconosNuevos/guardar48.png"/>     
+                <button id="btnEliminar" image="/Imagenes/iconosNuevos/eliminar48.png"/>
+                <button id="btnCancelar" image="/Imagenes/iconosNuevos/cancelar48.png"/>  
+            </hbox>
+            <separator/>
+            <vbox id="vbox1">                
+                    <div align="center">                                                                    
+                        <listbox  id="listboxUsuario">                        
+                            <listhead>                                
+                                <listheader id="listHeaderBotonVer"            label=""                   align="center" width="55px"/>
+                                <listheader id="listheaderCodigoUsuario"       label="Código"             align="center" />
+                                <listheader id="listheaderNombreUsuario"       label="Nombre"             align="center" width="155px"/>                                
+                                <listheader id="listheaderCorreo"              label="Correo"             align="center" />
+                                <listheader id="listheaderPassword"            label="Password"           align="center" width="155px"/>
+                            </listhead>
+                        </listbox>                                   
+                    </div>                    
+                </vbox>            
+                <vbox id="vbox2">
+                    <div align="center">                        
+                        <grid>
+                            <columns>
+                                <column />
+                                <column />
+                            </columns>
+                            <rows>
+                                <row>
+                                    <label value="Cédula/Rif :"/>          
+                                    <textbox id="txtRif"  />
+                                </row>
+                                <row>
+                                    <label value="Nombre :"/>     
+                                    <textbox id="txtNombre"  />
+                                </row>
+                                <row>
+                                    <label value="Apellido :"/>     
+                                    <textbox id="txtApellido"  />
+                                </row>
+                                <row>
+                                    <label value="Dirección :"/>
+                                    <textbox id="txtDireccion" />
+                                </row>
+                                <row>
+                                    <label value="Teléfono :"/> 
+                                    <textbox id="txtTelefono" />
+                                </row>                    
+                                <row>
+                                    <label value="Fecha Nacimiento :"/>    
+                                    <datebox id="dateboxFechaNacimiento"  format="yyyy-MM-dd"/>
+                                </row>
+                                <row>
+                                    <label value="Fecha Contratación :"/>  
+                                    <datebox id="dateboxFechaContratacion"  format="yyyy-MM-dd"/>
+                                </row>
+                                <row>
+                                    <label value="Login :"/>               
+                                    <textbox id="txtLogin" />
+                                </row>
+                                <row>
+                                    <label value="Password :"/>            
+                                    <textbox id="txtPassword" type="password" />
+                                </row>
+                                <row>
+                                    <label value="Repita el Password :"/>  
+                                    <textbox id="txtPassword1" type="password" />
+                                </row>                                                                                                        
+                                <row>
+                                    <label value="Sucursal :"/>
+                                    <combobox id="cmbSucursal"/>
+                                </row>                                                                                                        
+                            </rows>
+
+                        </grid>
+                        <separator/>                        
+                    </div>                    
+                </vbox>            
+        </window>
+    </div>    
+</zk>

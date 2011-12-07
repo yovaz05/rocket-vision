@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <grid style="border:0px">      
+    <columns>
+      <column id="col1" width="150px"/>
+      <column id="col2"/>
+      <column id="col3"/>
+    </columns>
+    <rows>
+      <row>
+        <label value="Cédula" sclass="etiqueta_campo"/>
+        <textbox id="txtCedula"/>
+        <label id="etqCedula"/>
+      </row>        
+      <row>
+        <label value="Nombre" sclass="etiqueta_campo"/>
+        <textbox id="txtNombre"/>
+        <label id="etqNombre"/>
+      </row>           
+      <row>
+        <label value="Red" sclass="etiqueta_campo"/>
+        <!-- TODO: hacer catálogo -->
+        <!-- TODO: mejorar visualización al editar, si ya hay líderes asignados -->
+        <toolbarbutton id="btnCatRed" image="/img/iconos/btnCatalogo.png" tooltiptext="Catálogo de redes"
+        onClick='alert("Este catálogo permite elegir la red")'/>
+        <a id="tbbRed"/>
+      </row>           
+      <row>        
+        <label value="Líderes" sclass="etiqueta_campo"/>
+          <!-- TODO: hacer catálogo -->
+          <!-- TODO: mejorar visualización al editar, si ya hay líderes asignados -->
+        <toolbarbutton id="btnCatLideres" image="/img/iconos/btnCatalogo.png" tooltiptext="Catálogo de líderes por pareja"
+        onClick='alert("Este catálogo permite elegir al líder o pareja de líderes")'/>
+        <vbox id="lideres">
+          <a id="tbbLider1"/>
+          <a id="tbbLider2"/>
+        </vbox>
+    </row>
+  </rows>
+</grid>
+</zk>

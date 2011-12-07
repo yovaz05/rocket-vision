@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="sig.controladores.CtrlCelula" width="500px">
+    <label id="tituloVentana" sclass="titulo_ventana"/>
+    <div align="center" style="display:inline-block;margin:2px; padding: 2px 15px;">
+      <label id="etqMensaje" value="Mensajes al usuario:" sclass="mensajes" visible="false"
+            style="margin: 2px; padding:2px;"/>
+    </div>    
+    <toolbar width="100%" height="20px" sclass="barraBotones" visible="false">
+      <toolbarbutton id="btnNew" label="Nueva" sclass="botonAccion" visible="false"/>
+      <toolbarbutton id="btnGuardar" label="Guardar" sclass="botonAccion" visible="false"/>
+      <toolbarbutton id="btnEditar" label="Editar" sclass="botonAccion" visible="false"/>
+      <toolbarbutton id="btnBorrar" label="Borrar" sclass="botonAccion" visible="false"/>
+      <toolbarbutton id="btnImprimir" label="Imprimir" sclass="botonAccion" visible="false"/>
+    </toolbar>
+    <tabbox id="tabbox" width="100%" mold="accordion">
+      <tabs>
+        <tab label="Datos Básicos"/>
+        <tab label="Dirección"/>
+        <tab label="Otros datos"/>
+        <tab label="Observaciones"/>
+      </tabs>
+      <tabpanels>
+        <tabpanel>
+          <include id="db" src="vistaCelula/DatosBasicos.zul"/>
+        </tabpanel>
+        <tabpanel>
+          <include id="dir" src="vistaReusable/Direccion.zul"/>  
+        </tabpanel>
+        <tabpanel>
+          <include id="otros" src="vistaCelula/OtrosDatos.zul"/>  
+        </tabpanel>
+        <tabpanel>
+          <include id="obs" src="vistaReusable/Observaciones.zul"/>  
+        </tabpanel>
+      </tabpanels>
+    </tabbox>   
+<!--TODO: activar esta opción: ingreso/visualización directo del reporte-->
+<!--    <space height="15px"/>      
+    <div align="right">
+      <a id="btnIngresarReporte" label="Reporte Semana »" sclass="botonAccion" visible="false"/>
+    </div>-->
+  </div>
+</zk>

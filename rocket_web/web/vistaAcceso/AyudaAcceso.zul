@@ -1,0 +1,51 @@
+<?page id="testZul" title="Inicio" cacheable="false"
+	language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8" title="SGD - Ayuda en Acceso"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <include src="vistaAcceso/Header.zul"/>
+  <div>
+    <div align="left" style="padding:10px">            
+      <vbox>
+        <label value="¿Has olvidado tus datos de acceso?" style="font-size:15px;font-weight:bold;color:#000;" />
+        <space spacing="10px" orient="horizontal"/>
+        <label value="Escribe la dirección de correo electrónico asociada a tu cuenta y elige la opción correspondiente."/>
+      </vbox>
+      <space spacing="10px" orient="horizontal"/>
+      <div sclass="ayuda_login_box">
+        <vbox>
+          <label id="etqCorreo" value="Correo electrónico:" style="font-weight:bold;color:#000;"/>
+          <textbox id="txtCorreo" cols="40" sclass="login_textbox"/>
+          <vbox>
+            <space height="10px"/>
+            <a label="Recordar nombre de usuario" onClick="mensajeEnDesarrollo();"/>
+            <space height="10px"/>
+            <a label="Recordar contraseña" onClick="mensajeEnDesarrollo();"/>
+          </vbox>
+        </vbox>
+      </div>
+      <space spacing="30px" orient="horizontal"/>
+      <vbox>
+        <label value="Si aún no estás registrado:"/> 
+        <a label="Solicitar Acceso" onClick='vistaCentral.src="vistaAcceso/Registro.zul"' sclass="boton_registro2"/>
+      </vbox>
+    </div>        
+  </div>    
+<!--  TODO: pasar esto al controlador-->
+  <zscript>
+  <![CDATA[
+    txtCorreo.setFocus(true);
+
+    void mensajeEnDesarrollo(){
+      Messagebox.show("En construcción","Ayuda en Acceso",
+      Messagebox.OK, Messagebox.INFORMATION);
+    }
+    ]]>        
+    </zscript>  
+</zk>
+
+
+
+                                  

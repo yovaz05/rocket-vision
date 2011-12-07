@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <style src="css/estilos1.css"/>  
+  <div align="center" style="display:inline-block;margin:2px; padding: 2px 15px;">
+    <label id="etqMensaje" value="Mensajes al usuario:" sclass="mensajes" visible="false"
+            style="margin: 2px; padding:2px;"/>
+  </div>  
+  <grid style="border:0px" apply="sig.controladores.CtrlLiderDatosBasicos">      
+    <columns>
+      <column id="col1" width="135px"/>
+      <column id="colEdit"/>
+      <column id="colView"/>
+    </columns>
+    <rows>
+      <row>
+        <label value="Cédula" sclass="etiqueta_campo"/>
+        <textbox id="txtCedula" value="" maxlength="8"/>
+        <label id="etqCedula" value=""/>
+      </row>        
+      <row>
+        <label value="Nombre" sclass="etiqueta_campo"/>
+        <textbox id="txtNombre" value="" cols="60" maxlength="45"/>
+        <label id="etqNombre" value=""/>
+      </row>   
+      <!-- Red, v2: CON COMBOBOX-->      
+      <row apply="sig.controladores.CtrlCatalogoRed">
+        <label value="Red" sclass="etiqueta_campo"/>
+        <cell>
+          <!-- TODO: quitar label -->
+          <label id="etqRed" value="" visible="false"/>
+          <space width="15px"/>
+          <combobox id="cmbRed" autodrop="true" autocomplete="true" readonly="true"/>
+        </cell>
+        <a id="tbbRed" label="Red elegida"/>
+      </row>
+<!-- Líderes VERSIÓN 2: CON COMBOBOX DIRECTOS -->
+      <row>
+        <label value="Líderes" sclass="etiqueta_campo"/>
+        <cell>
+          <vbox>
+          <!-- TODO: quitar label's -->
+            <label id="etqLider1" value="" visible="false"/>
+            <label id="etqLider2" value="" visible="false"/>
+            <label id="etqLider3" value="" visible="false"/>
+            <label id="etqLider4" value="" visible="false"/>
+          </vbox>
+          <hbox>
+            <space width="15px"/>         
+            <vbox>
+              <combobox id="cmbLider1" value="1er líder" autodrop="true" autocomplete="true" readonly="true"/>
+              <cell id="opcionLider2" visible="false">
+                <hbox>
+                  <combobox id="cmbLider2" value="2do líder" autodrop="true" autocomplete="true" readonly="true"/>
+                  <a image="/img/iconos/borrar.png" onClick="quitarOpcionLider(2)"/>
+                </hbox>
+              </cell>
+              <cell id="opcionLider3" visible="false">
+                <combobox id="cmbLider3" value="3er líder -opcional" autodrop="true" autocomplete="true" readonly="true"/>
+                <a image="/img/iconos/borrar.png" onClick="quitarOpcionLider(3)"/>
+              </cell>
+              <cell id="opcionLider4" visible="false">
+                <combobox id="cmbLider4" value="4to líder -opcional" autodrop="true" autocomplete="true" readonly="true"/>
+                <a image="/img/iconos/borrar.png" onClick="quitarOpcionLider(4)"/>
+              </cell>
+              <a label="Añadir" id="btnAddLider" onClick="añadirOpcionLider()"/>
+            </vbox>
+          </hbox>
+        </cell>
+        <vbox>
+          <a id="tbbLider1"/>
+          <a id="tbbLider2"/>
+          <a id="tbbLider3"/>
+          <a id="tbbLider4"/>
+        </vbox>
+      </row>            
+      <!-- Pareja,v2: CON COMBOBOX-->      
+      <row>
+        <label value="Pareja Ministerial" sclass="etiqueta_campo"/>
+        <cell>
+          <label id="etqPareja" value=""/>
+          <space width="15px"/>
+          <combobox id="cmbPareja" autodrop="true" autocomplete="true" readonly="true"/>
+        </cell>        
+        <a id="tbbPareja" label=""/>        
+      </row>      
+      <!-- Red VERSION 1: CON CATÁLOGO-->
+<!--      <row>
+        <label value="Red" sclass="etiqueta_campo"/>
+        <cell>
+          <label id="etqRed" value=""/>
+          <space width="15px"/>
+          <toolbarbutton id="btnCatRed" image="/img/iconos/btnCatalogo.png" tooltiptext="Elegir red"
+          onClick='mensajeEnDesarrollo("Aquí se podrá elegir la red")'/>
+        </cell>
+        <a id="tbbRed" label=""/>
+      </row>           -->
+<!-- LIDERES VERSION 1: CON CATÁLOGO
+<row>        
+        <label value="Líderes" sclass="etiqueta_campo"/>
+          TODO: hacer catálogo
+        <hbox>
+          <vbox>
+            <label id="etqLider1" value=""/>
+            <label id="etqLider2" value=""/>
+          </vbox>
+          <space width="15px"/>
+          <toolbarbutton id="btnCatLideres" image="/img/iconos/btnCatalogo.png" tooltiptext="Elegir líder"
+          onClick='mensajeEnDesarrollo("Aquí se podrá elegir a los líderes")'/>
+        </hbox>
+        <vbox>
+          <a id="tbbLider1"/>
+          <a id="tbbLider2"/>
+        </vbox>
+      </row>
+      <row>
+        <label value="Pareja Ministerial" sclass="etiqueta_campo"/>
+        <cell>
+          <label id="etqPareja" value=""/>
+          <space width="15px"/>
+          <toolbarbutton id="btnCatPareja" image="/img/iconos/btnCatalogo.png"
+        tooltiptext="Elegir pareja"
+        onClick='mensajeEnDesarrollo("Aquí se podrá elegir la pareja ministerial")'/>
+        </cell>        
+        <a id="tbbPareja" label=""/>        
+      </row>         
+      -->
+    </rows>
+  </grid>
+<!--    TODO: pasar esto al controlador-->
+  <zscript>
+    <![CDATA[
+    void mensajeEnDesarrollo(String msj){
+      Messagebox.show(msj,"En construcción",
+      Messagebox.OK, Messagebox.INFORMATION);
+    }
+    //control de agregar/quitar líder(es) adicionales
+      int nLideres = 1; //indica el número de líderes en uso actualmente
+      void añadirOpcionLider(){
+        nLideres++;
+        if (nLideres == 2){
+          opcionLider2.setVisible(true);
+        }
+        else if (nLideres == 3){
+          opcionLider3.setVisible(true);
+        }
+        else if (nLideres == 4){
+          opcionLider4.setVisible(true);
+          btnAddLider.setVisible(false);
+        }
+      }
+      void quitarOpcionLider(int pos){
+        if (pos == 2){
+          opcionLider2.setVisible(false);
+        }
+        else if (pos == 3){
+          opcionLider3.setVisible(false);
+        }
+        else if (pos == 4){
+          opcionLider4.setVisible(false);
+        }
+        nLideres--;        
+        if (nLideres < 4){
+          btnAddLider.setVisible(true);
+        }
+      }
+  ]]>
+  </zscript>    
+</zk>

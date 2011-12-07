@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="cdo.sgd.controladores.CtrlRed">
+    <label value="Red" sclass="titulo_ventana"/>
+    <grid width="450px">
+      <columns>
+        <column width="135px"/>
+        <column label=""/>
+      </columns>
+      <rows>
+        <row>
+          <label value="Nombre" sclass="etiqueta_campo"/>
+          <label id="etqNombre" value="" />
+        </row>
+        <row>
+          <label value="Líderes" sclass="etiqueta_campo"/>
+          <vbox>
+            <a id="tbbLider1"/>
+            <a id="tbbLider2"/>
+          </vbox>
+        </row>
+        <row>
+          <label value="Reunión Semanal" sclass="etiqueta_campo"/>
+          <label id="etqDiaHora" value=""/>
+        </row>
+      </rows>
+    </grid>
+    
+    <vbox id="vboxEstadisticas" visible="true">
+      <space height="15px"/>
+      <label value="Resumen" sclass="titulo_ventana"/>      
+      <grid id="gridEstadisticas" width="450px">
+        <columns> 
+          <column width="135px"/>
+          <column/>
+        </columns>
+        <rows>
+          <row>
+            <label value="Células" sclass="etiqueta_campo"/>
+            <a id="tbbNroCelulas" width="20px" style="text-align:center"/> 
+          </row>       
+          <row>
+            <label value="Líderes de célula" sclass="etiqueta_campo"/>
+            <a id="tbbNroLideresCelula" width="20px" style="text-align:center;"/> 
+          </row>
+          <row>     
+            <label value="Discípulos lanzados" sclass="etiqueta_campo"/>
+            <a id="tbbNroDiscipulosLanzados" width="20px" style="text-align:center"/> 
+          </row>  
+          <row>
+            <label value="Discípulos en proceso" sclass="etiqueta_campo"/>
+            <a id="tbbNroDiscipulosProceso" width="20px" style="text-align:center"/> 
+          </row>
+        </rows>
+      </grid>
+    </vbox>
+    <space height="15px"/>
+    <div>
+      <a id="btnResumen" label="Ocultar Resumen" sclass="botonAccion" style="margin-top: 2px;"/>
+    </div>
+  </div>
+</zk>

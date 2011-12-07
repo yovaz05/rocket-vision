@@ -1,0 +1,36 @@
+<?page id="pagLogin" title="SGD - Acceso" cacheable="true" language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div id="winAcceso" apply="cdo.sgd.controladores.CtrlAcceso">
+    <div sclass="login_box">
+      <div style="padding:5px;" align="left">
+        <vbox>
+          <vbox style="padding:7px;" align="right">
+            <vbox>
+              <label value="Usuario" sclass="login_label" />
+              <textbox id="txtLogin" cols="30" sclass="textbox"/>
+              <label id="etqErrorLogin" value="" sclass="login_error"  visible="false"/>
+            </vbox>
+            <vbox>
+              <label value="Contraseña" sclass="login_label"/>
+              <textbox id="txtPassword" type="password" cols="30" sclass="textbox"/>
+              <label id="etqErrorPassword" value="" sclass="login_error" width="200px" visible="false"/>
+            </vbox>
+            <hbox>
+              <button id="btnAcceso" label="Acceso" sclass="boton_acceso"/>
+              <div>
+                <checkbox id="checkRecordarSesion" label="Recordarme" sclass="recordar_sesion"/>
+<!--                <label id="etqRecordarSesion" value="No cerrar sesión" sclass="recordar_sesion"/>-->
+              </div>
+            </hbox>
+            <a id="linkAyudaAcceso" label="¿No puedes acceder?" onClick='vistaCentral.src="vistaAcceso/AyudaAcceso.zul"'/>
+          </vbox>
+        </vbox>
+      </div>
+    </div>
+    <a id="linkRegistro" label="Solicitar Acceso" onClick='vistaCentral.src="vistaAcceso/Registro.zul"' sclass="boton_registro"/>
+  </div>
+</zk>

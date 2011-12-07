@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <grid style="border:0px">      
+    <columns>
+      <column id="col1" width="0px"/>
+      <column id="colEdit"/>
+      <column id="colView"/>
+    </columns>
+    <rows>
+      <row>
+        <label value="" sclass="etiqueta_campo" width="0px"/>
+        <textbox id="txtObservaciones" width="100%" rows="10" maxlength="500"/> 
+        <label id="etqObservaciones" value="Comentarios..." multiline="true"/>
+      </row>       
+    </rows>
+  </grid>
+</zk>

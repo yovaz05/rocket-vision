@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <grid style="border:0px">  
+    <columns>
+      <column id="col1" width="100px"/>
+      <column id="col2"/>
+    </columns>
+    <rows>
+<!--      TODO: pasar la fecha actual, a la interfaz general del sistema-->
+      <row visible="false">
+        <label value="Hoy" sclass="etiqueta_campo"/>
+        <label id="etqHoy" value=""/>
+      </row>      
+      <row>
+        <label value="Semana" sclass="etiqueta_campo"/>
+        <label id="etqSemana" value=""/>
+        <hbox>
+<!-- TODO: establecer estilos apropiados a las fechas -->
+          <label value="Del "/>
+          <label value="domingo"/>
+          <label id="etqSemanaInicio" value=""/>
+          <label value=" al "/>
+          <label value="sábado"/>
+          <label id="etqSemanaFin" value=""/>
+        </hbox>
+      </row>
+      <row>
+        <label value="Día de Célula" sclass="etiqueta_campo"/>
+        <label  id="etqDiaCelula" value=""/>
+      </row>
+    </rows>
+  </grid>
+</zk>

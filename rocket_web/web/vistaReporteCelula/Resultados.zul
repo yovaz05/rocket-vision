@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <style src="css/estilos1.css"/>  
+<!--  Grid de Edición -->
+  <grid id="gridEdit" style="border:0px" visible="false">
+    <columns>
+      <column width="190px"/>
+      <column width="70px"/>
+      <column width="170px"/>
+      <column/>
+    </columns>
+    <rows>
+      <row>
+        <label value="Nuevos Invitados" sclass="etiqueta_campo"/>
+        <spinner cols="2" width="50px" id="spnInvitados" value="0" constraint="min 0 max 100" onChange="calcularTotalAsistencia();validarDesgloseInvitados();"/>
+
+        <label value="Convertidos" sclass="etiqueta_campo" tooltiptext="Líderes + Estacas"/>
+        <spinner cols="2" width="50px" id="spnConvertidos" value="0" constraint="min 0 max 100" onChange="validarDesgloseInvitados()"/>
+      </row>
+      <row id="rowMsjError" visible="false" sclass="msjError">
+        <cell colspan="4">
+          <label value="La suma de convertidos y reconciliados NO PUEDE ser mayor a la cantidad de invitados"/>
+        </cell>
+      </row>
+      <row>
+        <label value="Amigos que sólo asisten al grupo" sclass="etiqueta_campo" tooltiptext="Ya se entregaron en la célula, pero aún no han asistido a la iglesia por primera vez"/>
+        <spinner cols="2" width="50px" id="spnAmigos" value="0" constraint="min 0 max 100" onChange="calcularTotalAsistencia()"/>
+        <label value="Reconciliados" sclass="etiqueta_campo"/>
+        <spinner id="spnReconciliados" cols="2" width="50px" value="0" constraint="min 0 max 100" onChange="validarDesgloseInvitados()"/>
+      </row>
+      <row>
+        <label value="Cristianos de Casa de Oración" sclass="etiqueta_campo" tooltiptext="Líderes y Estacas"/>
+        <spinner id="spnCDO" cols="2" width="50px" value="0" constraint="min 0 max 100" onChange="calcularTotalAsistencia()" tooltiptext="Líderes y Estacas"/>
+        <label value="Visitas Realizadas" sclass="etiqueta_campo"/>
+        <spinner cols="2" width="50px" id="spnVisitas" value="0" constraint="min 0 max 100"/>
+      </row>
+      <row>
+        <label value="Cristianos de otras iglesias" sclass="etiqueta_campo"/>
+        <spinner id="spnOtrasIglesias" cols="2" width="50px" value="0" constraint="min 0 max 100" onChange="calcularTotalAsistencia()"/>
+        <label value="Asistencia Domingo Anterior" sclass="etiqueta_campo"/>
+        <spinner cols="2" width="50px" id="spnDomingoAnterior" value="0" constraint="min 0 max 100"/>
+      </row>           
+      <row>
+        <label value="Total Asistencia" sclass="total" tooltiptext="Se suman los 4 valores de arriba"/>
+        <label id="etqTotalAsistCelula" value="0" sclass="total" width="50px"/>
+        <label value=""/>
+        <label value=""/>          
+      </row>           
+    </rows>
+  </grid>
+  
+  <!--  Grid de Visualización -->
+  <grid id="gridView" style="border:0px" visible="true">
+    <columns>
+      <column width="190px"/>
+      <column width="70px"/>
+      <column width="170px"/>
+      <column/>
+    </columns>
+    <rows>
+      <row height="32px">
+        <label value="Nuevos Invitados" sclass="etiqueta_campo"/>
+        <label id="etqInvitados" value="7"/>
+        <label value="Convertidos" sclass="etiqueta_campo" tooltiptext="Líderes + Estacas"/>
+        <label id="etqConvertidos" value="7"/>
+      </row>
+      <row height="32px" >
+        <label value="Amigos que sólo asisten al grupo" sclass="etiqueta_campo" tooltiptext="Ya se entregaron en la célula, pero aún no han asistido a la iglesia por primera vez"/>
+        <label id="etqAmigos" value="7"/>
+        <label value="Reconciliados" sclass="etiqueta_campo"/>
+        <label id="etqReconciliados" value="7"/>
+      </row>
+      <row height="32px" >
+        <label value="Cristianos de Casa de Oración" sclass="etiqueta_campo" tooltiptext="Líderes + Estacas"/>
+        <label id="etqCDO" value="7"/>
+        <label value="Visitas Realizadas" sclass="etiqueta_campo"/>
+        <label id="etqVisitas" value="7"/>
+      </row>
+      <row height="32px" >
+        <label value="Cristianos de otras iglesias" sclass="etiqueta_campo"/>
+        <label id="etqOtrasIglesias" value="7"/>
+        <label value="Asistencia Domingo Anterior" sclass="etiqueta_campo"/>
+        <label id="etqDomingoAnterior" value="7"/>
+      </row>           
+      <row height="32px" >
+        <label value="Total Asistencia" sclass="total" tooltiptext="Se suman los 4 valores de arriba"/>
+        <label id="etqTotalAsistencia" value="28" sclass="total"/>
+        <label value=""/>
+        <label value=""/>
+          
+      </row>           
+    </rows>
+  </grid>
+  <zscript>
+<!--TODO: pasar esto al controlador-->
+  <![CDATA[
+    void calcularTotalAsistencia() {
+      int total = 0;
+      int v1 = spnInvitados.getValue().intValue();
+      int v2 = spnAmigos.getValue().intValue();
+      int v3 = spnCDO.getValue().intValue();
+      int v4 = spnOtrasIglesias.getValue().intValue();
+      total = v1 + v2 + v3 + v4;
+      etqTotalAsistCelula.setValue(""+total);
+    }
+    //valida que se cumpla:(convertidos + reconciliados) <= invitados
+    void validarDesgloseInvitados() {
+      int invitados = spnInvitados.getValue().intValue();
+      int convertidos = spnConvertidos.getValue().intValue();
+      int reconciliados = spnReconciliados.getValue().intValue();
+      boolean ok = true;
+      if ((convertidos == 0) && (reconciliados == 0) && (invitados == 0)){
+        ok = true;
+      }
+      else if ((convertidos + reconciliados) > invitados){
+        ok = false;
+      }
+      if (ok){
+        rowMsjError.setVisible(false);
+      }
+      else{
+        rowMsjError.setVisible(true);      
+      }
+    }
+  ]]>
+  </zscript>
+</zk>

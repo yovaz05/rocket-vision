@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <grid style="border:0px">      
+    <columns>
+      <column id="col1" width="135px"/>
+      <column id="col2"/>
+      <column id="col3"/>
+    </columns>
+    <!--TODO: usar imágenes para etiquetas "sí" y "no"-->
+    <rows>
+      <row id="rowLiderRed">
+        <label value="Líder de Red" sclass="etiqueta_campo"/>
+        <checkbox id="checkLiderRed" checked="false"/>
+        <label id="etqLiderRed"/>
+      </row>
+      <row id="rowSupervisor">
+          <label value="Supervisor de Células" sclass="etiqueta_campo"/>
+          <checkbox id="checkSupervisor" checked="false" onCheck="checkLiderCelula.checked=false; checkEstacaCelula.checked=false;"/>
+          <label id="etqSupervisor"/>
+      </row>
+      <row id="rowLiderCelula">
+        <label value="Líder de Célula" sclass="etiqueta_campo"/>
+        <checkbox id="checkLiderCelula" onCheck="checkSupervisor.checked=false; checkEstacaCelula.checked=false;"/>
+        <label id="etqLiderCelula" />
+      </row>
+      <row id="rowEstaca">
+        <label value="Estaca" sclass="etiqueta_campo"/>
+        <checkbox id="checkEstacaCelula" onCheck="checkLiderCelula.checked=false;checkSupervisor.checked=false;"/>
+        <label id="etqEstacaCelula" />
+      </row>
+      <row id="rowAnfitrion">
+        <label value="Anfitrión de Célula" sclass="etiqueta_campo"/>
+        <checkbox id="checkAnfitrionCelula" onCheck="checkLiderCelula.checked=false;checkSupervisor.checked=false;"/>
+        <label id="etqAnfitrionCelula" />
+      </row>
+      <row id="rowMaestro">
+        <label value="Maestro Academia" sclass="etiqueta_campo"/>
+        <checkbox id="checkMaestroAcademia"/>
+        <label id="etqMaestroAcademia" />
+      </row>
+    </rows>
+  </grid>
+</zk>

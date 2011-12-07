@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="cdo.sgd.controladores.CtrlReporteCelulaListadoSemana" width="510px">
+    <label id="tituloVentana" value="Reportes de esta semana" sclass="titulo_ventana"/>
+    <grid id="grid" style="border:normal" width="100%" mold="paging" pageSize="5">
+      <columns sizable="true">
+        <column label="#" width="20px" align="center"/>
+        <column label="Código" width="80px"/>
+        <column label="Dirección" width="120px"/>
+        <column label="Líderes" width="120px"/>        
+        <column label="Día/Hora" width="110px"/>
+<!--        <column label="Nombre" width="180px" visible="false"/>-->
+        <column label="Reporte" id="colEstadosReporte" align="center"/>
+      </columns>      
+      <rows>
+      </rows>
+    </grid>
+    <space height="10px"/>
+    <div id="divLeyenda" align="center"
+    style="font-size: 10px; font-family: Arial,sans-serif;" visible="true">
+      <div style="background: url(img/iconos/status_ok_16.gif) no-repeat; display:inline-block;" height="20px">
+        <label style="padding: 0 20px" value="Reporte ingresado"/>
+      </div>
+      <div style="background: url(img/iconos/status_not_16.png) no-repeat; display:inline-block;" height="20px">
+        <label style="padding: 0 20px" value="Reporte NO ingresado"/>
+      </div>
+      <div style="background: url(img/iconos/status_alert_16.gif) no-repeat; display:inline-block;" height="20px">
+        <label style="padding: 0 20px" value="Célula NO realizada"/>
+      </div>
+    </div>
+    <space height="15px"/>
+    <div align="right">
+      <a id="btnReportesAnteriores" sclass="botonAccion"
+      label="Ver Semanas Anteriores »" tooltiptext="Ver reportes de semanas anteriores"       
+      />
+<!--      onClick='mensaje("Reportes anteriores: En construcción")'-->
+    </div>
+    <div align="center" style="marging: 2px 10px" width="100%" height="25px">
+      <label id="etqMensaje" sclass="mensajes" style="padding:2px" value="" visible="false"/>
+    </div>    
+  </div>
+<!--    TODO: pasar esto al controlador-->
+  <zscript>
+    <![CDATA[
+    void mensaje(String msj){
+      etqMensaje.setVisible(true);
+      etqMensaje.setValue(msj);
+    }
+    //TODO: pasar a controlador
+    void mostrarBotonSemana(boolean status){
+      btnSemana.setVisible(status);
+    }
+    //TODO: pasar a controlador
+    void reiniciar(){
+      //opción A:
+      panelCentral.setSrc("");
+      panelCentral.setSrc("vistaReporteCelula/Listado.zul");
+      //colEstadosReporte
+      //opción B:
+      /*
+      spnNumeroPeriodos.setValue(1);
+      cmbTipoPeriodo.setValue("Semanas");
+      */
+    }
+    //TODO: pasar a controlador
+    void ultimoMes(){
+      spnNumeroPeriodos.setValue(4);
+      cmbTipoPeriodo.setValue("Semanas");
+      mensaje("Reportes del mes: En construcción");
+    }
+    ]]>        
+  </zscript> 
+</zk>

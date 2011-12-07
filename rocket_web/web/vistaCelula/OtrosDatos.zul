@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <grid style="border:0px">      
+    <columns>
+      <column id="col1" width="150px"/>
+      <column id="colEdit"/>
+      <column id="colView"/>
+    </columns>
+    <rows>
+      <row>
+        <label value="Fecha de Apertura" sclass="etiqueta_campo"/>
+        <datebox id="dateboxFechaApertura" format="dd/MM/yyyy" constraint="no future"/>
+        <label id="etqFechaApertura" value=""/>
+      </row>        
+      <row>	
+        <label value="Anfitrión" sclass="etiqueta_campo"/>
+        <textbox id="txtAnfitrion" value=""/>
+        <label id="etqAnfitrion" value=""/>
+
+<!--OPCION B: mejorado: un textbox con un catálogo-->
+<!--        TODO: activar textbox con búsqueda, o un combo adicional para buscar persona en el sistema -->
+<!--      <cell tooltiptext="Si el anfitrión es un usuario registrado del sistema puedes elegir del catálogo, sino escribe el nombre directamente">
+          <textbox id="txtAnfitrion" value=""/>
+          <toolbarbutton id="btnCatAnfitrion" image="/img/iconos/btnCatalogo.png"
+        onClick='Messagebox.show("Este catálogo permite elegir al anfitrión de la célula", "Elegir anfitrión",  Messagebox.OK, Messagebox.INFORMATION)'/>
+        </cell>        
+        <label id="etqAnfitrion" value=""/>
+        -->
+      </row>
+    </rows>
+  </grid>
+
+</zk>

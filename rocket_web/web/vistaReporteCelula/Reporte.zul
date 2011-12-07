@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="cdo.sgd.controladores.CtrlReporteCelula" width="500px">
+    <vbox>
+      <label id="tituloVentana" sclass="titulo_ventana" visible="true"/>
+      <label id="etqMensaje" value="" sclass="mensajes" visible="false"/>
+<!--    <space height="15px"/>-->
+    </vbox>
+    <hbox id="hboxPreguntaCelulaRealizada" sclass="mensajes" visible="false">
+      <label id="etqPregunta" value="¿La célula se realizó esta semana?"/>
+      <toolbarbutton id="btnCelulaRealizada" label="Sí"/>
+      <toolbarbutton id="btnCelulaNoRealizada" label="No"/>
+      <space height="5px"/>
+    </hbox>
+    <toolbar visible="false" height="20px">
+      <toolbarbutton id="btnGuardar" label="Guardar" visible="false"/>
+      <toolbarbutton id="btnEditar" label="Editar" sclass="botonAccion" visible="false"/>
+      <toolbarbutton id="btnConfirmar" label="Confirmar Reporte" visible="false"/>
+    </toolbar>
+    <tabbox id="tabbox" width="100%" mold="accordion">
+      <tabs>
+        <tab label="Célula" id="tabCelula"/>
+        <tab label="Fechas" id="tabFechas"/>
+        <tab label="Planificación" id="tabPlanificacion"/>
+        <tab label="Resultados" id="tabResultados"/>
+        <tab label="Ofrendas" id="tabOfrendas"/>
+        <tab label="Observaciones" id="tabObservaciones"/>
+      </tabs>
+      <tabpanels>
+        <tabpanel id="tabPanelCelula">
+          <include id="db" src="vistaReporteCelula/Celula.zul"/>
+        </tabpanel>
+        <tabpanel id="tabPanelFechas">
+          <include id="fechas" src="vistaReporteCelula/Fechas.zul"/>
+        </tabpanel>
+        <tabpanel id="tabPanelPlanificacion">
+          <include id="planif" src="vistaReporteCelula/Planificacion.zul"/>
+        </tabpanel>
+        <tabpanel id="tabPanelResultados">
+          <include id="result" src="vistaReporteCelula/Resultados.zul"/>
+        </tabpanel>
+        <tabpanel id="tabPanelOfrendas">
+          <include id="ofrendas" src="vistaReporteCelula/Ofrendas.zul"/>
+        </tabpanel>
+        <tabpanel id="tabPanelObservaciones">
+          <include id="obs" src="vistaReusable/Observaciones.zul"/>
+        </tabpanel>
+      </tabpanels>
+    </tabbox>
+  </div>
+</zk>

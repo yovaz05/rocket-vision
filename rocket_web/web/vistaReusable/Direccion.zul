@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <style src="css/estilos1.css"/>  
+  <label id="etqMensajes" value="Mensajes: " sclass="mensajes" visible="false"/>
+  <grid style="border:0px" apply="sig.controladores.CtrlDireccion">      
+    <columns>
+      <column id="col1" width="135px"/>
+      <column id="colEdit"/>
+      <column id="colView"/>
+    </columns>
+    <rows>
+      <row>
+        <label value="Estado" sclass="etiqueta_campo" />
+        <hbox align="left">        
+          <label id="etqEstado" value="Lara"/>
+          <combobox id="cmbEstado"
+        autocomplete="true" autodrop="true" readonly="true"
+        visible="false"
+        />
+        </hbox>
+        <div align="left">
+          <a id="btnEditEstado" tooltiptext="Editar"
+            onClick="activarEditEstado()"
+            image="/img/iconos/edit_row.png"
+            hoverImage="/img/iconos/edit_row_hover.png"/>
+          <a id="btnCancelarEditEstado" visible="false"
+            tooltiptext="Cancelar Edición"
+            onClick="cancelarEditEstado()"
+            image="/img/iconos/cancel_row.png"
+            hoverImage="/img/iconos/cancel_row_hover.png"/>
+        </div>
+        <!-- TODO: listar sólo los estados actualmente en uso -->
+<!--      <comboitem label="Lara"/>
+          <comboitem label="Yaracuy"/>
+          <comboitem label="Carabobo"/>
+          <comboitem label="Otro..."/>
+        </combobox>
+-->        
+      </row>     
+      <row>
+        <label value="Ciudad" sclass="etiqueta_campo"/>
+        <cell>
+<!--          <combobox id="cmbCiudad" value="Barquisimeto" autocomplete="true" autodrop="true" readonly="true">-->
+          <combobox id="cmbCiudad" autocomplete="true" autodrop="true" readonly="true">
+<!--          <comboitem label="Barquisimeto"/>
+          <comboitem label="Cabudare"/>
+          <comboitem label="Duaca"/>
+          <comboitem label="Yaritagua"/>
+          <comboitem label="Otra..."/>-->
+          </combobox>
+<!--          Este textbox es para agregar una ciudad adicional cuando haga falta-->
+          <textbox id="txtCiudad" visible="false" tooltiptext="Ingrese el nombre de la nueva ciudad y presiona la tecla 'Enter'"/>
+        </cell>
+        <label id="etqCiudad"/>
+      </row>
+      <row>
+        <label value="Sector" sclass="etiqueta_campo"/>
+        <cell>
+<!--          <combobox id="cmbZona" value="Centro" autocomplete="true" autodrop="true" readonly="true">-->
+          <combobox id="cmbZona" autocomplete="true" autodrop="true" readonly="true">
+          <!-- TODO: listar las zonas actualmente usadas -->
+<!--            <comboitem label="Centro"/>
+            <comboitem label="Los Cerrajones"/>
+            <comboitem label="El Cercado"/>
+            <comboitem label="Macuto"/>
+            <comboitem label="Agua Viva"/>
+            <comboitem label="Atapaima"/>
+            <comboitem label="El Placer"/>
+            <comboitem label="Santa Inés"/>
+            <comboitem label="Veragacha"/>
+            <comboitem label="Yaritagua"/>
+            <comboitem label="Otro..." id="itemZonaAdicional"/>-->
+          </combobox>
+          <textbox id="txtZona" value="" visible="false" tooltiptext="Ingrese el nombre de la nueva ciudad..."/>
+        </cell>
+        <label id="etqZona" />
+      </row>           
+      <row>        
+        <label value="Dirección detallada" sclass="etiqueta_campo"/>
+        <textbox id="txtDirDetallada" rows="3" width="100%" value="" maxlength="200"/> 
+        <label id="etqDirDetallada" multiline="true"/>
+      </row> 
+      <row>
+        <label value="Teléfono" sclass="etiqueta_campo"/>
+        <textbox  id="txtTelefono" value="" visible="true" cols="15" maxlength="15"/>
+        <toolbarbutton id="tbbTelefono"/>
+      </row>      
+    </rows>
+  </grid>
+
+</zk>

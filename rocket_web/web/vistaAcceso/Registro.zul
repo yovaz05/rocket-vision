@@ -1,0 +1,74 @@
+<?page id="testZul" title="Inicio" cacheable="false"
+	language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8" title="Acceso a Usuarios"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+    <style src="css/estilos1.css"/>
+    <include src="vistaAcceso/Header.zul"/>
+    <div use="cdo.sgd.controladores.CtrlRegistro">
+        <label value="Registro" sclass="titulo_ventana"/>
+        <panel width="100%">
+            <panelchildren>
+                <div style="padding:10px">
+                    <hbox>
+                        <label value="Cédula de Identidad:" sclass="etiqueta_campo"/>
+                        <space width="5px"/>
+                        <intbox id="txtCedula" maxlength="8" cols="10" sclass="textbox_field"/>
+                        <button id="btnVerificarCedula" label="Verificar" sclass="boton_verificar"/>
+                    </hbox>
+                    <space height="20px"/>
+                    <label id="etqInstrucciones" value="Verifique su cédula antes de ingresar todos los datos" sclass="instrucciones"/>
+                </div>
+        
+                <hbox>
+                    <vbox style="margin:10px">
+                        <space height="7px"/>
+<!--            <label sclass="etiqueta_campo" value="Red:"/>
+            <space height="20px"/>-->
+                        <label sclass="etiqueta_campo" value="Líder(es):"/>
+                        <space height="20px"/>
+                        <label sclass="etiqueta_campo" value="Nombre Completo:"/>
+                        <space height="21px"/>
+                        <label sclass="etiqueta_campo" value="Correo electrónico:"/>
+                        <space height="21px"/>
+                        <label sclass="etiqueta_campo" value="Teléfono:"/>
+                        <space height="21px"/>
+                        <label sclass="etiqueta_campo" value="Contraseña:"/>
+                        <space height="21px"/>
+                        <label sclass="etiqueta_campo" value="Repite la contraseña:"/>
+                        <space height="5px"/>
+                        <label value=""/>
+                    </vbox>
+                    <vbox style="margin:10px">
+                        <space height="3px"/>
+                        <combobox sclass="textbox_field" id="cmbLider" width="180px" tooltiptext="Elige a tus líderes" inplace="false" autocomplete="tr"/>
+                        <space height="10x"/>
+                        <textbox sclass="textbox_field" id="txtNombre" width="180px"/>
+                        <space height="10x"/>
+                        <textbox sclass="textbox_field" id="txtCorreo" width="180px"/>
+                        <space height="10x"/>
+                        <intbox sclass="textbox_field" id="txtTelefono" width="180px" maxlength="11"/>
+                        <space height="10x"/>
+                        <textbox sclass="textbox_field" id="txtPassword" width="180px" type="password"/>
+                        <space height="10x"/>
+                        <textbox sclass="textbox_field" id="txtRepetirPassword" width="180px" type="password"/>
+                        <space height="10x"/>
+                        <div>
+                            <button id="btnEnviar" label="Enviar" sclass="boton_acceso"/>
+                        </div>
+                    </vbox>
+                </hbox>                
+            </panelchildren>
+        </panel>
+<!--    TODO: pasar esto al controlador-->
+        <zscript>
+    <![CDATA[
+    void mensajeEnDesarrollo(){
+      Messagebox.show("En construcción","Registro",
+      Messagebox.OK, Messagebox.INFORMATION);
+    }
+    ]]>        
+        </zscript>
+    </div>  
+</zk>

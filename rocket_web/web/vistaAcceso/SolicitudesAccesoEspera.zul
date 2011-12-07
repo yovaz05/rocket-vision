@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+<div align="center">
+    <window id="vtnSesionUsuario" style="margin-top:5px" use="waytech.iuri.controladores.ControladorAccesoSolicitudes">
+    <panel id="panelUsuario" title="Módulo de Acceso - Solicitudes en espera -  V1.1" border="mold" collapsible="true" closable="true" maximizable="true">
+        <panelchildren style="background:#c5e6ef;">      
+            <div align="center">
+                <grid width="480px" style="padding:5px">
+                    <columns>
+                        <column>
+                        </column>
+                        <column>
+                        </column>
+                    </columns>
+                    <rows>
+                        <row>
+                            <label sclass="etiqueta" value="Seleccione tipo de usuario "/>
+                            <combobox sclass="combo" id="comboNivelesUsuarios" readonly="true"/>
+                        </row>
+                        <row>
+                            <label sclass="etiqueta" value="Ingrese el nombre a filtrar"/>
+                            <textbox id="txtBuscarUsuario" width = "220px"/>
+                        </row>
+                    </rows>
+                </grid>
+            </div>
+            <div align="center">
+                <grid style="padding:10px">
+                    <columns>
+                        <column/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <div align="center">
+                                <paging id="pg" pageSize="8"/>
+                                <listbox  id="listboxUsuarios" mold="paging" paginal="${pg}" rows="8">
+                                    <listhead>
+                                        <listheader label="ID" align="center" />
+                                        <listheader label="RIF" align="center" />
+                                        <listheader label="Nombre del usuario" align="center" />
+                                        <listheader label="Nivel" align="center" />
+                                        <listheader label="Login" align="center" />
+                                        <listheader label="Fecha Solicitud" align="center" />
+                                        <listheader align="center"  width="45px" />
+                                        <listheader align="center"  width="45px" />
+                                        <listheader align="center"  width="45px" />
+                                        <listheader align="center"  width="45px" visible = "false" />
+                                    </listhead>
+                                </listbox>
+                            </div>
+                        </row>
+                    </rows>
+                </grid>                              
+            </div>            
+        </panelchildren>
+    </panel>   
+    </window>
+</div>
+</zk>

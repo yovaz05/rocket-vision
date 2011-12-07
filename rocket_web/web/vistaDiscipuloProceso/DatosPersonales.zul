@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <grid style="border:0px">
+    <columns>
+      <column id="col1" width="150px"/>
+      <column id="col2"/>
+      <column id="col3"/>
+    </columns>
+    <rows>
+      <row>
+        <label value="Fecha de Nacimiento" sclass="etiqueta_campo"/>
+        <datebox id="dboxFechaNacimiento" format="dd/MM/yyyy" constraint="no future"/>
+        <label id="etqFechaNacimiento"/>
+      </row>
+      <row>
+        <label value="Edad" sclass="etiqueta_campo"/>
+        <spinner value="20" constraint="no negative, no zero, min 10 max 80" cols="2"/>
+        <label id="etqEdad"/>
+      </row>
+      <row>
+        <label value="Estado Civil" sclass="etiqueta_campo" />
+        <combobox id="cmbEstadoCivil" value="Soltero" autodrop="true" inplace="false" readonly="true">
+          <comboitem label="Soltero"/>
+          <comboitem label="Casado"/>
+          <comboitem label="Unido"/>
+          <comboitem label="Divorciado"/>
+          <comboitem label="Separado"/>
+          <comboitem label="Viudo"/>
+        </combobox>
+        <label id="etqEstadoCivil" value="" />
+      </row>        
+      <!-- TODO: listar todas las profesiones pertinentes, desde la base de datos-->
+      <row>
+        <label value="Profesión / Oficio" sclass="etiqueta_campo" />
+        <combobox id="cmbProfesion" value="Profesional" autocomplete="true" autodrop="true"  readonly="true">
+          <comboitem label="Profesional"/>
+          <comboitem label="Trabajador Independiente"/>
+          <comboitem label="..."/>
+        </combobox>
+        <label id="etqProfesion" value="" />
+      </row>              
+    </rows>
+  </grid>
+</zk>

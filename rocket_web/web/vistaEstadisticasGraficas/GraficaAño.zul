@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div>
+    <flashchart id="chart" width="570" height="300" style="font-weight:bold"/>    
+  </div>
+  <zscript>
+  <![CDATA[
+   SimpleCategoryModel demoModel = new SimpleCategoryModel();
+        demoModel.setValue("2009", "Semana 1", new Integer(123));
+        demoModel.setValue("2008", "Semana 2", new Integer(234));
+        demoModel.setValue("2007", "Semana 3", new Integer(456));
+        demoModel.setValue("2006", "Semana 4", new Integer(567));
+        chart.setModel(demoModel);
+        chart.setType("line");
+  ]]>  
+  </zscript>  
+</zk>

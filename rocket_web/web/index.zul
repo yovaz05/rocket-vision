@@ -1,0 +1,47 @@
+<!--
+  index.zul, vista de entrada del sistema, con login y opciones generales para usuario no logueado
+-->
+<?page id="pagAcceso" cacheable="false" language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8"
+title="Rocket Web - 0.10"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<!--TODO: sacar el código de Zcript a otro archivo-->
+  <style src="css/estilos1.css"/>
+  <zscript>
+    <![CDATA[
+        import org.zkoss.zk.ui.Sessions;
+    
+        //sesión cerrada al comienzo:
+        //Sessions.getCurrent().setAttribute("idUsuario", null);
+        //Sessions.getCurrent().setAttribute("nombreUsuario", null);
+        
+        //datos de prueba: sólo usados para efectos de desarrollo rápido:
+        void loginConDatosPrecargados(){
+          Sessions.getCurrent().setAttribute("accesoActivado", false);
+          Sessions.getCurrent().setAttribute("usuarioLogueado", true);
+          Sessions.getCurrent().setAttribute("idUsuario", 2);
+          Sessions.getCurrent().setAttribute("nombreUsuario", "Gabriel Pérez");
+          Sessions.getCurrent().setAttribute("idRed", 1);
+          Executions.sendRedirect("index2.zul");
+       }
+        
+       vistaCentralDefecto  = "vistaAcceso/Acceso.zul";
+       panelCentralDefecto  = "";
+       //comentar línea siguiente, para mostrar la pantalla de login:
+       loginConDatosPrecargados();
+    ]]>
+  </zscript>
+  <borderlayout>
+    <center id="rcenter" flex="true" autoscroll="true" border="0">
+      <div align="left" style="padding:5px;">
+        <include id="vistaCentral" src="${vistaCentralDefecto}" />
+        <include id="panelCentral" src="${panelCentralDefecto}" />
+      </div>
+    </center>
+    <south id="rsur" border="0">
+      <include src="menu_inferior.zul"/>
+    </south>
+  </borderlayout>
+</zk>

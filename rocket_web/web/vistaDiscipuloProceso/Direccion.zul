@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <grid style="border:0px">      
+    <columns>
+      <column id="col1" width="150px"/>
+      <column id="col2"/>
+      <column id="col3"/>
+    </columns>
+    <rows>
+      <row>
+        <label value="Estado" sclass="etiqueta_campo" />
+        <combobox id="cmbEstado" value="Lara">
+          <comboitem label="Lara"/>
+          <comboitem label="Yaracuy"/>
+          <comboitem label="Carabobo"/>
+          <comboitem label="Otro..."/>
+        </combobox>
+        <label id="etqEstado" />
+      </row>        
+      <row>
+        <label value="Ciudad" sclass="etiqueta_campo"/>
+        <combobox id="cmbCiudad" value="Barquisimeto">
+          <comboitem label="Barquisimeto"/>
+          <comboitem label="Cabudare"/>
+          <comboitem label="Duaca"/>
+          <comboitem label="Yaritagua"/>
+          <comboitem label="Otra..."/>
+        </combobox>
+        <label id="etqCiudad" />          
+      </row>
+      <row>
+        <label value="Zona" sclass="etiqueta_campo"/>
+        <textbox id="txtZona" value="" visible="true"/>
+        <label id="etqZona" />
+      </row>           
+      <row>        
+        <label value="Dirección detallada" sclass="etiqueta_campo"/>
+        <textbox id="txtDirDetallada" rows="3" width="100%" value=""/> 
+        <label id="etqDirDetallada" multiline="true"/>
+      </row> 
+      <row>
+        <label value="Teléfono" sclass="etiqueta_campo"/>
+        <textbox  id="txtTelefono" value="" visible="true"/>
+        <toolbarbutton id="tbbTelefono"/>
+      </row>      
+    </rows>
+  </grid>
+
+</zk>

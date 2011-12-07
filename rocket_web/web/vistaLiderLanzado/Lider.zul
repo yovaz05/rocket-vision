@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="sig.controladores.CtrlLider" width="500px">
+    <label id="tituloVentana" height="20px" sclass="titulo_ventana"/>
+    <label id="etqMensaje" value="" sclass="mensajes" visible="false"/>    
+    <toolbar width="100%" height="20px" sclass="barraBotones" visible="false">
+      <toolbarbutton id="btnNew" label="Nuevo" sclass="botonAccion" visible="false"/>
+      <toolbarbutton id="btnGuardar" label="Guardar" sclass="botonAccion" visible="false"/>
+      <toolbarbutton id="btnEditar" label="Editar" sclass="botonAccion" visible="false"/>
+    </toolbar>
+    <tabbox id="tabbox" width="100%" mold="accordion">
+      <tabs>
+        <tab label="Datos Básicos"/>
+        <tab label="Datos Personales"/>
+        <tab label="Dirección"/>
+        <tab label="Contacto"/>
+        <tab label="Roles"/>
+        <tab label="Fechas"/>
+        <tab label="Observaciones"/>
+      </tabs>
+      <tabpanels>
+        <tabpanel>
+          <include id="db" src="vistaLider/DatosBasicos.zul"/>            
+        </tabpanel>
+        <tabpanel>
+          <include id="dp" src="vistaLider/DatosPersonales.zul"/>            
+        </tabpanel>
+        <tabpanel>
+          <include id="dir" src="vistaReusable/Direccion.zul"/>  
+        </tabpanel>
+        <tabpanel>
+          <include id="contacto" src="vistaReusable/Contacto.zul"/>  
+        </tabpanel>
+        <tabpanel>
+          <include id="roles" src="vistaLider/Roles.zul"/>  
+        </tabpanel>
+        <tabpanel>
+          <include id="fechas" src="vistaLider/Fechas.zul"/>  
+        </tabpanel>
+        <tabpanel>
+          <include id="obs" src="vistaReusable/Observaciones.zul"/>  
+        </tabpanel>
+      </tabpanels>
+    </tabbox>   
+  </div>
+</zk>

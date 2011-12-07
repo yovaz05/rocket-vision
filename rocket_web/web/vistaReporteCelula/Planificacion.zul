@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <grid style="border:0px">      
+    <columns>
+      <column id="col1" width="180px"/>
+      <column id="colEdit" visible="false"/>
+      <column id="colView"/>
+    </columns>
+    <rows>
+      <row>
+        <label value="Nuevos Invitados" sclass="etiqueta_campo" />
+        <spinner id="spnInvitados" cols="2" width="50px" value="0" constraint="min 0 max 100" />
+        <toolbarbutton id="tbbInvitados" label="2"/>
+      </row>        
+      <row>
+        <label value="Por Reconciliarse" sclass="etiqueta_campo"/>
+        <spinner id="spnReconciliados" cols="2" width="50px" value="0" constraint="min 0 max 100"/>
+        <toolbarbutton id="tbbReconciliados" label="2"/>
+      </row>
+      <row>
+        <label value="Visitas a Realizar" sclass="etiqueta_campo"/>
+        <spinner id="spnVisitas" cols="2" width="50px" value="0" constraint="min 0 max 100"/>
+        <toolbarbutton id="tbbVisitas" label="0"/>
+      </row>           
+      <row>
+        <label value="Personas en Planificación" sclass="etiqueta_campo" tooltiptext="Líderes + Estacas"/>
+        <spinner id="spnPersonasEnPlanif" cols="2" width="50px" value="0" constraint="min 0 max 100"/>
+        <toolbarbutton id="tbbPersonasEnPlanif" label="2"/>
+      </row>
+    </rows>
+  </grid>
+
+</zk>

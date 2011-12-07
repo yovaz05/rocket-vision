@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <grid style="border:0px">  
+    <columns>
+      <column id="col1" width="150px"/>
+      <column id="col2"/>
+      <column id="col3"/>
+    </columns>
+    <rows>
+      <row>
+        <label value="Conversión" sclass="etiqueta_campo"/>
+        <datebox id="dateConversion"/>
+        <label id="etqConversion" value="" />
+      </row>        
+      <row>
+        <label value="Encuentro" sclass="etiqueta_campo"/>
+        <datebox id="dateEncuentro"/>
+        <label id="etqEncuentro" value="" />
+      </row>        
+      <row>
+        <label value="Graduación Academia" sclass="etiqueta_campo"/>
+        <datebox id="dateGraduacionAcademia"/>
+        <label id="etqGraduacionAcademia" value="" />
+      </row>        
+      <row>
+        <label value="Lanzamiento" sclass="etiqueta_campo"/>
+        <datebox id="dateLanzamiento"/>
+        <label id="etqLanzamiento" value="" />
+      </row>        
+      <row>
+        <label value="Bautizo" sclass="etiqueta_campo"/>
+        <datebox id="dateBautizo"/>
+        <label id="etqBautizo" value="" />
+      </row>        
+    </rows>
+  </grid>
+
+</zk>

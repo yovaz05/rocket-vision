@@ -1,0 +1,35 @@
+<?page id="testZul" title="Inicio" cacheable="false"
+	language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8" title="Inicio del sistema"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">    
+  <style src="css/estilos1.css"/>
+  <div>
+    <label value="SIG" sclass="titulo_ventana"/>      
+    <div align="center">
+      <div align="left" style="padding: 0px 20px">
+        <html><![CDATA[
+<div>
+<h4>Sistema para la Gestión de Células y Discípulos</h4>
+<p>Versión 1</p>
+<p>Fecha Estimada de Lanzamiento: 31.nov.2011</p>
+<h4>Características</h4>
+<p>Control de información de las células</p>
+<p>Ingreso y supervisión de los reportes semanales de las células.</p>
+<p>Permite ver las estadísticas de las células.</p>
+<p>Permite gestionar los líderes</p>
+<p>Permite gestionar los discípulos en el proceso.</p>
+<p>Gestión de las redes.</p>
+<p>Generación de estadísticas por redes y de la iglesia en general: células, líderes, discípulos.</p>
+<!--<p>
+<h4>Desarrolladores:</h4>
+<p style="color: #666;">Gabriel Pérez - gabrielperez@waytech.com.ve</p>
+<p style="color: #666;">Gerardo Montilla - gerardomontilla@waytech.com.ve</p>
+</p>-->
+]]>
+        </html>
+      </div>        
+    </div>
+  </div>
+</zk>

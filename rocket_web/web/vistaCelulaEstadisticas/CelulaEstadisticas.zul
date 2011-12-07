@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--TODO: cambiar tabbox por filtros para cambiar el período-->
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="cdo.sgd.controladores.CtrlCelulaEstadisticas" width="940px">
+    <label value="Estadísticas" sclass="titulo_ventana"/>
+    <div width="100%">      
+      <div align="left">
+        <label value="Desde"/>
+        <datebox id="dateboxInicio" constraint="no future" format="dd/MM/yyyy"/>
+        <label value="hasta"/>
+        <datebox id="dateboxFin" constraint="no future" format="dd/MM/yyyy"/>
+        <a id="btnAplicar" label="Aplicar" sclass="botonAccion"
+        onClick='mensaje("En construcción");'/>
+        <label id="etqMensaje" sclass="mensajes" style="marging-left:10px" value="" visible="false"/>
+      </div>
+<!-- TODO: SE usará más adelante, en versiones posteriores
+<div align="right" style="display:inline-block;float:right">
+        <label value="Tipo de Promedio"/>
+        <combobox id="cmbTipoPeriodo" value="Semanal" autodrop="true" readonly="true" width="80px" onChange="">
+          <comboitem label="Semanal"/>
+          <comboitem label="Mensual"/>
+          <comboitem label="Años" visible="false"/>
+        </combobox>      
+      </div>-->
+
+<!--      TODO: usar esto: botones para agrupar datos por 'semana' o 'mes'-->
+<!--      <div style="float:right">
+        <label value="Ver por: " style="vertical-align:middle;" height="25px"/>
+        <toolbar width="140px">
+        <toolbarbutton id="btnSemana" label="Semana" tooltiptext="Semana" sclass="botonAccion"
+                onClick='mensaje("En construcción");'/>
+        image="/img/iconos/btnSemana.png" orient="vertical" dir="reverse"/>
+        <toolbarbutton id="btnMes" label="Mes" tooltiptext="Mes" sclass="botonAccion"
+        onClick='mensaje("En construcción");'/>   
+        image="/img/iconos/btnMes.png" orient="vertical" dir="reverse"/>
+        <toolbarbutton id="btnTriMestre" label="Trimestre" tooltiptext="Período Siguiente"/>
+      <toolbarbutton id="btnPeriodoAño" label="Año" tooltiptext="Período Siguiente"/>
+        </toolbar>
+      </div>-->
+<!--    <hbox>
+      <toolbarbutton id="btnPeriodoAnterior" tooltiptext="Período Anterior" image="/img/iconos/back.png"/>
+      <toolbarbutton id="btnPeriodoSiguiente" tooltiptext="Período Siguiente" image="/img/iconos/next.png"/>
+    </hbox>-->
+    </div>
+<!--
+    <space height="10px"/>-->
+    <div width="100%" visible="true">
+      <div id="btnVerTabla" visible="false" align="right">
+        <a label="Mostrar Tabla"
+          sclass="botonAccion"
+          onClick='panelTabla.visible=true; btnVerTabla.visible=false; btnOcultarTabla.visible=true;'/>
+      </div>
+      <div id="btnOcultarTabla" align="right">
+        <a label="Ocultar Tabla" sclass="botonAccion"
+    tooltiptext="Ocultar tabla de datos"
+    onClick='panelTabla.visible=false; btnVerTabla.visible=true; btnOcultarTabla.visible=false;'
+    style="display:inline-block;"
+    />
+      </div>
+      <div id="panelTabla">
+        <panel width="100%">
+          <panelchildren>
+            <include id="tablaDatos" src="vistaCelulaEstadisticas/TablaSemana.zul"/>            
+          </panelchildren>
+        </panel>
+      </div>
+    </div>
+    <space height="15px"/>
+  
+<!--GRAFICA-->
+    <div width="100%">
+      <div id="btnVerGrafica" visible="true" align="center">
+        <a label="Mostrar Gráfica"
+    onClick='panelGrafica.visible=true;mensajeGrafica("Gráfica: En construcción");btnVerGrafica.visible=false;btnOcultarGrafica.visible=true'
+    sclass="botonAccion" style="display:inline-block"/>
+      </div>
+      <div id="btnOcultarGrafica" visible="false" align="center">
+        <a label="Ocultar Gráfica" sclass="botonAccion"
+          onClick='panelGrafica.visible=false;mensajeGrafica.visible=false;btnVerGrafica.visible=true;btnOcultarGrafica.visible=false'
+          style="display:inline-block;"
+        />
+      </div>
+      <div align="center" style="marging: 10px 50px">
+        <label id="etqMensajeGrafica" sclass="mensajes" value="" visible="false"/>
+      </div>
+    
+      <div id="panelGrafica" visible="false">
+        <div align="left" style="display:inline-block;float:left">
+<!--        <label value="Valores en gráfica" sclass="etiqueta_campo"/>-->
+          <vbox onClick='mensajeGrafica("Elección de campos: En construcción");'>
+            <checkbox label="Invitados" checked="false"/>
+            <checkbox label="Convertidos" checked="true"/>
+            <checkbox label="Reconciliados" checked="true"/>
+            <checkbox label="Amigos" tooltiptext="Amigos que no asisten a la iglesia, sólo a la célula" checked="false"/>
+            <checkbox label="Casa de Oración" tooltiptext="Cristianos de Casa de Oración" checked="false"/>
+            <checkbox label="Otras Iglesias" tooltiptext="Cristianos de otras iglesias" checked="false"/>
+            <checkbox label="Visitas" tooltiptext="Visitas realizadas" checked="false"/>
+            <checkbox label="Domingo" tooltiptext="Asistencia Domingo" checked="false"/>
+          </vbox>
+        </div>
+        <div align="center" style="display:inline-block;">
+          <include src="vistaEstadisticasGraficas/GraficaSemana.zul"/>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <!--    TODO: pasar esto al controlador-->
+  <zscript>
+    <![CDATA[
+    void mensaje(String msj){
+      etqMensaje.setVisible(true);
+      etqMensaje.setValue(msj);
+    }
+    void mensajeGrafica(String msj){
+      etqMensajeGrafica.setVisible(true);
+      etqMensajeGrafica.setValue(msj);
+    }
+    ]]>        
+  </zscript>  
+</zk>

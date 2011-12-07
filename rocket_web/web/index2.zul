@@ -1,0 +1,54 @@
+<?page id="pagPrincipal" cacheable="false" language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8"
+title="Rocket Web - 0.10"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <zscript>
+  <![CDATA[
+    import org.zkoss.zk.ui.Sessions;    
+    //CÓDIGO DE PRUEBAS:
+    //TODO: QUITAR
+    void activarRed1(){
+    //usuario Gabriel:
+      Sessions.getCurrent().setAttribute("idRed", 1);
+      Sessions.getCurrent().setAttribute("idUsuario", 2);
+      Sessions.getCurrent().setAttribute("nombreUsuario", "Gabriel Pérez");
+    }
+    void activarRed1_2(){
+    //usuario Jairo:
+      Sessions.getCurrent().setAttribute("idRed", 1);
+      Sessions.getCurrent().setAttribute("idUsuario", 3);
+      Sessions.getCurrent().setAttribute("nombreUsuario", "Jairo Rivera");
+    }
+    void activarRed2(){
+      //usuario Juan Carlos:
+      Sessions.getCurrent().setAttribute("idRed", 2);
+      Sessions.getCurrent().setAttribute("idUsuario", 11);
+      Sessions.getCurrent().setAttribute("nombreUsuario", "Juan Carlos Godoy");
+    }
+    //activarRed1();
+  ]]>
+  </zscript>  
+  <borderlayout height="100%" width="100%">
+    <north id="rnorte" border="0">
+      <div width="100%">
+<!-- TODO: activar cambio de menú, según tipo de usuario -->
+<!-- este include representa la barra superior: que incluye menú principal y barra de navegación -->
+        <include id="vistaCentral" src="MenuAll.zul"/>
+      </div>
+    </north>  
+    <center id="rcenter" title="" flex="true" border="0" autoscroll="true">
+<!--este include será donde se mostrarán las vistas de datos o formularios-->
+      <div align="left" style="margin:5px 5px 5px 10px;" width="100%">
+<!--        <include id="panelCentral" src="vistaDiscipuloProceso/Listado.zul"/>-->
+<!--        <include id="panelCentral" src="vistaLider/Listado.zul"/>-->
+<!--        <include id="panelCentral" src="vistaLiderCelula/Listado.zul"/>-->
+<!--        <include id="panelCentral" src="vistaCuenta/Perfil.zul"/>-->
+<!--        <include id="panelCentral" src="vistaReporteCelula/ListadoSemana.zul"/>        -->
+<!--        <include id="panelCentral" src="vistaReporteCelula/ListadoAnteriores.zul"/>        -->
+<!--        <include id="panelCentral" src="vistaCelulaEstadisticas/CelulaEstadisticasResumen.zul"/>-->
+<!--        <include id="panelCentral" src="vistaCelulaEstadisticas/CelulaEstadisticas.zul"/>-->
+<!--        <include id="panelCentral" src="vistaReusable/Direccion.zul"/>-->
+        <include id="panelCentral" src="vistaCelula/Listado.zul"/>
+      </div>
+    </center>
+  </borderlayout>
+</zk>
