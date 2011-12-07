@@ -1224,7 +1224,7 @@ public class SaPersona implements IsaPersona {
         if (conectorBD.iniciarConexion()) {
             rspPersona.setEsConexionAbiertaExitosamente(true);
             rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
-            String consultaSQL = "SELECT * FROM persona WHERE estado = 1 AND cedula = '" + cedula + "'";
+            String consultaSQL = "SELECT * FROM persona WHERE estado = 1 AND ci = '" + cedula + "'";
             try {
                 Statement sentencia = conectorBD.getConnection().createStatement();
                 boolean bandera = sentencia.execute(consultaSQL);
@@ -1238,6 +1238,48 @@ public class SaPersona implements IsaPersona {
                 }
             } catch (SQLException e) {
                 rspPersona.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "esCedulaExistente(String cedula)", this.getClass().toString()));
+            } finally {
+                if (conectorBD.cerrarConexion()) {
+                    rspPersona.setEsConexionCerradaExitosamente(true);
+                }
+                rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPersona;
+            }
+        } else {
+            rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPersona;
+        }
+    }
+    
+    @Override
+    public RspPersona getPersonaPorCedula(String cedula) {
+        //INSTANCIAS DE LAS CLASES                
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        RspPersona rspPersona = new RspPersona();
+        //INICIALIZAR VARIABLES
+        rspPersona.setEsConexionAbiertaExitosamente(false);
+        rspPersona.setEsConexionCerradaExitosamente(false);
+        rspPersona.setEsSentenciaSqlEjecutadaExitosamente(false);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPersona.setEsConexionAbiertaExitosamente(true);
+            rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            String consultaSQL = "SELECT * FROM persona WHERE estado = 1 AND cedula = '" + cedula + "'";
+            try {
+                Statement sentencia = conectorBD.getConnection().createStatement();
+                boolean bandera = sentencia.execute(consultaSQL);
+                if (bandera) {
+                    ResultSet rs = sentencia.getResultSet();
+                    rspPersona.setEsSentenciaSqlEjecutadaExitosamente(true);
+                    rspPersona.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), "getPersonaPorCedula(String cedula)", this.getClass().toString()));
+                    if (rs.next()) {
+                        Persona persona = new Persona();
+                        persona = rsPersona(rs, persona);
+                        rspPersona.setPersona(persona);
+                    }
+                }
+            } catch (SQLException e) {
+                rspPersona.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "getPersonaPorCedula(String cedula)", this.getClass().toString()));
             } finally {
                 if (conectorBD.cerrarConexion()) {
                     rspPersona.setEsConexionCerradaExitosamente(true);

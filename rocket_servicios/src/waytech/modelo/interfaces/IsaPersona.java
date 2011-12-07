@@ -31,6 +31,8 @@ public interface IsaPersona {
 
     public abstract RspPersona getLiderLanzadoPorIdPersona(int idPersona);
     
+    public abstract RspPersona getPersonaPorCedula(String cedula);
+    
     public abstract RspPersona esCedulaExistente(String cedula);
 
     public abstract RspPersona renovarPersona(int idPersona);
