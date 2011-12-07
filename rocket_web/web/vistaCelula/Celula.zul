@@ -19,12 +19,14 @@
     </toolbar>
     <tabbox id="tabbox" width="100%" mold="accordion">
       <tabs>
+<!--        TODO: cambiar orden de tabs-->
         <tab label="Datos Básicos"/>
         <tab label="Dirección"/>
         <tab label="Otros datos"/>
         <tab label="Observaciones"/>
       </tabs>
       <tabpanels>
+<!--        TODO: cambiar orden de tabs-->
         <tabpanel>
           <include id="db" src="vistaCelula/DatosBasicos.zul"/>
         </tabpanel>

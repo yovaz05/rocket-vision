@@ -3,9 +3,7 @@ package sig.controladores;
 import cdo.sgd.controladores.CtrlVista;
 import cdo.sgd.controladores.Sesion;
 import cdo.sgd.controladores.Vistas;
-import cdo.sgd.modelo.bd.simulador.BD;
 import cdo.sgd.modelo.bd.simulador.CelulaUtil;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import org.zkoss.zk.ui.Component;
@@ -13,7 +11,6 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.A;
-import org.zkoss.zul.Cell;
 import org.zkoss.zul.Column;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
@@ -69,31 +66,29 @@ public class CtrlCelula extends GenericForwardComposer {
   A db$tbbRed;
   A db$tbbLider1, db$tbbLider2, db$tbbLider3, db$tbbLider4;
   //pestaña "Dirección"
-  Column dir$colEdit;
   Column dir$colView;
+  Column dir$colEdit;
   Combobox dir$cmbEstado;
   Combobox dir$cmbCiudad;
   Combobox dir$cmbZona;
   Textbox dir$txtZona;
-  Textbox dir$txtDirDetallada;
+  Textbox dir$txtDetalle;
   Textbox dir$txtTelefono;
   Label dir$etqEstado;
   Label dir$etqCiudad;
   Label dir$etqZona;
-  Label dir$etqDirDetallada;
-  Toolbarbutton dir$linkZona;
-  Toolbarbutton dir$tbbTelefono;
+  Label dir$etqDetalle;
+  Label dir$etqTelefono;
+  //usos posteriores:
+  //+Toolbarbutton dir$linkZona;
   //pestaña "Otros datos"
-  Column otros$colEdit;
-  Column otros$colView;
+  Column otros$colData;
   Datebox otros$dateboxFechaApertura;
   Label otros$etqFechaApertura;
   Label otros$etqAnfitrion;
   Textbox otros$txtAnfitrion;
   Toolbarbutton otros$btnCatAnfitrion;
   //pestaña "Observaciones"
-  Column obs$colEdit;
-  Column obs$colView;
   Label obs$etqObservaciones;
   Textbox obs$txtObservaciones;
   //variables de control:
@@ -117,6 +112,7 @@ public class CtrlCelula extends GenericForwardComposer {
   int idZona = 1;
   //fecha de apertura con formato para BD
   String fechaAperturaBD;
+  private String anfitrion;
   //objeto con la data de la base de datos
   CelulaUtil celulaBD = new CelulaUtil();
   //objeto con la data ingresada por el usuario
@@ -148,7 +144,9 @@ public class CtrlCelula extends GenericForwardComposer {
       System.out.println("CtrlCelula.inicio().id = " + idCelula);
       buscarDataBD();
       mostrarDatosBD();
-      selectTab(1);
+      //TODO: tab mostrada al abrir: 1
+      selectTab(3);
+      mostrarColumnasVisualizacion(true);
     }
     actualizarEstado();
     notificarBarra();
@@ -209,11 +207,18 @@ public class CtrlCelula extends GenericForwardComposer {
     db$tbbLider4.setLabel(celulaBD.getNombreLider4());
 
     //dirección:
+    /**/
     dir$etqEstado.setValue(celulaBD.getDireccion().getEstado());
+    System.out.println("relleno.punto1");
     dir$etqCiudad.setValue(celulaBD.getDireccion().getCiudad());
+    System.out.println("relleno.punto2");
+    System.out.println("CtrlDireccion.zona: " + celulaBD.getDireccion().getZona());    
+    System.out.println("relleno.punto3");
     dir$etqZona.setValue(celulaBD.getDireccion().getZona());
-    dir$etqDirDetallada.setValue(celulaBD.getDireccion().getDirDetallada());
-    dir$tbbTelefono.setLabel(celulaBD.getDireccion().getTelefono());
+    System.out.println("relleno.punto4");
+    dir$etqDetalle.setValue(celulaBD.getDireccion().getDirDetallada());
+    System.out.println("relleno.punto5");
+    dir$etqTelefono.setValue(celulaBD.getDireccion().getTelefono());
 
     fechaApertura = celulaBD.getFechaApertura();
     //TODO: convertir fecha a formato legible: 'día de mes de año'
@@ -279,17 +284,16 @@ public class CtrlCelula extends GenericForwardComposer {
   public void actualizarEstado() {
     if (modo.equals("new")) {
       tituloVentana.setValue(titulo + " » Ingresar");
-      verColumnasData(true);
-      mostrarColumnasVisualizacion(false);
-      mostrarWidgetsView(false);
+      ///-mostrarColumnasVisualizacion(false);
+      mostrarWidgetsViewLink(false);
       mostrarWidgetsEdit(false);
+      mostrarWidgetsNew(false);
       verBotonesEdicion(false);
       setFocoEdicion();
       //- btnIngresarReporte.setVisible(false);
     } else if (modo.equals("ver")) {
       tituloVentana.setValue(titulo + ": " + descripcionCelula);
-      verColumnasData(false);
-      mostrarColumnasVisualizacion(true);
+      //-mostrarColumnasVisualizacion(true);
       //- btnIngresarReporte.setVisible(true);
       /*modo editar, funciona
       } else if (modo.equals("editar")) {
@@ -304,8 +308,8 @@ public class CtrlCelula extends GenericForwardComposer {
       //modo editar, modificando, sólo mostrará columnas con botones de edición
     } else if (modo.equals("editar")) {
       tituloVentana.setValue(titulo + ": " + descripcionCelula + " » Editando");
-      mostrarValoresEdit();
-      mostrarWidgetsView(false);
+      getValoresEdit();
+      mostrarWidgetsViewLink(false);
       mostrarWidgetsEdit(true);
       verBotonesEdicion(true);
       setFocoEdicion();
@@ -345,23 +349,13 @@ public class CtrlCelula extends GenericForwardComposer {
   }
 
   /**
-   * oculta o muestra las columnas donde están los widgets de entrada
-   * @param status el estado true o false
-   */
-  public void verColumnasData(boolean status) {
-    dir$colEdit.setVisible(status);
-    otros$colEdit.setVisible(status);
-    obs$colEdit.setVisible(status);
-  }
-
-  /**
    * oculta o muestra las columnas donde están los widgets de visualización
    * @param status el estado true o false
    */
   public void mostrarColumnasVisualizacion(boolean status) {
+    db$colData.setVisible(status);
     dir$colView.setVisible(status);
-    otros$colView.setVisible(status);
-    obs$colView.setVisible(status);
+    otros$colData.setVisible(status);
   }
 
   /**
@@ -370,6 +364,7 @@ public class CtrlCelula extends GenericForwardComposer {
    */
   public void verBotonesEdicion(boolean status) {
     db$colEdit.setVisible(status);
+    dir$colEdit.setVisible(status);
   }
 
   public void onSelect$tabbox() {
@@ -460,8 +455,8 @@ public class CtrlCelula extends GenericForwardComposer {
   dir$cmbEstado.setValue(dir$etqEstado.getValue());
   dir$cmbCiudad.setValue(dir$etqCiudad.getValue());
   dir$txtZona.setValue(dir$etqZona.getValue());
-  dir$txtDirDetallada.setValue(dir$etqDirDetallada.getValue());
-  dir$txtTelefono.setValue(dir$tbbTelefono.getLabel());
+  dir$txtDetalle.setValue(dir$etqDetalle.getValue());
+  dir$txtTelefono.setValue(dir$etqTelefono.getLabel());
   
   //Otros datos:
   otros$dateboxFechaApertura.setValue(new Date(fechaApertura));
@@ -473,11 +468,10 @@ public class CtrlCelula extends GenericForwardComposer {
   }
    * 
    */
-  
   /**
    * muestra/oculta los widgets de visualización que no sirven para edición
    */
-  private void mostrarWidgetsView(boolean status) {
+  private void mostrarWidgetsViewLink(boolean status) {
     //datos básicos:
     db$tbbRed.setVisible(status);
     db$tbbLider1.setVisible(status);
@@ -485,7 +479,7 @@ public class CtrlCelula extends GenericForwardComposer {
     db$tbbLider3.setVisible(status);
     db$tbbLider4.setVisible(status);
   }
-  
+
   /**
    * muestra/oculta los widgets de visualización que no sirven para edición
    */
@@ -523,7 +517,7 @@ public class CtrlCelula extends GenericForwardComposer {
   /**
    * muestra los valores actuales en los widgets de entrada (captura de datos)
    */
-  private void mostrarValoresEdit() {
+  private void getValoresEdit() {
     db$etqRed.setValue(celulaBD.getNombreRed());
     //líderes
     nLideresUsados = celulaBD.getNumeroLideres();
@@ -549,8 +543,8 @@ public class CtrlCelula extends GenericForwardComposer {
     dir$cmbEstado.setValue(dir$etqEstado.getValue());
     dir$cmbCiudad.setValue(dir$etqCiudad.getValue());
     dir$txtZona.setValue(dir$etqZona.getValue());
-    dir$txtDirDetallada.setValue(dir$etqDirDetallada.getValue());
-    dir$txtTelefono.setValue(dir$tbbTelefono.getLabel());
+    dir$txtDetalle.setValue(dir$etqDetalle.getValue());
+    dir$txtTelefono.setValue(dir$etqTelefono.getLabel());
     
     //Otros datos:
     otros$dateboxFechaApertura.setValue(new Date(fechaApertura));
@@ -588,8 +582,8 @@ public class CtrlCelula extends GenericForwardComposer {
     dir$etqEstado.setValue(dir$cmbEstado.getValue());
     dir$etqCiudad.setValue(dir$cmbCiudad.getValue());
     dir$etqZona.setValue(dir$cmbZona.getValue());
-    dir$etqDirDetallada.setValue(celulaInsert.getDireccion());
-    dir$tbbTelefono.setLabel(celulaInsert.getTelefono());
+    dir$etqDetalle.setValue(celulaInsert.getDireccion());
+    dir$etqTelefono.setValue(celulaInsert.getTelefono());
     otros$etqFechaApertura.setValue(fechaApertura);
     otros$etqAnfitrion.setValue(celulaInsert.getAnfitrion());
     obs$etqObservaciones.setValue(celulaInsert.getObservaciones());
@@ -869,7 +863,7 @@ public class CtrlCelula extends GenericForwardComposer {
     idZona = (Integer) Sesion.getVariable("cmbZona.id");
     celulaInsert.setIdZona(idZona);
 
-    celulaInsert.setDireccion(dir$txtDirDetallada.getValue());
+    celulaInsert.setDireccion(dir$txtDetalle.getValue());
     celulaInsert.setTelefono(dir$txtTelefono.getValue());
 
     prepararFechaApertura();
@@ -879,6 +873,10 @@ public class CtrlCelula extends GenericForwardComposer {
     celulaInsert.setObservaciones(obs$txtObservaciones.getValue());
   }
 
+  /**
+   * genera fecha de apertura en formato para base de datos,
+   * y lo guarda en la variable fechaAperturaBD
+   */
   void prepararFechaApertura() {
     dateFechaApertura = otros$dateboxFechaApertura.getValue();
     if (dateFechaApertura != null) {
@@ -996,4 +994,11 @@ public class CtrlCelula extends GenericForwardComposer {
     db$btnEditRed.setVisible(false);
   }
 
+  private void mostrarWidgetsNew(boolean b) {
+   //por hacer. similar al metodo
+   //mostrarWidgetsEdit(b);
+   //pero mostrar todos los widgets de entrada
+  }
+  
+ 
 }

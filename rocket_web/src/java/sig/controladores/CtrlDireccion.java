@@ -7,7 +7,6 @@ cada controlador que use esto, debe grabar el nuevo registro? no me gusta esta o
 opción C: cuando se eliga "nuevo item", se abre una ventana popup donde se debe ingresar el valor, 
 y esta ventana graba en la base de datos. la lista muestra el nuevo valor.
  */
-
 package sig.controladores;
 
 import cdo.sgd.controladores.Sesion;
@@ -18,13 +17,13 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.A;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
-import org.zkoss.zul.Toolbarbutton;
 import sig.modelo.servicios.ServicioCiudad;
 import sig.modelo.servicios.ServicioEstado;
 import sig.modelo.servicios.ServicioZona;
@@ -35,26 +34,36 @@ import sig.modelo.servicios.ServicioZona;
  */
 public class CtrlDireccion extends GenericForwardComposer {
 
+  /**
+   *TODO:
+   * 1. cuando eliga nueva ciudad: mensaje en la parte superior de la ventana
+   * 2. mostrar item nueva ciudad en la carga inicial
+   * 3. programar perdida de foco de los combos
+   * 4. cuando se selecciona un combo, desplegarlo automáticamente
+   * 4. quitar botones de edición, o cancelar edición
+   ***/
   //widgets:
   Label etqEstado;
   Label etqCiudad;
   Label etqZona;
-  Label etqDirDetallada;
+  Label etqDetalle;
+  Label etqTelefono;
   Combobox cmbEstado;
   Combobox cmbCiudad;
   Combobox cmbZona;
   Textbox txtCiudad;
   Textbox txtZona;
-  Textbox txtDirDetallada;
+  Textbox txtDetalle;
   Textbox txtTelefono;
-  Toolbarbutton tbbTelefono;
   Comboitem itemZonaAdicional;
   Label etqMensaje;
   //widgets adicionales:
-  String etiquetaNuevaCiudad = "Nueva Ciudad...";
-  String etiquetaNuevaZona = "Nuevo Sector...";
+  String etiquetaNuevoEstado = "Agregar...";
+  String etiquetaNuevaCiudad = "Agregar...";
+  String etiquetaNuevaZona = "Agregar...";
   Comboitem itemAddCiudad = new Comboitem(etiquetaNuevaCiudad);
   //variables de control:
+  String modo; //{crear, editar}
   List listaCiudades = new ArrayList();
   List listaEstados = new ArrayList();
   List listaZonas = new ArrayList();
@@ -74,6 +83,14 @@ public class CtrlDireccion extends GenericForwardComposer {
   String zona = "";
   String direccion = "";
   String telefono = "";
+  //widgets para edición
+  A btnEditEstado;
+  A btnCancelarEditEstado;
+  A btnEditCiudad;
+  A btnCancelarEditCiudad;
+  A btnEditZona;
+  A btnCancelarEditZona;
+  private String detalle = "";
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -82,12 +99,13 @@ public class CtrlDireccion extends GenericForwardComposer {
   }
 
   public void inicio() throws InterruptedException {
-    cargarEstados();
+    modo = "editar";
+    //+ cargarEstados();
+    //+ cargarCiudades();
+    //+ cargarZonas();
     desmarcarEstado();
-    cargarCiudades();
-    cargarZonas();
     //-mostrarCiudadesPorDefecto();
-    setVariablesSesionPorDefecto();
+    setVariablesSesion();
   }
 
   /**
@@ -100,8 +118,8 @@ public class CtrlDireccion extends GenericForwardComposer {
     modelEstados.addAll(listaEstados);
     cmbEstado.setModel(modelEstados);
   }
-  
-  void desmarcarEstado(){
+
+  void desmarcarEstado() {
     cmbEstado.setValue("");
   }
 
@@ -141,29 +159,34 @@ public class CtrlDireccion extends GenericForwardComposer {
    * y se muestran en el combobox de ciudades
    */
   public void onSelect$cmbEstado() {
-    //ocultar txtCiudad
+    estado = cmbEstado.getValue();
+    //**System.out.println("CtrlDireccion. estado seleccionado: " + estado);
+
+    //+ buscarCiudadesDeEstadoSeleccionado();
+
+    //limpiar valores seleccionados
     cmbCiudad.setValue("");
     cmbZona.setValue("");
+
+    //ocultar textbox por si fueron usados
     txtCiudad.setVisible(false);
     txtZona.setVisible(false);
 
-    //TODO: buscar id por nombre de la lista de estados
-    estado = cmbEstado.getValue();
-    idEstado = servEstado.getIdEstado(estado);
-    System.out.println("CtrlDireccion. estado seleccionado: " + estado);
-    System.out.println("CtrlDireccion. id estado seleccionado: " + idEstado);
-    listaCiudades = servCiudad.getCiudadesPorEstado(idEstado);
+    mostrarValorEstado();
+    desactivarEditEstado();
+    activarEditCiudad(); //al cambiar el estado se obliga a cambiar la ciudad
+  }
+
+  private void buscarCiudadesDeEstadoSeleccionado() {
+    //- idEstado = servEstado.getIdEstado(estado);
+    //**System.out.println("CtrlDireccion. id de estado: " + idEstado);
+    //- listaCiudades = servCiudad.getCiudadesPorEstado(idEstado);
+
+    //agregar item nuevo item:
     listaCiudades.add(etiquetaNuevaCiudad);
+
     modelCiudades = new ListModelList(listaCiudades);
     cmbCiudad.setModel(modelCiudades);
-
-    /*
-    if (listaCiudades.size() > 2) {
-    //seleccionar primer valor en la lista:
-    cmbCiudad.setSelectedIndex(0);
-    cmbCiudad.setFocus(true);
-    }
-     */
   }
 
   /**
@@ -172,10 +195,13 @@ public class CtrlDireccion extends GenericForwardComposer {
    * y se muestran en la lista de zonas
    */
   public void onSelect$cmbCiudad() {
-    //quitar zona seleccionada
-    cmbZona.setValue("");
-    txtZona.setVisible(false);
     ciudad = cmbCiudad.getValue();
+
+    //quitar valores seleccionados:
+    cmbZona.setValue("");
+    desactivarEditEstado(); //por si está activado
+    desactivarEditZona(); //por si está activado
+
     if (ciudad.equals(etiquetaNuevaCiudad)) {
       System.out.println("CtrlDireccion. se seleccionó 'nueva ciudad'");
       txtCiudad.setValue("");
@@ -187,25 +213,26 @@ public class CtrlDireccion extends GenericForwardComposer {
     } else {
       System.out.println("CtrlDireccion -> Ciudad elegida: " + ciudad);
       txtCiudad.setVisible(false);
-      idCiudad = servCiudad.getIdCiudad(ciudad);
-      System.out.println("CtrlDireccion -> id Ciudad: " + idCiudad);
-      System.out.println("Posición en la lista: " + cmbCiudad.getSelectedIndex());
-      //buscar las zonas de la ciudad seleccionada:
-      listaZonas = servZona.getZonasPorCiudad(idCiudad);
-      /*
-      //seleccionar primera zona en la lista: EN PROCESO
-      if (listaZonas.size() > 2) {
-      cmbZona.setSelectedIndex(0);
-      cmbZona.setFocus(true);
-      cmbZona.select();
-      }
-       */
+      mostrarValorCiudad();
+      buscarZonasDeCiudadSeleccionada();
     }
-    //configurar cmbZona para nuevo sector
+    desactivarEditCiudad();//al cambiar el estado se obliga a cambiar la zona
+    activarEditZona(); //al cambiar el estado se obliga a cambiar la ciudad    
+  }
+
+  //buscar las zonas de la ciudad seleccionada:
+  private void buscarZonasDeCiudadSeleccionada() {
+    //- idCiudad = servCiudad.getIdCiudad(ciudad);
+    System.out.println("CtrlDireccion -> id Ciudad: " + idCiudad);
+    /*+
+    listaZonas = servZona.getZonasPorCiudad(idCiudad);
+    configurar cmbZona para nuevo sector
     listaZonas.add(etiquetaNuevaZona);
     modelZonas = new ListModelList(listaZonas);
     cmbZona.setModel(modelZonas);
     cmbZona.setValue(etiquetaNuevaZona);
+     * 
+     */
   }
 
   /**
@@ -235,11 +262,7 @@ public class CtrlDireccion extends GenericForwardComposer {
     ciudad = txtCiudad.getValue();
     if (!ciudad.isEmpty()) {
       //TODO: validar si la nueva ciudad no existe en base de datos
-
-      //mostrar txtZona para ingreso de nueva zona
-      txtZona.setVisible(true);
-      txtZona.setValue("");
-      txtZona.setFocus(true);
+      activarIngresoNuevaZona();
     }
   }
 
@@ -255,25 +278,37 @@ public class CtrlDireccion extends GenericForwardComposer {
     System.out.println("CtrlDireccion. se seleccionó 'nueva zona' ? ");
     if (zona.equals(etiquetaNuevaZona)) {
       System.out.println("SÍ");
-      txtZona.setValue("");
-      txtZona.setVisible(true);
-      txtZona.setFocus(true);
+      activarIngresoNuevaZona();
     } else {
       System.out.println("NO");
       txtZona.setVisible(false);
-      //foco en widget siguiente:
-      txtDirDetallada.setFocus(true);
       //capturar valores:
       idZona = servZona.getIdZona(zona);
       System.out.println("CtrlDireccion.Zona.id=" + idZona);
       setVariableSesionZona();
+      mostrarValorZona();
     }
+    desactivarEditZona();
+    activarEditDetalle();
   }
 
-  /**
-   * maneja evento de Enter cuando la nueva ciudad es ingresada
-   */
   public void onOK$txtZona() {
+    procesarNuevaZona();
+  }
+
+  public void onBlur$txtZona() {
+    procesarNuevaZona();
+  }
+
+  private void procesarNuevaZona() {
+    if (zonaNuevaIngresada()) {
+      desactivarEditZona();
+      etqZona.setValue(zona);
+      txtDetalle.setFocus(true);
+    } else {
+      txtZona.setFocus(true);
+    }
+
     /* OPCION B: agregando opción a la lista:
     String zonaNueva = txtZona.getValue();
     //se agregará la nueva Zona
@@ -296,21 +331,14 @@ public class CtrlDireccion extends GenericForwardComposer {
     /**
      * //OPCION A: Simplemente usar el valor que está en la caja de texto
      */
-    validarZonaNueva();
-    if (!validarZonaNueva()) {
-      txtDirDetallada.setFocus(true);
-    } else {
-      txtZona.setFocus(true);
-    }
-
-  }
-
-  public void onBlur$txtZona() {
-    validarZonaNueva();
   }
 
   //TODO: validar si zona nueva no existe en la base de datos
-  private boolean validarZonaNueva() {
+  /**
+   * devuelve true si ingresó el nombre de la zona nueva
+   * @return 
+   */
+  private boolean zonaNuevaIngresada() {
     zona = txtZona.getValue();
     if (zona.isEmpty()) {
       return false;
@@ -318,27 +346,6 @@ public class CtrlDireccion extends GenericForwardComposer {
     return true;
   }
 
-  /**
-   * en desarrollo
-   * se intenta mostrar un textbox dentro del combobox donde se ingrese la nueva 
-   */
-  private void definirItemCiudadAdicional() {
-    itemAddCiudad.addEventListener(Events.ON_CLICK, new EventListener() {
-
-      public void onEvent(Event event) throws Exception {
-        Messagebox.show("JAX, botón dentro de un com-BOBO-x creado dinámicamente");
-      }
-    });
-  }
-
-  /**
-   *TODO:
-   * 1. cuando eliga nueva ciudad: mensaje en la parte superior de la ventana
-   * 2. mostrar item nueva ciudad en la carga inicial
-   * 3. hacer mètodos: buscarIdCiudad()  
-   * buscarIdEstado()
-   * buscarIdZona()
-   ***/
   /**
    * establece la variables de sesión de hora
    * para ser usado por los otros controladores
@@ -351,7 +358,238 @@ public class CtrlDireccion extends GenericForwardComposer {
    * guardar variables de sesión con valores por defecto
    * para ser usado por los otros controladores
    */
-  private void setVariablesSesionPorDefecto() {
+  private void setVariablesSesion() {
     setVariableSesionZona();
+  }
+
+  /**
+   * click en la etiqueta de estado activa la edición
+   */
+  public void onClick$etqEstado() {
+    desactivarEditCiudad();//por si está activado
+    desactivarEditZona();//por si está activado
+    activarEditEstado();
+  }
+
+  /**
+   * click en la etiqueta de ciudad activa la edición
+   */
+  public void onClick$etqCiudad() {
+    desactivarEditEstado();//por si está activado
+    desactivarEditZona();//por si está activado
+    activarEditCiudad();
+  }
+
+  /**
+   * click en la etiqueta de ciudad activa la edición
+   */
+  public void onClick$etqZona() {
+    desactivarEditEstado();//por si está activado
+    desactivarEditCiudad();//por si está activado
+    activarEditZona();
+  }
+
+  /**
+   * botón de edición de estado
+   */
+  public void onClick$btnEditEstado() {
+    activarEditEstado();
+  }
+
+  /**
+   * botón para cancelar la edición de estado
+   */
+  public void onClick$btnCancelarEditEstado() {
+    desactivarEditEstado();
+  }
+
+  /**
+   * activar edición de estado
+   */
+  void activarEditEstado() {
+    etqEstado.setVisible(false);
+    cmbEstado.setValue(etqEstado.getValue());
+    cmbEstado.setVisible(true);
+    cmbEstado.open();
+    cmbEstado.setFocus(true);
+    cmbEstado.select();
+    //- btnEditEstado.setVisible(false);
+    //- btnCancelarEditEstado.setVisible(true);
+  }
+
+  /**
+   * activar edición de estado
+   */
+  void desactivarEditEstado() {
+    cmbEstado.setVisible(false);
+    etqEstado.setVisible(true);
+    //- btnCancelarEditEstado.setVisible(false);
+    //- btnEditEstado.setVisible(true);
+  }
+
+  /**
+   * botón de edición de Ciudad
+   */
+  public void onClick$btnEditCiudad() {
+    activarEditCiudad();
+  }
+
+  /**
+   * botón para cancelar la edición de Ciudad
+   */
+  public void onClick$btnCancelarEditCiudad() {
+    desactivarEditCiudad();
+  }
+
+  /**
+   * activar edición de Ciudad
+   */
+  void activarEditCiudad() {
+    etqCiudad.setVisible(false);
+    cmbCiudad.setValue(etqCiudad.getValue());
+    cmbCiudad.setVisible(true);
+    cmbCiudad.setFocus(true);
+    cmbCiudad.select();
+    cmbCiudad.open();
+    //- btnEditCiudad.setVisible(false);
+    //- btnCancelarEditCiudad.setVisible(true);
+  }
+
+  /**
+   * activar edición de Ciudad
+   */
+  void desactivarEditCiudad() {
+    btnCancelarEditCiudad.setVisible(false);
+    cmbCiudad.setVisible(false);
+    etqCiudad.setVisible(true);
+    //- btnEditCiudad.setVisible(true);
+  }
+
+  /**
+   * botón de edición de Zona
+   */
+  public void onClick$btnEditZona() {
+    activarEditZona();
+  }
+
+  /**
+   * botón para cancelar la edición de Zona
+   */
+  public void onClick$btnCancelarEditZona() {
+    desactivarEditZona();
+  }
+
+  /**
+   * activar edición de Zona
+   */
+  void activarEditZona() {
+    etqZona.setVisible(false);
+    cmbZona.setValue(etqZona.getValue());
+    cmbZona.setVisible(true);
+    cmbZona.open();
+    cmbZona.setFocus(true);
+    cmbZona.select();
+    //- btnEditZona.setVisible(false);
+  }
+
+  /**
+   * activar edición de Zona
+   */
+  void desactivarEditZona() {
+    etqZona.setVisible(true);
+    cmbZona.setVisible(false);
+    txtZona.setVisible(false);
+    btnCancelarEditZona.setVisible(false);
+    //- btnEditZona.setVisible(true);
+  }
+
+  boolean modoEditar() {
+    return modo.equals("editar");
+  }
+
+  //mostrar txtZona para ingreso de nueva zona
+  private void activarIngresoNuevaZona() {
+    txtZona.setValue("");
+    txtZona.setVisible(true);
+    txtZona.setFocus(true);
+    btnCancelarEditZona.setVisible(true);
+  }
+
+  private void mostrarValorEstado() {
+    etqEstado.setValue(estado);
+  }
+
+  private void mostrarValorCiudad() {
+    etqCiudad.setValue(ciudad);
+  }
+
+  private void mostrarValorZona() {
+    etqZona.setValue(zona);
+  }
+
+  private void activarEditDetalle() {
+    etqDetalle.setVisible(false);
+    txtDetalle.setValue(etqDetalle.getValue());
+    txtDetalle.setVisible(true);
+    txtDetalle.setFocus(true);
+  }
+
+  private void desactivarEditDetalle() {
+    txtDetalle.setVisible(false);
+    etqDetalle.setFocus(true);
+    etqDetalle.setVisible(true);
+  }
+
+  public void onClick$etqDetalle() {
+    activarEditDetalle();
+  }
+
+  public void onOK$txtDetalle() {
+    procesarDetalle();
+    desactivarEditDetalle();
+  }
+
+  public void onBlur$txtDetalle() {
+    procesarDetalle();
+    desactivarEditDetalle();
+  }
+
+  private void procesarDetalle() {
+    detalle = txtDetalle.getValue();
+    //TODO: alguna validación que sea necesaria
+    etqDetalle.setValue(detalle);
+  }
+
+  private void activarEditTelefono() {
+    etqTelefono.setVisible(false);
+    txtTelefono.setValue(etqTelefono.getValue());
+    txtTelefono.setVisible(true);
+    txtTelefono.setFocus(true);
+  }
+
+  private void desactivarEditTelefono() {
+    txtTelefono.setVisible(false);
+    etqTelefono.setFocus(true);
+    etqTelefono.setVisible(true);
+  }
+
+  public void onClick$etqTelefono() {
+    activarEditTelefono();
+  }
+
+  public void onOK$txtTelefono() {
+    procesarTelefono();
+    desactivarEditTelefono();
+  }
+
+  public void onBlur$txtTelefono() {
+    procesarTelefono();
+    desactivarEditTelefono();
+  }
+
+  private void procesarTelefono() {
+    telefono = txtTelefono.getValue();
+    //TODO: alguna validación que sea necesaria
+    etqTelefono.setValue(telefono);
   }
 }

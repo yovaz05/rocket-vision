@@ -8,15 +8,15 @@
   <grid style="border:0px" apply="sig.controladores.CtrlCelulaDatosBasicos">
     <columns>
       <column id="col1" width="15%"/>
-      <column id="colData" width="70%"/>
+      <column id="colData"/>
 <!-- botones para edición-->
-      <column id="colEdit" width="10%" align="rigth" visible="false"/>
+      <column id="colEdit" width="7%" align="rigth" visible="false"/>
     </columns>
     <rows>
       <!-- Código -->
       <row>
         <label value="Código" sclass="etiqueta_campo"/>
-        <div id="divCodigoData">
+        <div>
           <label id="etqCodigo" value=""/>
           <textbox id="txtCodigo" value="" cols="25" maxlength="20" visible="false"/>
         </div>
