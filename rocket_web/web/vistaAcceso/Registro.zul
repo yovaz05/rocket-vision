@@ -19,46 +19,66 @@
                     </hbox>
                     <space height="20px"/>
                     <label id="etqInstrucciones" value="Verifique su cédula antes de ingresar todos los datos" sclass="instrucciones"/>
-                </div>
-        
+                </div>        
                 <hbox>
-                    <vbox style="margin:10px">
-                        <space height="7px"/>
-<!--            <label sclass="etiqueta_campo" value="Red:"/>
-            <space height="20px"/>-->
-                        <label sclass="etiqueta_campo" value="Líder(es):"/>
-                        <space height="20px"/>
-                        <label sclass="etiqueta_campo" value="Nombre Completo:"/>
-                        <space height="21px"/>
-                        <label sclass="etiqueta_campo" value="Correo electrónico:"/>
-                        <space height="21px"/>
-                        <label sclass="etiqueta_campo" value="Teléfono:"/>
-                        <space height="21px"/>
-                        <label sclass="etiqueta_campo" value="Contraseña:"/>
-                        <space height="21px"/>
-                        <label sclass="etiqueta_campo" value="Repite la contraseña:"/>
-                        <space height="5px"/>
-                        <label value=""/>
+                    <grid>
+                        <columns>
+                            <column width="30%"/>
+                            <column width="70%"/>
+                        </columns>
+                        <rows>       
+                            <row>
+                                <label sclass="etiqueta_campo" value="Líder(es):"/>
+                                <vbox>                                    
+                                    <hbox> 
+                                        <textbox sclass="textbox_field" id="txtBuscarLider" width="180px"/>
+                                        <button id="btnBuscarLider" label="Buscar" sclass="boton_verificar"/>
+                                    </hbox>
+                                    <paging   id="pagingPareja"  pageSize ="4" width="93%"/>                                                   
+                                    <listbox  id="listboxPareja"  mold="paging" paginal="${pagingPareja}" rows="4" width="95%">                        
+                                        <listhead>                                
+                                            <listheader id="listHeaderBotonVer"            label=""                   align="center" width="55px"/>                                            
+                                            <listheader id="listheaderNombreUsuario"       label="Nombre"             align="center" width="250px"/>                                
+                                            <listheader id="listheaderDireccionHabitacion" label="Pareja"             align="center" width="250px"/>                                            
+                                        </listhead>
+                                    </listbox>                                   
+                                </vbox>
+                            </row>
+                            <row>
+                                
+                                <label sclass="etiqueta_campo" value="Nombre completo:"/>                                
+                                <textbox sclass="textbox_field" id="txtNombre" width="180px"/>				 
+                            </row>
+                            <row>
+                                <label sclass="etiqueta_campo" value="Correo electrónico:"/>
+                                <textbox sclass="textbox_field" id="txtCorreo" width="180px"/>                                
+                            </row>
+                            <row>
+                                <label sclass="etiqueta_campo" value="Teléfono:"/>
+                                <textbox sclass="textbox_field" id="txtTelefono" width="140px" value="@{...}"  constraint="no empty, /[0-9]{11}/ : Verifique los datos, no incluya caracteres especiales como -,.!"/>
+                                
+                            </row>
+                            <row>
+                                <label sclass="etiqueta_campo" value="Contraseña:"/>
+                                <textbox sclass="textbox_field" id="txtPassword" width="180px" type="password"/>
+                                
+                            </row>
+                            <row>
+                                <label sclass="etiqueta_campo" value="Repite la contraseña:"/>
+                                <textbox sclass="textbox_field" id="txtRepetirPassword" width="180px" type="password"/>
+                            </row>
+                        </rows>
+                        
+                    </grid>
+                    <vbox style="margin:10px">                        
                     </vbox>
-                    <vbox style="margin:10px">
-                        <space height="3px"/>
-                        <combobox sclass="textbox_field" id="cmbLider" width="180px" tooltiptext="Elige a tus líderes" inplace="false" autocomplete="tr"/>
-                        <space height="10x"/>
-                        <textbox sclass="textbox_field" id="txtNombre" width="180px"/>
-                        <space height="10x"/>
-                        <textbox sclass="textbox_field" id="txtCorreo" width="180px"/>
-                        <space height="10x"/>
-                        <intbox sclass="textbox_field" id="txtTelefono" width="180px" maxlength="11"/>
-                        <space height="10x"/>
-                        <textbox sclass="textbox_field" id="txtPassword" width="180px" type="password"/>
-                        <space height="10x"/>
-                        <textbox sclass="textbox_field" id="txtRepetirPassword" width="180px" type="password"/>
-                        <space height="10x"/>
+                    
+                </hbox>                
+                <vbox style="margin:10px">                        
                         <div>
                             <button id="btnEnviar" label="Enviar" sclass="boton_acceso"/>
                         </div>
                     </vbox>
-                </hbox>                
             </panelchildren>
         </panel>
 <!--    TODO: pasar esto al controlador-->
