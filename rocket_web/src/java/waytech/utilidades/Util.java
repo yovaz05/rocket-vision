@@ -326,7 +326,7 @@ public class Util {
 
   /**
    * devuelve fecha en formato 'Día MesCorto, Año'
-   * Ejemplo: Sábado 7 de Noviembre
+   * Ejemplo: 7 Dic, 2011
    * @param cal el calendar con la fecha a convertir
    * @return 
    */
@@ -594,4 +594,17 @@ public class Util {
     SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     return formato.format(fecha);
   }
+  
+  /**
+   * convierte una objeto desde un objeto java.util.Date a String
+   * en formato 'día mes, año'
+   * Ejemplo: '7 Dic, 2011'
+   * @param date el objeto Date
+   * @return el objeto Calendar
+   */
+  public static String getFechaTexto(Date date) {
+    Calendar cal = Util.getCalendar(date);
+    return Util.getFechaTextoDiaMesAñoAbreviado(cal);
+  }
+  
 }

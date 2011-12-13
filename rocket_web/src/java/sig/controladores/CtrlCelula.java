@@ -126,8 +126,6 @@ public class CtrlCelula extends GenericForwardComposer {
   int idLider2 = 0;
   int idLider3 = 0;
   int idLider4 = 0;
-  A db$btnCancelarEditRed;
-  A db$btnEditRed;
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -144,9 +142,8 @@ public class CtrlCelula extends GenericForwardComposer {
       System.out.println("CtrlCelula.inicio().id = " + idCelula);
       buscarDataBD();
       mostrarDatosBD();
-      //TODO: tab mostrada al abrir: 1
-      selectTab(3);
-      mostrarColumnasVisualizacion(true);
+      //TODO: valor por defecto: tab mostrada al abrir: 1
+      selectTab(1);
     }
     actualizarEstado();
     notificarBarra();
@@ -212,7 +209,7 @@ public class CtrlCelula extends GenericForwardComposer {
     System.out.println("relleno.punto1");
     dir$etqCiudad.setValue(celulaBD.getDireccion().getCiudad());
     System.out.println("relleno.punto2");
-    System.out.println("CtrlDireccion.zona: " + celulaBD.getDireccion().getZona());    
+    System.out.println("CtrlDireccion.zona: " + celulaBD.getDireccion().getZona());
     System.out.println("relleno.punto3");
     dir$etqZona.setValue(celulaBD.getDireccion().getZona());
     System.out.println("relleno.punto4");
@@ -221,8 +218,7 @@ public class CtrlCelula extends GenericForwardComposer {
     dir$etqTelefono.setValue(celulaBD.getDireccion().getTelefono());
 
     fechaApertura = celulaBD.getFechaApertura();
-    //TODO: convertir fecha a formato legible: 'día de mes de año'
-    //como en reporte de célula. pestaña 'Fechas'
+    //TODO: convertir fecha a formato legible: 'día mes, año'
     System.out.println("CtrlCelula.FechaApertura=" + celulaBD.getFechaApertura());
     otros$etqFechaApertura.setValue(fechaApertura);
 
@@ -281,19 +277,20 @@ public class CtrlCelula extends GenericForwardComposer {
   /**
    * actualiza el estado de los widgets, título de ventana y setea el foco
    */
-  public void actualizarEstado() {
+  private void actualizarEstado() {
     if (modo.equals("new")) {
       tituloVentana.setValue(titulo + " » Ingresar");
       ///-mostrarColumnasVisualizacion(false);
       mostrarWidgetsViewLink(false);
       mostrarWidgetsEdit(false);
-      mostrarWidgetsNew(false);
+      mostrarWidgetsNew(true);
       verBotonesEdicion(false);
       setFocoEdicion();
       //- btnIngresarReporte.setVisible(false);
     } else if (modo.equals("ver")) {
       tituloVentana.setValue(titulo + ": " + descripcionCelula);
-      //-mostrarColumnasVisualizacion(true);
+      verBotonesEdicion(true);
+      mostrarWidgetsViewLink(true);
       //- btnIngresarReporte.setVisible(true);
       /*modo editar, funciona
       } else if (modo.equals("editar")) {
@@ -348,15 +345,6 @@ public class CtrlCelula extends GenericForwardComposer {
     //procesamiento de impresión
   }
 
-  /**
-   * oculta o muestra las columnas donde están los widgets de visualización
-   * @param status el estado true o false
-   */
-  public void mostrarColumnasVisualizacion(boolean status) {
-    db$colData.setVisible(status);
-    dir$colView.setVisible(status);
-    otros$colData.setVisible(status);
-  }
 
   /**
    * oculta o muestra la columna donde están los botones de edición
@@ -364,7 +352,6 @@ public class CtrlCelula extends GenericForwardComposer {
    */
   public void verBotonesEdicion(boolean status) {
     db$colEdit.setVisible(status);
-    dir$colEdit.setVisible(status);
   }
 
   public void onSelect$tabbox() {
@@ -378,6 +365,10 @@ public class CtrlCelula extends GenericForwardComposer {
   /**
    * seleccionar tab de la posición i
    * @param i la posición del tab, comenzando con 1
+   * 1: datos básicos
+   * 2: dirección
+   * 3: otros datos
+   * 4: observaciones
    */
   private void selectTab(int i) {
     tabbox.setSelectedIndex(i - 1);
@@ -422,7 +413,7 @@ public class CtrlCelula extends GenericForwardComposer {
   }
 
   /**
-   * EN DESARROLLO
+   * EN DESUSO
    * muestra los valores actuales en los widgets de entrada (captura de datos)
    */
   //TODO: buscar en la base de datos, llenar los combos, y elegir los valores correspondientes al registro
@@ -613,6 +604,7 @@ public class CtrlCelula extends GenericForwardComposer {
     boolean ok = false;
     //TODO: validar si es modo new: ingresarDatosCelula, si es modo edit usar: modificar
     if (modo.equals("editar")) {
+      System.out.println("CtrlCelula. btnGuardar. modo editar. no está programado");
       return;//modo editar aún no programado
     }
     ok = addCelula();
@@ -985,20 +977,14 @@ public class CtrlCelula extends GenericForwardComposer {
     etqMensaje.setValue("");
   }
 
-  void activarEditRed() {
-    db$cmbRed.setVisible(true);
-    db$cmbRed.setValue(db$etqRed.getValue());
-    db$tbbRed.setVisible(false);
-    db$etqRed.setVisible(false);
-    db$btnCancelarEditRed.setVisible(true);
-    db$btnEditRed.setVisible(false);
+  //TODO: hacer similar a 
+  //mostrar todos los widgets de entrada
+  private void mostrarWidgetsNew(boolean status) {
+    //datos básicos:
+    db$txtCodigo.setVisible(status);
+    db$cmbRed.setVisible(status);
+    db$cmbDia.setVisible(status);
+    db$cmbHora.setVisible(status);    
+    db$txtNombre.setVisible(status);
   }
-
-  private void mostrarWidgetsNew(boolean b) {
-   //por hacer. similar al metodo
-   //mostrarWidgetsEdit(b);
-   //pero mostrar todos los widgets de entrada
-  }
-  
- 
 }

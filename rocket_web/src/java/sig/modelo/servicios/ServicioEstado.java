@@ -25,6 +25,7 @@ public class ServicioEstado {
     rspEstado = isaEstado.listEstado();
     //** System.out.println("INICIO DE LA CONEXION " + rspEstado.getRespuestaInicioDeConexion());    System.out.println("NOMBRE DE LOS ESTADOS");
     estados = rspEstado.getTodosLosEstados();
+    //** listarAllConsola();
     //** System.out.println("CIERRE DE LA CONEXION " + rspEstado.getRespuestaInicioDeConexion());
     return estados;
   }
@@ -48,11 +49,9 @@ public class ServicioEstado {
   }  
 
   public void listarAllConsola() {
-    /*
     System.out.println("NOMBRE DE LOS ESTADOS");
     for (Estado estado : estados) {
       System.out.println("ESTADO: " + estado.getNombre());
     }
-     */
   }
 }

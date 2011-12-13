@@ -24,10 +24,11 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   //widgets:
   Label etqMensaje;
   Textbox txtCodigo, txtNombre;
+  A tbbRed;
+  A tbbLider1, tbbLider2, tbbLider3, tbbLider4;
+  Label etqRed;
   Label etqCodigo, etqLider1, etqLider2, etqLider3, etqLider4, etqNombre;
-  Combobox cmbDia;
-  Combobox cmbHora;
-  Combobox cmbRed;
+  Combobox cmbRed, cmbDia, cmbHora;
   Combobox cmbLider1, cmbLider2, cmbLider3, cmbLider4;
   Div opcionLider1, opcionLider2, opcionLider3, opcionLider4;
   Div opcionAddLider;
@@ -59,8 +60,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   private String codigo = "";
   A btnCancelarEditCodigo;
   A btnEditCodigo;
-  Label etqDia;
-  Label etqHora;
+  Label etqDia, etqHora;
   Label etqSeparadorDiaHora;
   A btnEditDiaHora;
   A btnCancelarEditDiaHora;
@@ -68,6 +68,11 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   A btnEditNombre;
   A btnCancelarEditNombre;
   Label etqNoHayLideres;
+  A btnEditRed, btnCancelarEditRed;
+  A btnEditLideres, btnCancelarEditLideres;
+  private Div linksLideres;
+  private Div etqsLideres;
+  private Div combosLideres;
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -101,12 +106,14 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
 
   /**
    * carga lista de redes
-   * TODO: Evaluar mejora: mostrar sólo las redes donde hay líderes lanzados registrados
    */
   private void cargarRedes() {
     redesNombres = servRed.getRedesNombres();
     modelRedes.addAll(redesNombres);
     cmbRed.setModel(modelRedes);
+    /**
+     * TODO: EVALUAR - MEJORA DE USABILIDAD: mostrar sólo las redes donde hay líderes lanzados registrados
+     */
   }
   //TODO: obtener id de la red seleccionada directamente del combobox
   /*
@@ -126,16 +133,19 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    */
   //TODO: quitar de la lista2, 3 y 4 al líder elegido en las listas anteriores
   private void cargarLideresLanzados() {
+    mostrarLinksLideres(false);
+    mostrarEtiquetasLider(false);
     System.out.println("red value " + cmbRed.getValue());
-    servRed.setNombreRed(nombreRed);
     idRed = servRed.getIdRed();
     System.out.println("cargarLideresLanzados. nombre red: " + nombreRed);
     System.out.println("cargarLideresLanzados. id red: " + idRed);
     lideresLanzadosNombres = servRed.getLideresLanzadosNombres(idRed);
     if (lideresLanzadosNombres.isEmpty()) {
       mostrarMensajeNoHayLideres(true);
-      mostrarEtiquetasLider(false);
       return;
+    } else {
+      mostrarMensajeNoHayLideres(false);
+      activarEditLideres();
     }
     modelLideresLanzados = new ListModelList();
     modelLideresLanzados.addAll(lideresLanzadosNombres);
@@ -166,8 +176,9 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * maneja la selección del combo red
    */
   public void onSelect$cmbRed() {
-    System.out.println("CtrlCelulaDatosBasicos.cmbRed.onSelect");
+    //** System.out.println("CtrlCelulaDatosBasicos.cmbRed.onSelect");
     procesarValorRed();
+    cancelarEditRed();
   }
 
   /**
@@ -176,7 +187,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    */
   public void onBlur$cmbRed() {
     procesarValorRed();
-
+    cancelarEditRed();
   }
 
   void limpiarLideresSeleccionados() {
@@ -242,24 +253,28 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    **/
   public void onSelect$cmbDia() {
     diaTexto = cmbDia.getValue();
-    capturarDia();
+    mostrarValorDia();
+    cancelarEditDia();
+    diaNumero = Integer.parseInt("" + cmbDia.getSelectedItem().getValue());
+    setVariableSesionDia();
+
     //**
     System.out.println("cmbDia.label=" + diaTexto);
     System.out.println("cmbDia.value=" + cmbDia.getSelectedItem().getValue());
     //**
-    diaNumero = Integer.parseInt("" + cmbDia.getSelectedItem().getValue());
-    setVariablesSesionDia();
   }
 
   public void onSelect$cmbHora() {
     horaTexto = cmbHora.getValue();
-    capturarValorHora();
+    mostrarValorHora();
+    cancelarEditHora();
+    horaNumero = Integer.parseInt("" + cmbHora.getSelectedItem().getValue());
+    setVariablesSesionHora();
+
     //**
     System.out.println("cmbHora.label=" + horaTexto);
     System.out.println("cmbHora.value=" + cmbHora.getSelectedItem().getValue());
     //**
-    horaNumero = Integer.parseInt("" + cmbHora.getSelectedItem().getValue());
-    setVariablesSesionHora();
   }
 
   /**
@@ -306,7 +321,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * establece la variables de sesión de día
    * para ser usado por los otros controladores
    */
-  public void setVariablesSesionDia() {
+  public void setVariableSesionDia() {
     Sesion.setVariable("celula.dia.texto", diaTexto);
     Sesion.setVariable("celula.dia.numero", diaNumero);
   }
@@ -336,7 +351,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     //TODO: valores por defecto, para asegurar, se puede inicializar sólo en la declaración
     diaTexto = "Lunes";
     horaTexto = "7:00 p.m.";
-    setVariablesSesionDia();
+    setVariableSesionDia();
     setVariablesSesionHora();
     setVariablesSesionNroLideresUsados();
     setVariablesSesionLideres();
@@ -487,122 +502,56 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     return !nombreRed.isEmpty();
   }
 
-  /**
-   * maneja evento de tecla 'Enter' en el widget txtCodigo
-   */
-  public void onOK$txtCodigo() {
-    procesarCodigo();
-  }
-
-  /**
-   * maneja evento de perdida de foco en el widget txtCodigo
-   */
-  public void onBlur$txtCodigo() {
-    procesarCodigo();
-  }
-
-  void procesarCodigo() {
-    codigo = txtCodigo.getValue();
-    //obligar a usuario a ingresar algo
-    if (codigo.isEmpty()) {
-      txtCodigo.setFocus(true);
-      return;
-    }
-    //**
-    System.out.println("celula.Codigo=" + codigo);
-    //TODO: llamar a validación de si existe una célula registrada con ese código
-    //tomar valor del textbox, darselo a la etiqueta, y ocultar el txtCodigo
-    tomarValorCodigo();
-  }
-
-  private void tomarValorCodigo() {
-    txtCodigo.setVisible(false);
-    etqCodigo.setValue(codigo);
-    etqCodigo.setVisible(true);
-    cancelarEditCodigo();
-  }
-
+  //NO USADO
+  /*
   void cancelarEditCodigo() {
-    if (Sesion.modoEditar()) {
-      btnCancelarEditCodigo.setVisible(false);
-      btnEditCodigo.setVisible(true);
-    }
+  if (Sesion.modoEditar()) {
+  btnCancelarEditCodigo.setVisible(false);
+  btnEditCodigo.setVisible(true);
   }
-
-  void capturarDia() {
-    etqDia.setValue(diaTexto);
-    mostrarDiaHora(true);
-    cancelarEditDiaHora();
   }
-
+   * 
+   */
+  //NO USADO
+  /*
   private void capturarValorHora() {
-    etqHora.setValue(horaTexto);
-    mostrarDiaHora(true);
-    cancelarEditDiaHora();
+  etqHora.setValue(horaTexto);
+  mostrarDiaHora(true);
+  cancelarEditDiaHora();
   }
-
+   * 
+   */
+  //NO USADO
+  /*
   void cancelarEditDiaHora() {
-    cmbDia.setVisible(false);
-    cmbHora.setVisible(false);
-    if (Sesion.modoEditar()) {
-      btnCancelarEditDiaHora.setVisible(false);
-      btnEditDiaHora.setVisible(true);
-    }
+  cmbDia.setVisible(false);
+  cmbHora.setVisible(false);
+  if (Sesion.modoEditar()) {
+  btnCancelarEditDiaHora.setVisible(false);
+  btnEditDiaHora.setVisible(true);
   }
-
+  }
+   * 
+   */
+  //NO USADO
+  /*
   private void mostrarDiaHora(boolean status) {
-    etqDia.setVisible(status);
-    etqSeparadorDiaHora.setVisible(status);
-    etqHora.setVisible(status);
+  etqDia.setVisible(status);
+  etqSeparadorDiaHora.setVisible(status);
+  etqHora.setVisible(status);
   }
-
-  /**
-   * maneja evento de tecla 'Enter' en el widget txtCodigo
+   * 
    */
-  public void onOK$txtNombre() {
-    procesarNombre();
-  }
-
-  /**
-   * maneja evento de perdida de foco en el widget txtCodigo
-   */
-  public void onBlur$txtNombre() {
-    procesarNombre();
-  }
-
-  void procesarNombre() {
-    nombre = txtNombre.getValue();
-    //obligar a usuario a ingresar algo
-    if (nombre.isEmpty()) {
-      txtNombre.setFocus(true);
-      return;
-    }
-    //**
-    System.out.println("celula.Nombre=" + codigo);
-    //TODO: llamar a validación de si existe una célula registrada con ese código
-    //tomar valor del textbox, darselo a la etiqueta, y ocultar el txtCodigo
-    tomarValorNombre();
-  }
-
-  private void tomarValorNombre() {
-    txtNombre.setVisible(false);
-    etqNombre.setValue(nombre);
-    etqNombre.setVisible(true);
-    cancelarEditNombre();
-  }
-
-  void cancelarEditNombre() {
-    if (Sesion.modoEditar()) {
-      btnCancelarEditNombre.setVisible(false);
-      btnEditNombre.setVisible(true);
-    }
-  }
-
   private void procesarValorRed() {
     nombreRed = cmbRed.getValue();
+    servRed.setNombreRed(nombreRed);    
     System.out.println("CtrlCelulaDatosBasicos - Red Seleccionada - nombre: " + nombreRed);
     System.out.println("CtrlCelulaDatosBasicos - Red seleccionada - id: " + cmbRed.getSelectedItem().getValue());
+    
+    mostrarLinksLideres(false);
+    mostrarEtiquetasLider(false);
     cargarLideresLanzados();
+    
     limpiarLideresSeleccionados();
     Sesion.setVariable("celula.red", nombreRed);
     añadirOpcionLider(1);
@@ -612,13 +561,258 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     etqNoHayLideres.setVisible(status);
   }
 
+  public void onClick$etqNombre() {
+    activarEditNombre();
+  }
+
   /**
-   * muestra/oculta las etiquetas de los líderes
+   * activa la edición de Nombre
+   */
+  private void activarEditNombre() {
+    etqNombre.setVisible(false);
+    nombre = etqNombre.getValue();
+    txtNombre.setValue(nombre);
+    txtNombre.setVisible(true);
+    txtNombre.setFocus(true);
+  }
+
+  /**
+   * desactiva la edición de Nombre
+   * y muestra el valor actual
+   */
+  private void cancelarEditNombre() {
+    txtNombre.setVisible(false);
+    etqNombre.setVisible(true);
+    etqNombre.setFocus(true);
+  }
+
+  public void onOK$txtNombre() {
+    procesarNombre();
+    cancelarEditNombre();
+  }
+
+  public void onBlur$txtNombre() {
+    procesarNombre();
+    cancelarEditNombre();
+  }
+
+  private void procesarNombre() {
+    nombre = txtNombre.getValue();
+    //TODO: alguna validación que sea necesaria
+    //TODO: chequear si existe una célula con ese mismo nombre
+    etqNombre.setValue(nombre);
+  }
+
+  /*
+  void procesarNombre() {
+  nombre = txtNombre.getValue();
+  //obligar a usuario a ingresar algo
+  if (nombre.isEmpty()) {
+  txtNombre.setFocus(true);
+  return;
+  }
+  //**
+  System.out.println("celula.Nombre=" + codigo);
+  //tomar valor del textbox, darselo a la etiqueta, y ocultar el txtCodigo
+  tomarValorNombre();
+  }
+  
+  private void tomarValorNombre() {
+  txtNombre.setVisible(false);
+  etqNombre.setValue(nombre);
+  etqNombre.setVisible(true);
+  cancelarEditNombre();
+  }
+  
+  void cancelarEditNombre() {
+  if (Sesion.modoEditar()) {
+  btnCancelarEditNombre.setVisible(false);
+  btnEditNombre.setVisible(true);
+  }
+  }
+   */
+  public void onClick$etqDia() {
+    diaTexto = etqDia.getValue();
+    activarEditDia();
+  }
+
+  void activarEditDia() {
+    etqDia.setVisible(false);
+    cmbDia.setValue(diaTexto);
+    cmbDia.setVisible(true);
+    cmbDia.open();
+  }
+
+  void cancelarEditDia() {
+    cmbDia.setVisible(false);
+  }
+
+  public void onClick$etqHora() {
+    horaTexto = etqHora.getValue();
+    activarEditHora();
+  }
+
+  void activarEditHora() {
+    etqHora.setVisible(false);
+    cmbHora.setValue(horaTexto);
+    cmbHora.setVisible(true);
+    cmbHora.open();
+  }
+
+  void cancelarEditHora() {
+    etqHora.setVisible(false);
+    cmbHora.setVisible(false);
+  }
+
+  void mostrarValorDia() {
+    etqDia.setValue(diaTexto);
+    etqDia.setVisible(true);
+  }
+
+  void mostrarValorHora() {
+    System.out.println("CrtrlCelulaDatosBasicos.horaTexto=" + horaTexto);
+    etqHora.setValue(horaTexto);
+    etqHora.setVisible(true);
+  }
+
+  /**
+   * cuando se pierde el foco, se cancela la edición
+   */
+  public void onBlur$cmbDia() {
+    cancelarEditDia();
+  }
+
+  /**
+   * cuando se pierde el foco, se cancela la edición
+   */
+  public void onBlur$cmbHora() {
+    cancelarEditHora();
+  }
+
+  public void onClick$etqCodigo() {
+    codigo = etqCodigo.getValue();
+    activarEditCodigo();
+  }
+
+  /**
+   * activa la edición de código
+   */
+  private void activarEditCodigo() {
+    txtCodigo.setValue(codigo);
+    txtCodigo.setVisible(true);
+    txtCodigo.setFocus(true);
+    etqCodigo.setVisible(false);
+  }
+
+  /**
+   * desactiva la edición de Codigo
+   */
+  void cancelarEditCodigo() {
+    txtCodigo.setVisible(false);
+    etqCodigo.setVisible(true);
+  }
+
+  public void onOK$txtCodigo() {
+    procesarCodigo();
+    cancelarEditCodigo();
+  }
+
+  public void onBlur$txtCodigo() {
+    procesarCodigo();
+    cancelarEditCodigo();
+  }
+
+  private void procesarCodigo() {
+    codigo = txtCodigo.getValue();
+    //TODO: alguna validación que sea necesaria
+    //TODO: chequear si existe una célula con ese mismo Codigo
+    etqCodigo.setValue(codigo);
+  }
+
+  /**
+   * muestra/oculta los links de líderes
+   */
+  private void mostrarLinksLideres(boolean status) {
+    tbbLider1.setVisible(status);
+    tbbLider2.setVisible(status);
+    tbbLider3.setVisible(status);
+    tbbLider4.setVisible(status);
+  }
+
+  /**
+   * muestra/oculta las etiquetas de líderes
    */
   private void mostrarEtiquetasLider(boolean status) {
     etqLider1.setVisible(status);
     etqLider2.setVisible(status);
     etqLider3.setVisible(status);
     etqLider4.setVisible(status);
+  }
+
+  void activarEditRed() {
+    cmbRed.setValue(tbbRed.getLabel());
+    cmbRed.setVisible(true);
+    cmbRed.setFocus(true);
+    cmbRed.select();
+    cmbRed.open();
+    tbbRed.setVisible(false);
+    etqRed.setVisible(false);
+    btnCancelarEditRed.setVisible(true);
+    btnEditRed.setVisible(false);
+    btnEditLideres.setVisible(false);//bloquear edición de líderes
+  }
+
+  void cancelarEditRed() {
+    cmbRed.setVisible(false);
+    etqRed.setVisible(true);
+    btnCancelarEditRed.setVisible(false);
+    btnEditRed.setVisible(true);
+    btnEditLideres.setVisible(true);//permitir edición de líderes
+  }
+
+  void activarEditLideres() {
+    btnEditRed.setVisible(false);//bloquear edición de red
+
+    cmbLider1.setValue(etqLider1.getValue());
+    cmbLider2.setValue(etqLider2.getValue());
+    cmbLider3.setValue(etqLider3.getValue());
+    cmbLider4.setValue(etqLider4.getValue());
+
+    linksLideres.setVisible(false);
+    etqsLideres.setVisible(true);
+    combosLideres.setVisible(true);
+
+    etqLider1.setVisible(true);
+    btnCancelarEditLideres.setVisible(true);
+    btnEditLideres.setVisible(false);
+  }
+
+  void cancelarEditLideres() {
+    linksLideres.setVisible(true);
+    etqsLideres.setVisible(true);
+    combosLideres.setVisible(false);
+    btnCancelarEditLideres.setVisible(false);
+    btnEditLideres.setVisible(true);
+    btnEditRed.setVisible(true);//permitir edición de red
+  }
+
+  public void onClick$btnEditRed() {
+    activarEditRed();
+  }
+
+  public void onClick$etqRed() {
+    activarEditRed();
+  }
+
+  public void onClick$btnCancelarEditRed() {
+    cancelarEditRed();
+  }
+
+  public void onClick$btnEditLideres() {
+    activarEditLideres();
+  }
+
+  public void onClick$btnCancelarEditLideres() {
+    cancelarEditLideres();
   }
 }

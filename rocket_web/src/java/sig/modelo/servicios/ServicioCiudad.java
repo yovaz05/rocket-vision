@@ -42,6 +42,13 @@ public class ServicioCiudad {
     return nombres;
   }
 
+  /**
+   * obtiene la lista de ciudad del estado cuyo id es pasado como parámetro
+   * saca la data de todas las ciudades cargadas,
+   * no hace consulta a la base de datos
+   * @param idEstado
+   * @return 
+   */
   public List getCiudadesPorEstado(int idEstado) {
     ciudadesPorEstado = new ArrayList();
     for (Ciudad ciudad : todas) {

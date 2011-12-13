@@ -116,8 +116,7 @@ public class CtrlCelulaOtrosDatos extends GenericForwardComposer {
   String procesarFechaApertura() {
     dateFechaApertura = dateboxFechaApertura.getValue();
     if (dateFechaApertura != null) {
-      Calendar cal = Util.getCalendar(dateFechaApertura);
-      fechaApertura = Util.getFechaTextoDiaMesAñoAbreviado(cal);
+      fechaApertura = Util.getFechaTexto(dateFechaApertura);
     } else {
       fechaApertura = "";
     }

@@ -5,7 +5,8 @@
     <label id="etqMensaje" value="Mensajes al usuario:" sclass="mensajes" visible="false"
             style="margin: 2px; padding:2px;"/>
   </div>   
-  <grid style="border:0px" apply="sig.controladores.CtrlCelulaDatosBasicos">
+  <grid style="border:0px"
+  apply="sig.controladores.CtrlCelulaDatosBasicos">
     <columns>
       <column id="col1" width="15%"/>
       <column id="colData"/>
@@ -20,7 +21,8 @@
           <label id="etqCodigo" value=""/>
           <textbox id="txtCodigo" value="" cols="25" maxlength="20" visible="false"/>
         </div>
-        <div align="left">
+<!--botones de edición-->
+        <div align="left" visible="false">
           <a id="btnEditCodigo" tooltiptext="Editar"
             onClick="activarEditCodigo()"
             image="/img/iconos/edit_row.png" hoverImage="/img/iconos/edit_row_hover.png"/>
@@ -33,22 +35,20 @@
       <!-- Red -->
       <row apply="sig.controladores.CtrlCatalogoRed">
         <label value="Red" sclass="etiqueta_campo"/>
-        <hbox align="left" id="editRed">
+        <hbox align="left">
           <a id="tbbRed" label=""/>
           <label id="etqRed" value="" visible="false"/>
           <combobox id="cmbRed"
           autodrop="true" autocomplete="true" readonly="true"
-          visible="false"
-          onSelect="cancelarEditRed()"/>
+          visible="false"/>
         </hbox>
+<!--botones de edición-->
         <div align="left">
           <a id="btnEditRed" tooltiptext="Editar"
-            onClick="activarEditRed()"
             image="/img/iconos/edit_row.png"
             hoverImage="/img/iconos/edit_row_hover.png"/>
           <a id="btnCancelarEditRed" visible="false"
             tooltiptext="Cancelar Edición"
-            onClick="cancelarEditRed()"
             image="/img/iconos/cancel_row.png"
             hoverImage="/img/iconos/cancel_row_hover.png"/>
         </div>
@@ -57,7 +57,7 @@
       <row>        
         <label value="Líderes" sclass="etiqueta_campo"/>
         <!-- enlaces -->
-        <div id="divLideresData">  
+        <div id="linksLideres">  
           <vbox id="lideresViewLink">
             <a id="tbbLider1"/>
             <a id="tbbLider2"/>
@@ -66,61 +66,64 @@
           </vbox>
         <!-- etiquetas -->
           <hbox>
-            <vbox id="etqsLideres">
-              <label id="etqNoHayLideres" value="No hay líderes registrados en esta red" visible="false"/>
-              <label id="etqLider1" value="Líder 1" visible="false"/>
-              <label id="etqLider2" value="Líder 2" visible="false"/>
-              <label id="etqLider3" value="Líder 3" visible="false"/>
-              <label id="etqLider4" value="Líder 4" visible="false"/>
-            </vbox>
+            <div id="etqsLideres">
+              <vbox>
+                <label id="etqNoHayLideres" value="No hay líderes registrados en esta red" visible="false"/>
+                <label id="etqLider1" value="Líder 1" visible="false"/>
+                <label id="etqLider2" value="Líder 2" visible="false"/>
+                <label id="etqLider3" value="Líder 3" visible="false"/>
+                <label id="etqLider4" value="Líder 4" visible="false"/>
+              </vbox>
+            </div>
           <!-- Combos -->
-            <vbox id="combosLideres" visible="false">
+            <div id="combosLideres" visible="false">
+              <vbox>
             <!-- Líder 1 -->
-              <div id="opcionLider1">
-                <combobox id="cmbLider1" value="" autodrop="true" autocomplete="true" readonly="true"/>
-              </div>
+                <div id="opcionLider1">
+                  <combobox id="cmbLider1" value="" autodrop="true" autocomplete="true" readonly="true"/>
+                </div>
             <!-- Líder 2 -->
-              <div id="opcionLider2" visible="false">
-                <combobox id="cmbLider2" value="" autodrop="true" autocomplete="true" readonly="true"/>
-                <a id="btnQuitarLider2" image="/img/iconos/remove_row.png" tooltiptext="Quitar"/>
-              </div>
+                <div id="opcionLider2" visible="false">
+                  <combobox id="cmbLider2" value="" autodrop="true" autocomplete="true" readonly="true"/>
+                  <a id="btnQuitarLider2" image="/img/iconos/remove_row.png" tooltiptext="Quitar"/>
+                </div>
             <!-- Líder 3: opcional -->
-              <div id="opcionLider3" visible="false">
-                <combobox id="cmbLider3" value="" autodrop="true" autocomplete="true" readonly="true"/>
-                <a id="btnQuitarLider3" image="/img/iconos/remove_row.png" tooltiptext="Quitar"/>
-              </div>
+                <div id="opcionLider3" visible="false">
+                  <combobox id="cmbLider3" value="" autodrop="true" autocomplete="true" readonly="true"/>
+                  <a id="btnQuitarLider3" image="/img/iconos/remove_row.png" tooltiptext="Quitar"/>
+                </div>
             <!-- Líder 4: opcional -->
-              <div id="opcionLider4" visible="false">
-                <combobox id="cmbLider4" value="" autodrop="true" autocomplete="true" readonly="true"/>
-                <a id="btnQuitarLider4" image="/img/iconos/remove_row.png" tooltiptext="Quitar"/>
-              </div>
-              <div id="opcionAddLider" visible="false" style="color: #36C;vertical-align: top;cursor: pointer;" width="75px">
-                <image src="/img/iconos/add8x10.png" width="8px" height="8px" style="vertical-align:middle"/>
-                <label value=" Añadir líder" id="btnAddLider"/>
-              </div>
-            </vbox>
+                <div id="opcionLider4" visible="false">
+                  <combobox id="cmbLider4" value="" autodrop="true" autocomplete="true" readonly="true"/>
+                  <a id="btnQuitarLider4" image="/img/iconos/remove_row.png" tooltiptext="Quitar"/>
+                </div>
+                <div id="opcionAddLider" visible="false" style="color: #36C;vertical-align: top;cursor: pointer;" width="75px">
+                  <image src="/img/iconos/add8x10.png" width="8px" height="8px" style="vertical-align:middle"/>
+                  <label value=" Añadir líder" id="btnAddLider"/>
+                </div>
+              </vbox>
+            </div>
           </hbox>
         </div>
+        <!--botones de edición-->
         <div align="left">
-          <a id="btnEditLideres" tooltiptext="Editar"
-            onClick="activarEditLideres()"
-            image="/img/iconos/edit_row.png"
-            hoverImage="/img/iconos/edit_row_hover.png"/>
-          <a id="btnCancelarEditLideres" visible="false"
-            tooltiptext="Cancelar Edición"
-            onClick="cancelarEditLideres()"
-            image="/img/iconos/cancel_row.png"
-            hoverImage="/img/iconos/cancel_row_hover.png"/>
+          <a id="btnEditLideres"
+             tooltiptext="Editar"
+             image="/img/iconos/edit_row.png"
+             hoverImage="/img/iconos/edit_row_hover.png"/>
+          <a id="btnCancelarEditLideres"             
+             tooltiptext="Cancelar Edición"
+             image="/img/iconos/cancel_row.png"
+             hoverImage="/img/iconos/cancel_row_hover.png"
+              visible="false"/>
         </div>
       </row>
       <!-- Día y Hora -->
       <row>        
         <label value="Día y Hora" sclass="etiqueta_campo"/>
         <cell>
-          <label id="etqDia" value=""/>
-          <label id="etqSeparadorDiaHora" value=" - "/>
-          <label id="etqHora" value=""/>
           <hbox>
+            <label id="etqDia" value=""/>
             <combobox id="cmbDia" value="Lunes"
             autodrop="true" autocomplete="true" readonly="true" cols="8" width="80px"
             visible="false">
@@ -132,6 +135,8 @@
               <comboitem id="itemSábado"    value="6" label="Sábado"/>
               <comboitem id="itemDomingo"   value="7" label="Domingo"/>
             </combobox>
+            <label id="etqSeparadorDiaHora" value=" - "/>
+            <label id="etqHora" value=""/>
             <combobox id="cmbHora" value="7:30 p.m."
             autodrop="true" autocomplete="true" readonly="true" cols="10" width="90px"
             visible="false">
@@ -163,14 +168,17 @@
             </combobox>
           </hbox>
         </cell>
-        <div align="left">
-          <a id="btnEditDiaHora" tooltiptext="Editar"
-            onClick="activarEditDiaHora()"
-            image="/img/iconos/edit_row.png" hoverImage="/img/iconos/edit_row_hover.png"/>
-          <a id="btnCancelarEditDiaHora" visible="false"
-            tooltiptext="Cancelar Edición"
-            onClick="cancelarEditDiaHora()"
-            image="/img/iconos/cancel_row.png" hoverImage="/img/iconos/cancel_row_hover.png"/>
+<!--botones de edición-->
+        <div align="left" visible="false">
+          <a id="btnEditDiaHora"
+             tooltiptext="Editar"
+             onClick="activarEditDiaHora()"
+             image="/img/iconos/edit_row.png" hoverImage="/img/iconos/edit_row_hover.png"/>
+          <a id="btnCancelarEditDiaHora" 
+             visible="false"
+             tooltiptext="Cancelar Edición"
+             onClick="cancelarEditDiaHora()"
+             image="/img/iconos/cancel_row.png" hoverImage="/img/iconos/cancel_row_hover.png"/>
         </div>
       </row>
       <!-- Nombre -->
@@ -180,7 +188,7 @@
           <label id="etqNombre" value="" />          
           <textbox id="txtNombre" value="" cols="50" maxlength="40" visible="false"/>
         </div>
-        <div align="left">
+<!--        <div align="left">
           <a id="btnEditNombre" tooltiptext="Editar"
             onClick="activarEditNombre()"
             image="/img/iconos/edit_row.png"
@@ -190,7 +198,7 @@
             onClick="cancelarEditNombre()"
             image="/img/iconos/cancel_row.png"
             hoverImage="/img/iconos/cancel_row_hover.png"/>
-        </div>        
+        </div>        -->
       </row>
       
     </rows>
@@ -199,6 +207,47 @@
   <zscript>
 <!--TODO: pasar este código al controlador, y unificar al ya existente-->
   <![CDATA[
+  /*
+    void activarEditRed(){
+      cmbRed.setValue(tbbRed.getLabel());
+      cmbRed.setVisible(true);
+      cmbRed.setFocus(true);
+      cmbRed.select();
+      tbbRed.setVisible(false);
+      etqRed.setVisible(false);
+      btnCancelarEditRed.setVisible(true);
+      btnEditRed.setVisible(false);
+      btnEditLideres.setVisible(false);//bloquear edición de red
+    }    
+    void cancelarEditRed(){
+      btnCancelarEditRed.setVisible(false);
+      cmbRed.setVisible(false);
+      etqRed.setVisible(true);
+      btnEditRed.setVisible(true);
+      btnEditLideres.setVisible(true);//permitir edición de red
+    }
+    void activarEditLideres(){
+      btnEditRed.setVisible(false);//bloquear edición de red
+      cmbLider1.setValue(etqLider1.getValue());
+      cmbLider2.setValue(etqLider2.getValue());
+      cmbLider3.setValue(etqLider3.getValue());
+      cmbLider4.setValue(etqLider4.getValue());
+      linksLideres.setVisible(false);
+      etqsLideres.setVisible(true);
+      combosLideres.setVisible(true);
+      etqLider1.setVisible(true);      
+      btnCancelarEditLideres.setVisible(true);
+      btnEditLideres.setVisible(false);
+    }
+    
+    void cancelarEditLideres(){
+      linksLideres.setVisible(true);
+      etqsLideres.setVisible(true);
+      combosLideres.setVisible(false);
+      btnCancelarEditLideres.setVisible(false);
+      btnEditLideres.setVisible(true);
+      btnEditRed.setVisible(true);//permitir edición de red
+    }   
     void activarEditCodigo(){
       txtCodigo.setValue(etqCodigo.getValue());
       btnEditCodigo.setVisible(false);
@@ -214,43 +263,6 @@
       txtCodigo.setVisible(false);
       etqCodigo.setVisible(true);
     }
-    
-    void activarEditRed(){
-      cmbRed.setValue(etqRed.getValue());
-      cmbRed.setVisible(true);
-      cmbRed.setFocus(true);
-      cmbRed.select();
-      tbbRed.setVisible(false);
-      etqRed.setVisible(false);
-      btnCancelarEditRed.setVisible(true);
-      btnEditRed.setVisible(false);
-    }
-    
-    void cancelarEditRed(){
-      btnCancelarEditRed.setVisible(false);
-      cmbRed.setVisible(false);
-      etqRed.setVisible(true);
-      btnEditRed.setVisible(true);
-    }
-    
-     void activarEditLideres(){
-      cmbLider1.setValue(etqLider1.getValue());
-      cmbLider2.setValue(etqLider2.getValue());
-      cmbLider3.setValue(etqLider3.getValue());
-      cmbLider4.setValue(etqLider4.getValue());
-      etqsLideres.setVisible(false);
-      combosLideres.setVisible(true);
-      btnCancelarEditLideres.setVisible(true);
-      btnEditLideres.setVisible(false);
-    }
-    
-    void cancelarEditLideres(){
-      etqsLideres.setVisible(true);
-      combosLideres.setVisible(false);
-      btnCancelarEditLideres.setVisible(false);
-      btnEditLideres.setVisible(true);
-    }
-    
     void activarEditDiaHora(){
       cmbDia.setValue(etqDia.getValue());
       cmbHora.setValue(etqHora.getValue());
@@ -271,8 +283,7 @@
       etqDia.setVisible(true);
       etqSeparadorDiaHora.setVisible(true);
       etqHora.setVisible(true);
-    }
-    
+    }   
     void activarEditNombre(){
       txtNombre.setValue(etqNombre.getValue());
       btnEditNombre.setVisible(false);
@@ -288,6 +299,7 @@
       txtNombre.setVisible(false);
       etqNombre.setVisible(true);
     }
+    */
   ]]> 
   </zscript>
   
