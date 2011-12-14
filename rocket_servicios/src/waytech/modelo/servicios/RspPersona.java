@@ -120,13 +120,5 @@ public class RspPersona {
 
     void setRespuestaInicioDeConexion(String respuestaInicioDeConexion) {
         this.respuestaInicioDeConexion = respuestaInicioDeConexion;
-    }
-
-    public List<Persona> getTodosLosPersonas() {
-        return todasLasPersonas;
-    }
-
-    void setTodosLosPersonas(List<Persona> todasLasPersonas) {
-        this.todasLasPersonas = todasLasPersonas;
-    }
+    }   
 }

@@ -493,7 +493,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                    rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -542,7 +542,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -586,7 +586,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -631,7 +631,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -675,7 +675,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -719,7 +719,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -763,7 +763,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -807,7 +807,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -851,7 +851,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -895,7 +895,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -939,7 +939,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -983,7 +983,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -1027,7 +1027,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -1071,7 +1071,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -1115,7 +1115,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -1159,7 +1159,7 @@ public class SaPersona implements IsaPersona {
                     rspPersona.setEsConexionCerradaExitosamente(true);
                 }
                 rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
-                rspPersona.setTodosLosPersonas(todosLosPersonas);
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
                 return rspPersona;
             }
         } else {
@@ -1264,7 +1264,7 @@ public class SaPersona implements IsaPersona {
         if (conectorBD.iniciarConexion()) {
             rspPersona.setEsConexionAbiertaExitosamente(true);
             rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
-            String consultaSQL = "SELECT * FROM persona WHERE estado = 1 AND cedula = '" + cedula + "'";
+            String consultaSQL = "SELECT * FROM persona WHERE estado = 1 AND ci = '" + cedula + "'";
             try {
                 Statement sentencia = conectorBD.getConnection().createStatement();
                 boolean bandera = sentencia.execute(consultaSQL);
@@ -1291,5 +1291,93 @@ public class SaPersona implements IsaPersona {
             rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
             return rspPersona;
         }
+    }
+
+    @Override
+    public RspPersona listPersonaCualquierLider() {
+        //INSTANCIAS DE LAS CLASES                
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        RspPersona rspPersona = new RspPersona();
+        List<Persona> todosLosPersonas = new ArrayList<Persona>();
+        //INICIALIZAR VARIABLES
+        rspPersona.setEsConexionAbiertaExitosamente(false);
+        rspPersona.setEsConexionCerradaExitosamente(false);
+        rspPersona.setEsSentenciaSqlEjecutadaExitosamente(false);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPersona.setEsConexionAbiertaExitosamente(true);
+            rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            String consultaSQL = "SELECT * FROM persona WHERE estado = 1 AND(es_lider_red = 'TRUE' OR es_lider_celula = 'TRUE' OR es_supervisor  = 'TRUE' OR es_estaca  = 'TRUE' OR es_maestro_academia  = 'TRUE' OR es_anfitrion  = 'TRUE' OR es_lider_lanzado  = 'TRUE' OR es_lider_supervisor  = 'TRUE')";
+            try {
+                Statement sentencia = conectorBD.getConnection().createStatement();
+                boolean bandera = sentencia.execute(consultaSQL);
+                if (bandera) {
+                    ResultSet rs = sentencia.getResultSet();
+                    rspPersona.setEsSentenciaSqlEjecutadaExitosamente(true);
+                    rspPersona.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), "listPersonaLideresLanzados()", this.getClass().toString()));
+                    while (rs.next()) {
+                        Persona acceso = new Persona();
+                        acceso = rsPersona(rs, acceso);
+                        todosLosPersonas.add(acceso);
+                    }
+                }
+            } catch (SQLException e) {
+                rspPersona.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "listPersonaLideresLanzados()", this.getClass().toString()));
+            } finally {
+                if (conectorBD.cerrarConexion()) {
+                    rspPersona.setEsConexionCerradaExitosamente(true);
+                }
+                rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
+                return rspPersona;
+            }
+        } else {
+            rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPersona;
+        }
+    }
+
+    @Override
+    public RspPersona listPersonaCualquierLiderNombre(String nombre) {
+        //INSTANCIAS DE LAS CLASES                
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        RspPersona rspPersona = new RspPersona();
+        List<Persona> todosLosPersonas = new ArrayList<Persona>();
+        //INICIALIZAR VARIABLES
+        rspPersona.setEsConexionAbiertaExitosamente(false);
+        rspPersona.setEsConexionCerradaExitosamente(false);
+        rspPersona.setEsSentenciaSqlEjecutadaExitosamente(false);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPersona.setEsConexionAbiertaExitosamente(true);
+            rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            String consultaSQL = "SELECT * FROM persona WHERE estado = 1 AND(es_lider_red = 'TRUE' OR es_lider_celula = 'TRUE' OR es_supervisor  = 'TRUE' OR es_estaca  = 'TRUE' OR es_maestro_academia  = 'TRUE' OR es_anfitrion  = 'TRUE' OR es_lider_lanzado  = 'TRUE' OR es_lider_supervisor  = 'TRUE') AND nombre LIKE '%" + nombre + "%'";
+            try {
+                Statement sentencia = conectorBD.getConnection().createStatement();
+                boolean bandera = sentencia.execute(consultaSQL);
+                if (bandera) {
+                    ResultSet rs = sentencia.getResultSet();
+                    rspPersona.setEsSentenciaSqlEjecutadaExitosamente(true);
+                    rspPersona.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), "listPersonaCualquierLiderNombre(String nombre)", this.getClass().toString()));
+                    while (rs.next()) {
+                        Persona acceso = new Persona();
+                        acceso = rsPersona(rs, acceso);
+                        todosLosPersonas.add(acceso);
+                    }
+                }
+            } catch (SQLException e) {
+                rspPersona.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "listPersonaCualquierLiderNombre(String nombre)", this.getClass().toString()));
+            } finally {
+                if (conectorBD.cerrarConexion()) {
+                    rspPersona.setEsConexionCerradaExitosamente(true);
+                }
+                rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
+                return rspPersona;
+            }
+        } else {
+            rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPersona;
+        }        
     }
 }

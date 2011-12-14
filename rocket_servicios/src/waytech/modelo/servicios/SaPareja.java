@@ -338,4 +338,88 @@ public class SaPareja implements IsaPareja {
             return rspPareja;
         }
     }
+
+    @Override
+    public RspPareja tienePareja(int idPersona) {
+        //INSTANCIAS DE LAS CLASES                
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        RspPareja rspPareja = new RspPareja();
+        //INICIALIZAR VARIABLES
+        rspPareja.setEsConexionAbiertaExitosamente(false);
+        rspPareja.setEsConexionCerradaExitosamente(false);
+        rspPareja.setEsSentenciaSqlEjecutadaExitosamente(false);        
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPareja.setEsConexionAbiertaExitosamente(true);
+            rspPareja.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            String consultaSQL = "SELECT * FROM pareja WHERE estado = 1 AND (id_persona1 = '" + idPersona + "' OR id_persona2 = '" + idPersona + "' )";
+            try {
+                Statement sentencia = conectorBD.getConnection().createStatement();
+                boolean bandera = sentencia.execute(consultaSQL);
+                if (bandera) {
+                    ResultSet rs = sentencia.getResultSet();
+                    rspPareja.setEsSentenciaSqlEjecutadaExitosamente(true);
+                    rspPareja.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), "tienePareja(int idPersona)", this.getClass().toString()));
+                    if (rs.next()) {
+                        rspPareja.setTienePareja(true);
+                    }
+                }
+            } catch (SQLException e) {
+                rspPareja.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "tienePareja(int idPersona)", this.getClass().toString()));
+            } finally {
+                if (conectorBD.cerrarConexion()) {
+                    rspPareja.setEsConexionCerradaExitosamente(true);
+                }
+                rspPareja.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPareja;
+            }
+        } else {
+            rspPareja.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPareja;
+        }
+    }
+
+    @Override
+    public RspPareja listParejaPorIdPersona(int idPersona) {
+        //INSTANCIAS DE LAS CLASES                
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        RspPareja rspPareja = new RspPareja();
+        List<Pareja> allParejas = new ArrayList<Pareja>();
+        //INICIALIZAR VARIABLES
+        rspPareja.setEsConexionAbiertaExitosamente(false);
+        rspPareja.setEsConexionCerradaExitosamente(false);
+        rspPareja.setEsSentenciaSqlEjecutadaExitosamente(false);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPareja.setEsConexionAbiertaExitosamente(true);
+            rspPareja.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            String consultaSQL = "SELECT * FROM pareja WHERE estado = 1 AND id_persona1 = '"+ idPersona +"'";
+            try {
+                Statement sentencia = conectorBD.getConnection().createStatement();
+                boolean bandera = sentencia.execute(consultaSQL);
+                if (bandera) {
+                    ResultSet rs = sentencia.getResultSet();
+                    rspPareja.setEsSentenciaSqlEjecutadaExitosamente(true);
+                    rspPareja.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), "listParejaPorIdPersona(int idPersona)", this.getClass().toString()));
+                    while (rs.next()) {
+                        Pareja pareja = new Pareja();
+                        pareja = rsPareja(rs, pareja);
+                        allParejas.add(pareja);
+                    }
+                }
+            } catch (SQLException e) {
+                rspPareja.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "listParejaPorIdPersona(int idPersona)", this.getClass().toString()));
+            } finally {
+                if (conectorBD.cerrarConexion()) {
+                    rspPareja.setEsConexionCerradaExitosamente(true);
+                }
+                rspPareja.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                rspPareja.setAllParejas(allParejas);
+                return rspPareja;
+            }
+        } else {
+            rspPareja.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPareja;
+        }
+    }
 }

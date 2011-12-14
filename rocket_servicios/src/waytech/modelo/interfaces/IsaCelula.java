@@ -17,6 +17,28 @@ public interface IsaCelula {
 
     public abstract RspCelula updateCelula(CelulaUpdate celulaModificar);
 
+    public abstract RspCelula updateIdRedCelula(int idCelula, int idRed);
+
+    public abstract RspCelula updateCodigoCelula(int idCelula, String codigo);
+
+    public abstract RspCelula updateNombreCelula(int idCelula, String nombre);
+
+    public abstract RspCelula updateAnfitrionCelula(int idCelula, String anfitrion);
+
+    public abstract RspCelula updateDireccionCelula(int idCelula, String direccion);
+
+    public abstract RspCelula updateDiaCelula(int idCelula, int dia);
+
+    public abstract RspCelula updateHoraCelula(int idCelula, int hora);
+
+    public abstract RspCelula updateTelefonoCelula(int idCelula, String telefono);
+
+    public abstract RspCelula updateObservacionesCelula(int idCelula, String observaciones);
+
+    public abstract RspCelula updateIdZonaCelula(int idCelula, int idZona);
+
+    public abstract RspCelula updateFechaAperturaCelula(int idCelula, String fechaApertura);
+
     /**
      * Elimina un registro lógicamente
      * @param idCelula
@@ -31,6 +53,8 @@ public interface IsaCelula {
     public abstract RspCelula getNumeroLideresCelula(int idCelula);
 
     public abstract RspCelula esCodigoCelulaExistente(String codigo);
+    
+    public abstract RspCelula esNombreCelulaExistente(String nombre);
 
     public abstract RspCelula esCelulaConIntegrantes(int idCelula);
 

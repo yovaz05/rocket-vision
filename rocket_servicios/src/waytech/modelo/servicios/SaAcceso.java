@@ -96,7 +96,7 @@ public class SaAcceso implements IsaAcceso {
         if (conectorBD.iniciarConexion()) {
             rspAcceso.setEsConexionAbiertaExitosamente(true);
             rspAcceso.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
-            String consultaSQL = "SELECT * FROM acceso WHERE estado = 1 AND id_usuario = '" + idUsuario + "'";
+            String consultaSQL = "SELECT * FROM acceso WHERE estado = 1 AND id_persona = '" + idUsuario + "'";
             try {
                 Statement sentencia = conectorBD.getConnection().createStatement();
                 boolean bandera = sentencia.execute(consultaSQL);

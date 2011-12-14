@@ -23,10 +23,14 @@ public interface IsaPareja {
      * @return 
      */
     public abstract RspPareja deletePareja(int idPareja);
+    
+    public abstract RspPareja tienePareja(int idPersona);
 
     public abstract RspPareja getParejaPorIdPareja(int idPareja);
 
     public abstract RspPareja getParejaPorTraza(String traza);
 
     public abstract RspPareja listPareja();
+    
+    public abstract RspPareja listParejaPorIdPersona(int idPersona);
 }

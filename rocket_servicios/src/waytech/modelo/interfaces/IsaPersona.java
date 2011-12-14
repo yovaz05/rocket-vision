@@ -68,4 +68,8 @@ public interface IsaPersona {
     public abstract RspPersona listPersonaLiderSupervizor();
 
     public abstract RspPersona listPersonaDiscipulosEnProceso();
+    
+    public abstract RspPersona listPersonaCualquierLider();
+    
+    public abstract RspPersona listPersonaCualquierLiderNombre(String nombre);
 }

@@ -17,6 +17,7 @@ public class RspPareja {
     private boolean esConexionCerradaExitosamente;
     private boolean esRolledBackIntentado;
     private boolean esRolledBackExitosamente;
+    private boolean tienePareja;
     private List<Pareja> allParejas;
     private String respuestaRolledBack;
     private String respuestaInicioDeConexion;
@@ -24,6 +25,14 @@ public class RspPareja {
     private String respuestaServicio;
     private Pareja pareja;
 
+    public boolean tienePareja() {
+        return tienePareja;
+    }
+
+    public void setTienePareja(boolean tienePareja) {
+        this.tienePareja = tienePareja;
+    }  
+    
     public List<Pareja> getAllParejas() {
         return allParejas;
     }
