@@ -385,7 +385,7 @@ public class SaPersonaEnCelula implements IsaPersonaEnCelula {
     }
 
     @Override
-    public RspPersonaEnCelula deletePersonaEnCelulaPorIdPersona(int idPersona) {
+    public RspPersonaEnCelula deletePersonaEnCelulaPorIdPersona(int idCelula, int idPersona) {
         RspPersonaEnCelula rspPersonaEnCelula = new RspPersonaEnCelula();
         ConectorBDMySQL conectorBD = new ConectorBDMySQL();
         rspPersonaEnCelula.setEsConexionAbiertaExitosamente(false);
@@ -401,7 +401,10 @@ public class SaPersonaEnCelula implements IsaPersonaEnCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE persona_en_celula SET estado = '0' WHERE id_persona = '" + idPersona + "'";
+                String consultaSQL = "UPDATE persona_en_celula"
+                        + " SET estado = '0'"
+                        + " WHERE id_persona = '" + idPersona + "'"
+                        + " AND id_celula = '" + idCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
