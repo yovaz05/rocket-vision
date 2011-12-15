@@ -98,7 +98,7 @@ public class RspPersona {
         this.esConexionCerradaExitosamente = esConexionCerradaExitosamente;
     }
 
-    boolean esSentenciaSqlEjecutadaExitosamente() {
+    public boolean esSentenciaSqlEjecutadaExitosamente() {
         return esSentenciaSqlEjecutadaExitosamente;
     }
 

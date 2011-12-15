@@ -383,4 +383,55 @@ public class SaPersonaEnCelula implements IsaPersonaEnCelula {
             return rspPersonaEnCelula;
         }
     }
+
+    @Override
+    public RspPersonaEnCelula deletePersonaEnCelulaPorIdPersona(int idPersona) {
+        RspPersonaEnCelula rspPersonaEnCelula = new RspPersonaEnCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspPersonaEnCelula.setEsConexionAbiertaExitosamente(false);
+        rspPersonaEnCelula.setEsConexionCerradaExitosamente(false);
+        rspPersonaEnCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspPersonaEnCelula.setEsRolledBackIntentado(false);
+        rspPersonaEnCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPersonaEnCelula.setEsConexionAbiertaExitosamente(true);
+            rspPersonaEnCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE persona_en_celula SET estado = '0' WHERE id_persona = '" + idPersona + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspPersonaEnCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), "deletePersonaEnCelulaPorIdPersona(int idPersona))", this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspPersonaEnCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspPersonaEnCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "deletePersonaEnCelulaPorIdPersona(int idPersona)", this.getClass().toString()));
+                try {
+                    rspPersonaEnCelula.setEsRolledBackIntentado(true);
+                    rspPersonaEnCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", "deletePersonaEnCelulaPorIdPersona(int idPersona)", this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspPersonaEnCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, "deletePersonaEnCelulaPorIdPersona(int idPersona)", this.getClass().toString()));
+                    rspPersonaEnCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspPersonaEnCelula.esRolledBackIntentado()) {
+                    rspPersonaEnCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspPersonaEnCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspPersonaEnCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPersonaEnCelula;
+            }
+        } else {
+            rspPersonaEnCelula.setEsRolledBackExitosamente(false);
+            rspPersonaEnCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPersonaEnCelula;
+        }
+    }
 }

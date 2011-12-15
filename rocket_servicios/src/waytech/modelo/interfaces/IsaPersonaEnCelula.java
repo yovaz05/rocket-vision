@@ -24,6 +24,8 @@ public interface IsaPersonaEnCelula {
      * @return 
      */
     public abstract RspPersonaEnCelula deletePersonaEnCelula(int idPersonaEnCelula);
+    
+    public abstract RspPersonaEnCelula deletePersonaEnCelulaPorIdPersona(int idPersona);
 
     public abstract RspPersonaEnCelula getPersonaEnCelulaPorIdPersonaEnCelula(int idPersonaEnCelula);
 
