@@ -14,7 +14,7 @@ public class Sesion {
    */
   public static void setVariable(String nombre, Object valor) {
     Sessions.getCurrent().setAttribute(nombre, valor);
-    System.out.println("SET Variable de sesión [" + nombre + "]=" + valor);
+    System.out.println("SET variable sesión [" + nombre + "]=" + valor);
   }
 
   /**
@@ -22,7 +22,7 @@ public class Sesion {
    * @return 
    */
   public static Object getVariable(String nombre) {
-    System.out.println("GET Variable de sesión [" + nombre + "]=" + Sessions.getCurrent().getAttribute(nombre));
+    System.out.println("GET variable sesión [" + nombre + "]=" + Sessions.getCurrent().getAttribute(nombre));
     return Sessions.getCurrent().getAttribute(nombre);
   }
 
@@ -122,7 +122,11 @@ public class Sesion {
     mostrarVariableSesion(clase, metodo, "modo", getModo());
   }
   
-  public static boolean modoEditar(){
-    return Sesion.getModo().equals("editar");
+  public static boolean modoEditable(){
+    return Sesion.getModo().equals("ver-modificable");
+  }
+  
+  public static boolean modoIngresar(){
+    return Sesion.getModo().equals("new");
   }
 }

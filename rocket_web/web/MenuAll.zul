@@ -128,6 +128,7 @@ title="SIG - Mejorando barra superior"?>
         <toolbarbutton id="btnRefresh" tooltiptext="Refrescar" image="/img/iconos/refresh24.png"/>
         <toolbarbutton id="btnEdit" tooltiptext="Editar" image="/img/iconos/edit24.png"/>
         <toolbarbutton id="btnSave" tooltiptext="Guardar cambios" image="/img/iconos/ok22.png"/>
+<!--        TODO: falta botón cancelar-->
         <toolbarbutton id="btnDelete" tooltiptext="Eliminar" image="/img/iconos/delete22.png"/>
         <toolbarbutton id="btnNew" tooltiptext="Ingresar" image="/img/iconos/add24.png"/>
         <toolbarbutton id="btnConfirmar" label="Confirmar" visible="false"/>

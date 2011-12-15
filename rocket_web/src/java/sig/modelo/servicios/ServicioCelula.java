@@ -38,13 +38,22 @@ public class ServicioCelula {
   List<PersonaEnCelula> lideresCelula;
   //TODO: OPTIMIZACION: sacar estas 2 líneas en todos los servicios
   IsaCelula isaCelula = new SaCelula();
-  RspCelula rspCelula = new RspCelula();
   IsaPersonaEnCelula isaPersonaCelula = new SaPersonaEnCelula();
-  RspPersonaEnCelula rspPersonaCelula = new RspPersonaEnCelula();
   List<CelulaListadoUtil> listadoCelulas = new ArrayList();
+  String nombreLider1 = "";
+  String nombreLider2 = "";
+  String nombreLider3 = "";
+  String nombreLider4 = "";
+  int idLider1 = 0;
+  int idLider2 = 0;
+  int idLider3 = 0;
+  int idLider4 = 0;
+  int nLideresUsados = 1;
+  //TODO: usar este id para las modificaciones
+  int idCelula = 0;
 
   public List getAll() {
-    rspCelula = isaCelula.listCelula();
+    RspCelula rspCelula = isaCelula.listCelula();
     System.out.println("INICIO DE LA CONEXION " + rspCelula.getRespuestaInicioDeConexion());
     celulas = rspCelula.getTodosLosCelulas();
     if (celulas == null) {
@@ -68,7 +77,7 @@ public class ServicioCelula {
     if (celulas == null) {
       System.out.println("ServicioCelula.listaTodas=null");
     }
-    System.out.println("NOMBRE DE TODAS LAS Celulas:");
+    System.out.println("NOMBRE DE TODAS LAS Células:");
     for (Celula celula : celulas) {
       System.out.println("Celula: " + celula.getNombre());
     }
@@ -81,20 +90,27 @@ public class ServicioCelula {
    * @return el id de la célula creada
    */
   public int ingresarDatosCelula(CelulaInsert celulaInsert) {
-    int id = 0;
-    rspCelula = isaCelula.insertCelula(celulaInsert);
+    RspCelula rspCelula = isaCelula.insertCelula(celulaInsert);
     boolean ok = rspCelula.esSentenciaSqlEjecutadaExitosamente();
     if (ok) {
-      id = rspCelula.getCelula().getIdCelula();
+      idCelula = rspCelula.getCelula().getIdCelula();
     }
-    return id;
+    return idCelula;
   }
 
-  public boolean ingresarLiderCelula(PersonaEnCelulaInsert persona) {
-    boolean ok = false;
+  /**
+   * agregar lider a la célula
+   * @param idLider
+   * @return 
+   */
+  public boolean agregarLiderCelula(int idLider) {
+    PersonaEnCelulaInsert persona = new PersonaEnCelulaInsert();
+    RspPersonaEnCelula rspPersonaCelula = new RspPersonaEnCelula();
+    persona.setIdCelula(idCelula);
+    persona.setIdPersona(idLider);
+    persona.setEsLiderCelula(true);
     rspPersonaCelula = isaPersonaCelula.insertPersonaEnCelula(persona);
-    ok = rspCelula.esSentenciaSqlEjecutadaExitosamente();
-    return ok;
+    return rspPersonaCelula.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**
@@ -107,8 +123,8 @@ public class ServicioCelula {
     int n = 0;
     for (Celula celulaBD : celulas) {
       CelulaListadoUtil celulaListado = new CelulaListadoUtil();
-      int idCelula = celulaBD.getIdCelula();
-      System.out.println("ServicioCelula.getCelulasListado.celulaBD.id=" + idCelula);
+      idCelula = celulaBD.getIdCelula();
+      //**System.out.println("ServicioCelula.getCelulasListado.celulaBD.id=" + idCelula);
       celulaListado.setId(idCelula);
 
       String codigoCelula = celulaBD.getCodigo();
@@ -124,6 +140,7 @@ public class ServicioCelula {
       List<PersonaEnCelula> listaPersonaCelula = new ArrayList<PersonaEnCelula>();
       listaPersonaCelula = isaPersonaCelula.listPersonaEnCelulaPorIdCelula(idCelula).getAllPersonaEnCelulas();
 
+      /*-
       String nombreLider1 = "";
       String nombreLider2 = "";
       String nombreLider3 = "";
@@ -132,38 +149,39 @@ public class ServicioCelula {
       int idLider2 = 0;
       int idLider3 = 0;
       int idLider4 = 0;
+       */
       int i = 0;
 
-      System.out.println("ServicioCelula.CELULA.id=" + idCelula + ", codigo=" + codigoCelula);
-      System.out.println("ServicioCelula.recorrido de líderes de la célula");
+      //**System.out.println("ServicioCelula.CELULA.id=" + idCelula + ", codigo=" + codigoCelula);
+      //**System.out.println("ServicioCelula.recorrido de líderes de la célula");
       for (PersonaEnCelula personaCelula : listaPersonaCelula) {
         if (personaCelula.esLiderCelula()) {
           i++;
-          System.out.println("ServicioCelula.i=" + i);
+          //**System.out.println("ServicioCelula.i=" + i);
           int idLider = personaCelula.getIdPersona().getIdPersona();
           String nombreLider = personaCelula.getIdPersona().getNombre();
-          System.out.println("ServicioCelula.Lider" + i + ".nombre=" + nombreLider);
-          System.out.println("ServicioCelula.Lider" + i + ".id=" + idLider);
+          //**System.out.println("ServicioCelula.Lider" + i + ".nombre=" + nombreLider);
+          //**System.out.println("ServicioCelula.Lider" + i + ".id=" + idLider);
           if (i == 1) {
-            System.out.println("lider1");
+            //**System.out.println("lider1");
             idLider1 = idLider;
             nombreLider1 = nombreLider;
             celulaListado.setIdLider1(idLider1);
             celulaListado.setNombreLider1(nombreLider1);
           } else if (i == 2) {
-            System.out.println("if.i=2");
+            //**System.out.println("if.i=2");
             idLider2 = idLider;
             nombreLider2 = nombreLider;
             celulaListado.setIdLider2(idLider2);
             celulaListado.setNombreLider2(nombreLider2);
           } else if (i == 3) {
-            System.out.println("if.i=3");
+            //**System.out.println("if.i=3");
             idLider3 = idLider;
             nombreLider3 = nombreLider;
             celulaListado.setIdLider3(idLider3);
             celulaListado.setNombreLider3(nombreLider3);
           } else if (i == 4) {
-            System.out.println("if.i=4");
+            //**System.out.println("if.i=4");
             idLider4 = idLider;
             nombreLider4 = nombreLider;
             celulaListado.setIdLider4(idLider4);
@@ -192,7 +210,8 @@ public class ServicioCelula {
     System.out.println("ServicioCelula.celula=" + celula.toString());
 
     //data básica de la célula
-    int idCelula = celula.getIdCelula();
+    //-int idCelula = celula.getIdCelula();
+    idCelula = celula.getIdCelula();
     c.setId(idCelula);
     c.setCodigo(celula.getCodigo());
     c.setNombre(celula.getNombre());
@@ -279,8 +298,9 @@ public class ServicioCelula {
    * @return Celula la celula con el id, o null si no existe
    */
   public CelulaUtil getCelula(int idCelula) {
+    setIdCelula(idCelula);
     //traer datos de la célula
-    rspCelula = isaCelula.getCelulaPorIdCelula(idCelula);
+    RspCelula rspCelula = isaCelula.getCelulaPorIdCelula(idCelula);
     Celula celulaBD = new Celula();
     celulaBD = rspCelula.getCelula();
     if (celulaBD == null) {
@@ -301,7 +321,6 @@ public class ServicioCelula {
    * 3. método para crear un objeto 'CelulaListadoSimulador' del simulador a partir de un objeto Celula del simuladorBD
    * 4. mejorar método getListadoCelulas con los métodos de las tareas anteriores
    **/
-  
   /**
    * establece el número de líderes usados en la célula
    * en una variable de sesión
@@ -318,13 +337,111 @@ public class ServicioCelula {
     }
     Sesion.setVariable("celula.nLideresUsados", nLideresUsados);
   }
-  String nombreLider1 = "";
-  String nombreLider2 = "";
-  String nombreLider3 = "";
-  String nombreLider4 = "";
-  int idLider1 = 0;
-  int idLider2 = 0;
-  int idLider3 = 0;
-  int idLider4 = 0;
-  int nLideresUsados = 1;
+
+  public int getIdCelula() {
+    return idCelula;
+  }
+
+  public void setIdCelula(int idCelula) {
+    this.idCelula = idCelula;
+  }
+
+  /**
+   * actualiza el código de la célula en la base de datos
+   */
+  public boolean actualizarCodigo(String codigo) {
+    RspCelula rspCelula = isaCelula.updateCodigoCelula(idCelula, codigo);
+    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+    //return true;
+    //TODO: devolver si hubo éxito o error
+  }
+
+  /**
+   * actualiza el día de la célula
+   */
+  public boolean actualizarDia(int dia) {
+    RspCelula rspCelula = isaCelula.updateDiaCelula(idCelula, dia);
+    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  /**
+   * actualiza la hora de la célula
+   */
+  public boolean actualizarHora(int hora) {
+    RspCelula rspCelula = isaCelula.updateHoraCelula(idCelula, hora);
+    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  /**
+   * actualiza el nombre de la célula
+   */
+  public boolean actualizarNombre(String nombre) {
+    RspCelula rspCelula = isaCelula.updateNombreCelula(idCelula, nombre);
+    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  /**
+   * actualiza el id de la zona (o sector)
+   */
+  public boolean actualizarIdZona(int idZona) {
+    RspCelula rspCelula = isaCelula.updateIdZonaCelula(idCelula, idZona);
+    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  /**
+   * actualiza el detalle de la dirección de la célula
+   */
+  public boolean actualizarDireccionDetalle(String direccionDetalle) {
+    RspCelula rspCelula = isaCelula.updateDireccionCelula(idCelula, direccionDetalle);
+    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  /**
+   * actualiza el teléfono de la dirección de la célula
+   */
+  public boolean actualizarTelefono(String telefono) {
+    RspCelula rspCelula = new RspCelula();
+    rspCelula = isaCelula.updateTelefonoCelula(idCelula, telefono);
+    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  /**
+   * actualiza la fecha de apertura
+   */
+  public boolean actualizarFechaApertura(String fechaApertura) {
+    RspCelula rspCelula = new RspCelula();
+    rspCelula = isaCelula.updateFechaAperturaCelula(idCelula, fechaApertura);
+    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  /**
+   * actualiza el nombre del anfitrión
+   */
+  public boolean actualizarAnfitrion(String nombreAnfitrion) {
+    RspCelula rspCelula = new RspCelula();
+    rspCelula = isaCelula.updateAnfitrionCelula(idCelula, nombreAnfitrion);
+    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  /**
+   * actualiza las observaciones
+   */
+  public boolean actualizarObservaciones(String observaciones) {
+    RspCelula rspCelula = isaCelula.updateObservacionesCelula(idCelula, observaciones);
+    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  /**
+   * elimina a un líder de la célula
+   * @param idLider
+   * @return 
+   */
+  public boolean deleteLider(int idLider) {    
+    System.out.println("ServicioCelula.deleteLider.idLider=" + idLider);
+    RspPersonaEnCelula rspPersonaCelula = new RspPersonaEnCelula();
+    rspPersonaCelula = isaPersonaCelula.deletePersonaEnCelulaPorIdPersona(idCelula, idLider);
+    return rspPersonaCelula.esSentenciaSqlEjecutadaExitosamente();
+    //TODO: devolver el resultado de la operación de base de datos (true, false)
+  }
+  
 }

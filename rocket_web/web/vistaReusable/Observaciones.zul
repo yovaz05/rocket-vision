@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
+  <style src="css/estilos1.css"/>  
   <grid style="border:0px" apply="sig.controladores.CtrlObservaciones">      
     <columns>
       <column id="col1" width="0px"/>
@@ -7,12 +8,23 @@
     </columns>
     <rows>
       <row>
-        <label value="" sclass="etiqueta_campo" width="0px"/>
+        <a label="Agregar" sclass="etiqueta_campo"/>
         <vbox>
-          <label id="etqObservaciones" value="Comentarios..." multiline="true"/>
+          <label id="etqObservaciones" value="Comentarios..." multiline="true" visible="false"/>
           <textbox id="txtObservaciones" cols="100" rows="5" maxlength="500" visible="false"/> 
         </vbox>
       </row>       
     </rows>
   </grid>
+  <zscript>
+<!--TODO: pasar este código al controlador, y unificar al ya existente-->
+  <![CDATA[  
+    void activarEditObservaciones(){
+      txtObservaciones.setValue(etqObservaciones.getValue());
+      txtObservaciones.setVisible(true);
+      txtObservaciones.setFocus(true);
+      etqObservaciones.setVisible(false);
+    }
+    ]]> 
+  </zscript>  
 </zk>

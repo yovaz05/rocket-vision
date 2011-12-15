@@ -9,14 +9,14 @@
           <row>
             <label value="Fecha de Apertura" sclass="etiqueta_campo"/>
         <vbox align="left">
-          <label id="etqFechaApertura" value="01/01/1900"/>
+          <label id="etqFechaApertura" value=""/>
           <datebox id="dateboxFechaApertura" format="dd/MM/yyyy" constraint="no future" visible="false"/>
         </vbox>
       </row>
       <row>
         <label value="Anfitrión" sclass="etiqueta_campo"/>
         <vbox align="left">
-          <label id="etqAnfitrion" value="Anfitrión"/>
+          <label id="etqAnfitrion" value=""/>
           <textbox id="txtAnfitrion" cols="35"
           visible="false" value="" />
         </vbox>

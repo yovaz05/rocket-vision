@@ -18,6 +18,8 @@ import org.zkoss.zul.A;
 public class BotonCelula extends A {
 
   int idCelula;
+  int idRed;
+  int nroLideres;
   CtrlVista ctrlVista = new CtrlVista();
 
   public BotonCelula() {
@@ -37,7 +39,9 @@ public class BotonCelula extends A {
         //actualizar variables de sesión:
         Sesion.setVistaSiguiente(Vistas.CELULA);
         Sesion.setVariable("idCelula", idCelula);
-        Sesion.setModo("ver");//modo visualización
+        Sesion.setVariable("celula.idRed", idRed);
+        Sesion.setVariable("celula.nLideres", nroLideres);
+        Sesion.setModo("ver-modificable");  //modo visualización, con edición dinámica
         ctrlVista.forzarCambioVista_btnControl();
       }
     });
@@ -46,13 +50,29 @@ public class BotonCelula extends A {
   public void setIdCelula(int idCelula) {
     this.idCelula = idCelula;
     programarEventoClick(idCelula);
-    asignarTooltip("Ver detalles... idCelula=" + idCelula);
+    asignarTooltip("Ver detalles");
   }
 
   public int getIdCelula() {
     return idCelula;
   }
 
+  public int getIdRed() {
+    return idRed;
+  }
+
+  public void setIdRed(int idRed) {
+    this.idRed = idRed;
+  }
+
+  public int getNroLideres() {
+    return nroLideres;
+  }
+
+  public void setNroLideres(int nLideres) {
+    this.nroLideres = nLideres;
+  }
+  
   private void asignarTooltip(String texto) {
     this.setTooltiptext(texto);
   }

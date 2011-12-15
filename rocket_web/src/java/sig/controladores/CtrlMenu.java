@@ -532,31 +532,32 @@ public class CtrlMenu extends GenericForwardComposer {
       btnEdit.setVisible(false);
       btnSave.setVisible(true);
       btnDelete.setVisible(false);
-//-      btnConfirmar.setVisible(false);
+      //TODO: falta botón cancelar
     } else if (modo.equals("ver")) {
       btnNew.setVisible(false);
       btnEdit.setVisible(true);
       btnSave.setVisible(false);
       btnDelete.setVisible(true);
-//-      //- btnConfirmar.setVisible(false);
+    } else if (modo.equals("ver-modificable")) {
+      btnNew.setVisible(false);
+      btnEdit.setVisible(false);
+      btnSave.setVisible(false);
+      btnDelete.setVisible(true);
     } else if (modo.equals("editar")) {
       btnNew.setVisible(false);
       btnEdit.setVisible(false);
       btnSave.setVisible(true);
       btnDelete.setVisible(false);
-      //- btnConfirmar.setVisible(false);
     } else if (modo.equals("consulta")) {
       btnNew.setVisible(false);
       btnEdit.setVisible(false);
       btnSave.setVisible(false);
       btnDelete.setVisible(false);
-      //- btnConfirmar.setVisible(false);
     } else if (modo.equals("listado")) {
       btnNew.setVisible(true);
       btnEdit.setVisible(false);
       btnSave.setVisible(false);
       btnDelete.setVisible(false);
-      //- btnConfirmar.setVisible(false);
     } else if (modo.equals("permitir_edicion")) {
       btnNew.setVisible(false);
       btnEdit.setVisible(true);
@@ -567,7 +568,6 @@ public class CtrlMenu extends GenericForwardComposer {
       btnEdit.setVisible(false);
       btnSave.setVisible(true);
       btnDelete.setVisible(false);
-      //- btnConfirmar.setVisible(false);
     }
   }
 

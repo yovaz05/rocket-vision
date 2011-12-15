@@ -16,7 +16,7 @@ import sig.modelo.servicios.ServicioRed;
  * Servicios usados: Red
  * @author Gabriel
  */
-public class CtrlCatalogoRed extends GenericForwardComposer {
+public class CtrlComboRed extends GenericForwardComposer {
 
   //widgets:
   Label etqRed;

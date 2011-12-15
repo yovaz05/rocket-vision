@@ -46,7 +46,7 @@ public class CtrlCelulaListado extends GenericForwardComposer {
   BotonCelula tbbCelula;
   BotonLider tbbLider1, tbbLider2, tbbLider3, tbbLider4;
   //variables de control:
-  int idRed;
+  int idRedUsuario;
   //gestión de datos:
   BD datos;
   List<CelulaListadoUtil> listaCelulaListado = new ArrayList<CelulaListadoUtil>();
@@ -59,7 +59,7 @@ public class CtrlCelulaListado extends GenericForwardComposer {
   }
 
   void inicio() {
-    idRed = UtilSIG.buscarIdRed(this.getClass());
+    idRedUsuario = UtilSIG.buscarIdRed(this.getClass());
 //TODO:verificar tipo de usuario para ver qué data buscar y mostrar
     getListado();
     mostrarDatos();
@@ -103,8 +103,11 @@ public class CtrlCelulaListado extends GenericForwardComposer {
         final int idLider2 = celula.getIdLider2();
         final int idLider3 = celula.getIdLider3();
         final int idLider4 = celula.getIdLider4();
+        final int idRed = celula.getIdRed();
 
+        tbbCelula.setIdRed(idRed);
         tbbCelula.setIdCelula(idCelula);
+        tbbCelula.setNroLideres(celula.getNumeroLideres());
         tbbLider1.setIdLider(idLider1);
         tbbLider2.setIdLider(idLider2);
         tbbLider3.setIdLider(idLider3);

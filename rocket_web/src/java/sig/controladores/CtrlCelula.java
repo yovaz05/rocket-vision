@@ -7,7 +7,6 @@ import cdo.sgd.modelo.bd.simulador.CelulaUtil;
 import java.util.Calendar;
 import java.util.Date;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.A;
@@ -23,7 +22,7 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 import sig.modelo.servicios.ServicioCelula;
 import waytech.modelo.beans.sgi.CelulaInsert;
-import waytech.modelo.beans.sgi.PersonaEnCelulaInsert;
+import waytech.modelo.beans.sgi.CelulaUpdate;
 import waytech.utilidades.Util;
 
 /**
@@ -63,6 +62,7 @@ public class CtrlCelula extends GenericForwardComposer {
   Combobox db$cmbHora;
   Combobox db$cmbLider1, db$cmbLider2, db$cmbLider3, db$cmbLider4;
   Div db$opcionLider1, db$opcionLider2, db$opcionLider3, db$opcionLider4;
+  Div db$divLideresEdit;
   A db$tbbRed;
   A db$tbbLider1, db$tbbLider2, db$tbbLider3, db$tbbLider4;
   //pestaña "Dirección"
@@ -99,7 +99,7 @@ public class CtrlCelula extends GenericForwardComposer {
   private String descripcionCelula;
   String fechaApertura = "";
   Date dateFechaApertura;
-  int nLideresUsados = 0;
+  int nLideres = 0;
   //gestión de datos
   //data en modificación:
   String diaTexto = "";
@@ -109,6 +109,7 @@ public class CtrlCelula extends GenericForwardComposer {
   int diaNumero = 1;  //día por defecto en combo: Lunes
   int horaNumero = 19;  //hora por defecto en combo: 7.00pm
   int idRed = 1;
+  String nombreRed = "";
   int idZona = 1;
   //fecha de apertura con formato para BD
   String fechaAperturaBD;
@@ -119,6 +120,8 @@ public class CtrlCelula extends GenericForwardComposer {
   CelulaUtil celulaActual = new CelulaUtil();
   //objeto para insertar nueva célula
   CelulaInsert celulaInsert;
+  //objeto para actualizar célula
+  CelulaUpdate celulaUpdate;
   ServicioCelula servicio = new ServicioCelula();
   private int idCelula;
   //IDs de personas elegidas como líderes de célula
@@ -130,13 +133,13 @@ public class CtrlCelula extends GenericForwardComposer {
   @Override
   public void doAfterCompose(Component comp) throws Exception {
     super.doAfterCompose(comp);
-    System.out.println("CtrlCelula.INICIO()");
     inicio();
   }
 
   public void inicio() throws InterruptedException {
+    System.out.println("CtrlCelula.INICIO()");
     modo = Sesion.getModo();
-    if (modo.equals("ver")) {
+    if (modo.equals("ver-modificable")) {
       System.out.println("CtrlCelula.modoActual = ver");
       getID();
       System.out.println("CtrlCelula.inicio().id = " + idCelula);
@@ -150,13 +153,14 @@ public class CtrlCelula extends GenericForwardComposer {
   }
 
   /**
-   * recupera parámetro idCelula que viene de la vista llamante
+   * recupera variable de sesión 'idCelula'
+   * que fue seteada por la vista llamante
+   * sólo en modo ver
    */
-  //TODO: evaluar qué se hará si no viene de navegación dinámica...
-  //DOING:mejorando este método
+  //TODO: MEJORA: evaluar forma de obtener este valor si viniera en el URL
   private void getID() {
     try {
-      idCelula = (Integer) Sessions.getCurrent().getAttribute("idCelula");
+      idCelula = (Integer) Sesion.getVariable("idCelula");
       System.out.println("CtrlCelula.getId:id=" + idCelula);
     } catch (Exception e) {
       System.out.println("CtrlCelula -> ERROR: parámetro idCelula nulo... "
@@ -165,7 +169,8 @@ public class CtrlCelula extends GenericForwardComposer {
   }
 
   /**
-   * obtiene la célula de la data actualmente cargada
+   * obtiene la célula de la base de datos
+   * con el id de la célula
    */
   void buscarDataBD() {
     celulaBD = servicio.getCelula(idCelula);
@@ -174,11 +179,32 @@ public class CtrlCelula extends GenericForwardComposer {
     } else {
       System.out.println("CtrlCelula.Celula=" + celulaBD.toString());
     }
+    System.out.println("CtrlCelula.buscarData - nLideres=" + nLideres);
+    setVariablesSesion();
+  }
+
+  /**
+   * guarda las variables de sesión  de la red: id y nombre
+   */
+  private void setVariablesSesion() {
+    idRed = celulaBD.getIdRed();
+    nombreRed = celulaBD.getNombreRed();
+    nLideres = celulaBD.getNumeroLideres();
+    idLider1 = celulaBD.getIdLider1();
+    idLider2 = celulaBD.getIdLider2();
+    idLider3 = celulaBD.getIdLider3();
+    idLider4 = celulaBD.getIdLider4();
+    Sesion.setVariable("celula.red.id", idRed);
+    Sesion.setVariable("celula.red.nombre", nombreRed);
+    Sesion.setVariable("celula.nLideres", nLideres);
+    Sesion.setVariable("celula.idLider1", idLider1);
+    Sesion.setVariable("celula.idLider2", idLider2);
+    Sesion.setVariable("celula.idLider3", idLider3);
+    Sesion.setVariable("celula.idLider4", idLider4);
   }
 
   /**
    * muestra los datos actuales de la célula, desde la base de datos
-   * por ahora desde el simulador de BD
    */
   public void mostrarDatosBD() throws InterruptedException {
     if (celulaBD == null) {
@@ -199,27 +225,29 @@ public class CtrlCelula extends GenericForwardComposer {
     db$etqHora.setValue(horaTexto);
 
     db$tbbLider1.setLabel(celulaBD.getNombreLider1());
-    db$tbbLider2.setLabel(celulaBD.getNombreLider2());
-    db$tbbLider3.setLabel(celulaBD.getNombreLider3());
-    db$tbbLider4.setLabel(celulaBD.getNombreLider4());
+    //TODO:mostrar los otros líderes sólo si son usados
+    if (seUsaLider(2)) {
+      db$tbbLider2.setLabel(celulaBD.getNombreLider2());
+    }
+    if (seUsaLider(3)) {
+      db$tbbLider3.setLabel(celulaBD.getNombreLider3());
+    }
+    if (seUsaLider(4)) {
+      db$tbbLider4.setLabel(celulaBD.getNombreLider4());
+    }
 
     //dirección:
     /**/
     dir$etqEstado.setValue(celulaBD.getDireccion().getEstado());
-    System.out.println("relleno.punto1");
     dir$etqCiudad.setValue(celulaBD.getDireccion().getCiudad());
-    System.out.println("relleno.punto2");
-    System.out.println("CtrlDireccion.zona: " + celulaBD.getDireccion().getZona());
-    System.out.println("relleno.punto3");
+    //**System.out.println("CtrlDireccion.zona: " + celulaBD.getDireccion().getZona());
     dir$etqZona.setValue(celulaBD.getDireccion().getZona());
-    System.out.println("relleno.punto4");
     dir$etqDetalle.setValue(celulaBD.getDireccion().getDirDetallada());
-    System.out.println("relleno.punto5");
     dir$etqTelefono.setValue(celulaBD.getDireccion().getTelefono());
 
     fechaApertura = celulaBD.getFechaApertura();
     //TODO: convertir fecha a formato legible: 'día mes, año'
-    System.out.println("CtrlCelula.FechaApertura=" + celulaBD.getFechaApertura());
+    //**System.out.println("CtrlCelula.FechaApertura=" + celulaBD.getFechaApertura());
     otros$etqFechaApertura.setValue(fechaApertura);
 
     otros$etqAnfitrion.setValue(celulaBD.getAnfitrion());
@@ -284,13 +312,18 @@ public class CtrlCelula extends GenericForwardComposer {
       mostrarWidgetsViewLink(false);
       mostrarWidgetsEdit(false);
       mostrarWidgetsNew(true);
+      //-mostrarOpcionLider1();
       verBotonesEdicion(false);
-      setFocoEdicion();
+      selectTab(1);
+      db$txtCodigo.setFocus(true);
       //- btnIngresarReporte.setVisible(false);
-    } else if (modo.equals("ver")) {
+    } else if (modo.equals("ver-modificable")) {
       tituloVentana.setValue(titulo + ": " + descripcionCelula);
-      verBotonesEdicion(true);
       mostrarWidgetsViewLink(true);
+      //-mostrarWidgetsEdit(false);
+      mostrarWidgetsNew(false);
+      //TODO: permisos, chequeo si se tiene permiso de edición
+      verBotonesEdicion(true);
       //- btnIngresarReporte.setVisible(true);
       /*modo editar, funciona
       } else if (modo.equals("editar")) {
@@ -345,9 +378,8 @@ public class CtrlCelula extends GenericForwardComposer {
     //procesamiento de impresión
   }
 
-
   /**
-   * oculta o muestra la columna donde están los botones de edición
+   * oculta o muestra la columna donde están los botones de edición específicos
    * @param status el estado true o false
    */
   public void verBotonesEdicion(boolean status) {
@@ -356,10 +388,12 @@ public class CtrlCelula extends GenericForwardComposer {
 
   public void onSelect$tabbox() {
     tabSeleccionado = tabbox.getSelectedIndex();
-    //-Messagebox.show("tab selected: " + tabSeleccionado);
+    /*-
     if (modo.equals("editar")) {
-      setFocoEdicion();
+    setFocoEdicion();
     }
+     * 
+     */
   }
 
   /**
@@ -463,7 +497,6 @@ public class CtrlCelula extends GenericForwardComposer {
    * muestra/oculta los widgets de visualización que no sirven para edición
    */
   private void mostrarWidgetsViewLink(boolean status) {
-    //datos básicos:
     db$tbbRed.setVisible(status);
     db$tbbLider1.setVisible(status);
     db$tbbLider2.setVisible(status);
@@ -487,22 +520,20 @@ public class CtrlCelula extends GenericForwardComposer {
   private void mostrarWidgetsEdit(boolean status) {
     //datos básicos:
     db$etqRed.setVisible(status);
+    //? db$divLideresEdit.setVisible(status);
     if (seUsaLider(1)) {
-      db$opcionLider1.setVisible(true);
-      db$etqLider1.setVisible(true);
+      db$opcionLider1.setVisible(status);
     }
     if (seUsaLider(2)) {
-      db$opcionLider2.setVisible(true);
-      db$etqLider2.setVisible(true);
+      db$opcionLider2.setVisible(status);
     }
     if (seUsaLider(3)) {
-      db$opcionLider3.setVisible(true);
-      db$etqLider3.setVisible(true);
+      db$opcionLider3.setVisible(status);
     }
     if (seUsaLider(4)) {
-      db$opcionLider4.setVisible(true);
-      db$etqLider4.setVisible(true);
+      db$opcionLider4.setVisible(status);
     }
+
   }
 
   /**
@@ -510,23 +541,25 @@ public class CtrlCelula extends GenericForwardComposer {
    */
   private void getValoresEdit() {
     db$etqRed.setValue(celulaBD.getNombreRed());
+
+    /*?
     //líderes
-    nLideresUsados = celulaBD.getNumeroLideres();
     if (seUsaLider(1)) {
-      db$etqLider1.setValue(celulaBD.getNombreLider1());
+    db$etqLider1.setValue(celulaBD.getNombreLider1());
     }
     if (seUsaLider(2)) {
-      db$etqLider2.setValue(celulaBD.getNombreLider2());
+    db$etqLider2.setValue(celulaBD.getNombreLider2());
     }
     if (seUsaLider(3)) {
-      db$etqLider3.setValue(celulaBD.getNombreLider3());
+    db$etqLider3.setValue(celulaBD.getNombreLider3());
     }
     if (seUsaLider(4)) {
-      db$etqLider4.setValue(celulaBD.getNombreLider4());
+    db$etqLider4.setValue(celulaBD.getNombreLider4());
     }
+    ?*/
+
     /*
     //TODO: convertir día y hora a número acorde a los valores estándares de base de datos
-    //getDiaHoraSeleccionada();
     db$cmbDia.setValue(diaTexto);
     db$cmbHora.setValue(horaTexto);
     
@@ -602,18 +635,16 @@ public class CtrlCelula extends GenericForwardComposer {
   //TODO: optimizar código relacionado a variable booleana ok
   public void onClick$btnGuardar() {
     boolean ok = false;
-    //TODO: validar si es modo new: ingresarDatosCelula, si es modo edit usar: modificar
-    if (modo.equals("editar")) {
-      System.out.println("CtrlCelula. btnGuardar. modo editar. no está programado");
-      return;//modo editar aún no programado
-    }
-    ok = addCelula();
-    if (ok) {
-      Sesion.setVariable("resultOperacion", 1);
-      //indica éxito, será usado por barraMenu para los mensajes
-    } else {
-      Sesion.setVariable("resultOperacion", -1);
-      //indica error, será usado por barraMenu para los mensajes
+    //TODO: MEJORA CODIGO: quitar modo editar, ya que se usa edición dinámica
+    if (modo.equals("new")) {
+      ok = addCelula();
+      if (ok) {
+        Sesion.setVariable("resultOperacion", 1);
+        //indica éxito, será usado por barraMenu para los mensajes
+      } else {
+        Sesion.setVariable("resultOperacion", -1);
+        //indica error, será usado por barraMenu para los mensajes
+      }
     }
   }
 
@@ -654,17 +685,17 @@ public class CtrlCelula extends GenericForwardComposer {
       selectTab(1);
       db$txtCodigo.setFocus(true);
       return false;
-    } else if (!textboxIngresado(db$txtNombre, "Ingresa el nombre")) {
-      //set foco en tabPanel y widget correspondiente
-      selectTab(1);
-      db$txtNombre.setFocus(true);
-      return false;
     } else if (!comboSeleccionado(db$cmbRed, "Selecciona la red")) {
       //set foco en tabPanel y widget correspondiente
       selectTab(1);
       db$cmbRed.setFocus(true);
       return false;
     } else if (!lideresIngresados()) {
+      return false;
+    } else if (!textboxIngresado(db$txtNombre, "Ingresa el nombre")) {
+      //set foco en tabPanel y widget correspondiente
+      selectTab(1);
+      db$txtNombre.setFocus(true);
       return false;
     } else if (!estadoSeleccionado()) {
       return false;
@@ -692,7 +723,7 @@ public class CtrlCelula extends GenericForwardComposer {
       ok = true;
     } else {
       //valor NO válido
-      mostrarMensaje(msjError);
+      //- mostrarMensaje(msjError);
       textbox.setSclass("textbox_error");
       ok = false;
     }
@@ -719,7 +750,7 @@ public class CtrlCelula extends GenericForwardComposer {
 //TODO: MEJORACODIGO: sacar este método para una clase de utilería
   private boolean lideresIngresados() {
     //sacar número de líderes ingresados, desde variable de sesión en CtrlCelulaDatosBasicos
-    nLideresUsados = (Integer) Sesion.getVariable("celula.nLideresUsados");
+    nLideres = (Integer) Sesion.getVariable("celula.nLideres");
     if (!comboSeleccionado(db$cmbLider1, "Selecciona el líder")) {
       //set foco en tabPanel y widget correspondiente
       selectTab(1);
@@ -753,7 +784,7 @@ public class CtrlCelula extends GenericForwardComposer {
    * @return 
    */
   private boolean seUsaLider(int posLider) {
-    if (posLider <= nLideresUsados) {
+    if (posLider <= nLideres) {
       return true;
     }
     return false;
@@ -887,15 +918,15 @@ public class CtrlCelula extends GenericForwardComposer {
   void getLideresCelulaElegidos() {
     idLider1 = buscarIdLider(1);
     System.out.println("CtrlCelula-lider1.id=" + idLider1);
-    if (nLideresUsados >= 2) {
+    if (nLideres >= 2) {
       idLider2 = buscarIdLider(2);
       System.out.println("CtrlCelula-lider2.id=" + idLider2);
     }
-    if (nLideresUsados >= 3) {
+    if (nLideres >= 3) {
       idLider3 = buscarIdLider(3);
       System.out.println("CtrlCelula-lider3.id=" + idLider3);
     }
-    if (nLideresUsados == 4) {
+    if (nLideres == 4) {
       idLider4 = buscarIdLider(4);
       System.out.println("CtrlCelula-lider4.id=" + idLider4);
     }
@@ -918,14 +949,11 @@ public class CtrlCelula extends GenericForwardComposer {
   }
 
   /**
-   * prepara objeto PersonaEnCelulaInsert para grabar un líder de célula
+   * agregar lider a la célula
+   * @param idLider id del líder
    */
   private void ingresarLiderCelula(int idLider) {
-    PersonaEnCelulaInsert persona = new PersonaEnCelulaInsert();
-    persona.setIdCelula(idCelula);
-    persona.setIdPersona(idLider);
-    persona.setEsLiderCelula(true);
-    if (servicio.ingresarLiderCelula(persona)) {
+    if (servicio.agregarLiderCelula(idLider)) {
       System.out.println("CtrlCelula. Líder registrado. Célula.id=" + idCelula + ", Lider.id=" + idLider);
     }
   }
@@ -977,14 +1005,21 @@ public class CtrlCelula extends GenericForwardComposer {
     etqMensaje.setValue("");
   }
 
-  //TODO: hacer similar a 
-  //mostrar todos los widgets de entrada
   private void mostrarWidgetsNew(boolean status) {
-    //datos básicos:
     db$txtCodigo.setVisible(status);
     db$cmbRed.setVisible(status);
     db$cmbDia.setVisible(status);
-    db$cmbHora.setVisible(status);    
+    db$cmbHora.setVisible(status);
     db$txtNombre.setVisible(status);
+    dir$cmbEstado.setVisible(status);
+    dir$txtDetalle.setVisible(status);
+    dir$txtTelefono.setVisible(status);
+    otros$dateboxFechaApertura.setVisible(status);
+    otros$txtAnfitrion.setVisible(status);
+    obs$txtObservaciones.setVisible(status);
+  }
+
+  private void mostrarOpcionLider1() {
+    db$opcionLider1.setVisible(true);
   }
 }

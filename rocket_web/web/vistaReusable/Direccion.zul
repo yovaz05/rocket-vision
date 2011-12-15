@@ -12,7 +12,8 @@
       <row>
         <label value="Estado" sclass="etiqueta_campo"/>
         <hbox align="left">
-          <label id="etqEstado" value="Lara"/>
+<!--          <label id="etqEstado" value="Lara"/>-->
+          <label id="etqEstado" value=""/>
           <combobox id="cmbEstado"
           autocomplete="true" autodrop="true" readonly="true"
           visible="false">
@@ -44,7 +45,8 @@
       <row>
         <label value="Ciudad" sclass="etiqueta_campo"/>
         <hbox align="left">
-          <label id="etqCiudad" value="Ciudad"/>
+<!--          <label id="etqCiudad" value="Barquisimeto"/>-->
+          <label id="etqCiudad" value=""/>
           <combobox id="cmbCiudad" autocomplete="true" autodrop="true" readonly="true"
           visible="false">
           <!--TODO: comentar la lista, los valores son traidos de la bd -->
@@ -76,7 +78,7 @@
       <row>
         <label value="Sector" sclass="etiqueta_campo"/>
         <hbox align="left">
-          <label id="etqZona" value="Sector"/>          
+          <label id="etqZona" value=""/>          
 <!--          <combobox id="cmbZona" value="Centro" autocomplete="true" autodrop="true" readonly="true">-->
           <combobox id="cmbZona" autocomplete="true" autodrop="true" readonly="true"
           visible="false">
@@ -117,7 +119,7 @@
       <row> 
         <label value="Detalle" sclass="etiqueta_campo" tooltiptext="Calle, Avenida, Número, Referencia, etc."/>
         <hbox align="left">
-          <label id="etqDetalle" value="Detalles" multiline="true"/>
+          <label id="etqDetalle" value="" multiline="true"/>
           <textbox id="txtDetalle" rows="3" cols="50" multiline="true"
           value="" visible="false"/>
         </hbox>
@@ -138,7 +140,7 @@
         <label value="Teléfono" sclass="etiqueta_campo"
           tooltiptext="Teléfono de la casa o lugar donde se realiza la célula"/>
         <hbox align="left">
-          <label id="etqTelefono" value="0251-555555"/>
+          <label id="etqTelefono" value=""/>
           <textbox id="txtTelefono" maxlength="15" value="" visible="false"/>
         </hbox>
 <!--          <div align="left" visible="false">
