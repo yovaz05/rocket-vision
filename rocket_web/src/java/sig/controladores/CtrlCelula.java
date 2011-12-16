@@ -184,7 +184,7 @@ public class CtrlCelula extends GenericForwardComposer {
   }
 
   /**
-   * guarda las variables de sesión  de la red: id y nombre
+   * guarda las variables de sesión
    */
   private void setVariablesSesion() {
     idRed = celulaBD.getIdRed();
@@ -637,10 +637,11 @@ public class CtrlCelula extends GenericForwardComposer {
     boolean ok = false;
     //TODO: MEJORA CODIGO: quitar modo editar, ya que se usa edición dinámica
     if (modo.equals("new")) {
-      ok = addCelula();
+      ok = crearCelula();
       if (ok) {
         Sesion.setVariable("resultOperacion", 1);
         //indica éxito, será usado por barraMenu para los mensajes
+        modo = "ver-modificable";
       } else {
         Sesion.setVariable("resultOperacion", -1);
         //indica error, será usado por barraMenu para los mensajes
@@ -653,14 +654,16 @@ public class CtrlCelula extends GenericForwardComposer {
    * incluye la validación de que se ingresen todos los valores obligatorios
    * @return 
    */
-  boolean addCelula() {
+  boolean crearCelula() {
+    ocultarMensaje();
     if (camposObligatoriosIngresados()) {
-      ocultarMensaje();
       //ingresar nueva célula en la base de datos      
       if (ingresarCelula()) {//nueva célula registrada con éxito
         System.out.println("CtrlCelula. Nueva celula ingresada. código:" + celulaInsert.getCodigo());
         //mostrar descripción en titulo:
-        descripcionCelula = generarDescripcionCelula(celulaInsert.getCodigo(), dir$cmbZona.getValue());
+        //TODO: agregar la zona a la descripción
+        //descripcionCelula = generarDescripcionCelula(celulaInsert.getCodigo(), dir$cmbZona.getValue());
+        descripcionCelula = generarDescripcionCelula(celulaInsert.getCodigo(), "");
         modo = "ver";
         actualizarEstado();
         mostrarValoresView();
@@ -692,18 +695,20 @@ public class CtrlCelula extends GenericForwardComposer {
       return false;
     } else if (!lideresIngresados()) {
       return false;
-    } else if (!textboxIngresado(db$txtNombre, "Ingresa el nombre")) {
-      //set foco en tabPanel y widget correspondiente
-      selectTab(1);
-      db$txtNombre.setFocus(true);
-      return false;
+    } /*- CAMBIO: estos campos no son necesarios hasta que cree la célula
+    else if (!textboxIngresado(db$txtNombre, "Ingresa el nombre")) {
+    //set foco en tabPanel y widget correspondiente
+    selectTab(1);
+    db$txtNombre.setFocus(true);
+    return false;
     } else if (!estadoSeleccionado()) {
-      return false;
+    return false;
     } else if (!ciudadSeleccionada()) {
-      return false;
+    return false;
     } else if (!zonaSeleccionada()) {
-      return false;
+    return false;
     }
+     */
     return true;
   }
 
@@ -1008,6 +1013,7 @@ public class CtrlCelula extends GenericForwardComposer {
   private void mostrarWidgetsNew(boolean status) {
     db$txtCodigo.setVisible(status);
     db$cmbRed.setVisible(status);
+    /*
     db$cmbDia.setVisible(status);
     db$cmbHora.setVisible(status);
     db$txtNombre.setVisible(status);
@@ -1017,6 +1023,7 @@ public class CtrlCelula extends GenericForwardComposer {
     otros$dateboxFechaApertura.setVisible(status);
     otros$txtAnfitrion.setVisible(status);
     obs$txtObservaciones.setVisible(status);
+     */
   }
 
   private void mostrarOpcionLider1() {

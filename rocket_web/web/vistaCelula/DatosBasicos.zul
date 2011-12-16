@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
   <style src="css/estilos1.css"/>  
-  <div align="center" style="display:inline-block;margin:2px; padding: 2px 15px;">
+  <hbox id="divMensaje"
+      align="left"
+      sclass="mensajes"
+      visible="false">
     <label id="etqMensaje"
       value="Mensajes al usuario:"
       sclass="mensajes"
-      style="margin: 2px; padding:2px;text-align:center"
-      visible="false"
-      onClick="self.visible=false"/>
-  </div>   
+      style="display:inline-block;margin:2px; padding: 2px 15px;"
+      onClick="cerrarMensaje()"
+      visible="false"/>
+    <a id="btnCerrarMensaje"
+      label="OK"
+      style="margin: 2px; padding:2px;text-align:right"
+      onClick="cerrarMensaje()"      
+      visible="false"/>
+  </hbox>   
   <grid style="border:0px" apply="sig.controladores.CtrlCelulaDatosBasicos">
     <columns>
       <column id="col1" width="100px"/>
@@ -238,108 +246,20 @@
   <zscript>
 <!--TODO: pasar este código al controlador, y unificar al ya existente-->
   <![CDATA[
-  /*
-    void activarEditRed(){
-      cmbRed.setValue(tbbRed.getLabel());
-      cmbRed.setVisible(true);
-      cmbRed.setFocus(true);
-      cmbRed.select();
-      tbbRed.setVisible(false);
-      etqRed.setVisible(false);
-      btnCancelarEditRed.setVisible(true);
-      btnEditRed.setVisible(false);
-      btnEditLideres.setVisible(false);//bloquear edición de red
-    }    
-    void cancelarEditRed(){
-      btnCancelarEditRed.setVisible(false);
-      cmbRed.setVisible(false);
-      etqRed.setVisible(true);
-      btnEditRed.setVisible(true);
-      btnEditLideres.setVisible(true);//permitir edición de red
+    void cerrarMensaje(){
+      etqMensaje.setVisible(false);
+      btnCerrarMensaje.setVisible(false);
+      divMensaje.setVisible(false);
     }
-    void activarEditLideres(){
-      btnEditRed.setVisible(false);//bloquear edición de red
-      cmbLider1.setValue(etqLider1.getValue());
-      cmbLider2.setValue(etqLider2.getValue());
-      cmbLider3.setValue(etqLider3.getValue());
-      cmbLider4.setValue(etqLider4.getValue());
-      linksLideres.setVisible(false);
-      etqsLideres.setVisible(true);
-      combosLideres.setVisible(true);
-      etqLider1.setVisible(true);      
-      btnCancelarEditLideres.setVisible(true);
-      btnEditLideres.setVisible(false);
-    }
-    
-    void cancelarEditLideres(){
-      linksLideres.setVisible(true);
-      etqsLideres.setVisible(true);
-      combosLideres.setVisible(false);
-      btnCancelarEditLideres.setVisible(false);
-      btnEditLideres.setVisible(true);
-      btnEditRed.setVisible(true);//permitir edición de red
-    }   
-    void activarEditCodigo(){
-      txtCodigo.setValue(etqCodigo.getValue());
-      btnEditCodigo.setVisible(false);
-      btnCancelarEditCodigo.setVisible(true);
-      etqCodigo.setVisible(false);
-      txtCodigo.setVisible(true);
-      txtCodigo.setFocus(true);
-    }
-    
-    void cancelarEditCodigo(){
-      btnCancelarEditCodigo.setVisible(false);
-      btnEditCodigo.setVisible(true);
-      txtCodigo.setVisible(false);
-      etqCodigo.setVisible(true);
-    }
-    void activarEditDiaHora(){
-      cmbDia.setValue(etqDia.getValue());
-      cmbHora.setValue(etqHora.getValue());
-      btnCancelarEditDiaHora.setVisible(true);
-      btnEditDiaHora.setVisible(false);
-      cmbDia.setVisible(true);
-      cmbHora.setVisible(true);
-      etqDia.setVisible(false);
-      etqSeparadorDiaHora.setVisible(false);
-      etqHora.setVisible(false);
-    }
-    
-    void cancelarEditDiaHora(){
-      btnCancelarEditDiaHora.setVisible(false);
-      btnEditDiaHora.setVisible(true);
-      cmbDia.setVisible(false);
-      cmbHora.setVisible(false);
-      etqDia.setVisible(true);
-      etqSeparadorDiaHora.setVisible(true);
-      etqHora.setVisible(true);
-    }   
-    void activarEditNombre(){
-      txtNombre.setValue(etqNombre.getValue());
-      btnEditNombre.setVisible(false);
-      btnCancelarEditNombre.setVisible(true);
-      etqNombre.setVisible(false);
-      txtNombre.setVisible(true);
-      txtNombre.setFocus(true);
-    }
-    
-    void cancelarEditNombre(){
-      btnCancelarEditNombre.setVisible(false);
-      btnEditNombre.setVisible(true);
-      txtNombre.setVisible(false);
-      etqNombre.setVisible(true);
-    }
-    */
   ]]> 
   </zscript>
   
 <!-- 
   TODO:
-  1. agrupar widgets por hbox's y vbox's:
-  líderes (1,2,3,4)
-  día y hora (+separador)
-  2. arreglar error en alto de botones de edición para diahora
-  3. manejar amigabilidad de intentar editar un campo estando editando el otro
+  *cambiar modo new: 
+    1. sólo pedir código y red
+    2. al ingresar estos campos se ingresa la célula en la base de datos, con todos los valores vacíos
+    3. y luego el usuario puede modificar los otros valores
+  
   -->
 </zk>
