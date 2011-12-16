@@ -21,7 +21,7 @@
     <toolbar width="100%" height="20px" sclass="barraBotones"  visible="false">
       <toolbarbutton id="btnNew" label="Nueva" sclass="botonAccion" onClick="nuevaCelula()"/>
     </toolbar>
-    <grid id="grid" style="border:normal" mold="paging" pageSize="5">
+    <grid id="grid" style="border:normal; margin-right:10px" mold="paging" pageSize="5">
       <columns sizable="true">
         <column label="#" width="25px"/>
         <column label="Código" width="80px"/>

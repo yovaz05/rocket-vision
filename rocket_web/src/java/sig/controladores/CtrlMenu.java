@@ -296,7 +296,7 @@ public class CtrlMenu extends GenericForwardComposer {
   public void onClick$btnDelete() {
     String modo_tmp = modo;
     modo = "borrar";
-    mostrarStatus("Borrar: En construcción");
+    mostrarStatus("Eliminar: En construcción");
     //...aquí va el procesamiento para imprimir
     modo = modo_tmp;
   }
@@ -532,7 +532,7 @@ public class CtrlMenu extends GenericForwardComposer {
     } else if (modo.equals("new")) {
       btnNew.setVisible(false);
       btnEdit.setVisible(false);
-      btnSave.setVisible(true);
+      btnSave.setVisible(false);
       btnDelete.setVisible(false);
       //TODO: falta botón cancelar
     } else if (modo.equals("ver")) {

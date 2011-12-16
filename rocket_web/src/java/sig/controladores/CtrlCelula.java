@@ -17,6 +17,7 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
@@ -41,6 +42,10 @@ public class CtrlCelula extends GenericForwardComposer {
   Toolbarbutton btnEditar;
   Label etqMensaje;
   Tabbox tabbox;
+  Tab tabDB;
+  Tab tabDir;
+  Tab tabOtros;
+  Tab tabObs;
   A btnIngresarReporte;
   //pestaña "Datos Básicos"
   Column db$colData;
@@ -329,6 +334,7 @@ public class CtrlCelula extends GenericForwardComposer {
       tituloVentana.setValue(titulo + " » Ingresar");
       //- mostrarColumnasVisualizacion(false);
       mostrarWidgetsNew(true);
+      mostrarTabsRestantes(false);
       mostrarWidgetsViewLink(false);
       mostrarWidgetsEdit(false);
       //- mostrarOpcionLider1();
@@ -659,7 +665,9 @@ public class CtrlCelula extends GenericForwardComposer {
       if (ingresarNuevaCelula()) {
         //-Sesion.setVariable("resultOperacion", 1);//indica éxito
         modo = "ver-modificable";
+        Sesion.setModo(modo);
         mostrarValoresView();
+        mostrarTabsRestantes(true);
         actualizarEstado();
       } else {
         //- Sesion.setVariable("resultOperacion", -1);//indica error
@@ -709,7 +717,11 @@ public class CtrlCelula extends GenericForwardComposer {
   }
 
   private String generarDescripcionCelula(String codigo, String zona) {
-    return codigo + ", " + zona;
+    String desc = codigo;
+    if (!zona.isEmpty()) {
+      desc += ", " + zona; 
+    }
+    return desc;
   }
 
   /**
@@ -1055,12 +1067,10 @@ public class CtrlCelula extends GenericForwardComposer {
   private void mostrarWidgetsNew(boolean visible) {
     db$txtCodigo.setVisible(visible);
     db$cmbRed.setVisible(visible);
-    //TODO: mejora: mostrar combo de red sólo cuando ingresa el código
-    /*
+    //TODO: se mostrará el combo de red sólo cuando ingresa el código
     if (visible) {
-      db$cmbRed.setDisabled(false);
+      db$cmbRed.setDisabled(true);
     }
-     */
 
     /*
     db$cmbDia.setVisible(status);
@@ -1081,5 +1091,11 @@ public class CtrlCelula extends GenericForwardComposer {
 
   private int getIdRed() {
     return (Integer) Sesion.getVariable("cmbRed.id");
+  }
+
+  private void mostrarTabsRestantes(boolean visible) {
+    tabDir.setVisible(visible);
+    tabOtros.setVisible(visible);
+    tabObs.setVisible(visible);
   }
 }

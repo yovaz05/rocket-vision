@@ -116,6 +116,7 @@ public class ServicioCelula {
     celulaInsert.setDia(0);
     celulaInsert.setHora(0);
     celulaInsert.setNombre("");
+    //TODO: Debe usarse una zona de utilería
     celulaInsert.setIdZona(1);
     celulaInsert.setDireccion("");
     celulaInsert.setTelefono("");

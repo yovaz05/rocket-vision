@@ -7,8 +7,10 @@
   <div apply="sig.controladores.CtrlCelula" width="450px">
     <label id="tituloVentana" sclass="titulo_ventana"/>
     <div align="center" style="display:inline-block;margin:2px; padding: 2px 15px;">
-      <label id="etqMensaje" value="Mensajes al usuario:" sclass="mensajes" visible="false"
-            style="margin: 2px; padding:2px;"/>
+      <label id="etqMensaje" value="Mensajes al usuario:"
+      sclass="mensajes" style="margin: 2px; padding:2px;"
+      onClick="self.visible=false"
+      visible="false"/>
     </div>    
     <toolbar width="100%" height="20px" sclass="barraBotones" visible="false">
       <toolbarbutton id="btnNew" label="Nueva" sclass="botonAccion" visible="false"/>
@@ -20,10 +22,10 @@
     <tabbox id="tabbox" width="100%" mold="accordion">
       <tabs>
 <!--        TODO: cambiar orden de tabs-->
-        <tab label="Datos Básicos"/>
-        <tab label="Dirección" visible="false"/>
-        <tab label="Otros datos" visible="false"/>
-        <tab label="Observaciones" visible="false"/>
+        <tab id="tabDB" label="Datos Básicos"/>
+        <tab id="tabDir" label="Dirección" visible="false"/>
+        <tab id="tabOtros" label="Otros datos" visible="false"/>
+        <tab id="tabObs" label="Observaciones" visible="false"/>
       </tabs>
       <tabpanels>
 <!--        TODO: cambiar orden de tabs-->

@@ -22,14 +22,15 @@ title="SIG - Mejorando barra superior"?>
           <menubar id="menubar" orient="horizontal" height="24px">
 <!--          <menuitem id="itemNombreSistema" label="SIG" height="22px"/>-->
             <menuitem label="Mi Red" id="itemRed" visible="false"/>
-            <menu label="Mis Células">
+            <menuitem label="Células" id="itemCelulaListado" image="/img/iconos/bullet.png"/>
+<!--            <menu label="Mis Células" visible="false">
               <menupopup>
-                <menuitem label="Listado" id="itemCelulaListado" image="/img/iconos/bullet.png"/>
-                <menuitem label="Líderes" id="itemCelulaLiderListado" image="/img/iconos/bullet.png"/>
-                <menuitem label="Reportes" id="itemCelulaReporteListado" image="/img/iconos/bullet.png"/>
-                <menuitem label="Estadísticas" id="itemCelulaEstadisticas" image="/img/iconos/bullet.png"/> 
+                <menuitem label="Células" id="itemCelulaListado" image="/img/iconos/bullet.png"/>
+                <menuitem label="Líderes" id="itemCelulaLiderListado" image="/img/iconos/bullet.png" visible="false"/>
+                <menuitem label="Reportes" id="itemCelulaReporteListado" image="/img/iconos/bullet.png" visible="false"/>
+                <menuitem label="Estadísticas" id="itemCelulaEstadisticas" image="/img/iconos/bullet.png" visible="false"/> 
               </menupopup>
-            </menu>
+            </menu>-->
             <menu label="Mis Discípulos" visible="false">
               <menupopup>
                 <menuitem label="Lanzados" id="itemDiscipuloLanzadoListado" image="/img/iconos/bullet.png"/>

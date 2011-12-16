@@ -105,8 +105,8 @@ public class CtrlCelulaListado extends GenericForwardComposer {
         final int idLider4 = celula.getIdLider4();
         final int idRed = celula.getIdRed();
 
-        tbbCelula.setIdRed(idRed);
         tbbCelula.setIdCelula(idCelula);
+        tbbCelula.setIdRed(idRed);
         tbbCelula.setNroLideres(celula.getNumeroLideres());
         tbbLider1.setIdLider(idLider1);
         tbbLider2.setIdLider(idLider2);
@@ -118,13 +118,13 @@ public class CtrlCelulaListado extends GenericForwardComposer {
         //se anexan los widgets a la fila
         etqNro.setParent(row);
         tbbCelula.setParent(row);
-        etqDireccion.setParent(row);
         Vbox vbox = new Vbox();
         tbbLider1.setParent(vbox);
         tbbLider2.setParent(vbox);
         tbbLider3.setParent(vbox);
         tbbLider4.setParent(vbox);
         vbox.setParent(row);
+        etqDireccion.setParent(row);
         etqDiaHora.setParent(row);
         etqNombre.setParent(row);
       }
