@@ -21,7 +21,7 @@ title="SIG - Mejorando barra superior"?>
         <hbox>
           <menubar id="menubar" orient="horizontal" height="24px">
 <!--          <menuitem id="itemNombreSistema" label="SIG" height="22px"/>-->
-            <menuitem label="Mi Red" id="itemRed"/>
+            <menuitem label="Mi Red" id="itemRed" visible="false"/>
             <menu label="Mis Células">
               <menupopup>
                 <menuitem label="Listado" id="itemCelulaListado" image="/img/iconos/bullet.png"/>
@@ -30,13 +30,13 @@ title="SIG - Mejorando barra superior"?>
                 <menuitem label="Estadísticas" id="itemCelulaEstadisticas" image="/img/iconos/bullet.png"/> 
               </menupopup>
             </menu>
-            <menu label="Mis Discípulos">
+            <menu label="Mis Discípulos" visible="false">
               <menupopup>
                 <menuitem label="Lanzados" id="itemDiscipuloLanzadoListado" image="/img/iconos/bullet.png"/>
                 <menuitem label="En Proceso" id="itemDiscipuloProcesoListado" image="/img/iconos/bullet.png"/>
               </menupopup>
             </menu>
-            <menu label="Herr">
+            <menu label="Herr" visible="false">
               <menupopup>
                 <menuitem label="Listado Acceso" id="itemListadoAcceso" image="/img/iconos/bullet.png"/>
                 <menuitem label="Cambiar Datos"  id="itemAccesoDatos" image="/img/iconos/bullet.png"/>
@@ -85,7 +85,7 @@ title="SIG - Mejorando barra superior"?>
             </menupopup>
           </menu>         
           -->
-          <menu id="tbbUsuario" label="Gabriel Pérez">
+          <menu id="tbbUsuario" label="Gabriel Pérez" visible="false">
             <menupopup>
               <menuitem label="Perfil" id="itemPerfil" image="/img/iconos/bullet.png"/>
               <menuitem label="Cambiar correo" id="itemCambiarEmail" image="/img/iconos/bullet.png"/>

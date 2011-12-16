@@ -84,16 +84,51 @@ public class ServicioCelula {
   }
 
   /**
-   * inserta los datos de la célula en la base de datos.
-   * tabla: celula
-   * @param nuevaCelula el objeto Celula con los datos
+   * crear una célula en la base de datos
+   * con todos los datos en el objeto CelulaInsert
+   * @param celulaInsert el objeto con los datos
    * @return el id de la célula creada
    */
-  public int ingresarDatosCelula(CelulaInsert celulaInsert) {
+  public int insertCelula(CelulaInsert celulaInsert) {
     RspCelula rspCelula = isaCelula.insertCelula(celulaInsert);
     boolean ok = rspCelula.esSentenciaSqlEjecutadaExitosamente();
     if (ok) {
       idCelula = rspCelula.getCelula().getIdCelula();
+    }
+    return idCelula;
+  }
+
+  /**
+   * crear una célula en la base de datos
+   * con sólo el código y la red
+   * @param nuevaCelula el objeto Celula con los datos
+   * @return el id de la célula creada
+   */
+  public int crearCelula(String codigo, int idRed) {
+    System.out.println("ServicioCelula.crearCelula.codigo=" + codigo);
+    System.out.println("ServicioCelula.crearCelula.idRed=" + idRed);
+
+    CelulaInsert celulaInsert = new CelulaInsert();
+    //datos ingresados:
+    celulaInsert.setCodigo(codigo);
+    celulaInsert.setIdRed(idRed);
+    //datos por defecto:
+    celulaInsert.setDia(0);
+    celulaInsert.setHora(0);
+    celulaInsert.setNombre("");
+    celulaInsert.setIdZona(1);
+    celulaInsert.setDireccion("");
+    celulaInsert.setTelefono("");
+    celulaInsert.setFechaApertura("");
+    celulaInsert.setAnfitrion("");
+    celulaInsert.setObservaciones("");
+
+    RspCelula respuesta = isaCelula.insertCelula(celulaInsert);
+    if (respuesta.esSentenciaSqlEjecutadaExitosamente()) {
+      System.out.println("ServicioCelula.crearCelula.codigo=" + codigo);
+      idCelula = respuesta.getCelula().getIdCelula();
+    } else {
+      idCelula = 0;
     }
     return idCelula;
   }
@@ -436,12 +471,11 @@ public class ServicioCelula {
    * @param idLider
    * @return 
    */
-  public boolean deleteLider(int idLider) {    
+  public boolean deleteLider(int idLider) {
     System.out.println("ServicioCelula.deleteLider.idLider=" + idLider);
     RspPersonaEnCelula rspPersonaCelula = new RspPersonaEnCelula();
     rspPersonaCelula = isaPersonaCelula.deletePersonaEnCelulaPorIdPersona(idCelula, idLider);
     return rspPersonaCelula.esSentenciaSqlEjecutadaExitosamente();
     //TODO: devolver el resultado de la operación de base de datos (true, false)
   }
-  
 }

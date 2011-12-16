@@ -187,13 +187,11 @@ public class CtrlMenu extends GenericForwardComposer {
     cambiarVista(Vistas.SISTEMA_ACERCADE);
     mostrarStatus("En construcción");
   }
-  
+
   public void onClick$itemListadoAcceso() {
     cambiarVista(Vistas.LISTADO_ACCESO);
     mostrarStatus("En construcción");
   }
-  
-  
   /**
    * codigo relacionado a barra de navegación
    **/
@@ -227,10 +225,10 @@ public class CtrlMenu extends GenericForwardComposer {
     borrarVariablesSesionResultado();
     ocultarStatus();
     //notificar evento a ventana actual:
+    modo = "new";
     Sesion.setModo("new");
     notificarEvento("btnNew");
     //actualizar estados de botones:
-    modo = "new";
     actualizarEstadoBarra();
   }
 
@@ -260,14 +258,18 @@ public class CtrlMenu extends GenericForwardComposer {
       //sólo se probó con CtrlLider y CtrlCelula
        */
       Integer resultado = (Integer) Sesion.getVariable("resultOperacion");
-      if ((resultado != null) && (resultado.intValue() == 1)) {
+      if (resultado == null) {
+        //no hay resultado de operación
+        return;
+      }
+      if (resultado.intValue() == 1) {
         //**
         System.out.println("CtrlMenu.btnSave.resultado=OK");
         mostrarStatus("Datos guardados");
         //+ mensajeExitoEspecifico();
         modo = "ver";
         actualizarEstadoBarra();
-      } else {
+      } else if (resultado.intValue() == -1) {
         System.out.println("CtrlMenu.btnSave.resultado Operacion=ERROR");
       }
       /**/

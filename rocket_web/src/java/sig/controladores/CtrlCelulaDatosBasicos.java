@@ -75,15 +75,12 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   A btnCancelarEditNombre;
   A btnEditRed, btnCancelarEditRed;
   A btnEditLideres, btnCancelarEditLideres;
-  private Div linksLideres;
-  private Div etqsLideres;
-  private int idCelula;
+  private int idCelula = 0;
   //TODO: MEJORA CODIGO: pasar estas constantes a clase de constantes
   private static final String LIDER1_VACIO = "Líder 1";
   private static final String LIDER2_VACIO = "Líder 2";
   private static final String LIDER3_VACIO = "Líder 3";
   private static final String LIDER4_VACIO = "Líder 4";
-  private A btnQuitarLider1;
   private A btnQuitarLider2;
   private A btnQuitarLider3;
   private A btnQuitarLider4;
@@ -98,11 +95,12 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     System.out.println("CtrlCelulaDatosBasicos.inicio");
     cargarRedes();
 
-    //TODO: MEJORA-CODIGO: evaluar quitar esta línea
-    getVariablesSesionGenerales();
-
+    /**/
+    if (Sesion.modoIngresar()) {
+      setVarSesionDefault();
+    }
     cargarLideresLanzados();
-    setVariablesSesionValoresPorDefecto();
+    /**/
   }
 
   /**
@@ -135,10 +133,11 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     modelRedes.addAll(redesNombres);
     cmbRed.setModel(modelRedes);
     /**
-     * TODO: EVALUAR - MEJORA DE USABILIDAD: mostrar sólo las redes donde hay líderes lanzados registrados
+     * TODO: EVALUAR - MEJORA USABILIDAD: mostrar sólo las redes donde hay líderes lanzados registrados
      */
   }
-  //TODO: obtener id de la red seleccionada directamente del combobox
+
+  //TODO: MEJORA CODIGO: obtener id de la red seleccionada directamente del combobox
   /*
    *     for (Red r : redes) {
   int id = r.getIdRed();
@@ -150,16 +149,19 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   cmbRed.setModel(modelRedes);
   
    */
-
   /**
    * obtiene todos los líderes lanzados de la red seleccionada
    */
   //TODO: quitar de la lista2, 3 y 4 al líder elegido en las listas anteriores
   private void cargarLideresLanzados() {
+    if (idRed == 0) {
+      return;
+    }
     lideresLanzadosNombres = servicioRed.getLideresLanzadosNombres(idRed);
     if (lideresLanzadosNombres.isEmpty()) {
       mostrarMensajeNoHayLideres(true);
       mostrarLideresEdit(false);
+      mostrarOpcionAgregarLider(false);
       //-btnEditLideres.setVisible(false);
       //-btnCancelarEditLideres.setVisible(false);
       return;
@@ -183,7 +185,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * obtiene y muestra todos los valores de los elemeentos de entrada
    * tal como serán usados para trabajar con la base de datos
    */
-  public void mostrarTodosValores() {
+  public void mostrarTodosValoresIngresados() {
     System.out.println("CELULA. DATOSBASICOS. VALORES INGRESADOS:");
     System.out.println("Código: " + txtCodigo.getValue());
     System.out.println("Nombre: " + txtNombre.getValue());
@@ -196,18 +198,28 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
 
   /**
+   * cuando se pierde el foco, se procesa el valor elegido
+   * y se activa la carga de líderes
+   */
+  //TODO: terminar
+  public void onBlur$cmbRed() {
+    //TODO: si pierde el foco, se verifica si eligió algo, si no eligió algo, se coloca: 'Elegir...' y se desactiva la edición
+    /*
+    if (cmbRed.getValue().isEmpty() || cmbRed.getValue() == nombreRed) {
+    return;//no se eligió ningún valor o es el anterior
+    }
+    procesarRed();
+     */
+  }
+
+  /**
    * maneja la selección del combo red
    */
   public void onSelect$cmbRed() {
     //** System.out.println("CtrlCelulaDatosBasicos.cmbRed.onSelect");
-    procesarRed();
-  }
-
-  /**
-   * cuando se pierde el foco, se procesa el valor elegido
-   * y se activa la carga de líderes
-   */
-  public void onBlur$cmbRed() {
+    if (!redSeleccionada()) {
+      return;
+    }
     procesarRed();
   }
 
@@ -217,15 +229,16 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   void procesarRed() {
     procesarValorRed();
     cancelarEditRed();
-    getVariablesSesionGenerales();
-    /**
-     * TODO: al cambiar el valor de la red, se borran los líderes elegidos anteriormente
-     * y se activa la edición de los líderes
-     **/
+    /*
+    //DOING: al cambiar el valor de la red, se borran los líderes elegidos anteriormente y se activa la edición de los líderes
+     *
+     */
+    limpiarValoresLideres();
+    setVarSesionLideres();
     activarEditLideres();
     /**
      * 
-     *TODO: 
+     * TODO: 2da fase
      * 1. mostrar como red por defecto, la red a la que pertenece el usuario en curso, en modo 'new'
      **/
   }
@@ -242,16 +255,21 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
 
   void procesarDia() {
+    if (cmbDia.getValue() == diaTexto) { //no se cambió el valor
+      return;
+    }
     diaTexto = cmbDia.getValue();
     mostrarValorDia();
     diaNumero = Integer.parseInt("" + cmbDia.getSelectedItem().getValue());
-    setVariableSesionDia();
+    setVarSesionDia();
 
     //**
     System.out.println("cmbDia.label=" + diaTexto);
     System.out.println("cmbDia.value=" + cmbDia.getSelectedItem().getValue());
     //**
+
     //actualizar cambio en la bd:
+    //TODO: MEJORA-CODIGO: este 'if' redundante
     if (Sesion.modoEditable()) {
       actualizarDia();
     }
@@ -270,9 +288,9 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
     servicioCelula.setIdCelula(idCelula);
     if (servicioCelula.actualizarDia(diaNumero)) {
-      mostrarMensaje("Día actualizado");
+      mostrarMensaje("Se cambió el día");
     } else {
-      mostrarMensaje("Error actualizando el día");
+      mostrarMensaje("Error cambiando el día");
     }
   }
 
@@ -280,16 +298,21 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * establece la variables de sesión de los líderes
    * para ser usado por los otros controladores
    */
-  //TODO: usar, cuando se carga la data
-  private void setVariableSesionLideres() {
-    //para setear los 4 líderes
+  //TODO: se usa cuando se cambia la red
+  //setear los 4 líderes
+  private void setVarSesionLideres() {
+    setVarSesionNroLideres();
+    setVarSesionLider1();
+    setVarSesionLider2();
+    setVarSesionLider3();
+    setVarSesionLider4();
   }
 
   /**
    * establece la variables de sesión del líder 1
    * para ser usado por los otros controladores
    */
-  public void setVariableSesionLider1() {
+  public void setVarSesionLider1() {
     Sesion.setVariable("celula.lider1.id", idLider1);
   }
 
@@ -297,7 +320,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * establece la variables de sesión del líder 2
    * para ser usado por los otros controladores
    */
-  public void setVariableSesionLider2() {
+  public void setVarSesionLider2() {
     Sesion.setVariable("celula.lider2.id", idLider2);
   }
 
@@ -305,7 +328,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * establece la variables de sesión del líder 3
    * para ser usado por los otros controladores
    */
-  public void setVariableSesionLider3() {
+  public void setVarSesionLider3() {
     Sesion.setVariable("celula.lider3.id", idLider3);
   }
 
@@ -313,7 +336,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * establece la variables de sesión del líder 4
    * para ser usado por los otros controladores
    */
-  public void setVariableSesionLider4() {
+  public void setVarSesionLider4() {
     Sesion.setVariable("celula.lider4.id", idLider4);
   }
 
@@ -321,7 +344,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * establece la variables de sesión de día
    * para ser usado por los otros controladores
    */
-  public void setVariableSesionDia() {
+  public void setVarSesionDia() {
     Sesion.setVariable("celula.dia.texto", diaTexto);
     Sesion.setVariable("celula.dia.numero", diaNumero);
   }
@@ -330,7 +353,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * establece la variables de sesión de hora
    * para ser usado por los otros controladores
    */
-  public void setVariableSesionHora() {
+  public void setVarSesionHora() {
     Sesion.setVariable("celula.hora.texto", horaTexto);
     Sesion.setVariable("celula.hora.numero", horaNumero);
   }
@@ -339,22 +362,26 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * establece la variables de sesión de número de líderes usados
    * para ser usado por los otros controladores
    */
-  private void setVariablesSesionNroLideres() {
+  private void setVarSesionNroLideres() {
     Sesion.setVariable("celula.nLideres", nLideres);
   }
 
+  private void setVarSesionRed() {
+    Sesion.setVariable("celula.idRed", idRed);
+  }
+
   /**
-   * guardar variables de sesión con valores por defecto
+   * guardar variables de sesión por defecto (al abrir la ventana)
    * para ser usado por los otros controladores
+   * 
    */
-  private void setVariablesSesionValoresPorDefecto() {
-    //TODO: valores por defecto, para asegurar, se puede inicializar sólo en la declaración
-    diaTexto = "Lunes";
-    horaTexto = "7:00 p.m.";
-    setVariableSesionDia();
-    setVariableSesionHora();
-    setVariablesSesionNroLideres();
-    setVariableSesionLideres();
+  private void setVarSesionDefault() {
+    setVarSesionRed();
+    setVarSesionDia();
+    setVarSesionDia();
+    setVarSesionHora();
+    setVarSesionNroLideres();
+    setVarSesionLideres();
   }
 
   public void onClick$btnAgregarLider() {
@@ -461,7 +488,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       opcionAgregarLider.setVisible(false);
     }
     //**
-    setVariablesSesionNroLideres();
+    setVarSesionNroLideres();
     System.out.println("líderes en uso: " + this.nLideres);
   }
 
@@ -524,7 +551,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     if (nLideres < TOPE_LIDERES) {
       opcionAgregarLider.setVisible(true);
     }
-    setVariablesSesionNroLideres();
+    setVarSesionNroLideres();
     System.out.println("líderes en uso: " + nLideres);
   }
 
@@ -542,25 +569,31 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * @return 
    */
   /*NO USADO
-  private boolean redElegida() {
+  private boolean redSeleccionada() {
   return !nombreRed.isEmpty();
   }
    * 
    */
   private void procesarValorRed() {
-    nombreRed = cmbRed.getValue();
-    if (!redElegida()) {
+    if (cmbRed.getValue().equals(nombreRed)) {//no se cambió el valor
       return;
     }
+    nombreRed = cmbRed.getValue();
+    //TODO: MEJORA. no graba si no está en modo editable
     Sesion.setVariable("celula.red", nombreRed);
     servicioRed.setNombreRed(nombreRed);
     idRed = servicioRed.getIdRed();
+    setVarSesionRed();
     cargarLideresLanzados();
     //** System.out.println("CtrlCelulaDatosBasicos - Red Seleccionada - nombre: " + nombreRed);
     //**System.out.println("CtrlCelulaDatosBasicos - Red seleccionada - id: " + cmbRed.getSelectedItem().getValue());
   }
 
-  boolean redElegida() {
+  /**
+   * valida que se haya seleccionado una red
+   * @return 
+   */
+  boolean redSeleccionada() {
     if (!comboSeleccionado(cmbRed, "Selecciona la red")) {
       //set foco en tabPanel y widget correspondiente
       cmbRed.setFocus(true);
@@ -569,11 +602,34 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     return true;
   }
 
+  /**
+   * valida que un combo tenga un valor seleccionado
+   */
+  //TODO: MEJORACODIGO: sacar este método para una clase de utilería
+  private boolean comboSeleccionado(Combobox combo, String msjError) {
+    String valor = combo.getValue();
+    if ((valor != null) && !valor.equals("")) {
+      ocultarMensaje();
+      combo.setSclass("");
+      return true;
+    }
+    //error:
+    mostrarMensaje(msjError);
+    combo.setSclass("textbox_error");
+    return false;
+  }
+
   private void mostrarMensajeNoHayLideres(boolean visible) {
-    String msj = "La red elegida no tiene líderes registrados";
-    etqMensajeNoHayLideres.setValue(msj);
+    String msjError = "La red elegida no tiene líderes registrados";
+    String msjOK = "La red elegida sí tiene líderes registrados";
+    etqMensajeNoHayLideres.setValue(msjError);
     etqMensajeNoHayLideres.setVisible(visible);
-    System.out.println(this.getClass().toString() + msj);
+    if (visible) {
+      System.out.println(this.getClass().toString() + msjError);
+    }//**
+    else {
+      System.out.println(this.getClass().toString() + msjOK);
+    }
   }
 
   public void onClick$etqNombre() {
@@ -603,25 +659,27 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
 
   public void onOK$txtNombre() {
     procesarNombre();
+    cancelarEditNombre();
   }
 
   public void onBlur$txtNombre() {
     procesarNombre();
+    cancelarEditNombre();
   }
 
   private void procesarNombre() {
-    nombre = txtNombre.getValue();
-    if (nombre.isEmpty()) {
+    if (txtNombre.getValue().equals(nombre)) {//no se cambió el valor
       return;
     }
+    nombre = txtNombre.getValue();
     ocultarMensaje();
     //TODO: Mejora, chequear si existe una célula con ese mismo nombre, y sugerir al usuario que use otro.
     //No es obligatorio que sea único
+    //TODO: MEJORA-CODIGO: este 'if' redundante
     if (Sesion.modoEditable()) {
       actualizarNombre();
     }
     etqNombre.setValue(nombre);
-    cancelarEditNombre();
   }
 
   /**
@@ -631,9 +689,9 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
     servicioCelula.setIdCelula(idCelula);
     if (servicioCelula.actualizarNombre(nombre)) {
-      mostrarMensaje("Nombre actualizado");
+      mostrarMensaje("Se cambió el nombre");
     } else {
-      mostrarMensaje("Error actualizando el nombre");
+      mostrarMensaje("Error cambiando el nombre");
     }
   }
 
@@ -752,6 +810,9 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
 
   //procesamiento de txtCódigo en modo edición
   public void onOK$txtCodigo() {
+    if (Sesion.modoIngresar()) {
+      cmbRed.setFocus(true);
+    }
     if (procesarCodigo()) {
       cancelarEditCodigo();
     }
@@ -780,7 +841,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     }
     ocultarMensaje();
     etqCodigo.setValue(codigo);
-    //DOING: actualizar valor en la base de datos
+    //TODO: MEJORA-CODIGO: este 'if' redundante
     if (Sesion.modoEditable()) {
       actualizarCodigo();
     }
@@ -806,9 +867,9 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
     servicioCelula.setIdCelula(idCelula);
     if (servicioCelula.actualizarCodigo(codigo)) {
-      mostrarMensaje("Código actualizado");
+      mostrarMensaje("Se cambió el código");
     } else {
-      mostrarMensaje("Error actualizando el código");
+      mostrarMensaje("Error cambiando el código");
     }
   }
 
@@ -910,14 +971,14 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     //- btnEditLideres.setVisible(true);//permitir edición de líderes
   }
 
+  //DOING: cambiando, da error de valor nulo
   void activarEditLideres() {
     System.out.println("CtrlCelulaDatosBasicos.EditLideres");
-    btnEditLideres.setVisible(false);
-    sacarDatosLideres();
+    getDatosLideres();
     pasarDatosLideresEtiquetas();
     mostrarLinksLideres(false);
     mostrarLideresEdit(true);
-    getVariablesSesionLideres();
+    btnEditLideres.setVisible(false);
   }
 
   void cancelarEditLideres() {
@@ -929,10 +990,15 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
 
   private void limpiarValoresLideres() {
+    nLideres = 0;
     nombreLider1 = "";
     nombreLider2 = "";
     nombreLider3 = "";
     nombreLider4 = "";
+    idLider1 = 0;
+    idLider2 = 0;
+    idLider3 = 0;
+    idLider4 = 0;
   }
 
   /*
@@ -960,7 +1026,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
   }
    */
-  private void sacarDatosLideres() {
+  private void getDatosLideres() {
     nombreLider1 = tbbLider1.getLabel();
     nombreLider2 = tbbLider2.getLabel();
     nombreLider3 = tbbLider3.getLabel();
@@ -994,8 +1060,12 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     cancelarEditRed();
   }
 
+  //TODO: chequear permiso de edición: celula.lideres
   public void onClick$btnEditLideres() {
-    //TODO: chequear permiso de edición: celula.lideres
+    //se traen variables de sesión, pues este controlador no ha gestionado los cambios
+    if (Sesion.modoEditable()) {
+      getVarSesionLideres();
+    }
     activarEditLideres();
   }
 
@@ -1013,14 +1083,14 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   private void getVariablesSesionGenerales() {
     System.out.println("CtrlCelulaDatosBasicos.getVariablesSesion()");
     getIdCelula();
-    idRed = (Integer) Sesion.getVariable("celula.idRed");
-    nombreRed = "" + Sesion.getVariable("celula.nombreRed");
+    getIdRed();
+    //+ nombreRed = "" + Sesion.getVariable("celula.nombreRed");
   }
 
   /**
    * obtiene los valores de la variable de sesión de los líderes
    */
-  private void getVariablesSesionLideres() {
+  private void getVarSesionLideres() {
     System.out.println("CtrlCelulaDatosBasicos.getVariablesSesionLideres()");
     nLideres = (Integer) Sesion.getVariable("celula.nLideres");
     idLider1 = (Integer) Sesion.getVariable("celula.idLider1");
@@ -1030,18 +1100,21 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
 
   private void procesarHora() {
+    if (cmbHora.getValue().equals(horaTexto)) { //no se cambió el valor
+      return;
+    }
     horaTexto = cmbHora.getValue();
     mostrarValorHora();
     cancelarEditHora();
     horaNumero = Integer.parseInt("" + cmbHora.getSelectedItem().getValue());
-    setVariableSesionHora();
+    setVarSesionHora();
 
     //**
     System.out.println("cmbHora.label=" + horaTexto);
     System.out.println("cmbHora.value=" + cmbHora.getSelectedItem().getValue());
     //**
 
-    //actualizar cambio en la bd:
+    //TODO: MEJORA-CODIGO: este 'if' redundante
     if (Sesion.modoEditable()) {
       actualizarHora();
     }
@@ -1055,9 +1128,9 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
     servicioCelula.setIdCelula(idCelula);
     if (servicioCelula.actualizarHora(horaNumero)) {
-      mostrarMensaje("Hora actualizada");
+      mostrarMensaje("Se cambió la hora");
     } else {
-      mostrarMensaje("Error actualizando la hora");
+      mostrarMensaje("Error cambiando la hora");
     }
   }
 
@@ -1067,32 +1140,27 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
 
   /**
-   * valida que un combo tenga un valor seleccionado
-   */
-  //TODO: MEJORACODIGO: sacar este método para una clase de utilería
-  private boolean comboSeleccionado(Combobox combo, String msjError) {
-    String valor = combo.getValue();
-    if ((valor != null) && !valor.equals("")) {
-      ocultarMensaje();
-      combo.setSclass("");
-      return true;
-    }
-    //error:
-    mostrarMensaje(msjError);
-    combo.setSclass("textbox_error");
-    return false;
-  }
-
-  /**
    * recupera variable de sesión 'idCelula'
    */
   //TODO: MEJORA: evaluar forma de obtener este valor si viniera en el URL
   private void getIdCelula() {
     try {
+      System.out.println("CtrlCelulaDatosBasicos.getIdCelula");
       idCelula = (Integer) Sesion.getVariable("idCelula");
-      System.out.println("CtrlCelulaDatosBasicos.getId:id=" + idCelula);
     } catch (Exception e) {
+      idCelula = 0;
       System.out.println("CtrlCelula -> ERROR recuperando variable de sesión 'idCelula': "
+              + e);
+    }
+  }
+
+  private void getIdRed() {
+    try {
+      System.out.println("CtrlCelulaDatosBasicos.getIdRed");
+      idRed = (Integer) Sesion.getVariable("celula.idRed");
+    } catch (Exception e) {
+      idRed = 0;
+      System.out.println("CtrlCelula -> ERROR recuperando variable de sesión 'idRed': "
               + e);
     }
   }
@@ -1125,6 +1193,12 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * cuando se pierde el foco, se procesa el valor elegido
    */
   public void onBlur$cmbLider1() {
+    /**
+     * TODO: 
+     * if no eligió nada
+     * deshabilitar combo
+     * mostrar botón agregar líder
+     */
     //-procesarLider1();
   }
 
@@ -1155,7 +1229,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       return;
     }
     idLider1 = servicioRed.getIdLider(nombreLider1);
-    setVariableSesionLider1();
+    setVarSesionLider1();
 
     //**
     System.out.println("CtrlCelulaDatosBasicos. Líder 1 seleccionado.nombre: " + nombreLider1);
@@ -1220,7 +1294,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       return;
     }
     idLider2 = servicioRed.getIdLider(nombreLider2);
-    setVariableSesionLider2();
+    setVarSesionLider2();
 
     //**
     System.out.println("CtrlCelulaDatosBasicos. Líder 2 seleccionado.nombre: " + nombreLider2);
@@ -1285,7 +1359,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       return;
     }
     idLider3 = servicioRed.getIdLider(nombreLider3);
-    setVariableSesionLider3();
+    setVarSesionLider3();
 
     //**
     System.out.println("CtrlCelulaDatosBasicos. Líder 3 seleccionado.nombre: " + nombreLider3);
@@ -1353,7 +1427,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       return;
     }
     idLider4 = servicioRed.getIdLider(nombreLider4);
-    setVariableSesionLider4();
+    setVarSesionLider4();
 
     //**
     System.out.println("CtrlCelulaDatosBasicos. Líder 4 seleccionado.nombre: " + nombreLider4);
@@ -1388,8 +1462,8 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
 }
 /**
  * TODO:
- * quitar condicionales de operaciones:
+ * 1. quitar condicionales de operaciones:
  * if (Sesion.modoEditable()) {
-
+ * 2. métodos onBlur hacen que la actualización sea doble
  * 
  */

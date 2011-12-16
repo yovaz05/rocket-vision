@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
   <style src="css/estilos1.css"/>  
-  <hbox id="divMensaje"
-      align="left"
+  <div align="center">
+    <hbox id="divMensaje"
+      align="right"
       sclass="mensajes"
+      style="margin:0;padding:0"
       visible="false">
-    <label id="etqMensaje"
+      <label id="etqMensaje"
       value="Mensajes al usuario:"
       sclass="mensajes"
       style="display:inline-block;margin:2px; padding: 2px 15px;"
       onClick="cerrarMensaje()"
       visible="false"/>
-    <a id="btnCerrarMensaje"
+      <a id="btnCerrarMensaje"
       label="OK"
       style="margin: 2px; padding:2px;text-align:right"
       onClick="cerrarMensaje()"      
       visible="false"/>
-  </hbox>   
+    </hbox>
+  </div>
   <grid style="border:0px" apply="sig.controladores.CtrlCelulaDatosBasicos">
     <columns>
       <column id="col1" width="100px"/>
@@ -141,6 +144,7 @@
             </div>
           </hbox>
         </div>
+<!--      TODO: MEJORA VISUAL: poner botones sin columna, a lado derecho de la etiqueta del campo-->
         <!--botones de edición-->
         <div align="left">
           <a id="btnEditLideres"

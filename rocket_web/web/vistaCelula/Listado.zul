@@ -25,8 +25,8 @@
       <columns sizable="true">
         <column label="#" width="25px"/>
         <column label="Código" width="80px"/>
-        <column label="Dirección" width="250px"/>
         <column label="Líderes" width="125px"/>
+        <column label="Dirección" width="250px"/>
         <column label="Día y Hora" width="120px"/>
         <column label="Nombre"/>
 <!--        <column label="Nivel"/>-->

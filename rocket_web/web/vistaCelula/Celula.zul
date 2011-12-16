@@ -21,9 +21,9 @@
       <tabs>
 <!--        TODO: cambiar orden de tabs-->
         <tab label="Datos Básicos"/>
-        <tab label="Dirección"/>
-        <tab label="Otros datos"/>
-        <tab label="Observaciones"/>
+        <tab label="Dirección" visible="false"/>
+        <tab label="Otros datos" visible="false"/>
+        <tab label="Observaciones" visible="false"/>
       </tabs>
       <tabpanels>
 <!--        TODO: cambiar orden de tabs-->

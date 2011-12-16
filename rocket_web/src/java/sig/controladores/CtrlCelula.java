@@ -65,6 +65,8 @@ public class CtrlCelula extends GenericForwardComposer {
   Div db$divLideresEdit;
   A db$tbbRed;
   A db$tbbLider1, db$tbbLider2, db$tbbLider3, db$tbbLider4;
+  A db$btnEditRed, db$btnCancelarEditRed;
+  A db$btnEditLideres, db$btnCancelarEditLideres;
   //pestaña "Dirección"
   Column dir$colView;
   Column dir$colEdit;
@@ -129,6 +131,7 @@ public class CtrlCelula extends GenericForwardComposer {
   int idLider2 = 0;
   int idLider3 = 0;
   int idLider4 = 0;
+  private String codigo = "";
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -139,6 +142,9 @@ public class CtrlCelula extends GenericForwardComposer {
   public void inicio() throws InterruptedException {
     System.out.println("CtrlCelula.INICIO()");
     modo = Sesion.getModo();
+    if (modo == null) {
+      modo = "new";
+    }
     if (modo.equals("ver-modificable")) {
       System.out.println("CtrlCelula.modoActual = ver");
       getID();
@@ -150,6 +156,17 @@ public class CtrlCelula extends GenericForwardComposer {
     }
     actualizarEstado();
     notificarBarra();
+  }
+
+  /**
+   * notifica a barraMenu sobre la vista actual, para el manejo de estados
+   */
+  private void notificarBarra() {
+    vistaCentral = Sesion.getVistaCentral();
+    Sesion.setVistaActual(Vistas.CELULA);
+    Sesion.setModo(modo);
+    Toolbarbutton btnControl2 = (Toolbarbutton) vistaCentral.getFellow("btnControl2");
+    Events.postEvent(1, "onClick", btnControl2, null);
   }
 
   /**
@@ -165,6 +182,7 @@ public class CtrlCelula extends GenericForwardComposer {
     } catch (Exception e) {
       System.out.println("CtrlCelula -> ERROR: parámetro idCelula nulo... "
               + e);
+      idCelula = 0;
     }
   }
 
@@ -194,6 +212,7 @@ public class CtrlCelula extends GenericForwardComposer {
     idLider2 = celulaBD.getIdLider2();
     idLider3 = celulaBD.getIdLider3();
     idLider4 = celulaBD.getIdLider4();
+    Sesion.setVariable("id", idCelula);
     Sesion.setVariable("celula.red.id", idRed);
     Sesion.setVariable("celula.red.nombre", nombreRed);
     Sesion.setVariable("celula.nLideres", nLideres);
@@ -308,22 +327,23 @@ public class CtrlCelula extends GenericForwardComposer {
   private void actualizarEstado() {
     if (modo.equals("new")) {
       tituloVentana.setValue(titulo + " » Ingresar");
-      ///-mostrarColumnasVisualizacion(false);
+      //- mostrarColumnasVisualizacion(false);
+      mostrarWidgetsNew(true);
       mostrarWidgetsViewLink(false);
       mostrarWidgetsEdit(false);
-      mostrarWidgetsNew(true);
-      //-mostrarOpcionLider1();
+      //- mostrarOpcionLider1();
       verBotonesEdicion(false);
       selectTab(1);
-      db$txtCodigo.setFocus(true);
+      setFocoEdicion();
       //- btnIngresarReporte.setVisible(false);
     } else if (modo.equals("ver-modificable")) {
       tituloVentana.setValue(titulo + ": " + descripcionCelula);
-      mostrarWidgetsViewLink(true);
-      //-mostrarWidgetsEdit(false);
       mostrarWidgetsNew(false);
-      //TODO: permisos, chequeo si se tiene permiso de edición
+      mostrarWidgetsViewLink(true);
       verBotonesEdicion(true);
+      setFocoEdicion();
+      //-mostrarWidgetsEdit(false);
+      //TODO: permisos, chequeo si se tiene permiso de edición
       //- btnIngresarReporte.setVisible(true);
       /*modo editar, funciona
       } else if (modo.equals("editar")) {
@@ -341,6 +361,7 @@ public class CtrlCelula extends GenericForwardComposer {
       getValoresEdit();
       mostrarWidgetsViewLink(false);
       mostrarWidgetsEdit(true);
+      //chequear permisos para ver si usuario puede editar la célula:
       verBotonesEdicion(true);
       setFocoEdicion();
       //- btnIngresarReporte.setVisible(false);
@@ -350,6 +371,7 @@ public class CtrlCelula extends GenericForwardComposer {
   public void onClick$btnNew() {
     modo = "new";
     Sesion.setModo(modo);
+    Sesion.setVariable("idCelula", 0);
     actualizarEstado();
   }
 
@@ -383,7 +405,10 @@ public class CtrlCelula extends GenericForwardComposer {
    * @param status el estado true o false
    */
   public void verBotonesEdicion(boolean status) {
+    //TODO: MEJORA: poner botones sin columna, a lado derecho de la etiqueta del campo
     db$colEdit.setVisible(status);
+    db$btnEditRed.setVisible(status);
+    db$btnEditLideres.setVisible(status);
   }
 
   public void onSelect$tabbox() {
@@ -406,21 +431,22 @@ public class CtrlCelula extends GenericForwardComposer {
    */
   private void selectTab(int i) {
     tabbox.setSelectedIndex(i - 1);
+    tabSeleccionado = i;
   }
 
   /**
    * le da el foco al primer elemento de entrada del tab actual
    **/
   public void setFocoEdicion() {
-    if (tabSeleccionado == 0) {
+    if (tabSeleccionado == 1) {
       db$txtCodigo.setFocus(true);
       //-db$txtCodigo.select();
-    } else if (tabSeleccionado == 1) {
-      dir$cmbEstado.setFocus(true);
     } else if (tabSeleccionado == 2) {
+      dir$cmbEstado.setFocus(true);
+    } else if (tabSeleccionado == 3) {
       otros$dateboxFechaApertura.setFocus(true);
       //-otros$dateboxFechaApertura.select();
-    } else if (tabSeleccionado == 3) {
+    } else if (tabSeleccionado == 4) {
       obs$txtObservaciones.setFocus(true);
       //TODO: ubicar cursor al final del texto, si se está en modo editar
     }
@@ -430,20 +456,9 @@ public class CtrlCelula extends GenericForwardComposer {
     //actualizar variables de sesión:
     Sesion.setVistaActual(Vistas.CELULA);
     Sesion.setVistaSiguiente(Vistas.REPORTE_CELULA);
-    Sesion.setModo("new");  //modo ingresarDatosCelula
+    Sesion.setModo("new");  //modo insertCelula
     //envia click al btnControl de CtrlBarraMenu, para que cambie la vista
     ctrlVista.forzarCambioVista_btnControl();
-  }
-
-  /**
-   * notifica a barraMenu sobre la vista actual, para el manejo de estados
-   */
-  private void notificarBarra() {
-    vistaCentral = Sesion.getVistaCentral();
-    Sesion.setVistaActual(Vistas.CELULA);
-    Sesion.setModo(modo);
-    Toolbarbutton btnControl2 = (Toolbarbutton) vistaCentral.getFellow("btnControl2");
-    Events.postEvent(1, "onClick", btnControl2, null);
   }
 
   /**
@@ -586,23 +601,23 @@ public class CtrlCelula extends GenericForwardComposer {
    */
   private void mostrarValoresView() {
     //datos básicos
-    db$etqCodigo.setValue(celulaInsert.getCodigo());
-    db$etqNombre.setValue(celulaInsert.getNombre());
-    db$tbbRed.setLabel(db$cmbRed.getValue());
+    db$etqCodigo.setValue(codigo);
+    db$tbbRed.setLabel(nombreRed);
+    /*
     db$tbbLider1.setLabel(db$cmbLider1.getValue());
     //TODO:mostrar los otros líderes sólo si son usados
     if (seUsaLider(2)) {
-      db$tbbLider2.setLabel(db$cmbLider2.getValue());
+    db$tbbLider2.setLabel(db$cmbLider2.getValue());
     }
     if (seUsaLider(3)) {
-      db$tbbLider3.setLabel(db$cmbLider3.getValue());
+    db$tbbLider3.setLabel(db$cmbLider3.getValue());
     }
     if (seUsaLider(4)) {
-      db$tbbLider4.setLabel(db$cmbLider4.getValue());
+    db$tbbLider4.setLabel(db$cmbLider4.getValue());
     }
+    db$etqNombre.setValue(celulaInsert.getNombre());
     db$etqDia.setValue(diaTexto);
     db$etqHora.setValue(" - " + horaTexto);
-    //TODO: faltan todos los demás campos
     dir$etqEstado.setValue(dir$cmbEstado.getValue());
     dir$etqCiudad.setValue(dir$cmbCiudad.getValue());
     dir$etqZona.setValue(dir$cmbZona.getValue());
@@ -611,6 +626,8 @@ public class CtrlCelula extends GenericForwardComposer {
     otros$etqFechaApertura.setValue(fechaApertura);
     otros$etqAnfitrion.setValue(celulaInsert.getAnfitrion());
     obs$etqObservaciones.setValue(celulaInsert.getObservaciones());
+     * 
+     */
   }
 
   /**
@@ -632,19 +649,20 @@ public class CtrlCelula extends GenericForwardComposer {
             + db$cmbHora.getValue();
   }
 
-  //TODO: optimizar código relacionado a variable booleana ok
+  /**
+   * se encarga de crear la célula
+   * setear la variable de resultado que será usada por barraMenu para los mensajes
+   * y cambiar modo de edicion dinámica
+   */
   public void onClick$btnGuardar() {
-    boolean ok = false;
-    //TODO: MEJORA CODIGO: quitar modo editar, ya que se usa edición dinámica
     if (modo.equals("new")) {
-      ok = crearCelula();
-      if (ok) {
-        Sesion.setVariable("resultOperacion", 1);
-        //indica éxito, será usado por barraMenu para los mensajes
+      if (ingresarNuevaCelula()) {
+        //-Sesion.setVariable("resultOperacion", 1);//indica éxito
         modo = "ver-modificable";
+        mostrarValoresView();
+        actualizarEstado();
       } else {
-        Sesion.setVariable("resultOperacion", -1);
-        //indica error, será usado por barraMenu para los mensajes
+        //- Sesion.setVariable("resultOperacion", -1);//indica error
       }
     }
   }
@@ -654,24 +672,40 @@ public class CtrlCelula extends GenericForwardComposer {
    * incluye la validación de que se ingresen todos los valores obligatorios
    * @return 
    */
-  boolean crearCelula() {
+  boolean ingresarNuevaCelula() {
     ocultarMensaje();
-    if (camposObligatoriosIngresados()) {
-      //ingresar nueva célula en la base de datos      
-      if (ingresarCelula()) {//nueva célula registrada con éxito
-        System.out.println("CtrlCelula. Nueva celula ingresada. código:" + celulaInsert.getCodigo());
-        //mostrar descripción en titulo:
-        //TODO: agregar la zona a la descripción
-        //descripcionCelula = generarDescripcionCelula(celulaInsert.getCodigo(), dir$cmbZona.getValue());
-        descripcionCelula = generarDescripcionCelula(celulaInsert.getCodigo(), "");
-        modo = "ver";
-        actualizarEstado();
-        mostrarValoresView();
-        System.out.println("Célula creada con éxito. id=" + idCelula);
-        return true;
-      }
+    if (!camposObligatoriosIngresados()) {
+      return false;
     }
-    return false;
+    //ingresar nueva célula en la base de datos      
+    if (crearCelula()) {//nueva célula registrada con éxito
+      System.out.println("CtrlCelula. Nueva celula ingresada. código:" + codigo);
+      //mostrar descripción en titulo:
+      //TODO: agregar la zona a la descripción
+      //descripcionCelula = generarDescripcionCelula(celulaInsert.getCodigo(), dir$cmbZona.getValue());
+      //modo = "ver";
+      mostrarMensaje("Célula ingresada. Agrega el resto de la información.");
+      descripcionCelula = generarDescripcionCelula(codigo, "");
+      System.out.println("CtrlCelula.Célula creada con éxito:");
+      System.out.println("id=" + idCelula);
+    }
+    return true;
+  }
+
+  /**
+   * se encarga de crea un célula nueva,  con el código y el id de red
+   */
+  private boolean crearCelula() {
+    codigo = db$txtCodigo.getValue();
+    idRed = getIdRed();
+    System.out.println("CtrlCelula.crearCelula.codigo=" + codigo);
+    System.out.println("CtrlCelula.crearCelula.idRed=" + idRed);
+    //-nombreRed = db$cmbRed.getValue();
+    idCelula = servicio.crearCelula(codigo, idRed);
+    System.out.println("CtrlCelula.crearCelula.idCelula=" + idCelula);
+    Sesion.setVariable("idCelula", idCelula);
+    Sesion.setVariable("celula.idRed", idRed);
+    return (idCelula != 0) ? true : false;
   }
 
   private String generarDescripcionCelula(String codigo, String zona) {
@@ -693,9 +727,12 @@ public class CtrlCelula extends GenericForwardComposer {
       selectTab(1);
       db$cmbRed.setFocus(true);
       return false;
-    } else if (!lideresIngresados()) {
-      return false;
-    } /*- CAMBIO: estos campos no son necesarios hasta que cree la célula
+    } /*
+     * CAMBIO: estos campos no son necesarios hasta que cree la célula
+     * TODO: los líderes también debe ser obligatorios para crear la célula?
+    else if (!lideresIngresados()) {
+    return false;
+    } 
     else if (!textboxIngresado(db$txtNombre, "Ingresa el nombre")) {
     //set foco en tabPanel y widget correspondiente
     selectTab(1);
@@ -728,7 +765,7 @@ public class CtrlCelula extends GenericForwardComposer {
       ok = true;
     } else {
       //valor NO válido
-      //- mostrarMensaje(msjError);
+      mostrarMensaje(msjError);
       textbox.setSclass("textbox_error");
       ok = false;
     }
@@ -858,10 +895,11 @@ public class CtrlCelula extends GenericForwardComposer {
 
   /**
    * se encarga de ingresar los datos de la celula nueva
+   * con TODOS LOS DATOS
    */
   private boolean ingresarCelula() {
     prepararCelulaInsert();
-    idCelula = servicio.ingresarDatosCelula(celulaInsert);
+    idCelula = servicio.insertCelula(celulaInsert);
     if (idCelula == 0) {//error, no se grabó
       return false;
     }
@@ -1010,9 +1048,20 @@ public class CtrlCelula extends GenericForwardComposer {
     etqMensaje.setValue("");
   }
 
-  private void mostrarWidgetsNew(boolean status) {
-    db$txtCodigo.setVisible(status);
-    db$cmbRed.setVisible(status);
+  /**
+   * MUESTRA EL CÓDIGO Y LA RED, que son los datos obligatorios para crear la célula,
+   * pero la red está deshabilitada
+   */
+  private void mostrarWidgetsNew(boolean visible) {
+    db$txtCodigo.setVisible(visible);
+    db$cmbRed.setVisible(visible);
+    //TODO: mejora: mostrar combo de red sólo cuando ingresa el código
+    /*
+    if (visible) {
+      db$cmbRed.setDisabled(false);
+    }
+     */
+
     /*
     db$cmbDia.setVisible(status);
     db$cmbHora.setVisible(status);
@@ -1028,5 +1077,9 @@ public class CtrlCelula extends GenericForwardComposer {
 
   private void mostrarOpcionLider1() {
     db$opcionLider1.setVisible(true);
+  }
+
+  private int getIdRed() {
+    return (Integer) Sesion.getVariable("cmbRed.id");
   }
 }

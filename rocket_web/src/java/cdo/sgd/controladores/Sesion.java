@@ -27,6 +27,14 @@ public class Sesion {
   }
 
   /**
+   * método re-usable para mostrar variable de sesión
+   */
+  public static void mostrarVariableSesion(Object claseInvocante, String metodo, String variable, Object valor) {
+    System.out.println(claseInvocante.getClass() + "- " + metodo + ": SESION: " + variable + "=" + valor);
+  }
+  
+  
+  /**
    * obtiene la variable de sesión idRed
    * @return 
    */
@@ -38,7 +46,7 @@ public class Sesion {
    * guarda en la variable de sesión 'vistaCentral' la referencia al widget correspondiente
    */
   public static void setVistaCentral(Include refVistaCentral) {
-    Sessions.getCurrent().setAttribute("vistaCentral", refVistaCentral);
+    Sesion.setVariable("vistaCentral", refVistaCentral);
   }
 
   /**
@@ -46,14 +54,14 @@ public class Sesion {
    * @return referencia al widget 'vistaCentral'
    */
   public static Include getVistaCentral() {
-    return (Include) Sessions.getCurrent().getAttribute("vistaCentral");
+    return (Include) Sesion.getVariable("vistaCentral");
   }
 
   /**
    * setea la variable de sesión 'modo'
    */
   public static void setModo(String valor) {
-    Sessions.getCurrent().setAttribute("modo", valor);
+    Sesion.setVariable("modo", valor);
   }
 
   /**
@@ -61,14 +69,14 @@ public class Sesion {
    * @return el valor de la variable de sesión 'modo'
    */
   public static String getModo() {
-    return "" + Sessions.getCurrent().getAttribute("modo");
+    return "" + Sesion.getVariable("modo");
   }
 
   /**
    * setea la variable de sesión 'vistaActual'
    */
   public static void setVistaActual(String vista) {
-    Sessions.getCurrent().setAttribute("vistaActual", vista);
+    Sesion.setVariable("vistaActual", vista);
   }
 
   /**
@@ -76,14 +84,14 @@ public class Sesion {
    * @return 
    */
   public static String getVistaActual() {
-    return "" + Sessions.getCurrent().getAttribute("vistaActual");
+    return "" + Sesion.getVariable("vistaActual");
   }
 
   /**
    * setea la variable de sesión 'vistaSiguiente'
    */
   public static void setVistaSiguiente(String vista) {
-    Sessions.getCurrent().setAttribute("vistaSiguiente", vista);
+    Sesion.setVariable("vistaSiguiente", vista);
   }
 
   /**
@@ -91,15 +99,9 @@ public class Sesion {
    * @return 
    */
   public static String getVistaSiguiente() {
-    return "" + Sessions.getCurrent().getAttribute("vistaSiguiente");
+    return "" + Sesion.getVariable("vistaSiguiente");
   }
 
-  /**
-   * método re-usable para mostrar variable de sesión
-   */
-  public static void mostrarVariableSesion(Object claseInvocante, String metodo, String variable, Object valor) {
-    System.out.println(claseInvocante.getClass() + "- " + metodo + ": SESION: " + variable + "=" + valor);
-  }
 
   /**
    * método debug
