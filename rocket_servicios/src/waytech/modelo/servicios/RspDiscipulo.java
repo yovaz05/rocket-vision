@@ -17,12 +17,21 @@ public class RspDiscipulo {
     private boolean esConexionCerradaExitosamente;
     private boolean esRolledBackIntentado;
     private boolean esRolledBackExitosamente;
+    private boolean esPersonaConLider;
     private List<Discipulo> allDiscipulos;
     private String respuestaRolledBack;
     private String respuestaInicioDeConexion;
     private String respuestaCierreDeConexion;
     private String respuestaServicio;
     private Discipulo discipulo;
+
+    public boolean esPersonaConLider() {
+        return esPersonaConLider;
+    }
+
+    public void setEsPersonaConLider(boolean esPersonaConLider) {
+        this.esPersonaConLider = esPersonaConLider;
+    }
 
     public List<Discipulo> getAllDiscipulos() {
         return allDiscipulos;

@@ -380,4 +380,45 @@ public class SaDiscipulo implements IsaDiscipulo {
             return rspDiscipulo;
         }
     }
+
+    @Override
+    public RspDiscipulo esPersonaConLider(int idPersona) {
+        //INSTANCIAS DE LAS CLASES                
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        RspDiscipulo rspDiscipulo = new RspDiscipulo();
+        //INICIALIZAR VARIABLES
+        rspDiscipulo.setEsConexionAbiertaExitosamente(false);
+        rspDiscipulo.setEsConexionCerradaExitosamente(false);
+        rspDiscipulo.setEsSentenciaSqlEjecutadaExitosamente(false);
+        rspDiscipulo.setEsPersonaConLider(false);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspDiscipulo.setEsConexionAbiertaExitosamente(true);
+            rspDiscipulo.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            String consultaSQL = "SELECT * FROM discipulo WHERE estado = 1 AND id_persona2 = '" + idPersona + "'";
+            try {
+                Statement sentencia = conectorBD.getConnection().createStatement();
+                boolean bandera = sentencia.execute(consultaSQL);
+                if (bandera) {
+                    ResultSet rs = sentencia.getResultSet();
+                    rspDiscipulo.setEsSentenciaSqlEjecutadaExitosamente(true);
+                    rspDiscipulo.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), "esPersonaConLider(int idPersona)", this.getClass().toString()));
+                    if (rs.next()) {
+                        rspDiscipulo.setEsPersonaConLider(true);
+                    }
+                }
+            } catch (SQLException e) {
+                rspDiscipulo.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "esPersonaConLider(int idPersona)", this.getClass().toString()));
+            } finally {
+                if (conectorBD.cerrarConexion()) {
+                    rspDiscipulo.setEsConexionCerradaExitosamente(true);
+                }
+                rspDiscipulo.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspDiscipulo;
+            }
+        } else {
+            rspDiscipulo.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspDiscipulo;
+        }
+    }
 }

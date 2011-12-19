@@ -31,7 +31,7 @@ public class SaPermisoTipoPersona implements IsaPermisoTipoPersona {
     private PermisoTipoPersona rsPermisoTipoPersona(ResultSet rs, PermisoTipoPersona permisoTipoPersona) throws SQLException {
         permisoTipoPersona.setIdPermisoTipoPersona(rs.getInt("id_permiso_tipo_persona"));
         permisoTipoPersona.setPermiso(isaPermiso.getPermisoPorIdPermiso(rs.getInt("id_permiso")).getPermiso());
-        permisoTipoPersona.setTipoPersona(isaTipoPersona.obtenerTipoPersonaPorIdTipoPersona(rs.getInt("id_tipo_persona")).getTipoPersona());
+//        permisoTipoPersona.setTipoPersona(isaTipoPersona.obtenerTipoPersonaPorIdTipoPersona(rs.getInt("id_tipo_persona")).getTipoPersona());
         permisoTipoPersona.setEstado(rs.getShort("estado"));
         permisoTipoPersona.setTraza(rs.getString("traza"));
         return permisoTipoPersona;

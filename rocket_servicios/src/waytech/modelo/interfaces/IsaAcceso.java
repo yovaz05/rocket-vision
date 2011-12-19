@@ -47,6 +47,8 @@ public interface IsaAcceso {
     public abstract RspAcceso esLoginExistente(String login);
 
     public abstract RspAcceso esPasswordExistente(String password);
+    
+    public abstract RspAcceso esLoginPasswordValido(String login, String password);
 
     public abstract RspAcceso esCorreoExistente(String correo);
 

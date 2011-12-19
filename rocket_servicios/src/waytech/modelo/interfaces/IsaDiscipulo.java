@@ -27,6 +27,8 @@ public interface IsaDiscipulo {
     public abstract RspDiscipulo getDiscipuloPorIdDiscipulo(int idDiscipulo);
 
     public abstract RspDiscipulo getDiscipuloPorTraza(String traza);
+    
+    public abstract RspDiscipulo esPersonaConLider(int idPersona);
 
     public abstract RspDiscipulo listDiscipulo();
     

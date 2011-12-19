@@ -493,19 +493,17 @@ public class SaAcceso implements IsaAcceso {
                         + "login,"
                         + "password,"
                         + "correo,"
-                        + "fecha_ultimo_acceso,"
                         + "estado,"
                         + "traza)"
-                        + " VALUES (?,?,?,?,?,?,?,?)";
+                        + " VALUES (?,?,?,?,?,?,?)";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 stmt.setInt(1, 0);
                 stmt.setInt(2, accesoInsert.getIdPersona());
                 stmt.setString(3, accesoInsert.getLogin());
                 stmt.setString(4, accesoInsert.getPassword());
                 stmt.setString(5, accesoInsert.getCorreo());
-                stmt.setString(6, accesoInsert.getFechaUltimoAcceso());
-                stmt.setShort(7, Short.valueOf("1"));
-                stmt.setString(8, traza);
+                stmt.setShort(6, Short.valueOf("1"));
+                stmt.setString(7, traza);
                 rows = stmt.executeUpdate();
                 stmt.close();
                 rspAcceso.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), "insertAcceso(AccesoInsert accesoInsert)", this.getClass().toString()));
@@ -673,6 +671,50 @@ public class SaAcceso implements IsaAcceso {
             } finally {
                 if (conectorBD.cerrarConexion()) {
                     rspAcceso.setEsConexionCerradaExitosamente(true);
+                }
+                rspAcceso.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspAcceso;
+            }
+        } else {
+            rspAcceso.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspAcceso;
+        }
+    }
+
+    @Override
+    public RspAcceso esLoginPasswordValido(String login, String password) {
+        //INSTANCIAS DE LAS CLASES                
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        RspAcceso rspAcceso = new RspAcceso();
+        //INICIALIZAR VARIABLES
+        rspAcceso.setEsConexionAbiertaExitosamente(false);
+        rspAcceso.setEsConexionCerradaExitosamente(false);
+        rspAcceso.setEsSentenciaSqlEjecutadaExitosamente(false);
+        rspAcceso.setEsLoginExistente(false);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspAcceso.setEsConexionAbiertaExitosamente(true);
+            rspAcceso.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            String consultaSQL = "SELECT * FROM acceso WHERE estado = 1 AND password = '" + password + "' AND login = '" + login + "'";
+            try {
+                Statement sentencia = conectorBD.getConnection().createStatement();
+                boolean bandera = sentencia.execute(consultaSQL);
+                if (bandera) {
+                    ResultSet rs = sentencia.getResultSet();
+                    rspAcceso.setEsSentenciaSqlEjecutadaExitosamente(true);
+                    rspAcceso.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), "esLoginPasswordValido(String login, String password)", this.getClass().toString()));
+                    if (rs.next()) {
+                        rspAcceso.setEsLoginPasswordValido(true);
+                    }
+                }
+            } catch (SQLException e) {
+                rspAcceso.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "esLoginPasswordValido(String login, String password)", this.getClass().toString()));
+            } finally {
+                if (conectorBD.cerrarConexion()) {
+                    rspAcceso.setEsConexionCerradaExitosamente(true);
+                    if (rspAcceso.esLoginPasswordValido()) {
+                        rspAcceso.setAcceso(getAccesoPorLogin(login).getAcceso());
+                    }
                 }
                 rspAcceso.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
                 return rspAcceso;

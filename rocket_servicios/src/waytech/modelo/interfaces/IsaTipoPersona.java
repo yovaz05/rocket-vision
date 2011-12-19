@@ -12,9 +12,9 @@ import waytech.modelo.servicios.RspTipoPersona;
  */
 public interface IsaTipoPersona {
 
-    public abstract RspTipoPersona obtenerTipoPersonaPorIdTipoPersona(int idTipoPersona);
+    public abstract RspTipoPersona getTipoPersonaPorIdTipoPersona(int idTipoPersona);
 
-    public abstract RspTipoPersona obtenerTodosLosTipoPersonas();
+    public abstract RspTipoPersona listTipoPersonas();
 
     public abstract RspTipoPersona modificarTipoPersona(TipoPersona tipoPersona);
 

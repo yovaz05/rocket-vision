@@ -15,6 +15,7 @@ public class RspAcceso {
 
     private boolean esLoginExistente;
     private boolean esPasswordExistente;
+    private boolean esLoginPasswordValido;
     private boolean esCorreoExistente;
     private boolean esSentenciaSqlEjecutadaExitosamente;
     private boolean esConexionAbiertaExitosamente;
@@ -27,6 +28,14 @@ public class RspAcceso {
     private String respuestaCierreDeConexion;
     private String respuestaServicio;
     private Acceso acceso;
+
+    public boolean esLoginPasswordValido() {
+        return esLoginPasswordValido;
+    }
+
+    public void setEsLoginPasswordValido(boolean esLoginPasswordValido) {
+        this.esLoginPasswordValido = esLoginPasswordValido;
+    }        
 
     public String getRespuestaRolledBack() {
         return respuestaRolledBack;
