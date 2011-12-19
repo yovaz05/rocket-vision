@@ -49,5 +49,7 @@ public class Vistas{
   
   //Menú del HERR
   public static String LISTADO_ACCESO = "vistaAcceso/ListadoAcceso.zul";
+  
+  public static String LISTADO_TIPO_PERSONA = "vistaTipoUsuario/Listado.zul";
 
 }

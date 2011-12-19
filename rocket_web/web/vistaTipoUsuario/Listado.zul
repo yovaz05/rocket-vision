@@ -1,0 +1,58 @@
+<?page id="testZul" title="Inicio" cacheable="false"
+	language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8" title="Acceso a Usuarios"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+    <style src="css/estilos1.css"/>
+<!--    <include src="vistaAcceso/Header.zul"/>-->
+    <div use="cdo.sgd.controladores.CtrlTipoPersonaListado">
+        <label value="Listado de Tipos de usuario" sclass="titulo_ventana"/>
+        <panel width="100%">
+            <panelchildren>
+                <div style="padding:10px">                    
+                    <vbox id="vbox1">
+                        <grid visible="false">
+                            <columns>
+                                <column width="55px"/>
+                                <column width="568px"/>
+                            </columns>
+                            <rows>       
+                                <row>
+                                    <label sclass="etiqueta_campo" value="Tipo de personas:"/>
+                                    <hbox>                                                                        
+                                        <textbox sclass="textbox_field" id="txtBuscarLider" width="180px"/>
+                                        <button id="btnBuscarLider" label="Buscar" sclass="boton_verificar"/>                                                                        
+                                    </hbox>
+                                </row>                            
+                            </rows>                        
+                        </grid>                                      
+                    
+                        <paging   id="pagingTipoPersona"  pageSize ="50" width="285px"/>                                                   
+                        <listbox  id="listboxTipoPersona"  mold="paging" paginal="${pagingTipoPersona}" width="295px">                        
+                            <listhead>                                
+                                <listheader id="listHeaderBotonVer"            label=""                   align="center" width="45px"/>                                                                            
+                                <listheader id="listheaderTipoPersona"       label="TipoPersona"             align="left" width="250px"/>                                                                
+                            </listhead>
+                        </listbox>                                   
+                    </vbox>        
+                </div>               
+                <vbox style="margin:10px">                        
+                    <div>
+                        <button id="btnPaso1" label="Continuar" sclass="boton_acceso" visible="false"/>
+                        <button id="btnPaso2" label="Enviar" sclass="boton_acceso" visible="false"/>
+                    </div>
+                </vbox>
+            </panelchildren>
+        </panel>
+<!--    TODO: pasar esto al controlador-->
+        <zscript>
+    <![CDATA[
+    void mensajeEnDesarrollo(){
+      Messagebox.show("En construcción","Registro",
+      Messagebox.OK, Messagebox.INFORMATION);
+    }
+    ]]>        
+        </zscript>
+    </div>  
+</zk>

@@ -475,7 +475,7 @@ public class ServicioCelula {
   public boolean deleteLider(int idLider) {
     System.out.println("ServicioCelula.deleteLider.idLider=" + idLider);
     RspPersonaEnCelula rspPersonaCelula = new RspPersonaEnCelula();
-    rspPersonaCelula = isaPersonaCelula.deletePersonaEnCelulaPorIdPersona(idCelula, idLider);
+    //rspPersonaCelula = isaPersonaCelula.deletePersonaEnCelulaPorIdPersona(idCelula, idLider);
     return rspPersonaCelula.esSentenciaSqlEjecutadaExitosamente();
     //TODO: devolver el resultado de la operación de base de datos (true, false)
   }

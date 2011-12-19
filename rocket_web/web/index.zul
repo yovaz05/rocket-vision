@@ -30,7 +30,7 @@ title="Rocket CDO"?>
        vistaCentralDefecto  = "vistaAcceso/Acceso.zul";
        panelCentralDefecto  = "";
        //comentar línea siguiente, para mostrar la pantalla de login:
-       loginConDatosPrecargados();
+       //loginConDatosPrecargados();
     ]]>
   </zscript>
   <borderlayout>

@@ -39,8 +39,9 @@ title="SIG - Mejorando barra superior"?>
             </menu>
             <menu label="Herr" visible="false">
               <menupopup>
-                <menuitem label="Listado Acceso" id="itemListadoAcceso" image="/img/iconos/bullet.png"/>
-                <menuitem label="Cambiar Datos"  id="itemAccesoDatos" image="/img/iconos/bullet.png"/>
+                <menuitem label="Listado Acceso"           id="itemListadoAcceso"      image="/img/iconos/bullet.png"/>
+                <menuitem label="Cambiar Datos"            id="itemAccesoDatos"        image="/img/iconos/bullet.png"/>
+                <menuitem label="Listado Tipos de persona" id="itemListadoTipoPersona" image="/img/iconos/bullet.png"/>
               </menupopup>
             </menu>
           </menubar>        
