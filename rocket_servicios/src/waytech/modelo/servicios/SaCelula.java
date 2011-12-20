@@ -251,7 +251,7 @@ public class SaCelula implements IsaCelula {
                 stmt.setString(12, celula.getObservaciones());
                 stmt.setInt(13, celula.getIdZona());
                 if (celula.getFechaApertura().isEmpty() || celula.getFechaApertura() == null) {
-                    celula.setFechaApertura("1900-01-01 00:00:00");
+                  celula.setFechaApertura("1970-01-01 00:00:00");
                 }
                 stmt.setString(14, celula.getFechaApertura());
                 rows = stmt.executeUpdate();
