@@ -540,7 +540,7 @@ public class CtrlMenu extends GenericForwardComposer {
       btnEdit.setVisible(true);
       btnSave.setVisible(false);
       btnDelete.setVisible(true);
-    } else if (modo.equals("ver-modificable")) {
+    } else if (modo.equals("edicion-dinamica")) {
       btnNew.setVisible(false);
       btnEdit.setVisible(false);
       btnSave.setVisible(false);

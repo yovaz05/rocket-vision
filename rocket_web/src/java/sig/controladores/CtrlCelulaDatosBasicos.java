@@ -163,20 +163,21 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       return false;
     }
     lideresLanzadosNombres = servicioRed.getLideresLanzadosNombres(idRed);
-    if (lideresLanzadosNombres.isEmpty()) {
-      mostrarMensajeNoHayLideres(true);
+    if (lideresLanzadosNombres.isEmpty()) {//la red elegida no tiene líderes lanzados que puedan ser líderes de células      
+      mensajeNoHayLideres(true);
       mostrarLideresEdit(false);
+      mostrarLinksLideres(false);
       mostrarOpcionAgregarLider(false);
       return false;
     }
-    mostrarMensajeNoHayLideres(false);
+    mensajeNoHayLideres(false);
+    mostrarOpcionAgregarLider(true);
 
     //cargar lista de líderes:
     modelLideresLanzados = new ListModelList();
     modelLideresLanzados.addAll(lideresLanzadosNombres);
     cmbLider1.setModel(modelLideresLanzados);
 
-    mostrarOpcionAgregarLider(true);
 
     //TODO: quitar, se carga cada lista de líderes disponibles al clickear 'Agregar líder'
     cmbLider2.setModel(modelLideresLanzados);
@@ -210,7 +211,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   //TODO: terminar
   public void onBlur$cmbRed() {
     //TODO: si pierde el foco, desactiva la edición
-    procesarRed();
+    cancelarEditRed();
   }
 
   /**
@@ -233,20 +234,37 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       cancelarEditRed();
       return;
     }
-    if (Sesion.modoIngresar()) {
-      //se crea la célula con el código y la red
-      notificarEvento("btnGuardar");
+    boolean redTieneLideresLanzados = cargarLideresLanzadosRed();
+    if (!redTieneLideresLanzados) {
+      cancelarEditRed();
+      return;
     }
-    etqRed.setValue(nombreRed);
+
+    //si está en modo ingresar se crea la célula con el código y la red
+    if (Sesion.modoIngresar()) {
+      System.out.println("CtrlCelulaDatosBasicos.procesarRed.modoIngresar");
+      notificarEvento("btnGuardar");
+    } else if (Sesion.modoEditable()) {
+      //modo edición
+      System.out.println("CtrlCelulaDatosBasicos.procesarRed.redCambiada. eliminando líderes anteriores:");
+      //DOING: se borran los líderes ANTERIORES
+      eliminarLideresAnteriores();
+      actualizarRed();
+    }
     //TODO: al cambiar el valor de la red, se borran los líderes elegidos anteriormente y se activa la edición de los líderes
     limpiarValoresLideres();
     setVarSesionLideres();
+    mostrarLinksLideres(false);
     mostrarLideresEdit(false);
     btnEditLideres.setVisible(false);
+
+    etqRed.setValue(nombreRed);
+    Sesion.setVariable("celula.nombreRed", nombreRed);
     cancelarEditRed();
   }
 
   private boolean procesarValorRed() {
+    getVarSesionNombreRed();
     String nombreRedElegida = cmbRed.getValue();
     if (nombreRedElegida.equals(nombreRed)) {//no se cambió el valor
       return false;
@@ -257,7 +275,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     servicioRed.setNombreRed(nombreRed);
     idRed = servicioRed.getIdRed();
     setVarSesionRed();
-    return cargarLideresLanzadosRed();
+    return true;
     //** System.out.println("CtrlCelulaDatosBasicos - Red Seleccionada - nombre: " + nombreRed);
     //**System.out.println("CtrlCelulaDatosBasicos - Red seleccionada - id: " + cmbRed.getSelectedItem().getValue());
   }
@@ -275,11 +293,45 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     return true;
   }
 
+  /**
+   * actualiza el día de la célula en la base de datos
+   */
+  void actualizarRed() {
+    servicioCelula.setIdCelula(idCelula);
+    if (servicioCelula.actualizarRed(idRed)) {
+      mostrarMensaje("Se cambió la célula a otra red");
+    } else {
+      mostrarMensaje("Error cambiando la célula a otra red");
+    }
+  }
+
   void limpiarLideresSeleccionados() {
     cmbLider1.setValue("");
     cmbLider2.setValue("");
     cmbLider3.setValue("");
     cmbLider4.setValue("");
+  }
+
+  /**
+   * elimina los líderes anteriores de la célula,
+   * cuando la célula es cambiada de red
+   */
+  void eliminarLideresAnteriores() {
+    getVarSesionLideres();
+    getIdCelula();
+    servicioCelula.setIdCelula(idCelula);
+    if (seUsaLider(1)) {
+      servicioCelula.eliminarLider(idLider1);
+    }
+    if (seUsaLider(2)) {
+      servicioCelula.eliminarLider(idLider2);
+    }
+    if (seUsaLider(3)) {
+      servicioCelula.eliminarLider(idLider3);
+    }
+    if (seUsaLider(4)) {
+      servicioCelula.eliminarLider(idLider4);
+    }
   }
 
   public void onSelect$cmbDia() {
@@ -320,7 +372,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
     servicioCelula.setIdCelula(idCelula);
     if (servicioCelula.actualizarDia(diaNumero)) {
-      mostrarMensaje("Se cambió el día");
+      mostrarMensaje("Se actualizó el día");
     } else {
       mostrarMensaje("Error cambiando el día");
     }
@@ -485,12 +537,12 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     }
     getIdCelula();
     servicioCelula.setIdCelula(idCelula);
-    if (servicioCelula.deleteLider(idLider)) {
-      mostrarMensaje("Se quitó un líder de célula");
+    if (servicioCelula.eliminarLider(idLider)) {
+      mostrarMensaje("Se quitó un líder");
       //-mostrarMensaje("Se quitó como líder de esta célula a " + nombreLider);
       quitarOpcionLider(i);//ocultar widgets
     } else {
-      mostrarMensaje("Error quitando líder de célula");
+      mostrarMensaje("Error quitando líder");
     }
   }
 
@@ -533,15 +585,15 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     if (nLider == 1) {
       opcionLider1.setVisible(true);
       activarEditLider1();
-      mostrarOpcionAgregarLider(false);
+      mostrarOpcionAgregarLider(true);
     } else if (nLider == 2) {
       opcionLider2.setVisible(true);
       activarEditLider2();
-      mostrarOpcionAgregarLider(false);
+      mostrarOpcionAgregarLider(true);
     } else if (nLider == 3) {
       opcionLider3.setVisible(true);
       activarEditLider3();
-      mostrarOpcionAgregarLider(false);
+      mostrarOpcionAgregarLider(true);
     } else if (nLider == 4) {
       opcionLider4.setVisible(true);
       activarEditLider4();
@@ -592,7 +644,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    */
   void mostrarOpcionAgregarLider(boolean visible) {
     opcionAgregarLider.setVisible(visible);
-    btnAgregarLider.setVisible(visible);
+    //-btnAgregarLider.setVisible(visible);
   }
 
   /**
@@ -612,7 +664,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     return false;
   }
 
-  private void mostrarMensajeNoHayLideres(boolean visible) {
+  private void mensajeNoHayLideres(boolean visible) {
     String msjError = "La red elegida no tiene líderes registrados";
     String msjOK = "La red elegida sí tiene líderes registrados";
     etqMensajeNoHayLideres.setValue(msjError);
@@ -682,7 +734,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
     servicioCelula.setIdCelula(idCelula);
     if (servicioCelula.actualizarNombre(nombre)) {
-      mostrarMensaje("Se cambió el nombre");
+      mostrarMensaje("Se actualizó el nombre");
     } else {
       mostrarMensaje("Error cambiando el nombre");
     }
@@ -767,14 +819,14 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * cuando se pierde el foco, se cancela la edición
    */
   public void onBlur$cmbDia() {
-    procesarDia();
+    cancelarEditDia();
   }
 
   /**
    * cuando se pierde el foco, se cancela la edición
    */
   public void onBlur$cmbHora() {
-    procesarHora();
+    cancelarEditHora();
   }
 
   public void onClick$etqCodigo() {
@@ -802,17 +854,24 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
 
   //procesamiento de txtCódigo en modo edición
-  public void onOK$txtCodigo() {
+  public void onBlur$txtCodigo() {
     procesarCodigo();
   }
 
   //procesamiento de txtCódigo en modo edición
-  public void onBlur$txtCodigo() {
+  public void onOK$txtCodigo() {
     procesarCodigo();
   }
 
   private void procesarCodigo() {
     ocultarMensaje();
+    if (Sesion.modoIngresar()) {
+      if (txtCodigo.getValue().isEmpty()) {
+        txtCodigo.setVisible(true);
+        txtCodigo.setFocus(true);
+        return;
+      }
+    }
     if (txtCodigo.getValue().isEmpty() || txtCodigo.getValue().equals(codigo)) {//no se cambió el valor
       return;
     }
@@ -820,15 +879,12 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     if (!codigoValido()) {
       return;
     }
-    //TODO: MEJORA-CODIGO: este 'if' redundante
     if (Sesion.modoEditable()) {
       actualizarCodigo();
     }
-    etqCodigo.setValue(codigo);
     cancelarEditCodigo();
-    if (Sesion.modoIngresar()) {
-      activarEditRed();
-    }
+    activarEditRed();
+    etqCodigo.setValue(codigo);
   }
 
   /**
@@ -850,7 +906,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
     servicioCelula.setIdCelula(idCelula);
     if (servicioCelula.actualizarCodigo(codigo)) {
-      mostrarMensaje("Se cambió el código");
+      mostrarMensaje("Se actualizó el código");
     } else {
       mostrarMensaje("Error cambiando el código");
     }
@@ -906,11 +962,11 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       btnQuitarLider2.setVisible(false);
       btnQuitarLider3.setVisible(false);
       btnQuitarLider4.setVisible(false);
-      mostrarOpcionAgregarLider(false);
       return;
     }
-    //true
-    mostrarOpcionAgregarLider(true);
+    //TODO: CODIGO: evaluar si se quita esta línea
+    mostrarOpcionAgregarLider(visible);
+    //true:
     if (seUsaLider(1)) {
       opcionLider1.setVisible(true);
       etqLider1.setVisible(true);
@@ -935,8 +991,11 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
 
   void activarEditRed() {
-    //TODO: se habilita el combo de red
+    mensajeNoHayLideres(false);
+
+    //se habilita el combo de red
     cmbRed.setDisabled(false);
+
     cmbRed.setValue(tbbRed.getLabel());
     cmbRed.setVisible(true);
     cmbRed.select();
@@ -978,6 +1037,9 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     //DOC: permitir edición de red, red y líderes tienen dependencia, se debe bloquear edición simultánea
   }
 
+  /**
+   * limpia las variables relacionadas a líderes
+   */
   private void limpiarValoresLideres() {
     nLideres = 0;
     nombreLider1 = "";
@@ -1037,14 +1099,17 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
 
   public void onClick$btnEditRed() {
-    //TODO: chequear permiso de edición: celula.red
+    //TODO: chequear permiso de edición: celula.red    
+    getVarSesionNombreRed();
     activarEditRed();
   }
 
   public void onClick$etqRed() {
+    getVarSesionNombreRed();
     activarEditRed();
   }
 
+  //NO USADO
   public void onClick$btnCancelarEditRed() {
     cancelarEditRed();
   }
@@ -1057,6 +1122,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     activarEditLideres();
   }
 
+  //NO USADO
   public void onClick$btnCancelarEditLideres() {
     cancelarEditLideres();
   }
@@ -1116,7 +1182,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
     servicioCelula.setIdCelula(idCelula);
     if (servicioCelula.actualizarHora(horaNumero)) {
-      mostrarMensaje("Se cambió la hora");
+      mostrarMensaje("Se actualizó la hora");
     } else {
       mostrarMensaje("Error cambiando la hora");
     }
@@ -1132,25 +1198,13 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    */
   //TODO: MEJORA: evaluar forma de obtener este valor si viniera en el URL
   private void getIdCelula() {
-    try {
-      System.out.println("CtrlCelulaDatosBasicos.getIdCelula");
-      idCelula = (Integer) Sesion.getVariable("idCelula");
-    } catch (Exception e) {
-      idCelula = 0;
-      System.out.println("CtrlCelula -> ERROR recuperando variable de sesión 'idCelula': "
-              + e);
-    }
+    System.out.println("CtrlCelulaDatosBasicos.getIdCelula");
+    idCelula = (Integer) Sesion.getVariable("idCelula");
   }
 
   private void getVarSesionIdRed() {
-    try {
-      System.out.println("CtrlCelulaDatosBasicos.getIdRed");
-      idRed = (Integer) Sesion.getVariable("celula.idRed");
-    } catch (Exception e) {
-      idRed = 0;
-      System.out.println("CtrlCelula -> ERROR recuperando variable de sesión 'idRed': "
-              + e);
-    }
+    System.out.println("CtrlCelulaDatosBasicos.getIdRed");
+    idRed = (Integer) Sesion.getVariable("celula.idRed");
   }
 
   /**
@@ -1226,7 +1280,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     System.out.println("CtrlCelulaDatosBasicos. Líder 1 seleccionado.id: " + idLider1);
 
     if (agregarLiderCelula(idLider1)) {
-      mostrarMensaje("Líder agregado");
+      mostrarMensaje("Se agregó un líder");
       etqLider1.setValue(nombreLider1);
       cancelarEditLider1();
       mostrarOpcionQuitarLider(1, true);
@@ -1458,6 +1512,10 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     //simular un click del boton indicado a la ventana abierta
     //-Events.postEvent(1, "onClick", boton, null);
     Events.sendEvent("onClick", boton, null);
+  }
+
+  private void getVarSesionNombreRed() {
+    nombreRed = "" + Sesion.getVariable("celula.nombreRed");
   }
 }
 /**

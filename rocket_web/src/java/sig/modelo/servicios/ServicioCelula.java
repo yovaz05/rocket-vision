@@ -315,8 +315,12 @@ public class ServicioCelula {
     //data de dirección:
     Zona zona = celula.getZona();
     Direccion dir = new Direccion();
+    
+    dir.setIdZona(zona.getIdZona());
+    dir.setIdCiudad(zona.getIdCiudad().getIdCiudad());
+    dir.setIdEstado(zona.getIdCiudad().getIdEstado().getIdEstado());
+    
     dir.setZona(zona.getNombre());
-    /**/
     dir.setCiudad(zona.getIdCiudad().getNombre());
     dir.setEstado(zona.getIdCiudad().getIdEstado().getNombre());
     dir.setTelefono(celula.getTelefono());
@@ -472,11 +476,16 @@ public class ServicioCelula {
    * @param idLider
    * @return 
    */
-  public boolean deleteLider(int idLider) {
+  public boolean eliminarLider(int idLider) {
     System.out.println("ServicioCelula.deleteLider.idLider=" + idLider);
     RspPersonaEnCelula rspPersonaCelula = new RspPersonaEnCelula();
     //rspPersonaCelula = isaPersonaCelula.deletePersonaEnCelulaPorIdPersona(idCelula, idLider);
     return rspPersonaCelula.esSentenciaSqlEjecutadaExitosamente();
     //TODO: devolver el resultado de la operación de base de datos (true, false)
+  }
+
+  public boolean actualizarRed(int idRed) {
+    RspCelula respuesta = isaCelula.updateIdRedCelula(idCelula, idRed);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 }
