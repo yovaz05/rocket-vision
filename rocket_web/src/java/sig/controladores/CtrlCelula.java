@@ -35,12 +35,16 @@ public class CtrlCelula extends GenericForwardComposer {
   //referencias:
   Include vistaCentral;
   Include panelCentral;
+  //mensajes
+  Div divMensaje;
+  Label etqMensaje;
   //widgets:
   Label tituloVentana;
+  //botones
   Toolbarbutton btnNew;
   Toolbarbutton btnGuardar;
   Toolbarbutton btnEditar;
-  Label etqMensaje;
+  //tabbox:
   Tabbox tabbox;
   Tab tabDB;
   Tab tabDir;
@@ -109,6 +113,7 @@ public class CtrlCelula extends GenericForwardComposer {
   int nLideres = 0;
   //gestión de datos
   //data en modificación:
+  String codigo = "";
   String diaTexto = "";
   String horaTexto = "";
   int dia;
@@ -117,7 +122,17 @@ public class CtrlCelula extends GenericForwardComposer {
   int horaNumero = 19;  //hora por defecto en combo: 7.00pm
   int idRed = 1;
   String nombreRed = "";
-  int idZona = 1;
+  //IDs de personas elegidas como líderes de célula
+  int idLider1 = 0;
+  int idLider2 = 0;
+  int idLider3 = 0;
+  int idLider4 = 0;
+  int idEstado = 0;
+  int idCiudad = 0;
+  int idZona = 0;
+  String nombreEstado = "";
+  String nombreCiudad = "";
+  String nombreZona = "";
   //fecha de apertura con formato para BD
   String fechaAperturaBD;
   private String anfitrion;
@@ -131,12 +146,6 @@ public class CtrlCelula extends GenericForwardComposer {
   CelulaUpdate celulaUpdate;
   ServicioCelula servicio = new ServicioCelula();
   private int idCelula;
-  //IDs de personas elegidas como líderes de célula
-  int idLider1 = 0;
-  int idLider2 = 0;
-  int idLider3 = 0;
-  int idLider4 = 0;
-  private String codigo = "";
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -208,6 +217,7 @@ public class CtrlCelula extends GenericForwardComposer {
 
   /**
    * guarda las variables de sesión
+   * para ser usadas por otros controladores
    */
   private void setVariablesSesion() {
     idRed = celula.getIdRed();
@@ -217,7 +227,14 @@ public class CtrlCelula extends GenericForwardComposer {
     idLider2 = celula.getIdLider2();
     idLider3 = celula.getIdLider3();
     idLider4 = celula.getIdLider4();
-    Sesion.setVariable("id", idCelula);
+    idEstado = celula.getDireccion().getIdEstado();
+    idCiudad = celula.getDireccion().getIdCiudad();
+    idZona = celula.getDireccion().getIdZona();
+    nombreEstado = celula.getDireccion().getEstado();
+    nombreCiudad = celula.getDireccion().getCiudad();
+    nombreZona = celula.getDireccion().getZona();
+    //TODO: poner en sers
+    Sesion.setVariable("idCelula", idCelula);
     Sesion.setVariable("celula.red.id", idRed);
     Sesion.setVariable("celula.nombreRed", nombreRed);
     Sesion.setVariable("celula.nLideres", nLideres);
@@ -225,6 +242,12 @@ public class CtrlCelula extends GenericForwardComposer {
     Sesion.setVariable("celula.idLider2", idLider2);
     Sesion.setVariable("celula.idLider3", idLider3);
     Sesion.setVariable("celula.idLider4", idLider4);
+    Sesion.setVariable("celula.idEstado", idEstado);
+    Sesion.setVariable("celula.idCiudad", idCiudad);
+    Sesion.setVariable("celula.idZona", idZona);
+    Sesion.setVariable("celula.nombreEstado", nombreEstado);
+    Sesion.setVariable("celula.nombreCiudad", nombreCiudad);
+    Sesion.setVariable("celula.nombreZona", nombreZona);
   }
 
   /**
@@ -276,7 +299,7 @@ public class CtrlCelula extends GenericForwardComposer {
     }
 
     //dirección:
-    idZona = celula.getDireccion().getIdEstado();
+    idZona = celula.getDireccion().getIdZona();
     String estado;
     if (idZona == 1) {
       estado = Constantes.VALOR_EDITAR;
@@ -1005,6 +1028,7 @@ public class CtrlCelula extends GenericForwardComposer {
     celulaInsert.setDia(diaNumero);
     celulaInsert.setHora(horaNumero);
 
+    //obtener valor de la zona por si fue cambiado por en la vista 'Direccion'
     idZona = (Integer) Sesion.getVariable("cmbZona.id");
     celulaInsert.setIdZona(idZona);
 
@@ -1116,6 +1140,7 @@ public class CtrlCelula extends GenericForwardComposer {
   private void mostrarMensaje(String msj) {
     etqMensaje.setValue(msj);
     etqMensaje.setVisible(true);
+    divMensaje.setVisible(true);
     System.out.println(this.getClass().toString() + msj);
   }
 

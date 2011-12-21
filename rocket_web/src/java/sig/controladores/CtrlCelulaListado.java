@@ -129,7 +129,6 @@ public class CtrlCelulaListado extends GenericForwardComposer {
         etqNombre.setParent(row);
       }
     });
-    /**/
   }
 
   /**

@@ -17,11 +17,12 @@
           <combobox id="cmbEstado"
           autocomplete="true" autodrop="true" readonly="true"
           visible="false">
-        <!-- TODO: listar sólo los estados actualmente en uso -->
-            <comboitem label="Lara"/>
+          <!-- TODO: CODIGO: quitar la lista, los valores son traidos de la bd -->
+<!--            <comboitem label="Lara"/>
             <comboitem label="Yaracuy"/>
             <comboitem label="Carabobo"/>
             <comboitem label="Agregar..."/>
+            -->
           </combobox>        
 <!-- Este textbox permite al usuario agregar una ciudad -->
           <textbox id="txtEstado"
@@ -49,12 +50,13 @@
           <label id="etqCiudad" value=""/>
           <combobox id="cmbCiudad" autocomplete="true" autodrop="true" readonly="true"
           visible="false">
-          <!--TODO: comentar la lista, los valores son traidos de la bd -->
-            <comboitem label="Barquisimeto"/>
+          <!-- TODO: CODIGO: quitar la lista, los valores son traidos de la bd -->
+<!--            <comboitem label="Barquisimeto"/>
             <comboitem label="Cabudare"/>
             <comboitem label="Duaca"/>
             <comboitem label="Yaritagua"/>
             <comboitem label="Agregar..."/>
+            -->
           </combobox>
           
 <!-- Este textbox permite al usuario agregar una ciudad -->
@@ -82,8 +84,8 @@
 <!--          <combobox id="cmbZona" value="Centro" autocomplete="true" autodrop="true" readonly="true">-->
           <combobox id="cmbZona" autocomplete="true" autodrop="true" readonly="true"
           visible="false">
-          <!-- TODO: comentar la lista, los valores son traidos de la bd -->
-            <comboitem label="Centro"/>
+          <!-- TODO: CODIGO: quitar la lista, los valores son traidos de la bd -->
+<!--            <comboitem label="Centro"/>
             <comboitem label="Los Cerrajones"/>
             <comboitem label="El Cercado"/>
             <comboitem label="Macuto"/>
@@ -94,6 +96,7 @@
             <comboitem label="Veragacha"/>
             <comboitem label="Yaritagua"/>
             <comboitem label="Agregar..." id="itemZonaAdicional"/>
+            -->
           </combobox>
 
           <textbox id="txtZona"

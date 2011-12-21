@@ -89,6 +89,9 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   private A btnQuitarLider3;
   private A btnQuitarLider4;
   private Include panelCentral;
+  Label tituloVentana;
+  String descripcionCelula;
+  private boolean codigoEditado;
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -860,18 +863,21 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     etqCodigo.setVisible(true);
   }
 
-  //procesamiento de txtCódigo en modo edición
   public void onBlur$txtCodigo() {
-    procesarCodigo();
+    //if para evitar proceso doble
+    if (!codigoEditado) {
+      procesarCodigo();
+    }
     cancelarEditCodigo();
+    codigoEditado = false;
   }
 
-  //procesamiento de txtCódigo en modo edición
   public void onOK$txtCodigo() {
     procesarCodigo();
     cancelarEditCodigo();
   }
 
+  //procesamiento de valor de código (nuevo y editado)
   private void procesarCodigo() {
     ocultarMensaje();
     String nuevoValor = txtCodigo.getValue();
@@ -883,33 +889,44 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       txtCodigo.setFocus(true);
       return;
     }
+    if (nuevoValor.equals(codigo)) {//no se cambió el valor
+      return;
+    }
+    if (codigoEnUso(nuevoValor)) {
+      txtCodigo.setVisible(true);
+      txtCodigo.setFocus(true);
+      return;
+    }    
+    
     if (Sesion.modoIngresar()) {
       activarEditRed();
     }
-    if (nuevoValor.isEmpty() || nuevoValor.equals(codigo)) {//no se cambió el valor
-      return;
-    }
-
+    
     codigo = nuevoValor;
-    if (!codigoValido()) {
-      return;
-    }
     if (Sesion.modoEditable()) {
       actualizarCodigo();
+      codigoEditado = true;
     }
     etqCodigo.setValue(codigo);
+    
+    //TODO: MEJORA CODIGO: mover generación de titulo de ventana a clase de utilidad
+    //actualizar título de ventana:
+    descripcionCelula = codigo;
+    tituloVentana.setValue("Célula: " + " " + descripcionCelula);
   }
-
+ 
   /**
-   * validaciones del código
+   * busca en la base de datos si el código ya está en uso
+   * devuelve true o false si existe o no.
+   * además muestra mensaje de error cuando aplica.
    * @return 
    */
-  boolean codigoValido() {
-    if (celulaExiste(codigo)) {
-      mostrarMensaje("Este código ya está en uso");
-      return false;
+  boolean codigoEnUso(String codigoCelula) {
+    if (servicioCelula.existeCelula(codigoCelula)) {
+      mostrarMensaje("Error: El código ya está en uso: " + codigoCelula);
+      return true;
     }
-    return true;
+    return false;
   }
 
   /**
@@ -1198,11 +1215,6 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     } else {
       mostrarMensaje("Error actualizando la hora");
     }
-  }
-
-  //TODO:buscar en la base de datos si el código ya está en uso
-  private boolean celulaExiste(String codigo) {
-    return false;
   }
 
   /**

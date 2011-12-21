@@ -485,4 +485,13 @@ public class ServicioCelula {
     RspCelula respuesta = isaCelula.updateIdRedCelula(idCelula, idRed);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
+
+  public boolean existeCelula(String codigo) {
+    RspCelula respuesta = isaCelula.esCodigoCelulaExistente(codigo);
+    boolean existe = false;
+    if (respuesta.esSentenciaSqlEjecutadaExitosamente()) {
+      existe = respuesta.esCodigoCelulaExistente();
+    }
+    return existe;
+  }
 }
