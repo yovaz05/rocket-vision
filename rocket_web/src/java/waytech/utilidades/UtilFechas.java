@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Util {
+public class UtilFechas {
 
   /**
    * convierte diaNumero a formato de texto.
@@ -135,10 +135,10 @@ public class Util {
    * une idcelula y fecha para obtener el idReporteCelula
    */
   public static int calcularIdReporteCelula(int idCelula) {
-    String idReporte = "" + idCelula + "" + Util.fechaNum();
+    String idReporte = "" + idCelula + "" + UtilFechas.fechaNum();
     /**
     System.out.println("idCelula="+idCelula);
-    System.out.println("fechaNum="+Util.fechaNum());
+    System.out.println("fechaNum="+UtilFechas.fechaNum());
     System.out.println("IDReporte="+IDReporte);     
      */
     int id = Integer.parseInt(idReporte);
@@ -603,8 +603,8 @@ public class Util {
    * @return el objeto Calendar
    */
   public static String getFechaTexto(Date date) {
-    Calendar cal = Util.getCalendar(date);
-    return Util.getFechaTextoDiaMesAñoAbreviado(cal);
+    Calendar cal = UtilFechas.getCalendar(date);
+    return UtilFechas.getFechaTextoDiaMesAñoAbreviado(cal);
   }
   
 }

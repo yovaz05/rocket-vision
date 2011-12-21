@@ -5,10 +5,10 @@
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
   <style src="css/estilos1.css"/>
   <div apply="sig.controladores.CtrlCelula" width="450px">
-    <div style="display:inline-block">
+    <div>
       <label id="tituloVentana" sclass="titulo_ventana"/>
     </div>
-    <div id="divMensaje" align="center" style="display:inline-block;margin:2px;padding:5px"
+    <div id="divMensaje" align="center" style="margin:2px;padding:5px"
     onClick="self.visible=false">
       <label id="etqMensaje" value="Mensajes al usuario:"
       sclass="mensajes" style="margin: 2px; padding:2px;"

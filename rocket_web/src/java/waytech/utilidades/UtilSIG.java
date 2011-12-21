@@ -54,4 +54,5 @@ public class UtilSIG {
       checkRol.setChecked(true);
     }
   }
+
 }

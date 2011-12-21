@@ -29,7 +29,7 @@ import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
-import waytech.utilidades.Util;
+import waytech.utilidades.UtilFechas;
 import waytech.utilidades.UtilSIG;
 
 /**
@@ -537,7 +537,7 @@ public class CtrlLider extends GenericForwardComposer {
     Calendar cal = Calendar.getInstance();
     if (dp$dateFechaNacimiento.getValue() != null) {
       cal.setTime(dp$dateFechaNacimiento.getValue());
-      fechaNacimiento = Util.getFechaTextoSoloNumeros(cal);
+      fechaNacimiento = UtilFechas.getFechaTextoSoloNumeros(cal);
       dp$etqFechaNacimiento.setValue(fechaNacimiento);
     } else {
       //TODO: hacer en otra clase
@@ -589,7 +589,7 @@ public class CtrlLider extends GenericForwardComposer {
     if (dp$dateFechaNacimiento.getValue() != null) {
       Calendar calFechaNac = Calendar.getInstance();
       calFechaNac.setTime(dp$dateFechaNacimiento.getValue());
-      fechaNacimiento = Util.getFechaTextoSoloNumeros(calFechaNac);
+      fechaNacimiento = UtilFechas.getFechaTextoSoloNumeros(calFechaNac);
       dp$etqFechaNacimiento.setValue(fechaNacimiento);
     }
 
@@ -614,7 +614,7 @@ public class CtrlLider extends GenericForwardComposer {
     if (datebox.getValue() != null) {
       Calendar cal = Calendar.getInstance();
       cal.setTime(datebox.getValue());
-      fecha = Util.getFechaTextoMesAño(cal);
+      fecha = UtilFechas.getFechaTextoMesAño(cal);
     }
     return fecha;
   }

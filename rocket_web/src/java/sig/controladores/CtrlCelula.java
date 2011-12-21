@@ -24,7 +24,7 @@ import org.zkoss.zul.Toolbarbutton;
 import sig.modelo.servicios.ServicioCelula;
 import waytech.modelo.beans.sgi.CelulaInsert;
 import waytech.modelo.beans.sgi.CelulaUpdate;
-import waytech.utilidades.Util;
+import waytech.utilidades.UtilFechas;
 
 /**
  * controlador asociado a CelulaSimulador.zul
@@ -146,6 +146,7 @@ public class CtrlCelula extends GenericForwardComposer {
   CelulaUpdate celulaUpdate;
   ServicioCelula servicio = new ServicioCelula();
   private int idCelula;
+  private Div db$opcionAgregarLider;
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -235,7 +236,7 @@ public class CtrlCelula extends GenericForwardComposer {
     nombreZona = celula.getDireccion().getZona();
     //TODO: poner en sers
     Sesion.setVariable("idCelula", idCelula);
-    Sesion.setVariable("celula.red.id", idRed);
+    Sesion.setVariable("celula.idRed", idRed);
     Sesion.setVariable("celula.nombreRed", nombreRed);
     Sesion.setVariable("celula.nLideres", nLideres);
     Sesion.setVariable("celula.idLider1", idLider1);
@@ -447,6 +448,7 @@ public class CtrlCelula extends GenericForwardComposer {
     modo = "new";
     Sesion.setModo(modo);
     Sesion.setVariable("idCelula", 0);
+    mostrarMensaje("Ingresa el código y elige la red");
     actualizarEstado();
   }
 
@@ -483,7 +485,6 @@ public class CtrlCelula extends GenericForwardComposer {
     //TODO: MEJORA: poner botones sin columna, a lado derecho de la etiqueta del campo
     db$colEdit.setVisible(status);
     db$btnEditRed.setVisible(status);
-    db$btnEditLideres.setVisible(status);
   }
 
   public void onSelect$tabbox() {
@@ -780,7 +781,7 @@ public class CtrlCelula extends GenericForwardComposer {
       //TODO: agregar la zona a la descripción
       //descripcionCelula = generarDescripcionCelula(celulaInsert.getCodigo(), dir$cmbZona.getValue());
       //modo = "ver";
-      mostrarMensaje("Célula ingresada. Agrega el resto de la información.");
+      mostrarMensaje("Célula ingresada. Agrega el resto de la información");
       descripcionCelula = codigo;
       //**System.out.println("CtrlCelula.Célula creada con éxito:");
       //**System.out.println("id=" + idCelula);
@@ -1049,9 +1050,9 @@ public class CtrlCelula extends GenericForwardComposer {
   void prepararFechaApertura() {
     dateFechaApertura = otros$dateboxFechaApertura.getValue();
     if (dateFechaApertura != null) {
-      Calendar cal = Util.getCalendar(dateFechaApertura);
-      fechaAperturaBD = Util.getFechaMySql(dateFechaApertura);
-      fechaApertura = Util.getFechaTextoDiaMesAñoAbreviado(cal);
+      Calendar cal = UtilFechas.getCalendar(dateFechaApertura);
+      fechaAperturaBD = UtilFechas.getFechaMySql(dateFechaApertura);
+      fechaApertura = UtilFechas.getFechaTextoDiaMesAñoAbreviado(cal);
     } else {
       fechaAperturaBD = "";
       fechaApertura = "";

@@ -81,7 +81,6 @@
           </vbox>
           <label id="etqMensajeNoHayLideres"
                  value="No hay líderes registrados en esta red"
-                 sclass="mensajes"
                  visible="false"/>
         <!-- etiquetas -->
           <hbox>

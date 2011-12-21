@@ -27,7 +27,7 @@ import waytech.modelo.interfaces.IsaCelula;
 import waytech.modelo.interfaces.IsaPersonaEnCelula;
 import waytech.modelo.servicios.SaCelula;
 import waytech.modelo.servicios.SaPersonaEnCelula;
-import waytech.utilidades.Util;
+import waytech.utilidades.UtilFechas;
 import waytech.utilidades.UtilSIG;
 
 /**
@@ -81,23 +81,14 @@ public class CtrlCelulaListado extends GenericForwardComposer {
     grid.setModel(model);
     grid.setRowRenderer(new RowRenderer() {
 
+      //gestiona cada fila del grid, el objeto data contiene a cada elemento de la colección
       public void render(Row row, Object data) throws Exception {
 
         CelulaListadoUtil celula = (CelulaListadoUtil) data;
 
         System.out.println("CtrlCelulaListado.mostrarDatos.render(): celula=>" + celula.toString());
-        //se crean los widgets con la data
-        etqNro = new EtqNro("" + celula.getNroItem());
-        etqDireccion = new Label(celula.getDireccionCorta());
-        etqDiaHora = new Label(getDiaHora(celula.getDia(), celula.getHora()));
-        etqNombre = new Label(celula.getNombre());
-        tbbCelula = new BotonCelula(celula.getCodigo());
-        tbbLider1 = new BotonLider(celula.getNombreLider1());
-        tbbLider2 = new BotonLider(celula.getNombreLider2());
-        tbbLider3 = new BotonLider(celula.getNombreLider3());
-        tbbLider4 = new BotonLider(celula.getNombreLider4());
 
-        //parámetros para navegación dinámica:
+        //id's para navegación dinámica:
         final int idCelula = celula.getId();
         final int idLider1 = celula.getIdLider1();
         final int idLider2 = celula.getIdLider2();
@@ -105,25 +96,48 @@ public class CtrlCelulaListado extends GenericForwardComposer {
         final int idLider4 = celula.getIdLider4();
         final int idRed = celula.getIdRed();
 
+        //se crean los widgets con la data
+        etqNro = new EtqNro("" + celula.getNroItem());
+        etqDireccion = new Label(celula.getDireccionCorta());
+        etqDiaHora = new Label(getDiaHora(celula.getDia(), celula.getHora()));
+        tbbCelula = new BotonCelula(celula.getCodigo());
+
         tbbCelula.setIdCelula(idCelula);
         tbbCelula.setIdRed(idRed);
-        tbbCelula.setNroLideres(celula.getNumeroLideres());
+        int nroLideres = celula.getNumeroLideres();
+        tbbCelula.setNroLideres(nroLideres);
+
+        tbbLider1 = new BotonLider(celula.getNombreLider1());
+        tbbLider2 = new BotonLider(celula.getNombreLider2());
+        tbbLider3 = new BotonLider(celula.getNombreLider3());
+        tbbLider4 = new BotonLider(celula.getNombreLider4());
         tbbLider1.setIdLider(idLider1);
         tbbLider2.setIdLider(idLider2);
         tbbLider3.setIdLider(idLider3);
         tbbLider4.setIdLider(idLider4);
 
+        String nombre = celula.getNombre();
+        if (nombre.isEmpty()) {
+          nombre = "No asignado";
+        }
+        etqNombre = new Label(nombre);
+        
         //TODO: establecer atributos de estilo a los widgets, por ahora no ha hecho falta
 
-        //se anexan los widgets a la fila
+        //se anexan los widgets a la fila del grid
         etqNro.setParent(row);
         tbbCelula.setParent(row);
-        Vbox vbox = new Vbox();
-        tbbLider1.setParent(vbox);
-        tbbLider2.setParent(vbox);
-        tbbLider3.setParent(vbox);
-        tbbLider4.setParent(vbox);
-        vbox.setParent(row);
+        if (nroLideres == 0) {//célula no tiene líderes          
+          Label etqNoTieneLideres = new Label("No asignados");
+          etqNoTieneLideres.setParent(row);
+        } else {
+          Vbox vbox = new Vbox();
+          tbbLider1.setParent(vbox);
+          tbbLider2.setParent(vbox);
+          tbbLider3.setParent(vbox);
+          tbbLider4.setParent(vbox);
+          vbox.setParent(row);
+        }
         etqDireccion.setParent(row);
         etqDiaHora.setParent(row);
         etqNombre.setParent(row);
@@ -139,7 +153,10 @@ public class CtrlCelulaListado extends GenericForwardComposer {
    */
   //TODO: hacer las conversiones necesarias
   String getDiaHora(String dia, String hora) {
-    return Util.convertirDiaSemanaTextoCompleto(dia) + ", " + Util.convertirHoraTextoCompleto(hora);
+    if (dia.isEmpty() || hora.isEmpty()) {
+      return "No asignado";
+    }
+    return UtilFechas.convertirDiaSemanaTextoCompleto(dia) + ", " + UtilFechas.convertirHoraTextoCompleto(hora);
   }
 
   /**

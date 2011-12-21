@@ -22,7 +22,8 @@ import waytech.modelo.servicios.RspCelula;
 import waytech.modelo.servicios.RspPersonaEnCelula;
 import waytech.modelo.servicios.SaCelula;
 import waytech.modelo.servicios.SaPersonaEnCelula;
-import waytech.utilidades.Util;
+import waytech.utilidades.UtilFechas;
+import waytech.utilidades.UtilSIG;
 
 /**
  *
@@ -152,8 +153,9 @@ public class ServicioCelula {
   /**
    * Convierte la lista de células a una lista de tipo listadoCelulas
    * tipo: 'Celula' a tipo 'CelulaListadoSimulador'
+   * @return listado de células
+   * @author Gerardo Montilla
    */
-  //REALIZADO POR GERARDO MONTILLA
   public List<CelulaListadoUtil> getCelulasListado() {
     getAll();
     int n = 0;
@@ -166,10 +168,21 @@ public class ServicioCelula {
       String codigoCelula = celulaBD.getCodigo();
       celulaListado.setCodigo(codigoCelula);
 
-      //TODO: no hará falta este método, porque setDireccion ya hace la conversión
-      celulaListado.setDireccionCorta(celulaBD.getZona().getNombre() + ", " + celulaBD.getZona().getIdCiudad().getNombre());
-      celulaListado.setDia("" + celulaBD.getDia());
-      celulaListado.setHora("" + celulaBD.getHora());
+      String ciudad = celulaBD.getZona().getIdCiudad().getNombre();
+      String zona = celulaBD.getZona().getNombre();
+      celulaListado.setDireccionCorta(generarDireccionCorta(ciudad, zona));
+
+      if (celulaBD.getDia() == 0) {
+        celulaListado.setDia("");
+      } else {
+        celulaListado.setDia("" + celulaBD.getDia());
+      }
+      if (celulaBD.getHora() == 0) {
+        celulaListado.setHora("");
+      } else {
+        celulaListado.setHora("" + celulaBD.getHora());
+      }
+
       celulaListado.setAnfitrion(celulaBD.getAnfitrion());
       celulaListado.setFechaApertura(celulaBD.getFechaApertura());
 
@@ -224,6 +237,7 @@ public class ServicioCelula {
             celulaListado.setNombreLider4(nombreLider4);
           }
         }
+        celulaListado.setNumeroLideres(i);
       }
       celulaListado.setNombre(celulaBD.getNombre());
       celulaListado.setNombreRed(celulaBD.getRed().getNombre());
@@ -256,8 +270,8 @@ public class ServicioCelula {
     c.setDireccionCorta(celula.getZona().getNombre() + ", " + celula.getZona().getIdCiudad().getNombre());
     int diaNumero = celula.getDia();
     int horaNumero = celula.getHora();
-    c.setDia(Util.convertirDiaSemanaTextoCompleto("" + diaNumero));
-    c.setHora(Util.convertirHoraTextoCompleto("" + horaNumero));
+    c.setDia(UtilFechas.convertirDiaSemanaTextoCompleto("" + diaNumero));
+    c.setHora(UtilFechas.convertirHoraTextoCompleto("" + horaNumero));
     c.setAnfitrion(celula.getAnfitrion());
 
     c.setFechaApertura(celula.getFechaApertura());
@@ -272,6 +286,7 @@ public class ServicioCelula {
     int i = 0;
     System.out.println("ServicioCelula.CELULA.id=" + idCelula + ", codigo=" + c.getCodigo());
     System.out.println("ServicioCelula.recorrido de líderes de la célula");
+    c.setNumeroLideres(0);
     for (PersonaEnCelula personaCelula : listaPersonaCelula) {
       if (personaCelula.esLiderCelula()) {
         i++;
@@ -309,17 +324,19 @@ public class ServicioCelula {
           c.setNombreLider4(nombreLider4);
           c.setNumeroLideres(4);
         }
+        //TODO: mejora de código:
+        //+c.setNumeroLideres(i);
       }
     }
 
     //data de dirección:
     Zona zona = celula.getZona();
     Direccion dir = new Direccion();
-    
+
     dir.setIdZona(zona.getIdZona());
     dir.setIdCiudad(zona.getIdCiudad().getIdCiudad());
     dir.setIdEstado(zona.getIdCiudad().getIdEstado().getIdEstado());
-    
+
     dir.setZona(zona.getNombre());
     dir.setCiudad(zona.getIdCiudad().getNombre());
     dir.setEstado(zona.getIdCiudad().getIdEstado().getNombre());
@@ -475,10 +492,8 @@ public class ServicioCelula {
    */
   public boolean eliminarLider(int idLider) {
     System.out.println("ServicioCelula.deleteLider.idLider=" + idLider);
-    RspPersonaEnCelula rspPersonaCelula = new RspPersonaEnCelula();
-    //rspPersonaCelula = isaPersonaCelula.deletePersonaEnCelulaPorIdPersona(idCelula, idLider);
-    return rspPersonaCelula.esSentenciaSqlEjecutadaExitosamente();
-    //TODO: devolver el resultado de la operación de base de datos (true, false)
+    RspPersonaEnCelula respuesta = isaPersonaCelula.deletePersonaEnCelulaPorIdPersona(idCelula, idLider);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   public boolean actualizarRed(int idRed) {
@@ -494,4 +509,12 @@ public class ServicioCelula {
     }
     return existe;
   }
+  
+  private String generarDireccionCorta(String ciudad, String zona) {
+    if (zona.isEmpty()) {
+      return "No asignada";
+    }
+    return ciudad + ", " + zona;
+  }
+  
 }

@@ -16,7 +16,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
 import sig.modelo.servicios.ServicioRed;
 import waytech.modelo.beans.sgi.Red;
-import waytech.utilidades.Util;
+import waytech.utilidades.UtilFechas;
 
 /**
  * Controlador asociado a vistaCelula/DatosBasicos.zul
@@ -116,7 +116,7 @@ public class CtrlCelulaOtrosDatos extends GenericForwardComposer {
   String procesarFechaApertura() {
     dateFechaApertura = dateboxFechaApertura.getValue();
     if (dateFechaApertura != null) {
-      fechaApertura = Util.getFechaTexto(dateFechaApertura);
+      fechaApertura = UtilFechas.getFechaTexto(dateFechaApertura);
     } else {
       fechaApertura = "";
     }
