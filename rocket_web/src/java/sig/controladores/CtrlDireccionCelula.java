@@ -12,16 +12,18 @@ package sig.controladores;
 import cdo.sgd.controladores.Sesion;
 import java.util.ArrayList;
 import java.util.List;
-import org.zkoss.zul.Div;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.A;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
-import sig.modelo.servicios.ServicioCelula;
 import sig.modelo.servicios.ServicioCiudad;
 import sig.modelo.servicios.ServicioEstado;
 import sig.modelo.servicios.ServicioZona;
@@ -30,7 +32,7 @@ import sig.modelo.servicios.ServicioZona;
  * controlador asociado a Direccion.zul
  * @author Gabriel
  */
-public class CtrlDireccion extends GenericForwardComposer {
+public class CtrlDireccionCelula extends GenericForwardComposer {
 
   /**
    *TODO:
@@ -41,8 +43,6 @@ public class CtrlDireccion extends GenericForwardComposer {
    * 4. quitar botones de edición, o cancelar edición
    ***/
   //widgets:
-  Div divMensaje;
-  Label etqMensaje;
   Label etqEstado;
   Label etqCiudad;
   Label etqZona;
@@ -57,6 +57,7 @@ public class CtrlDireccion extends GenericForwardComposer {
   Textbox txtDetalle;
   Textbox txtTelefono;
   Comboitem itemZonaAdicional;
+  Label etqMensaje;
   //widgets adicionales:
   private String NUEVO_ESTADO = "Agregar...";
   private String NUEVA_CIUDAD = "Agregar...";
@@ -98,8 +99,6 @@ public class CtrlDireccion extends GenericForwardComposer {
   private boolean nuevaCiudadIngresada = false;
   private boolean zonaNuevaIngresada = false;
   private boolean nuevoEstado = false;
-  private int idCelula = 0;
-  ServicioCelula servicioCelula = new ServicioCelula();
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -123,8 +122,8 @@ public class CtrlDireccion extends GenericForwardComposer {
     listaEstados = servEstado.getNombres();
     System.out.println("CtrlDireccion- total de estados: " + listaEstados.size());
 
-    //opción 'agregar...':, será implementado en lanzamientos futuros
-    //+ listaEstados.add(NUEVO_ESTADO);
+    //opción 'agregar...':
+    listaEstados.add(NUEVO_ESTADO);
 
     modelEstados.addAll(listaEstados);
     cmbEstado.setModel(modelEstados);
@@ -179,7 +178,7 @@ public class CtrlDireccion extends GenericForwardComposer {
     estado = cmbEstado.getValue();
     //**System.out.println("CtrlDireccion. estado seleccionado: " + estado);
     mostrarValorEstado();
-    cancelarEditEstado();
+    desactivarEditEstado();
 
     //limpiar las otras variables por si hay valores seleccionados
     ciudad = "";
@@ -187,7 +186,7 @@ public class CtrlDireccion extends GenericForwardComposer {
 
     if (estado.equals(NUEVO_ESTADO)) {
       System.out.println("CtrlDireccion. se seleccionó 'nuevo estado'");
-      cancelarEditEstado();
+      desactivarEditEstado();
       activarIngresoNuevoEstado();
       limpiarListaCiudad();
     } else {
@@ -231,7 +230,7 @@ public class CtrlDireccion extends GenericForwardComposer {
       estado = ELEGIR;
       ciudad = ELEGIR;
       zona = ELEGIR;
-    } else {//nombre de nuevo estado ingresado
+    } else {//zona ingresada
       //forzar ingreso de nueva ciudad:
       ciudad = NUEVA_CIUDAD;
       activarIngresoNuevaCiudad();
@@ -263,8 +262,8 @@ public class CtrlDireccion extends GenericForwardComposer {
     //**System.out.println("CtrlDireccion. id de estado: " + idEstado);
     listaCiudades = servCiudad.getCiudadesPorEstado(idEstado);
 
-    //opción 'agregar ciudad': será usado en próximos lanzamientos
-    //+ listaCiudades.add(NUEVA_CIUDAD);
+    //opción 'agregar ciudad':
+    listaCiudades.add(NUEVA_CIUDAD);
 
     modelCiudades = new ListModelList(listaCiudades);
     cmbCiudad.setModel(modelCiudades);
@@ -278,11 +277,11 @@ public class CtrlDireccion extends GenericForwardComposer {
   public void onSelect$cmbCiudad() {
     ciudad = cmbCiudad.getValue();
     mostrarValorCiudad();
-    cancelarEditCiudad();
+    desactivarEditCiudad();
 
     if (ciudad.equals(NUEVA_CIUDAD)) {
       System.out.println("CtrlDireccion. se seleccionó 'nueva ciudad'");
-      cancelarEditCiudad();
+      desactivarEditCiudad();
       activarIngresoNuevaCiudad();
       limpiarListaZona();
     } else {
@@ -331,12 +330,12 @@ public class CtrlDireccion extends GenericForwardComposer {
     System.out.println("CtrlDireccion -> id Ciudad: " + idCiudad);
     listaZonas = servZona.getZonasPorCiudad(idCiudad);
 
-    //item "agregar zona...", será implementado en lanzamientos futuros
-    //+ listaZonas.add(NUEVA_ZONA);
+    //item "agregar zona..."
+    listaZonas.add(NUEVA_ZONA);
 
     modelZonas = new ListModelList(listaZonas);
     cmbZona.setModel(modelZonas);
-    //- cmbZona.setValue(NUEVA_ZONA);
+    cmbZona.setValue(NUEVA_ZONA);
   }
 
   /** en desarrollo
@@ -351,28 +350,18 @@ public class CtrlDireccion extends GenericForwardComposer {
 
     if (zona.equals(NUEVA_ZONA)) {
       //manejo de evento si selecciona "nueva zona":
-      cancelarEditZona();
+      desactivarEditZona();
       activarIngresoNuevaZona();
-    } else {//zona elegida de las existentes:
+    } else {
       desactivarIngresoNuevaZona();
+      //*System.out.println("NO");
+      //- txtZona.setVisible(false);
+
       //capturar valores:
       idZona = servZona.getIdZona(zona);
       setVariableSesionZona();
-      //**System.out.println("CtrlDireccion.Zona.id=" + idZona);
-
-      //actualizar valor en la base de datos:
-      if (Sesion.esVistaCelula()) {
-        //actualizar valor en la base de datos
-        getIdCelula();
-        servicioCelula.setIdCelula(idCelula);
-        if (servicioCelula.actualizarIdZona(idZona)) {
-          mostrarMensaje("Se actualizó el sector");
-        } else {
-          mostrarMensaje("Error actualizando el sector");
-        }
-      }
-
-      //activar edición de siguiente campo: detalle
+      System.out.println("CtrlDireccion.Zona.id=" + idZona);
+      //activar edición de siguiente campo:
       activarEditDetalle();
     }
   }
@@ -417,7 +406,6 @@ public class CtrlDireccion extends GenericForwardComposer {
 
   public void onOK$txtZona() {
     procesarNuevaZona();
-    cancelarEditZona();
   }
 
   public void onBlur$txtZona() {
@@ -430,7 +418,9 @@ public class CtrlDireccion extends GenericForwardComposer {
       zona = ELEGIR;
     }
     mostrarValorZona();
-
+    /**
+     * TODO: grabar la nueva zona en la base de datos
+     **/
     //activar edición de próximo campo
     activarEditDetalle();
   }
@@ -465,8 +455,8 @@ public class CtrlDireccion extends GenericForwardComposer {
    * click en la etiqueta de estado activa la edición
    */
   public void onClick$etqEstado() {
-    cancelarEditCiudad();//por si está activado
-    cancelarEditZona();//por si está activado
+    desactivarEditCiudad();//por si está activado
+    desactivarEditZona();//por si está activado
     activarEditEstado();
   }
 
@@ -474,8 +464,8 @@ public class CtrlDireccion extends GenericForwardComposer {
    * click en la etiqueta de ciudad activa la edición
    */
   public void onClick$etqCiudad() {
-    cancelarEditEstado();//por si está activado
-    cancelarEditZona();//por si está activado
+    desactivarEditEstado();//por si está activado
+    desactivarEditZona();//por si está activado
     activarEditCiudad();
   }
 
@@ -483,22 +473,22 @@ public class CtrlDireccion extends GenericForwardComposer {
    * click en la etiqueta de ciudad activa la edición
    */
   public void onClick$etqZona() {
-    cancelarEditEstado();//por si está activado
-    cancelarEditCiudad();//por si está activado
+    desactivarEditEstado();//por si está activado
+    desactivarEditCiudad();//por si está activado
     activarEditZona();
   }
 
   public void onBlur$cmbEstado() {
-    cancelarEditEstado();
+    desactivarEditEstado();
   }
 
   public void onBlur$cmbCiudad() {
-    cancelarEditCiudad();
+    desactivarEditCiudad();
   }
 
   public void onBlur$cmbZona() {
     if (!nuevaZona) {
-      cancelarEditZona();
+      desactivarEditZona();
     }
   }
 
@@ -515,7 +505,7 @@ public class CtrlDireccion extends GenericForwardComposer {
    * botón para cancelar la edición de estado
    */
   public void onClick$btnCancelarEditEstado() {
-    cancelarEditEstado();
+    desactivarEditEstado();
   }
 
   /**
@@ -535,7 +525,7 @@ public class CtrlDireccion extends GenericForwardComposer {
   /**
    * activar edición de estado
    */
-  void cancelarEditEstado() {
+  void desactivarEditEstado() {
     cmbEstado.setVisible(false);
     etqEstado.setVisible(true);
     //- btnCancelarEditEstado.setVisible(false);
@@ -555,7 +545,7 @@ public class CtrlDireccion extends GenericForwardComposer {
    * botón para cancelar la edición de Ciudad
    */
   public void onClick$btnCancelarEditCiudad() {
-    cancelarEditCiudad();
+    desactivarEditCiudad();
   }
 
   /**
@@ -575,7 +565,7 @@ public class CtrlDireccion extends GenericForwardComposer {
   /**
    * activar edición de Ciudad
    */
-  void cancelarEditCiudad() {
+  void desactivarEditCiudad() {
     //- btnCancelarEditCiudad.setVisible(false);
     cmbCiudad.setVisible(false);
     //% txtCiudad.setVisible(false);
@@ -617,7 +607,7 @@ public class CtrlDireccion extends GenericForwardComposer {
   /**
    * activar edición de Zona
    */
-  void cancelarEditZona() {
+  void desactivarEditZona() {
     etqZona.setVisible(true);
     cmbZona.setVisible(false);
     txtZona.setVisible(false);
@@ -665,17 +655,13 @@ public class CtrlDireccion extends GenericForwardComposer {
   public void onClick$etqDetalle() {
     activarEditDetalle();
   }
-
+  
   /**
    * activa la edición de detalle
    */
   private void activarEditDetalle() {
     etqDetalle.setVisible(false);
-    detalle = etqDetalle.getValue();
-    if (detalle.equals(Constantes.VALOR_EDITAR)) {
-      detalle = "";
-    }
-    txtDetalle.setValue(detalle);
+    txtDetalle.setValue(etqDetalle.getValue());
     txtDetalle.setVisible(true);
     txtDetalle.setFocus(true);
   }
@@ -684,7 +670,7 @@ public class CtrlDireccion extends GenericForwardComposer {
    * desactiva la edición de detalle
    * y muestra el valor actual
    */
-  private void cancelarEditDetalle() {
+  private void desactivarEditDetalle() {
     txtDetalle.setVisible(false);
     etqDetalle.setFocus(true);
     etqDetalle.setVisible(true);
@@ -692,55 +678,28 @@ public class CtrlDireccion extends GenericForwardComposer {
 
   public void onOK$txtDetalle() {
     procesarDetalle();
-    cancelarEditDetalle();
+    desactivarEditDetalle();
   }
 
   public void onBlur$txtDetalle() {
     procesarDetalle();
-    cancelarEditDetalle();
+    desactivarEditDetalle();
   }
 
   private void procesarDetalle() {
-    String nuevoValor = txtDetalle.getValue();
-    //quitar espacios en blanco
-    nuevoValor = nuevoValor.trim();
-    if (nuevoValor.equals(detalle) //no se cambió valor anterior
-            || nuevoValor.equals(Constantes.VALOR_EDITAR)) {//no se cambió valor por defecto "Editar"
-      return;
-    }
-    detalle = nuevoValor;
-
-    //actualizar valor en la base de datos:
-    if (Sesion.esVistaCelula()) {
-      //actualizar valor en la base de datos
-      getIdCelula();
-      servicioCelula.setIdCelula(idCelula);
-      if (servicioCelula.actualizarDireccionDetalle(detalle)) {
-        mostrarMensaje("Se actualizó la dirección");
-      } else {
-        mostrarMensaje("Error actualizando la dirección");
-      }
-    }
-
-    if (detalle.isEmpty()) {//quedó en blanco, se usa etiqueta que permita edición posterior
-      etqDetalle.setValue(Constantes.VALOR_EDITAR);
-    } else {
-      etqDetalle.setValue(detalle);
-    }
+    detalle = txtDetalle.getValue();
+    //TODO: alguna validación que sea necesaria
+    etqDetalle.setValue(detalle);
   }
 
   private void activarEditTelefono() {
     etqTelefono.setVisible(false);
-    telefono = etqTelefono.getValue();
-    if (telefono.equals(Constantes.VALOR_EDITAR)) {
-      telefono = "";
-    }
-    txtTelefono.setValue(telefono);
+    txtTelefono.setValue(etqTelefono.getValue());
     txtTelefono.setVisible(true);
     txtTelefono.setFocus(true);
   }
 
-  private void cancelarEditTelefono() {
+  private void desactivarEditTelefono() {
     txtTelefono.setVisible(false);
     etqTelefono.setFocus(true);
     etqTelefono.setVisible(true);
@@ -752,75 +711,18 @@ public class CtrlDireccion extends GenericForwardComposer {
 
   public void onOK$txtTelefono() {
     procesarTelefono();
-    cancelarEditTelefono();
+    desactivarEditTelefono();
   }
 
   public void onBlur$txtTelefono() {
     procesarTelefono();
-    cancelarEditTelefono();
+    desactivarEditTelefono();
   }
 
   private void procesarTelefono() {
-    String nuevoValor = txtTelefono.getValue();
-    //quitar espacios en blanco
-    nuevoValor = nuevoValor.trim();
-
-    if (nuevoValor.equals(telefono) //no se cambió valor anterior
-            || nuevoValor.equals(Constantes.VALOR_EDITAR)) {//no se cambió valor por defecto "Editar"
-      return;
-    }
-    telefono = nuevoValor;
-
-    //actualizar valor en la base de datos:
-    if (Sesion.esVistaCelula()) {
-      //actualizar teléfono de la célula
-      getIdCelula();
-      servicioCelula.setIdCelula(idCelula);
-      if (servicioCelula.actualizarTelefono(telefono)) {
-        mostrarMensaje("Se actualizó el teléfono");
-      } else {
-        mostrarMensaje("Error actualizando la dirección");
-      }
-      //TODO: mensaje de éxito/error
-    } else if (Sesion.esVistaLider()) {
-      getIdCelula();
-      //TODO: se usará para el formulario de líder
-      //+ servicioLider.setIdCelula(idCelula);
-      //+ servicioLider.actualizarTelefono(telefono);
-    }
-    if (telefono.isEmpty()) {//quedó en blanco, se usa etiqueta que permita edición posterior
-      telefono = Constantes.VALOR_EDITAR;
-    }
+    telefono = txtTelefono.getValue();
+    //TODO: alguna validación que sea necesaria
     etqTelefono.setValue(telefono);
-  }
-
-  /**
-   * recupera variable de sesión 'idCelula'
-   */
-  //TODO: MEJORA: evaluar forma de obtener este valor si viniera en el URL
-  private void getIdCelula() {
-    System.out.println("CtrlDireccion.getIdCelula:");
-    idCelula = (Integer) Sesion.getVariable("idCelula");
-  }
-
-  /**
-   * muestra un mensaje en un label, para interacción con el usuario
-   * @param msj 
-   */
-  private void mostrarMensaje(String msj) {
-    etqMensaje.setValue(msj);
-    etqMensaje.setVisible(true);
-    divMensaje.setVisible(true);
-    System.out.println(this.getClass().toString() + msj);
-  }
-
-  /** 
-   * limpia el mensaje de estado
-   */
-  private void ocultarMensaje() {
-    etqMensaje.setValue("");//TODO: CODIGO: línea parece redundante
-    etqMensaje.setVisible(false);
-    divMensaje.setVisible(false);
   }
 }
 /**

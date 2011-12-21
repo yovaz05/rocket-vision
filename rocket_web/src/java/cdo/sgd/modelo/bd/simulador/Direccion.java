@@ -7,6 +7,9 @@ public class Direccion {
   String zona = "";
   String dirDetallada = "";
   String telefono = "";
+  int idEstado = 0;
+  int idCiudad = 0;
+  int idZona = 0;
 
   public Direccion() {
   }
@@ -67,4 +70,30 @@ public class Direccion {
   public void setZona(String zona) {
     this.zona = zona;
   }
+
+  public int getIdCiudad() {
+    return idCiudad;
+  }
+
+  public void setIdCiudad(int idCiudad) {
+    this.idCiudad = idCiudad;
+  }
+
+  public int getIdEstado() {
+    return idEstado;
+  }
+
+  public void setIdEstado(int idEstado) {
+    this.idEstado = idEstado;
+  }
+
+  public int getIdZona() {
+    return idZona;
+  }
+
+  public void setIdZona(int idZona) {
+    this.idZona = idZona;
+  }
+  
+  
 }

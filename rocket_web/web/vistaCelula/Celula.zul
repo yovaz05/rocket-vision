@@ -5,8 +5,11 @@
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
   <style src="css/estilos1.css"/>
   <div apply="sig.controladores.CtrlCelula" width="450px">
-    <label id="tituloVentana" sclass="titulo_ventana"/>
-    <div align="center" style="display:inline-block;margin:2px; padding: 2px 15px;">
+    <div style="display:inline-block">
+      <label id="tituloVentana" sclass="titulo_ventana"/>
+    </div>
+    <div id="divMensaje" align="center" style="display:inline-block;margin:2px;"
+    onClick="self.visible=false">
       <label id="etqMensaje" value="Mensajes al usuario:"
       sclass="mensajes" style="margin: 2px; padding:2px;"
       onClick="self.visible=false"
@@ -36,7 +39,7 @@
           <include id="dir" src="vistaReusable/Direccion.zul"/>  
         </tabpanel>
         <tabpanel>
-          <include id="otros" src="vistaCelula/OtrosDatos.zul"/>  
+          <include id="otros" src="vistaCelula/OtrosDatos.zul" visible="false"/>  
         </tabpanel>
         <tabpanel>
           <include id="obs" src="vistaReusable/Observaciones.zul"/>  

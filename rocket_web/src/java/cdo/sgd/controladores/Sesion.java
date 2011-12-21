@@ -125,10 +125,18 @@ public class Sesion {
   }
   
   public static boolean modoEditable(){
-    return Sesion.getModo().equals("ver-modificable");
+    return Sesion.getModo().equals("edicion-dinamica");
   }
   
   public static boolean modoIngresar(){
     return Sesion.getModo().equals("new");
+  }
+  
+  public static boolean esVistaCelula(){
+    return Sesion.getVistaActual().equals(Vistas.CELULA);
+  }
+  
+  public static boolean esVistaLider(){
+    return Sesion.getVistaActual().equals(Vistas.LIDER);
   }
 }

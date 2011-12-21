@@ -41,7 +41,7 @@ public class BotonCelula extends A {
         Sesion.setVariable("idCelula", idCelula);
         Sesion.setVariable("celula.idRed", idRed);
         Sesion.setVariable("celula.nLideres", nroLideres);
-        Sesion.setModo("ver-modificable");  //modo visualización, con edición dinámica
+        Sesion.setModo("edicion-dinamica");  //modo visualización, con edición dinámica
         ctrlVista.forzarCambioVista_btnControl();
       }
     });

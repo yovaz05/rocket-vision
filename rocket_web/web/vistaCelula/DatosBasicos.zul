@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
   <style src="css/estilos1.css"/>  
-  <div align="center">
+<!--  <div align="center">
     <hbox id="divMensaje"
       align="right"
       sclass="mensajes"
@@ -19,7 +19,7 @@
       onClick="cerrarMensaje()"      
       visible="false"/>
     </hbox>
-  </div>
+  </div>-->
   <grid style="border:0px" apply="sig.controladores.CtrlCelulaDatosBasicos">
     <columns>
       <column id="col1" width="100px"/>

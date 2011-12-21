@@ -116,8 +116,8 @@
         </div>
 -->
       </row>           
-      <row> 
-        <label value="Detalle" sclass="etiqueta_campo" tooltiptext="Calle, Avenida, Número, Referencia, etc."/>
+      <row id="filaDirDetalle" tooltiptext="Calle, Avenida, Número, Referencia, etc."> 
+        <label value="Detalle" sclass="etiqueta_campo"/>
         <hbox align="left">
           <label id="etqDetalle" value="" multiline="true"/>
           <textbox id="txtDetalle" rows="3" cols="50" multiline="true"

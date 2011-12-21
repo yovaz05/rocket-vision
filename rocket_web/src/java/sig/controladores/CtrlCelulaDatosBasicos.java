@@ -27,9 +27,9 @@ import waytech.modelo.beans.sgi.Red;
 public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
 
   //widgets:
-  Hbox divMensaje;
+  Div divMensaje;
   Label etqMensaje;
-  A btnCerrarMensaje;
+  //- A btnCerrarMensaje;
   Label etqMensajeNoHayLideres;
   Textbox txtCodigo, txtNombre;
   A tbbRed;
@@ -115,7 +115,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   private void mostrarMensaje(String msj) {
     etqMensaje.setValue(msj);
     etqMensaje.setVisible(true);
-    btnCerrarMensaje.setVisible(true);
+    //-btnCerrarMensaje.setVisible(true);
     divMensaje.setVisible(true);
     System.out.println(this.getClass().toString() + msj);
   }
@@ -126,7 +126,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   private void ocultarMensaje() {
     etqMensaje.setValue("");//TODO: CODIGO: línea parece redundante
     etqMensaje.setVisible(false);
-    btnCerrarMensaje.setVisible(false);
+    //-btnCerrarMensaje.setVisible(false);
     divMensaje.setVisible(false);
   }
 
@@ -237,7 +237,6 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     boolean redTieneLideresLanzados = cargarLideresLanzadosRed();
     if (!redTieneLideresLanzados) {
       cancelarEditRed();
-      return;
     }
 
     //si está en modo ingresar se crea la célula con el código y la red
@@ -301,7 +300,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     if (servicioCelula.actualizarRed(idRed)) {
       mostrarMensaje("Se cambió la célula a otra red");
     } else {
-      mostrarMensaje("Error cambiando la célula a otra red");
+      mostrarMensaje("Error actualizando la célula a otra red");
     }
   }
 
@@ -374,7 +373,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     if (servicioCelula.actualizarDia(diaNumero)) {
       mostrarMensaje("Se actualizó el día");
     } else {
-      mostrarMensaje("Error cambiando el día");
+      mostrarMensaje("Error actualizando el día");
     }
   }
 
@@ -687,6 +686,9 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   private void activarEditNombre() {
     etqNombre.setVisible(false);
     nombre = etqNombre.getValue();
+    if (nombre.equals(Constantes.VALOR_EDITAR)) {
+      nombre = "";
+    }
     txtNombre.setValue(nombre);
     txtNombre.setVisible(true);
     txtNombre.setFocus(true);
@@ -713,14 +715,19 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
 
   private void procesarNombre() {
-    if (txtNombre.getValue().equals(nombre)) {//no se cambió el valor
+    ocultarMensaje();
+    String nuevoValor = txtNombre.getValue();
+    //quitar espacios en blanco
+    nuevoValor = nuevoValor.trim();
+
+    if (nuevoValor.isEmpty() || nuevoValor.equals(nombre)) {//no se cambió el valor
       return;
     }
-    nombre = txtNombre.getValue();
-    ocultarMensaje();
-    //TODO: Mejora, chequear si existe una célula con ese mismo nombre, y sugerir al usuario que use otro.
+
+    nombre = nuevoValor;
+
+    //TODO: MEJORA: chequear si existe una célula con ese mismo nombre, y sugerir al usuario que use otro.
     //No es obligatorio que sea único
-    //TODO: MEJORA-CODIGO: este 'if' redundante
     if (Sesion.modoEditable()) {
       actualizarNombre();
     }
@@ -736,7 +743,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     if (servicioCelula.actualizarNombre(nombre)) {
       mostrarMensaje("Se actualizó el nombre");
     } else {
-      mostrarMensaje("Error cambiando el nombre");
+      mostrarMensaje("Error actualizando el nombre");
     }
   }
 
@@ -856,34 +863,40 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   //procesamiento de txtCódigo en modo edición
   public void onBlur$txtCodigo() {
     procesarCodigo();
+    cancelarEditCodigo();
   }
 
   //procesamiento de txtCódigo en modo edición
   public void onOK$txtCodigo() {
     procesarCodigo();
+    cancelarEditCodigo();
   }
 
   private void procesarCodigo() {
     ocultarMensaje();
-    if (Sesion.modoIngresar()) {
-      if (txtCodigo.getValue().isEmpty()) {
-        txtCodigo.setVisible(true);
-        txtCodigo.setFocus(true);
-        return;
-      }
-    }
-    if (txtCodigo.getValue().isEmpty() || txtCodigo.getValue().equals(codigo)) {//no se cambió el valor
+    String nuevoValor = txtCodigo.getValue();
+    //quitar espacios en blanco
+    nuevoValor = nuevoValor.trim();
+
+    if (nuevoValor.isEmpty()) {
+      txtCodigo.setVisible(true);
+      txtCodigo.setFocus(true);
       return;
     }
-    codigo = txtCodigo.getValue();
+    if (Sesion.modoIngresar()) {
+      activarEditRed();
+    }
+    if (nuevoValor.isEmpty() || nuevoValor.equals(codigo)) {//no se cambió el valor
+      return;
+    }
+
+    codigo = nuevoValor;
     if (!codigoValido()) {
       return;
     }
     if (Sesion.modoEditable()) {
       actualizarCodigo();
     }
-    cancelarEditCodigo();
-    activarEditRed();
     etqCodigo.setValue(codigo);
   }
 
@@ -908,7 +921,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     if (servicioCelula.actualizarCodigo(codigo)) {
       mostrarMensaje("Se actualizó el código");
     } else {
-      mostrarMensaje("Error cambiando el código");
+      mostrarMensaje("Error actualizando el código");
     }
   }
 
@@ -1016,7 +1029,6 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     //- btnEditLideres.setVisible(true);//permitir edición de líderes
   }
 
-  //DOING: cambiando, da error de valor nulo
   void activarEditLideres() {
     System.out.println("CtrlCelulaDatosBasicos.EditLideres");
     if (Sesion.modoEditable()) {
@@ -1184,7 +1196,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     if (servicioCelula.actualizarHora(horaNumero)) {
       mostrarMensaje("Se actualizó la hora");
     } else {
-      mostrarMensaje("Error cambiando la hora");
+      mostrarMensaje("Error actualizando la hora");
     }
   }
 

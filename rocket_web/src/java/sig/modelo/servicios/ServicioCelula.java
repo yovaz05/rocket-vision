@@ -87,15 +87,16 @@ public class ServicioCelula {
    * crear una célula en la base de datos
    * con todos los datos en el objeto CelulaInsert
    * @param celulaInsert el objeto con los datos
-   * @return el id de la célula creada
+   * @return el id de la célula creada, sino se insertó se devuelve 0
    */
   public int insertCelula(CelulaInsert celulaInsert) {
     RspCelula rspCelula = isaCelula.insertCelula(celulaInsert);
     boolean ok = rspCelula.esSentenciaSqlEjecutadaExitosamente();
     if (ok) {
       idCelula = rspCelula.getCelula().getIdCelula();
+      return idCelula;
     }
-    return idCelula;
+    return 0;
   }
 
   /**
@@ -141,12 +142,11 @@ public class ServicioCelula {
    */
   public boolean agregarLiderCelula(int idLider) {
     PersonaEnCelulaInsert persona = new PersonaEnCelulaInsert();
-    RspPersonaEnCelula rspPersonaCelula = new RspPersonaEnCelula();
     persona.setIdCelula(idCelula);
     persona.setIdPersona(idLider);
     persona.setEsLiderCelula(true);
-    rspPersonaCelula = isaPersonaCelula.insertPersonaEnCelula(persona);
-    return rspPersonaCelula.esSentenciaSqlEjecutadaExitosamente();
+    RspPersonaEnCelula respuesta = isaPersonaCelula.insertPersonaEnCelula(persona);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**
@@ -340,9 +340,9 @@ public class ServicioCelula {
   public CelulaUtil getCelula(int idCelula) {
     setIdCelula(idCelula);
     //traer datos de la célula
-    RspCelula rspCelula = isaCelula.getCelulaPorIdCelula(idCelula);
+    RspCelula respuesta = isaCelula.getCelulaPorIdCelula(idCelula);
     Celula celulaBD = new Celula();
-    celulaBD = rspCelula.getCelula();
+    celulaBD = respuesta.getCelula();
     if (celulaBD == null) {
       System.out.println("Error en ServicioCelula.getDatosCelula:celulla NULL");
       System.out.println("ServicioCelula.encontrada? ERROR");
@@ -390,8 +390,8 @@ public class ServicioCelula {
    * actualiza el código de la célula en la base de datos
    */
   public boolean actualizarCodigo(String codigo) {
-    RspCelula rspCelula = isaCelula.updateCodigoCelula(idCelula, codigo);
-    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+    RspCelula respuesta = isaCelula.updateCodigoCelula(idCelula, codigo);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
     //return true;
     //TODO: devolver si hubo éxito o error
   }
@@ -400,75 +400,72 @@ public class ServicioCelula {
    * actualiza el día de la célula
    */
   public boolean actualizarDia(int dia) {
-    RspCelula rspCelula = isaCelula.updateDiaCelula(idCelula, dia);
-    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+    RspCelula respuesta = isaCelula.updateDiaCelula(idCelula, dia);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**
    * actualiza la hora de la célula
    */
   public boolean actualizarHora(int hora) {
-    RspCelula rspCelula = isaCelula.updateHoraCelula(idCelula, hora);
-    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+    RspCelula respuesta = isaCelula.updateHoraCelula(idCelula, hora);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**
    * actualiza el nombre de la célula
    */
   public boolean actualizarNombre(String nombre) {
-    RspCelula rspCelula = isaCelula.updateNombreCelula(idCelula, nombre);
-    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+    RspCelula respuesta = isaCelula.updateNombreCelula(idCelula, nombre);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**
    * actualiza el id de la zona (o sector)
    */
   public boolean actualizarIdZona(int idZona) {
-    RspCelula rspCelula = isaCelula.updateIdZonaCelula(idCelula, idZona);
-    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+    RspCelula respuesta = isaCelula.updateIdZonaCelula(idCelula, idZona);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**
    * actualiza el detalle de la dirección de la célula
    */
   public boolean actualizarDireccionDetalle(String direccionDetalle) {
-    RspCelula rspCelula = isaCelula.updateDireccionCelula(idCelula, direccionDetalle);
-    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+    RspCelula respuesta = isaCelula.updateDireccionCelula(idCelula, direccionDetalle);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**
    * actualiza el teléfono de la dirección de la célula
    */
   public boolean actualizarTelefono(String telefono) {
-    RspCelula rspCelula = new RspCelula();
-    rspCelula = isaCelula.updateTelefonoCelula(idCelula, telefono);
-    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+    RspCelula respuesta = isaCelula.updateTelefonoCelula(idCelula, telefono);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**
    * actualiza la fecha de apertura
    */
   public boolean actualizarFechaApertura(String fechaApertura) {
-    RspCelula rspCelula = new RspCelula();
-    rspCelula = isaCelula.updateFechaAperturaCelula(idCelula, fechaApertura);
-    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+    RspCelula respuesta = isaCelula.updateFechaAperturaCelula(idCelula, fechaApertura);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**
    * actualiza el nombre del anfitrión
    */
   public boolean actualizarAnfitrion(String nombreAnfitrion) {
-    RspCelula rspCelula = new RspCelula();
-    rspCelula = isaCelula.updateAnfitrionCelula(idCelula, nombreAnfitrion);
-    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+    RspCelula respuesta = isaCelula.updateAnfitrionCelula(idCelula, nombreAnfitrion);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**
    * actualiza las observaciones
    */
   public boolean actualizarObservaciones(String observaciones) {
-    RspCelula rspCelula = isaCelula.updateObservacionesCelula(idCelula, observaciones);
-    return rspCelula.esSentenciaSqlEjecutadaExitosamente();
+    RspCelula respuesta = isaCelula.updateObservacionesCelula(idCelula, observaciones);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**

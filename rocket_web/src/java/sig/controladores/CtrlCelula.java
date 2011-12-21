@@ -286,13 +286,13 @@ public class CtrlCelula extends GenericForwardComposer {
       dir$etqZona.setValue(celula.getDireccion().getZona());
     }
     dir$etqEstado.setValue(estado);
-    
-    String detalle = celula.getDireccion().getDirDetallada();    
+
+    String detalle = celula.getDireccion().getDirDetallada();
     if (detalle.isEmpty()) {
       detalle = Constantes.VALOR_EDITAR;
     }
-    dir$etqDetalle.setValue(celula.getDireccion().getDirDetallada());      
-    
+    dir$etqDetalle.setValue(detalle);
+
     String telefono = celula.getDireccion().getTelefono();
     if (telefono.isEmpty()) {
       telefono = Constantes.VALOR_EDITAR;
@@ -311,6 +311,18 @@ public class CtrlCelula extends GenericForwardComposer {
       anfitrion = Constantes.VALOR_EDITAR;
     }
     otros$etqAnfitrion.setValue(anfitrion);
+
+    String observaciones = celula.getObservaciones();
+    if (observaciones.isEmpty()) {
+      observaciones = Constantes.VALOR_EDITAR;
+    }
+    obs$etqObservaciones.setValue(observaciones);
+
+    //crear descripción de la célula, para el título:
+    //TODO: si hay direcció, agregarsela al título
+    //+descripcionCelula = generarDescripcionCelula(celula.getCodigo(), celula.getDireccionCorta());
+    descripcionCelula = celula.getCodigo();
+
 
     //TODO: configurar parámetros para navegación dinámica:
     /*
@@ -356,12 +368,6 @@ public class CtrlCelula extends GenericForwardComposer {
     }
      */
 
-    obs$etqObservaciones.setValue(celula.getObservaciones());
-
-    //crear descripción de la célula, para el título:
-    //TODO: si hay direcció, agregarsela al título
-    //+descripcionCelula = generarDescripcionCelula(celula.getCodigo(), celula.getDireccionCorta());
-    descripcionCelula = celula.getCodigo();
   }
 
   /**
@@ -576,7 +582,7 @@ public class CtrlCelula extends GenericForwardComposer {
   }
 
   /**
-   * muestra/oculta los widgets de edición
+   * muestra/oculta las etiquetas que permiten la edición
    */
   private void mostrarWidgetsEdit(boolean status) {
     //datos básicos:
@@ -603,7 +609,7 @@ public class CtrlCelula extends GenericForwardComposer {
     //otros datos
     otros$etqAnfitrion.setVisible(status);
     otros$etqFechaApertura.setVisible(status);
-    obs$txtObservaciones.setVisible(status);
+    obs$etqObservaciones.setVisible(status);
   }
 
   /**
@@ -657,17 +663,17 @@ public class CtrlCelula extends GenericForwardComposer {
     //datos básicos
     //-db$etqCodigo.setValue(codigo);
     db$tbbRed.setLabel(nombreRed);
-    db$etqDia.setValue("Día");
-    db$etqHora.setValue("Hora");
-    db$etqNombre.setValue("Editar...");
-    dir$etqEstado.setValue("Editar...");
+    db$etqDia.setValue("Editar Día");
+    db$etqHora.setValue("Editar Hora");
+    db$etqNombre.setValue(Constantes.VALOR_EDITAR);
+    dir$etqEstado.setValue(Constantes.VALOR_EDITAR);
     dir$etqCiudad.setValue("");
     dir$etqZona.setValue("");
-    dir$etqDetalle.setValue("Editar...");
-    dir$etqTelefono.setValue("Editar...");
-    otros$etqFechaApertura.setValue("Editar...");
-    otros$etqAnfitrion.setValue("Editar...");
-    obs$etqObservaciones.setValue("");
+    dir$etqDetalle.setValue(Constantes.VALOR_EDITAR);
+    dir$etqTelefono.setValue(Constantes.VALOR_EDITAR);
+    otros$etqFechaApertura.setValue(Constantes.VALOR_EDITAR);
+    otros$etqAnfitrion.setValue(Constantes.VALOR_EDITAR);
+    obs$etqObservaciones.setValue(Constantes.VALOR_EDITAR);
     /*
     db$tbbLider1.setLabel(db$cmbLider1.getValue());
     //TODO:mostrar los otros líderes sólo si son usados
@@ -1156,7 +1162,7 @@ public class CtrlCelula extends GenericForwardComposer {
 
   private void mostrarTabsRestantes(boolean visible) {
     tabDir.setVisible(visible);
-    tabOtros.setVisible(visible);
+    //+ tabOtros.setVisible(visible);
     tabObs.setVisible(visible);
   }
 }

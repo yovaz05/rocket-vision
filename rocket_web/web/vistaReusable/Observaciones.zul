@@ -10,21 +10,10 @@
       <row>
         <a label="Agregar" sclass="etiqueta_campo"/>
         <vbox>
-          <label id="etqObservaciones" value="Comentarios..." multiline="true" visible="false"/>
+          <label id="etqObservaciones" value="Comentarios..." multiline="true" visible="true"/>
           <textbox id="txtObservaciones" cols="100" rows="5" maxlength="500" visible="false"/> 
         </vbox>
       </row>       
     </rows>
   </grid>
-  <zscript>
-<!--TODO: pasar este código al controlador, y unificar al ya existente-->
-  <![CDATA[  
-    void activarEditObservaciones(){
-      txtObservaciones.setValue(etqObservaciones.getValue());
-      txtObservaciones.setVisible(true);
-      txtObservaciones.setFocus(true);
-      etqObservaciones.setVisible(false);
-    }
-    ]]> 
-  </zscript>  
 </zk>
