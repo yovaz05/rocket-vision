@@ -4,7 +4,6 @@
  */
 package cdo.sgd.modelo.bd.simulador;
 
-
 /**
  *
  * @author Gabriel Pérez
@@ -22,11 +21,10 @@ public class CelulaUtil {
   protected String dia = "";
   protected String hora = "";
   protected String direccionCorta = "";
-  protected Direccion direccion = new Direccion("","","","","");
+  protected Direccion direccion = new Direccion("", "", "", "", "");
   protected String fechaApertura = "";
   protected String anfitrion = "";
   protected String observaciones = "";
-  
   //para navegación integrada:
   protected int idRed = 0;
   protected int idLider1 = 0;
@@ -76,7 +74,7 @@ public class CelulaUtil {
             + ", direccionCorta=" + direccion.getDireccionCorta()
             + ", direccionCompleta=" + direccion.toString()
             + ", fechaApertura=" + fechaApertura
-            + ", anfitrion=" + anfitrion 
+            + ", anfitrion=" + anfitrion
             + ", observaciones=" + observaciones
             + ", IDS: id-Red=" + idRed
             + ", id-Lider1=" + idLider1 + ", id-Lider2=" + idLider2
@@ -101,7 +99,7 @@ public class CelulaUtil {
     this.nombreLider1 = nombreLider1;
     this.nombreLider2 = nombreLider2;
   }
-  
+
   public String getDireccionCorta() {
     return direccionCorta;
   }
@@ -137,7 +135,7 @@ public class CelulaUtil {
   public void setDia(String diaHora) {
     this.dia = diaHora;
   }
-  
+
   public String getHora() {
     return hora;
   }
@@ -171,22 +169,13 @@ public class CelulaUtil {
   public void setId(int id) {
     this.id = id;
   }
-  
+
   public int getIdLider1() {
     return idLider1;
   }
 
   public void setIdLider1(int idLider1) {
     this.idLider1 = idLider1;
-    //updateNombreLider1();
-  }
-
-  //TODO: borrar o evaluar
-  public void updateNombreLider1() {
-    if (idLider1 == 1) {
-      this.nombreLider1 = "Pastor Rogelio Mora";
-      return;
-    }
   }
 
   public int getIdLider2() {
@@ -197,12 +186,7 @@ public class CelulaUtil {
     this.idLider2 = idLider2;
     //updateNombreLider2();
   }
-  
-/*
-  public void updateNombreLider2() {
-    this.nombreLider2 = (idLider2 != 0) ? bd.buscarLider(idLider2).getNombre() : "";
-  }
-*/
+
   public int getIdRed() {
     return idRed;
   }
@@ -254,19 +238,19 @@ public class CelulaUtil {
 
   /*
   private void updateNombreRed() {
-    this.setNombreRed(bd.buscarRed(this.idRed).getNombre());
+  this.setNombreRed(bd.buscarRed(this.idRed).getNombre());
   }
-
+  
   private void updateNombreSupervisor1() {
-    Lider supervisor = bd.buscarLider(idSupervisor1);
-    this.nombreSupervisor1 = supervisor.getNombre();
+  Lider supervisor = bd.buscarLider(idSupervisor1);
+  this.nombreSupervisor1 = supervisor.getNombre();
   }
-
+  
   private void updateNombreSupervisor2() {
-   Lider supervisor = bd.buscarLider(idSupervisor2);
-    this.nombreSupervisor2 = supervisor.getNombre();
+  Lider supervisor = bd.buscarLider(idSupervisor2);
+  this.nombreSupervisor2 = supervisor.getNombre();
   }
-/**/
+  /**/
   private void updateDireccionCorta() {
     setDireccionCorta(direccion.zona + " - " + direccion.ciudad);
   }
@@ -319,6 +303,4 @@ public class CelulaUtil {
   public void setNumeroLideres(int numeroLideres) {
     this.numeroLideres = numeroLideres;
   }
-
-  
 }

@@ -12,7 +12,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Toolbarbutton;
-import waytech.utilidades.Util;
+import waytech.utilidades.UtilFechas;
 import waytech.utilidades.UtilSIG;
 
 /**
@@ -187,11 +187,11 @@ public class CtrlCelulaEstadisticas extends GenericForwardComposer {
     hoy = new GregorianCalendar();
 
     //buscar domingo anterior:
-    Calendar domingo = Util.calcularDomingoAnterior();
+    Calendar domingo = UtilFechas.calcularDomingoAnterior();
     fechaInicio = domingo;
 
     //buscar sábado siguiente
-    Calendar sabado = Util.calcularSabadoSiguiente();
+    Calendar sabado = UtilFechas.calcularSabadoSiguiente();
     //ajustar fecha final con sábado siguiente
     if (sabado.after(hoy)) {
       fechaFin = hoy;
@@ -204,7 +204,7 @@ public class CtrlCelulaEstadisticas extends GenericForwardComposer {
    * ajusta período al último mes a partir del día de hoy
    */
   private void calcularFechasUltimoMes() {
-    fechaInicio = Util.calcularMesInicio();
+    fechaInicio = UtilFechas.calcularMesInicio();
     fechaFin = hoy;
   }
 
@@ -212,7 +212,7 @@ public class CtrlCelulaEstadisticas extends GenericForwardComposer {
    * ajusta período al último trimestre a partir del día de hoy
    */
   private void calcularFechasUltimoTrimestre() {
-    inicioTrimestre = Util.calcularTrimestreInicio();
+    inicioTrimestre = UtilFechas.calcularTrimestreInicio();
     fechaInicio = inicioTrimestre;
     fechaFin = hoy;
     dateInicioTrimestre = inicioTrimestre.getTime();
@@ -223,7 +223,7 @@ public class CtrlCelulaEstadisticas extends GenericForwardComposer {
    * ajusta período 1 año hacia atrás respecto al día de hoy
    */
   private void calcularFechasUltimoAño() {
-    fechaInicio = Util.calcularInicioAñoActual();
+    fechaInicio = UtilFechas.calcularInicioAñoActual();
     fechaFin = hoy;
   }
 
@@ -235,8 +235,8 @@ public class CtrlCelulaEstadisticas extends GenericForwardComposer {
     mostrarMensaje("fechaInicio: " + fechaInicio);
     dateboxInicio.setValue(fechaInicio.getTime());
     dateboxFin.setValue(fechaFin.getTime());
-    System.out.println("fecha inicio: " + Util.getFechaLarga(fechaInicio));
-    System.out.println("fecha fin: " + Util.getFechaLarga(fechaFin));
+    System.out.println("fecha inicio: " + UtilFechas.getFechaLarga(fechaInicio));
+    System.out.println("fecha fin: " + UtilFechas.getFechaLarga(fechaFin));
     //guardar valores actuales, en objetos tipo Date:
     dateInicio = dateboxInicio.getValue();
     dateFin = dateboxFin.getValue();
@@ -252,12 +252,12 @@ public class CtrlCelulaEstadisticas extends GenericForwardComposer {
     if (dateDesde != dateInicio) {
       //*mostrarMensaje("fecha inicio fue cambiada");
       cambios = true;
-      fechaInicio = Util.getCalendar(dateDesde);
+      fechaInicio = UtilFechas.getCalendar(dateDesde);
     }
     if (dateHasta != dateFin) {
       cambios = true;
       //*mostrarMensaje("fecha fin fue cambiada");
-      fechaFin = Util.getCalendar(dateHasta);
+      fechaFin = UtilFechas.getCalendar(dateHasta);
     }
     if (cambios) {
       tipoPeriodo = PERIODO_PERSONALIZADO;
@@ -313,13 +313,13 @@ public class CtrlCelulaEstadisticas extends GenericForwardComposer {
   }
 
   private void retrocederMes() {
-    fechaInicio = Util.retrocederMes(fechaInicio);
-    fechaFin = Util.retrocederMes(fechaFin);
+    fechaInicio = UtilFechas.retrocederMes(fechaInicio);
+    fechaFin = UtilFechas.retrocederMes(fechaFin);
 
   }
 
   private void avanzarMes() {
-    fechaInicio = Util.avanzarMes(fechaInicio);
-    fechaFin = Util.avanzarMes(fechaFin);
+    fechaInicio = UtilFechas.avanzarMes(fechaInicio);
+    fechaFin = UtilFechas.avanzarMes(fechaFin);
   }
 }

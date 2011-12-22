@@ -1,6 +1,6 @@
 package cdo.sgd.modelo.bd.simulador;
 
-import waytech.utilidades.Util;
+import waytech.utilidades.UtilFechas;
 
 
 /**
@@ -151,7 +151,7 @@ public class ReporteCelula extends CelulaUtil {
   }
 
   private void calcularIdReporte() {
-    setIdReporte(Util.calcularIdReporteCelula(idCelula));
+    setIdReporte(UtilFechas.calcularIdReporteCelula(idCelula));
   }
 
   public String getDescripcionCelula() {

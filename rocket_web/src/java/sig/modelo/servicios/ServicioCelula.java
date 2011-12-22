@@ -206,35 +206,20 @@ public class ServicioCelula {
       for (PersonaEnCelula personaCelula : listaPersonaCelula) {
         if (personaCelula.esLiderCelula()) {
           i++;
-          //**System.out.println("ServicioCelula.i=" + i);
           int idLider = personaCelula.getIdPersona().getIdPersona();
           String nombreLider = personaCelula.getIdPersona().getNombre();
-          //**System.out.println("ServicioCelula.Lider" + i + ".nombre=" + nombreLider);
-          //**System.out.println("ServicioCelula.Lider" + i + ".id=" + idLider);
           if (i == 1) {
-            //**System.out.println("lider1");
-            idLider1 = idLider;
-            nombreLider1 = nombreLider;
-            celulaListado.setIdLider1(idLider1);
-            celulaListado.setNombreLider1(nombreLider1);
+            celulaListado.setIdLider1(idLider);
+            celulaListado.setNombreLider1(nombreLider);
           } else if (i == 2) {
-            //**System.out.println("if.i=2");
-            idLider2 = idLider;
-            nombreLider2 = nombreLider;
-            celulaListado.setIdLider2(idLider2);
-            celulaListado.setNombreLider2(nombreLider2);
+            celulaListado.setIdLider2(idLider);
+            celulaListado.setNombreLider2(nombreLider);
           } else if (i == 3) {
-            //**System.out.println("if.i=3");
-            idLider3 = idLider;
-            nombreLider3 = nombreLider;
-            celulaListado.setIdLider3(idLider3);
-            celulaListado.setNombreLider3(nombreLider3);
+            celulaListado.setIdLider3(idLider);
+            celulaListado.setNombreLider3(nombreLider);
           } else if (i == 4) {
-            //**System.out.println("if.i=4");
-            idLider4 = idLider;
-            nombreLider4 = nombreLider;
-            celulaListado.setIdLider4(idLider4);
-            celulaListado.setNombreLider4(nombreLider4);
+            celulaListado.setIdLider4(idLider);
+            celulaListado.setNombreLider4(nombreLider);
           }
         }
         celulaListado.setNumeroLideres(i);
@@ -296,36 +281,20 @@ public class ServicioCelula {
         System.out.println("ServicioCelula.Lider" + i + ".nombre=" + nombreLider);
         System.out.println("ServicioCelula.Lider" + i + ".id=" + idLider);
         if (i == 1) {
-          System.out.println("lider1");
-          idLider1 = idLider;
-          nombreLider1 = nombreLider;
-          c.setIdLider1(idLider1);
-          c.setNombreLider1(nombreLider1);
-          c.setNumeroLideres(1);
+          c.setIdLider1(idLider);
+          c.setNombreLider1(nombreLider);
         } else if (i == 2) {
-          System.out.println("if.i=2");
-          idLider2 = idLider;
-          nombreLider2 = nombreLider;
-          c.setIdLider2(idLider2);
-          c.setNombreLider2(nombreLider2);
-          c.setNumeroLideres(2);
+          c.setIdLider2(idLider);
+          c.setNombreLider2(nombreLider);
         } else if (i == 3) {
-          System.out.println("if.i=3");
-          idLider3 = idLider;
-          nombreLider3 = nombreLider;
-          c.setIdLider3(idLider3);
-          c.setNombreLider3(nombreLider3);
-          c.setNumeroLideres(3);
+          c.setIdLider3(idLider);
+          c.setNombreLider3(nombreLider);
         } else if (i == 4) {
-          System.out.println("if.i=4");
-          idLider4 = idLider;
-          nombreLider4 = nombreLider;
-          c.setIdLider4(idLider4);
-          c.setNombreLider4(nombreLider4);
-          c.setNumeroLideres(4);
+          c.setIdLider4(idLider);
+          c.setNombreLider4(nombreLider);
         }
         //TODO: mejora de código:
-        //+c.setNumeroLideres(i);
+        c.setNumeroLideres(i);
       }
     }
 
@@ -490,13 +459,13 @@ public class ServicioCelula {
    * @param idLider
    * @return 
    */
-  public boolean eliminarLider(int idLider) {
+  public boolean eliminarLider(int idCelula, int idLider) {
     System.out.println("ServicioCelula.deleteLider.idLider=" + idLider);
-    RspPersonaEnCelula respuesta = isaPersonaCelula.deletePersonaEnCelulaPorIdPersona(idCelula, idLider);
+    RspPersonaEnCelula respuesta = isaPersonaCelula.deletePersonaEnCelula(idCelula, idLider);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarRed(int idRed) {
+  public boolean actualizarRed(int idCelula, int idRed) {
     RspCelula respuesta = isaCelula.updateIdRedCelula(idCelula, idRed);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
@@ -514,7 +483,7 @@ public class ServicioCelula {
     if (zona.isEmpty()) {
       return "No asignada";
     }
-    return ciudad + ", " + zona;
+    return zona + ", " + ciudad;
   }
   
 }

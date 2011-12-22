@@ -27,7 +27,7 @@ import org.zkoss.zul.Tabpanel;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 import waytech.utilidades.UtilSIG;
-import waytech.utilidades.Util;
+import waytech.utilidades.UtilFechas;
 
 //TODO: MEJORAR EL MANEJO DE FOCOS DE LOS widgets
 /**
@@ -201,7 +201,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
       System.out.println("CtrlReporteCelula -> ERROR: parámetro idCelula nulo... " + e);
     } finally {
       //TODO:
-      //id = Util.calcularIdReporteCelula(id);
+      //id = UtilFechas.calcularIdReporteCelula(id);
       System.out.println("CtrlReporteCelula -> idCelula = " + id);
     }
   }
@@ -665,25 +665,25 @@ public class CtrlReporteCelula extends GenericForwardComposer {
 
     //buscar fecha de hoy
     int diaSem = cal.get(Calendar.DAY_OF_WEEK);
-    hoy = Util.getFechaLarga(cal);
+    hoy = UtilFechas.getFechaLarga(cal);
 
     //buscar domingo anterior y sábado siguiente:
-    Calendar calDomingoAnterior = Util.calcularDomingoAnterior();
-    Calendar calSabado = Util.calcularSabadoSiguiente();
+    Calendar calDomingoAnterior = UtilFechas.calcularDomingoAnterior();
+    Calendar calSabado = UtilFechas.calcularSabadoSiguiente();
 
     if (igualMes(calDomingoAnterior, calSabado)) {
-      domingo = "" + Util.getDia(calDomingoAnterior);
-      sabado = "" + Util.getDia(calSabado);
+      domingo = "" + UtilFechas.getDia(calDomingoAnterior);
+      sabado = "" + UtilFechas.getDia(calSabado);
       semana = domingo + " — " + sabado + " "
-              + Util.getMesTextoCorto(cal) + ", " + Util.getAño(cal);
+              + UtilFechas.getMesTextoCorto(cal) + ", " + UtilFechas.getAño(cal);
     } else {//semana abarca 2 meses diferentes
       if (igualAño(calDomingoAnterior, calSabado)) {
-        domingo = Util.getFechaTextoDiaMes(calDomingoAnterior);
-        sabado = Util.getFechaTextoDiaMes(calSabado);
-        semana = domingo + " — " + sabado + ", " + Util.getAño(cal);
+        domingo = UtilFechas.getFechaTextoDiaMes(calDomingoAnterior);
+        sabado = UtilFechas.getFechaTextoDiaMes(calSabado);
+        semana = domingo + " — " + sabado + ", " + UtilFechas.getAño(cal);
       } else {//semana abarca 2 años diferentes
-        domingo = Util.getFechaTextoDiaMesAñoAbreviado(calDomingoAnterior);
-        sabado = Util.getFechaTextoDiaMesAñoAbreviado(calSabado);
+        domingo = UtilFechas.getFechaTextoDiaMesAñoAbreviado(calDomingoAnterior);
+        sabado = UtilFechas.getFechaTextoDiaMesAñoAbreviado(calSabado);
         semana = domingo + " — " + sabado;
       }
     }
@@ -693,7 +693,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     int diaSemana = celula.getDiaSemana();
     Calendar cal4 = getDiaCelula(diaSemana);
     //TODO: poner mes en texto corto
-    diaCelula = Util.getFechaTextoCortoSinAño(cal4) + ", " + Util.getAño(cal);
+    diaCelula = UtilFechas.getFechaTextoCortoSinAño(cal4) + ", " + UtilFechas.getAño(cal);
 
     System.out.println("hoy: " + hoy);
     System.out.println("domingo anterior: " + domingo);

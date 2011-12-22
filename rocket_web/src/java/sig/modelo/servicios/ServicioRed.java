@@ -24,12 +24,12 @@ public class ServicioRed {
   //tendrá los RedesNombres de las redes
   List<String> RedesNombres = new ArrayList();
   //tendrá los RedesNombres de todos los líderes lanzados de la red (quienes pueden tener célula)
-  List<PersonaEnRed> lideresLanzadosRed = new ArrayList();
-  List<String> lideresLanzadosRedNombres = new ArrayList();
+  List<PersonaEnRed> lideresLanzados = new ArrayList();
+  List<String> lideresLanzadosNombres = new ArrayList();
   int idRed;
   String nombreRed = "";
   Red red;
-
+  int nroLideresLanzados = 0;
 
   public List getTodas() {
     //**System.out.println("INICIO DE LA CONEXION " + rspRed.getRespuestaInicioDeConexion());
@@ -63,8 +63,6 @@ public class ServicioRed {
     return 0;
   }
 
-  
-  
   public Red getRed(int idRed) {
     for (Red r : redes) {
       if (r.getIdRed() == idRed) {
@@ -78,72 +76,117 @@ public class ServicioRed {
     /*
     System.out.println("NOMBRE DE TODAS LAS REDES:");
     for (Red Red : redes) {
-      System.out.println("Red: " + Red.getNombre());
+    System.out.println("Red: " + Red.getNombre());
     }
     System.out.println("ServicioRed. Número de Redes: " + redes.size());
      * 
      */
   }
-  
+
   public void listarLideresLanzados() {
     /*
     System.out.println("NOMBRE DE LOS LIDERES LANZADOS DE LA RED: " + nombreRed);
-    System.out.println("Número de Líderes: " + lideresLanzadosRed.size());
-    for (PersonaEnRed p : lideresLanzadosRed) {
-      System.out.println("Líder: " + p.getIdPersona().getNombre());
+    System.out.println("Número de Líderes: " + lideresLanzados.size());
+    for (PersonaEnRed p : lideresLanzados) {
+    System.out.println("Líder: " + p.getIdPersona().getNombre());
     }
      * 
      */
   }
-  
+
   /**
    * devuelve el id del líder lanzado cuyo nombre es  pasadocomo parámetro
    * @return id del líder, devuelve 0 si la persona no existe
    */
   public int getIdPersonaRed(String nombrePersonaRed) {
-    for (PersonaEnRed p : lideresLanzadosRed) {
+    for (PersonaEnRed p : lideresLanzados) {
       if (p.getIdPersona().getNombre().equals(nombrePersonaRed)) {
         return p.getIdPersona().getIdPersona();
       }
     }
     return 0;
   }
-  
+
   public List getLideresLanzados(int idRed) {
     IsaPersonaEnRed isaPersonaRed = new SaPersonaEnRed();
     RspPersonaEnRed rspPersonaRed = new RspPersonaEnRed();
     rspPersonaRed = isaPersonaRed.listLideresLanzados(idRed);
     System.out.println("INICIO DE LA CONEXION " + rspPersonaRed.getRespuestaInicioDeConexion());
-    lideresLanzadosRed = rspPersonaRed.getAllPersonaEnReds();
-    /**/    listarLideresLanzados();
+    lideresLanzados = rspPersonaRed.getAllPersonaEnReds();
+    /**/ listarLideresLanzados();
     System.out.println("CIERRE DE LA CONEXION " + rspPersonaRed.getRespuestaInicioDeConexion());
-    return lideresLanzadosRed;
-  }  
-  
+    return lideresLanzados;
+  }
+
   public List getLideresLanzadosNombres(int idRed) {
-    lideresLanzadosRedNombres = new ArrayList();
+    lideresLanzadosNombres = new ArrayList();
     getLideresLanzados(idRed);
-    for (PersonaEnRed p : lideresLanzadosRed) {
-      lideresLanzadosRedNombres.add(p.getIdPersona().getNombre());
+    for (PersonaEnRed p : lideresLanzados) {
+      lideresLanzadosNombres.add(p.getIdPersona().getNombre());
     }
-    return lideresLanzadosRedNombres;
+    return lideresLanzadosNombres;
   }
 
   public void setNombreRed(String nombreRed) {
     this.nombreRed = nombreRed;
   }
-  
+
   /**
    * devuelve el id del líder lanzado, pasando como parámetro el nombre
    * @return 
    */
   public int getIdLider(String nombreLider) {
-    for (PersonaEnRed p : lideresLanzadosRed) {
+    for (PersonaEnRed p : lideresLanzados) {
       if (p.getIdPersona().getNombre().equals(nombreLider)) {
         return p.getIdPersona().getIdPersona();
       }
     }
     return 0;
   }
-  
+
+  //TODO: no se pueden quitar de la lista general, sino crear una lista local
+  /**
+   * quita un líder de la lista
+   * para que no pueda aparecer en los líderes disponibles
+   * @param idLider el id del líder a quitar de la lista
+   * @return true si fue quitado, false si no fue quitado
+   */
+  public boolean quitarLiderLista(int idLider) {
+    System.out.print("ServicioRed.quitarLiderLista.idLider=" + idLider);
+    for (PersonaEnRed p : lideresLanzados) {
+      if (p.getIdPersona().getIdPersona() == idLider) {
+        lideresLanzadosNombres.remove(p.getIdPersona().getNombre());
+        System.out.println("->DONE");
+        return true;
+      }
+    }
+    System.out.println("->ERROR");
+    return false;
+  }
+
+  //métodos setter y getter
+  public List<String> getLideresLanzadosNombres() {
+    return lideresLanzadosNombres;
+  }
+
+  /**
+   * agrega un líder a la lista
+   * para que pueda aparecer en los líderes disponibles
+   * @param idLider el id del líder a agregar de la lista
+   * @return true/false si se pudo realizar la operación
+   */
+  public boolean agregarLiderLista(int idLider) {
+    for (PersonaEnRed p : lideresLanzados) {
+      if (p.getIdPersona().getIdPersona() == idLider) {
+        lideresLanzadosNombres.add(p.getIdPersona().getNombre());
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public int getNroLideresLanzados() {
+    nroLideresLanzados = lideresLanzados.size();
+    return nroLideresLanzados;
+  }
 }

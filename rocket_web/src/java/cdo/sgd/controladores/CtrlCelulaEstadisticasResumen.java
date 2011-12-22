@@ -12,7 +12,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Toolbarbutton;
-import waytech.utilidades.Util;
+import waytech.utilidades.UtilFechas;
 
 /**
  * controlador asociado a vistaPerfil/CambiarCorreo
@@ -168,11 +168,11 @@ public class CtrlCelulaEstadisticasResumen extends GenericForwardComposer {
     hoy = new GregorianCalendar();
 
     //buscar domingo anterior:
-    Calendar domingo = Util.calcularDomingoAnterior();
+    Calendar domingo = UtilFechas.calcularDomingoAnterior();
     fechaInicio = domingo;
 
     //buscar sábado siguiente
-    Calendar sabado = Util.calcularSabadoSiguiente();
+    Calendar sabado = UtilFechas.calcularSabadoSiguiente();
     //ajustar fecha final con sábado siguiente
     if (sabado.after(hoy)) {
       fechaFin = hoy;
@@ -185,7 +185,7 @@ public class CtrlCelulaEstadisticasResumen extends GenericForwardComposer {
    * ajusta período al último mes a partir del día de hoy
    */
   private void calcularFechasUltimoMes() {
-    fechaInicio = Util.calcularMesInicio();
+    fechaInicio = UtilFechas.calcularMesInicio();
     fechaFin = hoy;
   }
 
@@ -193,7 +193,7 @@ public class CtrlCelulaEstadisticasResumen extends GenericForwardComposer {
    * ajusta período al último trimestre a partir del día de hoy
    */
   private void calcularFechasUltimoTrimestre() {
-    inicioTrimestre = Util.calcularTrimestreInicio();
+    inicioTrimestre = UtilFechas.calcularTrimestreInicio();
     fechaInicio = inicioTrimestre;
     fechaFin = hoy;
     dateInicioTrimestre = inicioTrimestre.getTime();
@@ -204,7 +204,7 @@ public class CtrlCelulaEstadisticasResumen extends GenericForwardComposer {
    * ajusta período 1 año hacia atrás respecto al día de hoy
    */
   private void calcularFechasUltimoAño() {
-    fechaInicio = Util.retroceder1Año();
+    fechaInicio = UtilFechas.retroceder1Año();
     fechaFin = hoy;
   }
 
@@ -213,11 +213,11 @@ public class CtrlCelulaEstadisticasResumen extends GenericForwardComposer {
    * dateDesde y dateHasta
    */
   void actualizarPeriodo() {
-    etqFechaInicio.setValue(Util.getFechaTextoSoloNumeros(fechaInicio));
-    etqFechaFin.setValue(Util.getFechaTextoSoloNumeros(fechaFin));
+    etqFechaInicio.setValue(UtilFechas.getFechaTextoSoloNumeros(fechaInicio));
+    etqFechaFin.setValue(UtilFechas.getFechaTextoSoloNumeros(fechaFin));
     mostrarMensajePeriodo();
-    System.out.println("fecha inicio: " + Util.getFechaLarga(fechaInicio));
-    System.out.println("fecha fin: " + Util.getFechaLarga(fechaFin));
+    System.out.println("fecha inicio: " + UtilFechas.getFechaLarga(fechaInicio));
+    System.out.println("fecha fin: " + UtilFechas.getFechaLarga(fechaFin));
   }
 
   /**
