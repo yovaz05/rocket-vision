@@ -264,7 +264,7 @@ public class SaPersonaEnCelula implements IsaPersonaEnCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE persona_en_celula SET estado = '0' WHERE id_persona_en_celula = '" + idPersonaEnCelula + "'";
+                String consultaSQL = "DELETE persona_en_celula WHERE id_persona_en_celula = '" + idPersonaEnCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
