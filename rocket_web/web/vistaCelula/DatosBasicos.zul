@@ -49,90 +49,101 @@
       <!-- Red -->
       <row apply="sig.controladores.CtrlComboRed">
         <label value="Red" sclass="etiqueta_campo"/>
-        <hbox align="left">
-          <a id="tbbRed" label=""/>
-          <label id="etqRed" value="" visible="false"/>
-          <combobox id="cmbRed"
+        <div>
+          <hbox align="left">
+            <a id="tbbRed" label=""/>
+            <label id="etqRed" value="" visible="false"/>
+            <combobox id="cmbRed"
           autodrop="true" autocomplete="true" readonly="true"
           visible="false"/>
-        </hbox>
-<!--botones de edición-->
-        <div align="left">
-          <a id="btnEditRed" tooltiptext="Editar"
+            <!--botón de edición-->
+            <div align="left">
+              <space width="5px"/>
+              <a id="btnEditRed" tooltiptext="Editar"
             image="/img/iconos/edit_row.png"
             hoverImage="/img/iconos/edit_row_hover.png"/>
-          <a id="btnCancelarEditRed"
+              <a id="btnCancelarEditRed"
             tooltiptext="Cancelar Edición"
             image="/img/iconos/cancel_row.png"
             hoverImage="/img/iconos/cancel_row_hover.png"
             visible="false"/>
+            </div>
+          </hbox>
         </div>
       </row>  
       <!-- Líderes -->
       <row>        
         <label value="Líderes" sclass="etiqueta_campo"/>
         <!-- enlaces -->
-        <div>  
-          <vbox>
-            <a id="tbbLider1"/>
-            <a id="tbbLider2"/>
-            <a id="tbbLider3"/>
-            <a id="tbbLider4"/>
-          </vbox>
-          <label id="etqMensajeNoHayLideres"
-                 value="No hay líderes registrados en esta red"
-                 visible="false"/>
-        <!-- etiquetas -->
+        <div>
           <hbox>
-<!--            TODO: usar esta etiqueta, pues está en un lugar más oportuno-->
-<!--            <div id="etqsLideres">
-              <vbox>
-                  <label id="etqLider1" value="Líder 1" visible="false"/>
-                  <label id="etqLider2" value="Líder 2" visible="false"/>
-                  <label id="etqLider3" value="Líder 3" visible="false"/>
-                  <label id="etqLider4" value="Líder 4" visible="false"/>
-              </vbox>
-            </div>-->
-          <!-- Combos -->
+            <vbox>
+              <a id="tbbLider1" visible="false"/>
+              <a id="tbbLider2" visible="false"/>
+              <a id="tbbLider3" visible="false"/>
+              <a id="tbbLider4" visible="false"/>
+            </vbox>
+            <!--botón de edición-->
+            <div align="left">
+              <space width="5px"/>
+              <a id="btnEditLideres"
+             tooltiptext="Editar"
+             image="/img/iconos/edit_row.png"
+             hoverImage="/img/iconos/edit_row_hover.png"
+             visible="false"/>
+              <a id="btnCancelarEditLideres"             
+             tooltiptext="Cancelar Edición"
+             image="/img/iconos/cancel_row.png"
+             hoverImage="/img/iconos/cancel_row_hover.png"
+             visible="false"/>
+            </div>
+          </hbox>
+          <!-- Widgets para cambiar los líderes -->
+          <hbox>
             <div id="divLideresEdit">
               <vbox>
-            <!-- Líder 1 -->
+                <!-- Líder 1 -->
                 <div id="opcionLider1" visible="false">
                   <hbox>
-                    <a id="btnQuitarLider1" image="/img/iconos/remove_row.png" tooltiptext="Quitar líder"
+                    <a id="btnQuitarLider1" image="/img/iconos/remove_row.png" tooltiptext="Quitar"
                     visible="false"/>
                     <label id="etqLider1" value="Líder 1" visible="false"/>
                     <combobox id="cmbLider1" value="" autodrop="true" autocomplete="true" readonly="true"
                     visible="false"/>
                   </hbox>
                 </div>
-           <!-- Líder 2 -->
+                <!-- Líder 2 -->
                 <div id="opcionLider2" visible="false">
+                  <space height="5px"/>                
                   <hbox>
-                    <a id="btnQuitarLider2" image="/img/iconos/remove_row.png" tooltiptext="Quitar líder"
+                    <a id="btnQuitarLider2" image="/img/iconos/remove_row.png" tooltiptext="Quitar"
                     visible="false"/>
                     <label id="etqLider2" value="Líder 2" visible="false"/>
                     <combobox id="cmbLider2" value="" autodrop="true" autocomplete="true" readonly="true"
                     visible="false"/>
                   </hbox>
                 </div>
-            <!-- Líder 3: opcional -->
+                <!-- Líder 3: opcional -->
                 <div id="opcionLider3" visible="false">
+                  <space height="5px"/>
                   <hbox>
-                    <a id="btnQuitarLider3" image="/img/iconos/remove_row.png" tooltiptext="Quitar líder"
+                    <a id="btnQuitarLider3" image="/img/iconos/remove_row.png" tooltiptext="Quitar"
                     visible="false"/>
                     <label id="etqLider3" value="Líder 3" visible="false"/>
                     <combobox id="cmbLider3" value="" autodrop="true" autocomplete="true" readonly="true"
                     visible="false"/>
                   </hbox>
                 </div>
-            <!-- Líder 4: opcional -->
+                <!-- Líder 4: opcional -->
                 <div id="opcionLider4" visible="false">
-                  <a id="btnQuitarLider4" image="/img/iconos/remove_row.png" tooltiptext="Quitar líder"
+                  <space height="5px"/>
+                  <hbox>
+                    <a id="btnQuitarLider4" image="/img/iconos/remove_row.png" tooltiptext="Quitar"
                   visible="false"/>
-                  <label id="etqLider4" value="Líder 4" visible="false"/>
-                  <combobox id="cmbLider4" value="" autodrop="true" autocomplete="true" readonly="true"
+                    <label id="etqLider4" value="Líder 4" visible="false"/>
+                    <combobox id="cmbLider4" value="" autodrop="true" autocomplete="true" readonly="true"
                   visible="false"/>
+                  </hbox>
                 </div>
                 <div id="opcionAgregarLider" style="color: #36C;vertical-align: top;cursor: pointer;" width="75px"
                 visible="false">
@@ -141,20 +152,9 @@
                 </div>
               </vbox>
             </div>
-          </hbox>
-        </div>
-<!--      TODO: MEJORA VISUAL: poner botones sin columna, a lado derecho de la etiqueta del campo-->
-        <!--botones de edición-->
-        <div align="left">
-          <a id="btnEditLideres"
-             tooltiptext="Editar"
-             image="/img/iconos/edit_row.png"
-             hoverImage="/img/iconos/edit_row_hover.png"/>
-          <a id="btnCancelarEditLideres"             
-             tooltiptext="Cancelar Edición"
-             image="/img/iconos/cancel_row.png"
-             hoverImage="/img/iconos/cancel_row_hover.png"
-             visible="false"/>
+          </hbox>          
+          <label id="etqMensajeLideres" value="Mensajes relacionados a los líderes"
+                 visible="false"/>          
         </div>
       </row>
       <!-- Día y Hora -->

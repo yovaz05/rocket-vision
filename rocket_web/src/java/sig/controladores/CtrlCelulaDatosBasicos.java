@@ -30,7 +30,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   Div divMensaje;
   Label etqMensaje;
   //- A btnCerrarMensaje;
-  Label etqMensajeNoHayLideres;
+  Label etqMensajeLideres;
   Textbox txtCodigo, txtNombre;
   A tbbRed;
   A tbbLider1, tbbLider2, tbbLider3, tbbLider4;
@@ -44,6 +44,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   ServicioCelula servicioCelula = new ServicioCelula();
   ServicioRed servicioRed = new ServicioRed();
   List redesNombres = new ArrayList();
+  //nombres de líderes lanzados disponibles para ser líderes de célula
   List lideresLanzadosNombres = new ArrayList();
   Red redSelecionada;
   ListModelList modelRedes = new ListModelList();
@@ -93,7 +94,8 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   String descripcionCelula;
   //? variable para evitar doble actualización de código
   private boolean codigoProcesado;
-  private boolean redProcesada;
+  String msjNoHayLideres = "Esta red no tiene líderes lanzados";
+  String msjNoMasLideresDisponibles = "No hay más líderes lanzados disponibles";
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -110,7 +112,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       setVarSesionDefault();
     } else {
       getVarSesionIdRed();
-      cargarLideresLanzadosRed();      
+      cargarLideresLanzadosRed();
       mostrarOpcionAgregarLider(false);
     }
     /**/
@@ -145,51 +147,30 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     redesNombres = servicioRed.getRedesNombres();
     modelRedes.addAll(redesNombres);
     cmbRed.setModel(modelRedes);
-    /**
-     * TODO: EVALUAR - MEJORA USABILIDAD: mostrar sólo las redes donde hay líderes lanzados registrados
-     */
   }
 
-  //TODO: MEJORA CODIGO: obtener id de la red seleccionada directamente del combobox
-  /*
-   *     for (Red r : redes) {
-  int id = r.getIdRed();
-  String nombre = r.getNombre();
-  Comboitem item = new Comboitem(nombre);
-  item.setValue(id);
-  modelRedes.add(r);
-  }
-  cmbRed.setModel(modelRedes);
-  
-   */
   /**
    * obtiene todos los líderes lanzados de la red seleccionada
    */
-  //DOING: quitar de la listas 2, 3 y 4 a los líderes elegidos en las listas anteriores
+  //todo: MEJORA DE CODIGO. un método que diga sólo si tiene líderes, y otro para traer los datos
   private boolean cargarLideresLanzadosRed() {
-    if (idRed == 0) {
+    if (idRed == 0) {//REDUNDANTE?
       return false;
     }
     lideresLanzadosNombres = servicioRed.getLideresLanzadosNombres(idRed);
     if (lideresLanzadosNombres.isEmpty()) {//la red elegida no tiene líderes lanzados que puedan ser líderes de células      
-      mensajeNoHayLideres(true);
+      mensajeLideres(msjNoHayLideres);
       mostrarLideresLinks(false);
       btnEditLideres.setVisible(false);
       return false;
     }
-    mensajeNoHayLideres(false);
+    ocultarMensajeLideres();
+    btnEditLideres.setVisible(true);
 
     //cargar lista de líderes:
     modelLideresLanzados = new ListModelList();
     modelLideresLanzados.addAll(lideresLanzadosNombres);
-    
-    //DOING: se carga cada lista de líderes disponibles al clickear 'Agregar líder'
-    /*
-    cmbLider1.setModel(modelLideresLanzados);
-    cmbLider2.setModel(modelLideresLanzados);
-    cmbLider3.setModel(modelLideresLanzados);
-    cmbLider4.setModel(modelLideresLanzados);
-     * */
+
     return true;
   }
 
@@ -216,7 +197,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    */
   public void onBlur$cmbRed() {
     //TODO: si pierde el foco, desactiva la edición
-    procesarRed();
+    cancelarEditRed();
   }
 
   /**
@@ -230,7 +211,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   /**
    * manejo de cambio de red
    */
-    void procesarRed() {
+  void procesarRed() {
     if (!redSeleccionada()) {
       if (Sesion.modoEditable()) {
         cancelarEditRed();
@@ -241,6 +222,9 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       cancelarEditRed();
       return;
     }
+    
+    //valor de red cambiado
+    btnEditLideres.setVisible(true);
 
     /*+ si la red elegida no tiene líderes lanzados se puede evitar crear la célula?
     boolean redTieneLideresLanzados = cargarLideresLanzadosRed(); 
@@ -312,8 +296,8 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * actualiza el día de la célula en la base de datos
    */
   void actualizarRed() {
-    servicioCelula.setIdCelula(idCelula);
-    if (servicioCelula.actualizarRed(idRed)) {
+    getIdCelula();
+    if (servicioCelula.actualizarRed(idCelula, idRed)) {
       //-mensaje("Se cambió la célula de red. Y se quitaron los líderes asignados.");
       mensaje("Se cambió la célula de red");
     } else {
@@ -335,18 +319,17 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   void eliminarLideresAnteriores() {
     getVarSesionLideres();
     getIdCelula();
-    servicioCelula.setIdCelula(idCelula);
     if (seUsaLider(1)) {
-      servicioCelula.eliminarLider(idLider1);
+      servicioCelula.eliminarLider(idCelula, idLider1);
     }
     if (seUsaLider(2)) {
-      servicioCelula.eliminarLider(idLider2);
+      servicioCelula.eliminarLider(idCelula, idLider2);
     }
     if (seUsaLider(3)) {
-      servicioCelula.eliminarLider(idLider3);
+      servicioCelula.eliminarLider(idCelula, idLider3);
     }
     if (seUsaLider(4)) {
-      servicioCelula.eliminarLider(idLider4);
+      servicioCelula.eliminarLider(idCelula, idLider4);
     }
   }
 
@@ -413,7 +396,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * para ser usado por los otros controladores
    */
   public void setVarSesionLider1() {
-    Sesion.setVariable("celula.lider1.id", idLider1);
+    Sesion.setVariable("celula.idLider1", idLider1);
   }
 
   /**
@@ -421,7 +404,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * para ser usado por los otros controladores
    */
   public void setVarSesionLider2() {
-    Sesion.setVariable("celula.lider2.id", idLider2);
+    Sesion.setVariable("celula.idLider2", idLider2);
   }
 
   /**
@@ -429,7 +412,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * para ser usado por los otros controladores
    */
   public void setVarSesionLider3() {
-    Sesion.setVariable("celula.lider3.id", idLider3);
+    Sesion.setVariable("celula.idLider3", idLider3);
   }
 
   /**
@@ -437,7 +420,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * para ser usado por los otros controladores
    */
   public void setVarSesionLider4() {
-    Sesion.setVariable("celula.lider4.id", idLider4);
+    Sesion.setVariable("celula.idLider4", idLider4);
   }
 
   /**
@@ -485,19 +468,24 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
 
   public void onClick$btnAgregarLider() {
-    agregarOpcionLider();
+    if (noHayMasLideresDisponibles()) {
+      mensajeLideres(msjNoMasLideresDisponibles);
+      mostrarOpcionAgregarLider(false);
+      return;
+    }
+    activarOpcionLider();
   }
 
   public void onOK$btnAgregarLider() {
-    agregarOpcionLider();
+    activarOpcionLider();
   }
 
   public void onClick$opcionAgregarLider() {
-    agregarOpcionLider();
+    activarOpcionLider();
   }
 
   public void onOK$opcionAgregarLider() {
-    agregarOpcionLider();
+    activarOpcionLider();
   }
 
   //TODO: CODIGO: quitar método
@@ -549,11 +537,9 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       //-nombreLider = nombreLider3;
     } else if (i == 4) {
       idLider = idLider4 = (Integer) Sesion.getVariable("celula.idLider4");
-      //-nombreLider = nombreLider4;
     }
     getIdCelula();
-    servicioCelula.setIdCelula(idCelula);
-    if (servicioCelula.eliminarLider(idLider)) {
+    if (servicioCelula.eliminarLider(idCelula, idLider)) {
       mensaje("Se quitó un líder");
       quitarOpcionLider(i);//ocultar widgets del líder
     } else {
@@ -568,51 +554,43 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   //TODO: validar, sólo se puede agregar otro líder, si en los combos anteriores hay 1 valor seleccionado
   //TODO: ?MEJORA: se hace nLider++ cuando se elige un líder del combo
   //TODO: !ERROR, cuando no se han hecho cambios en los líderes, la opción agregar no hace nada
-  void agregarOpcionLider() {
-    int nLideresTemp = this.nLideres + 1;
+  void activarOpcionLider() {
+    int nLideresTemp = nLideres + 1;
     if (nLideresTemp == 1) {
-      agregarOpcionLider(1);
-      nLideres++;
+      activarOpcionLider(1);
     } else if (nLideresTemp == 2) {
-      agregarOpcionLider(2);
-      nLideres++;
+      activarOpcionLider(2);
     } else if (nLideresTemp == 3) {
-      agregarOpcionLider(3);
-      nLideres++;
+      activarOpcionLider(3);
     } else if (nLideresTemp == 4) {
-      agregarOpcionLider(4);
-      nLideres++;
+      activarOpcionLider(4);
     }
+    /*-
     if (this.nLideres == TOPE_LIDERES) {
-      opcionAgregarLider.setVisible(false);
+    opcionAgregarLider.setVisible(false);
     }
-    //**
-    setVarSesionNroLideres();
-    System.out.println("líderes en uso: " + this.nLideres);
+     * 
+     */
   }
 
   /**
    * agregar una opción para agregar el líder N
    * @param nLider 
    */
-  void agregarOpcionLider(int nLider) {
+  void activarOpcionLider(int nLider) {
     System.out.println("CtrlCelulaDatosBasicos.añadirOpcionLider" + nLider);
     if (nLider == 1) {
       opcionLider1.setVisible(true);
       activarEditLider1();
-      mostrarOpcionAgregarLider(true);
     } else if (nLider == 2) {
       opcionLider2.setVisible(true);
       activarEditLider2();
-      mostrarOpcionAgregarLider(true);
     } else if (nLider == 3) {
       opcionLider3.setVisible(true);
       activarEditLider3();
-      mostrarOpcionAgregarLider(true);
     } else if (nLider == 4) {
       opcionLider4.setVisible(true);
       activarEditLider4();
-      mostrarOpcionAgregarLider(false);
     }
   }
 
@@ -658,8 +636,8 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * habilita la opción para agregar líderes adicionales
    */
   void mostrarOpcionAgregarLider(boolean visible) {
+    System.out.println("mostrarOpcionAgregarLider=" + visible);
     opcionAgregarLider.setVisible(visible);
-    //-btnAgregarLider.setVisible(visible);
   }
 
   /**
@@ -679,17 +657,15 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     return false;
   }
 
-  private void mensajeNoHayLideres(boolean visible) {
-    String msjError = "Esta red no tiene líderes registrados";
-    String msjOK = "La red elegida sí tiene líderes registrados";
-    etqMensajeNoHayLideres.setValue(msjError);
-    etqMensajeNoHayLideres.setVisible(visible);
-    if (visible) {
-      System.out.println(this.getClass().toString() + msjError);
-    }//**
-    else {
-      System.out.println(this.getClass().toString() + msjOK);
-    }
+  //Mejora código: sacar variables de mensajes de aquí
+  private void ocultarMensajeLideres() {
+    etqMensajeLideres.setVisible(false);
+  }
+
+  private void mensajeLideres(String msj) {
+    System.out.println(this.getClass() + ".mensajeLideres: " + msj);
+    etqMensajeLideres.setValue(msj);
+    etqMensajeLideres.setVisible(true);
   }
 
   public void onClick$etqNombre() {
@@ -1009,9 +985,9 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * @return 
    */
   private boolean seUsaLider(int posLider) {
-    //**
-    //get variabl de sesión número de líderes
-    //en modo editar CtrlCelula cambia el valor
+    //**LINEA REDUNDANTE
+    //get variable de sesión número de líderes
+    //CtrlCelula cambia el valor en modo editar
     nLideres = (Integer) Sesion.getVariable("celula.nLideres");
     System.out.print("CtrlCelulaDatosBasicos.seUsaLider[" + posLider + "]?=");
     if (posLider <= nLideres) {
@@ -1082,21 +1058,19 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
 
   void activarEditRed() {
-    mensajeNoHayLideres(false);
+    ocultarMensajeLideres();
+    tbbRed.setVisible(false);
+    etqRed.setVisible(false);
+    btnEditRed.setVisible(false);
+    btnEditLideres.setVisible(false);//bloquear edición de líderes
 
     //se habilita el combo de red
     cmbRed.setDisabled(false);
-
-    cmbRed.setValue(tbbRed.getLabel());
+    cmbRed.setValue(nombreRed);
     cmbRed.setVisible(true);
     cmbRed.select();
     cmbRed.open();
     cmbRed.setFocus(true);
-    tbbRed.setVisible(false);
-    etqRed.setVisible(false);
-    //- btnCancelarEditRed.setVisible(true);
-    btnEditRed.setVisible(false);
-    btnEditLideres.setVisible(false);//bloquear edición de líderes
   }
 
   void cancelarEditRed() {
@@ -1104,19 +1078,18 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     etqRed.setVisible(true);
     //- btnEditRed.setVisible(true); //sólo se usa este botón una vez
     //-btnCancelarEditRed.setVisible(false);
-    //- btnEditLideres.setVisible(true);//permitir edición de líderes
+    //% btnEditLideres.setVisible(true);//permitir edición de líderes
   }
 
   void activarEditLideres() {
     System.out.println("CtrlCelulaDatosBasicos.EditLideres");
-    if (Sesion.modoEditable()) {
-      mostrarLideresLinks(false);
-      getDatosLideres();
-      pasarDatosLideresEtiquetas();
-      mostrarLideresEdit(true);
-    }
-    cargarLideresLanzadosRed();
+    mostrarLideresLinks(false);
+    getDatosLideres();
+    pasarDatosLideresEtiquetas();
+    mostrarLideresEdit(true);
+    //-cargarLideresLanzadosRed();
     btnEditLideres.setVisible(false);
+
   }
 
   void cancelarEditLideres() {
@@ -1142,31 +1115,6 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     idLider4 = 0;
   }
 
-  /*
-  //NO USADO
-  private void mostrarLideresEdit2(boolean visible) {
-  System.out.println("CtrlCelulaDatosBasicos.mostrarLideresEdit=" + visible);
-  //? divLideresEdit.setVisible(status);
-  //DOING: mostrar etiquetas o combos?
-  if (seUsaLider(1)) {
-  etqLider1.setVisible(visible);
-  opcionLider1.setVisible(visible);
-  }
-  if (seUsaLider(2)) {
-  opcionLider2.setVisible(visible);
-  etqLider2.setVisible(visible);
-  }
-  if (seUsaLider(3)) {
-  etqLider3.setVisible(visible);
-  opcionLider3.setVisible(visible);
-  }
-  if (seUsaLider(4)) {
-  etqLider4.setVisible(visible);
-  opcionLider4.setVisible(visible);
-  mostrarOpcionAgregarLider(false);
-  }
-  }
-   */
   private void getDatosLideres() {
     nombreLider1 = tbbLider1.getLabel();
     nombreLider2 = tbbLider2.getLabel();
@@ -1206,29 +1154,16 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
 
   //TODO: chequear permiso de edición: celula.lideres
   public void onClick$btnEditLideres() {
-    //se traen variables de sesión, pues este controlador no ha gestionado los cambios
-    getVarSesionIdRed();
+    //se traen variables de sesión, por si es el primer cambio
     getVarSesionLideres();
+    getVarSesionIdRed();
     activarEditLideres();
+    actualizarLideresEnUso();
   }
 
   //NO USADO
   public void onClick$btnCancelarEditLideres() {
     cancelarEditLideres();
-  }
-
-  private void setIdRed(int id) {
-    idRed = id;
-  }
-
-  /**
-   * obtiene los valores de la variable de sesión
-   */
-  private void getVariablesSesionGenerales() {
-    System.out.println("CtrlCelulaDatosBasicos.getVariablesSesion()");
-    getIdCelula();
-    getVarSesionIdRed();
-    //+ nombreRed = "" + Sesion.getVariable("celula.nombreRed");
   }
 
   /**
@@ -1237,10 +1172,18 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   private void getVarSesionLideres() {
     System.out.println("CtrlCelulaDatosBasicos.getVariablesSesionLideres()");
     nLideres = (Integer) Sesion.getVariable("celula.nLideres");
-    idLider1 = (Integer) Sesion.getVariable("celula.idLider1");
-    idLider2 = (Integer) Sesion.getVariable("celula.idLider2");
-    idLider3 = (Integer) Sesion.getVariable("celula.idLider3");
-    idLider4 = (Integer) Sesion.getVariable("celula.idLider4");
+    if (seUsaLider(1)) {
+      idLider1 = (Integer) Sesion.getVariable("celula.idLider1");
+    }
+    if (seUsaLider(2)) {
+      idLider2 = (Integer) Sesion.getVariable("celula.idLider2");
+    }
+    if (seUsaLider(3)) {
+      idLider3 = (Integer) Sesion.getVariable("celula.idLider3");
+    }
+    if (seUsaLider(4)) {
+      idLider4 = (Integer) Sesion.getVariable("celula.idLider4");
+    }
   }
 
   private void procesarHora() {
@@ -1306,7 +1249,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   //TODO: poner este comentario en donde se muestran los botones de edición de líderes
   //chequear permiso de edición: celula.líderes
   public void onClick$etqLider1() {
-    activarEditLider1();
+    //-activarEditLider1();
   }
 
   /**
@@ -1334,24 +1277,36 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * habilita combo de líder para selección
    */
   private void activarEditLider1() {
+    mostrarOpcionAgregarLider(false);
     etqLider1.setVisible(false);
+    nombreLider1 = etqLider1.getValue();
+    cmbLider1.setModel(modelLideresLanzados);
     cmbLider1.setVisible(true);
     cmbLider1.setValue(nombreLider1);
     cmbLider1.open();
     cmbLider1.setFocus(true);
-    btnQuitarLider1.setVisible(false);
+    mostrarOpcionQuitarLider(1, false);
   }
-  
+
   private void cancelarEditLider1() {
     cmbLider1.setVisible(false);
     etqLider1.setVisible(true);
-    btnQuitarLider1.setVisible(true);
+    if (idLider1 != 0) {
+      mostrarOpcionQuitarLider(1, true);
+    }
+    mostrarOpcionAgregarLider(true);
   }
 
   private void procesarLider1() {
-    nombreLider1 = cmbLider1.getValue();
+    String nombreLider = cmbLider1.getValue();
+    if (nombreLider.equals(nombreLider1)) {//no se cambió el valor
+      System.out.println("nombreLider1 NO cambió");
+      return;//no se hace nada
+    }
+    nombreLider1 = nombreLider;
     if (nombreLider1.isEmpty() || nombreLider1.equals(LIDER1_VACIO)) {
       //Validar si eligió algo
+      System.out.println("nombreLider1 NO elegido");
       quitarOpcionLider(1);
       return;
     }
@@ -1367,7 +1322,11 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       etqLider1.setValue(nombreLider1);
       cancelarEditLider1();
       mostrarOpcionQuitarLider(1, true);
-      mostrarOpcionAgregarLider(true);
+      nLideres++;
+      setVarSesionNroLideres();
+      //**
+      System.out.println("líderes en uso: " + this.nLideres);
+      deshabilitarLiderEnUso(1);
     } else {
       mensaje("Error agregando líder");
       System.out.println("CtrlCelulaDatosBasicos.error agregando líder 1");
@@ -1394,25 +1353,30 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   //TODO: poner este comentario en donde se muestran los botones de edición de líderes
   //chequear permiso de edición: celula.líderes
   public void onClick$etqLider2() {
-    activarEditLider2();
+    //- activarEditLider2();
   }
 
   /**
    * habilita combo de líder para selección
    */
   private void activarEditLider2() {
+    mostrarOpcionAgregarLider(false);
+    cmbLider2.setModel(modelLideresLanzados);
     etqLider2.setVisible(false);
     cmbLider2.setVisible(true);
     cmbLider2.setValue(nombreLider2);
     cmbLider2.open();
     cmbLider2.setFocus(true);
-    btnQuitarLider2.setVisible(false);
+    mostrarOpcionQuitarLider(2, false);
   }
 
   private void cancelarEditLider2() {
     cmbLider2.setVisible(false);
     etqLider2.setVisible(true);
-    btnQuitarLider2.setVisible(true);
+    if (idLider2 != 0) {
+      mostrarOpcionQuitarLider(2, true);
+    }
+    mostrarOpcionAgregarLider(true);
   }
 
   private void procesarLider2() {
@@ -1435,6 +1399,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       cancelarEditLider2();
       mostrarOpcionQuitarLider(2, true);
       mostrarOpcionAgregarLider(true);
+      deshabilitarLiderEnUso(2);
     } else {
       mensaje("Error agregando líder");
       System.out.println("CtrlCelulaDatosBasicos.error agregando líder 2");
@@ -1446,7 +1411,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   //TODO: poner este comentario en donde se muestran los botones de edición de líderes
   //chequear permiso de edición: celula.líderes
   public void onClick$etqLider3() {
-    activarEditLider3();
+    //- activarEditLider3();
   }
 
   /**
@@ -1468,18 +1433,24 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * habilita combo de líder para selección
    */
   private void activarEditLider3() {
+    mostrarOpcionAgregarLider(false);
+    cmbLider3.setModel(modelLideresLanzados);
+
     etqLider3.setVisible(false);
     cmbLider3.setVisible(true);
     cmbLider3.setValue(nombreLider3);
     cmbLider3.open();
     cmbLider3.setFocus(true);
-    btnQuitarLider3.setVisible(false);
+    mostrarOpcionQuitarLider(3, false);
   }
 
   private void cancelarEditLider3() {
     cmbLider3.setVisible(false);
     etqLider3.setVisible(true);
-    btnQuitarLider3.setVisible(true);
+    if (idLider3 != 0) {
+      mostrarOpcionQuitarLider(3, true);
+    }
+    mostrarOpcionAgregarLider(true);
   }
 
   private void procesarLider3() {
@@ -1502,6 +1473,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       cancelarEditLider3();
       mostrarOpcionQuitarLider(3, true);
       mostrarOpcionAgregarLider(true);
+      deshabilitarLiderEnUso(3);
     } else {
       mensaje("Error agregando líder");
       System.out.println("CtrlCelulaDatosBasicos.error agregando líder 3");
@@ -1528,28 +1500,29 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   //TODO: poner este comentario en donde se muestran los botones de edición de líderes
   //chequear permiso de edición: celula.líderes
   public void onClick$etqLider4() {
-    activarEditLider4();
+    //- activarEditLider4();
   }
 
   /**
    * habilita combo de líder para selección
    */
   private void activarEditLider4() {
+    mostrarOpcionAgregarLider(false);
+    cmbLider4.setModel(modelLideresLanzados);
     etqLider4.setVisible(false);
     opcionLider4.setVisible(true);//opcionLider incluye el botón para eliminar el líder
     cmbLider4.setVisible(true);
     cmbLider4.setValue(nombreLider4);
     cmbLider4.open();
     cmbLider4.setFocus(true);
-    btnQuitarLider4.setVisible(false);
-    //no se pueden agregar más
-    mostrarOpcionAgregarLider(false);
   }
 
   private void cancelarEditLider4() {
     cmbLider4.setVisible(false);
     etqLider4.setVisible(true);
-    btnQuitarLider4.setVisible(true);
+    if (idLider4 != 0) {
+      mostrarOpcionQuitarLider(4, true);
+    }
   }
 
   private void procesarLider4() {
@@ -1557,6 +1530,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     if (nombreLider4.isEmpty() || nombreLider4.equals(LIDER4_VACIO)) {
       //Validar si eligió algo
       quitarOpcionLider(4);
+      deshabilitarLiderEnUso(4);
       return;
     }
     idLider4 = servicioRed.getIdLider(nombreLider4);
@@ -1583,7 +1557,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   private void mostrarOpcionQuitarLider(int i, boolean visible) {
     //TODO: MEJORA-CODIGO: quitar caso i=1: no se puede quitar al líder 1
     if (i == 1) {
-      //- btnQuitarLider1.setVisible(visible);
+      btnQuitarLider1.setVisible(visible);
     } else if (i == 2) {
       btnQuitarLider2.setVisible(visible);
     } else if (i == 3) {
@@ -1603,11 +1577,81 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   private void getVarSesionNombreRed() {
     nombreRed = "" + Sesion.getVariable("celula.nombreRed");
   }
+
+  /**
+   * deshabilita al líder 'n' de las listas de líderes disponibles 
+   * esto para que en las otras listas de líderes no aparezcan los ya usados
+   */
+  private void deshabilitarLiderEnUso(int n) {
+    nLideres = n;
+    System.out.println("actualizarLideresEnUso.nLideres=" + nLideres);
+    if (n == 1) {
+      servicioRed.quitarLiderLista(idLider1);
+    } else if (n == 2) {
+      servicioRed.quitarLiderLista(idLider2);
+    } else if (n == 3) {
+      servicioRed.quitarLiderLista(idLider3);
+    } else if (n == 4) {
+      servicioRed.quitarLiderLista(idLider4);
+    }
+    //actualizar lista de nombres disponibles
+    lideresLanzadosNombres = servicioRed.getLideresLanzadosNombres();
+    modelLideresLanzados = new ListModelList();
+    modelLideresLanzados.addAll(lideresLanzadosNombres);
+    System.out.println("CtrlCelulaDatosBasicos.quitarLideresUsados. número de líderes disponibles = " + lideresLanzadosNombres.size());
+  }
+
+  /**
+   * 
+   */
+  void actualizarLideresEnUso() {
+    if (seUsaLider(1)) {
+      deshabilitarLiderEnUso(1);
+    }
+    if (seUsaLider(2)) {
+      deshabilitarLiderEnUso(2);
+    }
+    if (seUsaLider(3)) {
+      deshabilitarLiderEnUso(3);
+    }
+    if (seUsaLider(4)) {
+      deshabilitarLiderEnUso(4);
+    }
+  }
+
+  boolean noHayMasLideresDisponibles() {
+    if (nLideres == servicioRed.getNroLideresLanzados()) {
+      return true;
+    }
+    return false;
+  }
 }
 /**
  * TODO:
- * >>. actualizar titulo de ventana cuando cambia: código, zona
- * >>. métodos onBlur hacen que la actualización sea doble, sólo deben cancelar la edición
+ * >>. actualizar titulo de ventana cuando cambia zona (sector)
+ * >>. OJO con: métodos onBlur hacen que la actualización sea doble, sólo deben cancelar la edición, para textbox's
+ * >>.
  * >>. OPCIONAL: mostrar como red por defecto, la red a la que pertenece el usuario en curso, en modo 'new'
- * 
+ */
+//GARBAGE
+/**
+ * TODO: EVALUAR - MEJORA USABILIDAD: mostrar sólo las redes donde hay líderes lanzados registrados
+ */
+//MEJORA CODIGO: obtener id de la red seleccionada directamente del combobox
+  /*
+ *     for (Red r : redes) {
+int id = r.getIdRed();
+String nombre = r.getNombre();
+Comboitem item = new Comboitem(nombre);
+item.setValue(id);
+modelRedes.add(r);
+}
+cmbRed.setModel(modelRedes);
+
+//DOING: se carga cada lista de líderes disponibles al clickear 'Agregar líder'
+/*
+cmbLider1.setModel(modelLideresLanzados);
+cmbLider2.setModel(modelLideresLanzados);
+cmbLider3.setModel(modelLideresLanzados);
+cmbLider4.setModel(modelLideresLanzados);
  */

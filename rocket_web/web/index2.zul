@@ -1,5 +1,5 @@
 <?page id="pagPrincipal" cacheable="false" language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8"
-title="CDO Rocket"?>
+title="Casa de Oración - Rocket"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
   <zscript>
   <![CDATA[

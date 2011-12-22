@@ -17,7 +17,7 @@ title="SIG - Mejorando barra superior"?>
   white-space: nowrap;"
   >
 <!-- barra de menú -->
-      <div id="divIzquierdo" style="display:inline-block;float:left" width="240px">
+      <div id="divIzquierdo" style="display:inline-block;float:left" width="240px" visible="false">
         <hbox>
           <menubar id="menubar" orient="horizontal" height="24px">
 <!--          <menuitem id="itemNombreSistema" label="SIG" height="22px"/>-->
@@ -126,7 +126,7 @@ title="SIG - Mejorando barra superior"?>
 <!--        <image id="itemNombreSistema" src="/img/logo/SIG.png" style="cursor: pointer;"/>-->
 <!--        <toolbarbutton id="btnAtras" tooltiptext="Vista Anterior" sclass="botonAccion" image="/img/iconos/previous24.png" disabled="true"/>
         <toolbarbutton id="btnSiguiente" tooltiptext="Vista Siguiente" sclass="botonAccion" image="/img/iconos/next24.png" disabled="true"/>-->
-        <toolbarbutton id="btnPrint" tooltiptext="Imprimir" image="/img/iconos/printer24.png"/>
+        <toolbarbutton id="btnPrint" tooltiptext="Imprimir" image="/img/iconos/printer24.png" visible="false"/>
         <toolbarbutton id="btnRefresh" tooltiptext="Refrescar" image="/img/iconos/refresh24.png"/>
         <toolbarbutton id="btnEdit" tooltiptext="Editar" image="/img/iconos/edit24.png"/>
         <toolbarbutton id="btnSave" tooltiptext="Guardar cambios" image="/img/iconos/ok22.png"/>

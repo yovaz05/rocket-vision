@@ -75,10 +75,10 @@ public class CtrlDireccion extends GenericForwardComposer {
   ListModelList modelEstados = new ListModelList();
   ListModelList modelCiudades = new ListModelList();
   ListModelList modelZonas = new ListModelList();
-  //valores actuales:
-  int idEstado = 1;
-  int idCiudad = 1;
-  int idZona = 1;
+  //valores por defecto:
+  int idEstado = 0;
+  int idCiudad = 0;
+  int idZona = 0;
   String estado = "";
   String ciudad = "";
   String zona = "";
@@ -474,8 +474,6 @@ public class CtrlDireccion extends GenericForwardComposer {
    * click en la etiqueta de estado activa la edición
    */
   public void onClick$etqEstado() {
-    cancelarEditCiudad();//por si está activado
-    cancelarEditZona();//por si está activado
     activarEditEstado();
   }
 
@@ -484,7 +482,7 @@ public class CtrlDireccion extends GenericForwardComposer {
    */
   public void onClick$etqCiudad() {
     //se busca id de estado de la sesión y se cargan las ciudades del estado
-    idEstado = (Integer) Sesion.getVariable("celula.idEstado");
+    idEstado = (Integer) Sesion.getVariable("idEstado");
     cargarCiudadesPorEstado();
     //se trae la zona actual para seleccionar en la lista
     ciudad = etqCiudad.getValue();
@@ -496,7 +494,7 @@ public class CtrlDireccion extends GenericForwardComposer {
    */
   public void onClick$etqZona() {
     //se busca id de ciudad de la sesión y se cargan las zonas de la ciudad
-    idCiudad = (Integer) Sesion.getVariable("celula.idCiudad");
+    idCiudad = (Integer) Sesion.getVariable("idCiudad");
     cargarZonasPorCiudad();
     //se trae la zona actual para seleccionar en la lista
     zona = etqZona.getValue();
@@ -509,11 +507,19 @@ public class CtrlDireccion extends GenericForwardComposer {
 
   public void onBlur$cmbCiudad() {
     cancelarEditCiudad();
+    cancelarEditEstado();//por si fue activada y no se seleccionó nada
+    //-cancelarEditZona();//por si fue activada y no se seleccionó nada
   }
 
   public void onBlur$cmbZona() {
     cancelarEditZona();
-    /*TODO: para próximas versiones:
+    if (zona.isEmpty()) {
+      estado = Constantes.VALOR_EDITAR;
+      ciudad = "";
+      mostrarValorEstado();
+      mostrarValorCiudad();
+    }
+    /*TODO: para próximas versiones manejar las nuevas zonas directamente:
     if (!nuevaZona) {
     cancelarEditZona();
     }

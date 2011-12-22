@@ -4,7 +4,6 @@ import cdo.sgd.controladores.CtrlVista;
 import cdo.sgd.controladores.Sesion;
 import cdo.sgd.controladores.Vistas;
 import cdo.sgd.modelo.bd.simulador.CelulaUtil;
-import java.util.Calendar;
 import java.util.Date;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;
@@ -22,9 +21,6 @@ import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 import sig.modelo.servicios.ServicioCelula;
-import waytech.modelo.beans.sgi.CelulaInsert;
-import waytech.modelo.beans.sgi.CelulaUpdate;
-import waytech.utilidades.UtilFechas;
 
 /**
  * controlador asociado a CelulaSimulador.zul
@@ -91,7 +87,6 @@ public class CtrlCelula extends GenericForwardComposer {
   Label dir$etqDetalle;
   Label dir$etqTelefono;
   //usos posteriores:
-  //+Toolbarbutton dir$linkZona;
   //pestaña "Otros datos"
   Column otros$colData;
   Datebox otros$dateboxFechaApertura;
@@ -140,13 +135,9 @@ public class CtrlCelula extends GenericForwardComposer {
   CelulaUtil celula = new CelulaUtil();
   //objeto con la data ingresada por el usuario
   CelulaUtil celulaActual = new CelulaUtil();
-  //objeto para insertar nueva célula
-  CelulaInsert celulaInsert;
-  //objeto para actualizar célula
-  CelulaUpdate celulaUpdate;
+
   ServicioCelula servicio = new ServicioCelula();
   private int idCelula;
-  private Div db$opcionAgregarLider;
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -243,9 +234,9 @@ public class CtrlCelula extends GenericForwardComposer {
     Sesion.setVariable("celula.idLider2", idLider2);
     Sesion.setVariable("celula.idLider3", idLider3);
     Sesion.setVariable("celula.idLider4", idLider4);
-    Sesion.setVariable("celula.idEstado", idEstado);
-    Sesion.setVariable("celula.idCiudad", idCiudad);
-    Sesion.setVariable("celula.idZona", idZona);
+    Sesion.setVariable("idEstado", idEstado);
+    Sesion.setVariable("idCiudad", idCiudad);
+    Sesion.setVariable("idZona", idZona);
     Sesion.setVariable("celula.nombreEstado", nombreEstado);
     Sesion.setVariable("celula.nombreCiudad", nombreCiudad);
     Sesion.setVariable("celula.nombreZona", nombreZona);
@@ -416,6 +407,7 @@ public class CtrlCelula extends GenericForwardComposer {
       mostrarTabsRestantes(true);
       mostrarWidgetsEdit(true);
       mostrarWidgetsViewLink(true);
+      //TODO: PERMISOS: aquí se debe comprobar el permiso de edición para activar la siguiente línea
       verBotonesEdicion(true);
       setFocoEdicion();
       //-mostrarWidgetsEdit(false);
@@ -478,13 +470,13 @@ public class CtrlCelula extends GenericForwardComposer {
   }
 
   /**
-   * oculta o muestra la columna donde están los botones de edición específicos
+   * oculta o muestra los botones de edición de campos
    * @param status el estado true o false
    */
   public void verBotonesEdicion(boolean status) {
-    //TODO: MEJORA: poner botones sin columna, a lado derecho de la etiqueta del campo
-    db$colEdit.setVisible(status);
+    //-db$colEdit.setVisible(status);
     db$btnEditRed.setVisible(status);
+    //-db$btnEditLideres.setVisible(status);
   }
 
   public void onSelect$tabbox() {
@@ -754,8 +746,7 @@ public class CtrlCelula extends GenericForwardComposer {
     if (modo.equals("new")) {
       if (ingresarNuevaCelula()) {
         //-Sesion.setVariable("resultOperacion", 1);//indica éxito
-        modo = "edicion-dinamica";
-        Sesion.setModo(modo);
+        Sesion.setModo(modo = "edicion-dinamica");
         mostrarValoresViewRecienCreada();
         actualizarEstado();
       } else {
@@ -936,202 +927,26 @@ public class CtrlCelula extends GenericForwardComposer {
   }
 
   /**
-   * valida que se seleccionó un estado
+   * MUESTRA EL CÓDIGO Y LA RED, que son los datos obligatorios para crear la célula,
+   * pero la red está deshabilitada
    */
-  //TODO: MEJORACODIGO: sacar este método para una clase de utilería
-  private boolean estadoSeleccionado() {
-    String valor = dir$cmbEstado.getValue();
-    //TODO: ojo con el valor de nueva zona
-    if ((valor != null) && !valor.equals("")) {
-      ocultarMensaje();
-      dir$cmbEstado.setSclass("");
-      return true;
-    }
-    //error:
-    mostrarMensaje("Selecciona el estado");
-    dir$cmbEstado.setSclass("textbox_error");
-    //set foco en tabPanel y widget correspondiente
-    selectTab(2);
-    dir$cmbEstado.setFocus(true);
-    return false;
-  }
-
-  /**
-   * valida que se seleccionó una ciudad
-   */
-  private boolean ciudadSeleccionada() {
-    String valor = dir$cmbCiudad.getValue();
-    //TODO: ojo con el valor de nueva zona
-    if ((valor != null) && !valor.equals("")) {
-      ocultarMensaje();
-      dir$cmbCiudad.setSclass("");
-      return true;
-    }
-    //error:
-    mostrarMensaje("Selecciona la ciudad");
-    dir$cmbCiudad.setSclass("textbox_error");
-    //set foco en tabPanel y widget correspondiente
-    selectTab(2);
-    dir$cmbCiudad.setFocus(true);
-    return false;
-  }
-
-  /**
-   * valida que se seleccionó una zona (Sector)
-   */
-  private boolean zonaSeleccionada() {
-    String valor = dir$cmbZona.getValue();
-    //TODO: ojo con el valor de nueva zona
-    if ((valor != null) && !valor.equals("") && !valor.contains("Nueva")) {
-      ocultarMensaje();
-      dir$cmbZona.setSclass("");
-      return true;
-    }
-    //error:
-    mostrarMensaje("Selecciona el sector");
-    dir$cmbZona.setSclass("textbox_error");
-    //set foco en tabPanel y widget correspondiente
-    selectTab(2);
-    dir$cmbZona.setFocus(true);
-    return false;
-  }
-
-  /**
-   * se encarga de ingresar los datos de la celula nueva
-   * con TODOS LOS DATOS
-   */
-  private boolean ingresarCelula() {
-    prepararCelulaInsert();
-    idCelula = servicio.insertCelula(celulaInsert);
-    if (idCelula == 0) {//error, no se grabó
-      return false;
-    }
-    ingresarLideresCelula();
-    return true;
-  }
-
-  /**
-   * obtiene todos los datos ingresados por el usuario en los widgets de entrada
-   * y los guarda en el objeto 'celulaInsert'
-   */
-  private void prepararCelulaInsert() {
-    celulaInsert = new CelulaInsert();
-    //datos básicos:
-    celulaInsert.setCodigo(db$txtCodigo.getValue());
-    celulaInsert.setNombre(db$txtNombre.getValue());
-
-    idRed = (Integer) Sesion.getVariable("cmbRed.id");
-    celulaInsert.setIdRed(idRed);
-
-    //TODO: en desarrollo todos los valores siguientes
-    //DOING: obteniendo valores día y hora seleccionados por el usuario:
-    getDiaHoraSeleccionada();
-    celulaInsert.setDia(diaNumero);
-    celulaInsert.setHora(horaNumero);
-
-    //obtener valor de la zona por si fue cambiado por en la vista 'Direccion'
-    idZona = (Integer) Sesion.getVariable("cmbZona.id");
-    celulaInsert.setIdZona(idZona);
-
-    celulaInsert.setDireccion(dir$txtDetalle.getValue());
-    celulaInsert.setTelefono(dir$txtTelefono.getValue());
-
-    prepararFechaApertura();
-    System.out.println("CtrlCelula: fecha de apertura antes de grabar en bd=" + fechaAperturaBD);
-    celulaInsert.setFechaApertura(fechaAperturaBD);
-    celulaInsert.setAnfitrion(otros$txtAnfitrion.getValue());
-    celulaInsert.setObservaciones(obs$txtObservaciones.getValue());
-  }
-
-  /**
-   * genera fecha de apertura en formato para base de datos,
-   * y lo guarda en la variable fechaAperturaBD
-   */
-  void prepararFechaApertura() {
-    dateFechaApertura = otros$dateboxFechaApertura.getValue();
-    if (dateFechaApertura != null) {
-      Calendar cal = UtilFechas.getCalendar(dateFechaApertura);
-      fechaAperturaBD = UtilFechas.getFechaMySql(dateFechaApertura);
-      fechaApertura = UtilFechas.getFechaTextoDiaMesAñoAbreviado(cal);
-    } else {
-      fechaAperturaBD = "";
-      fechaApertura = "";
+  private void mostrarWidgetsNew(boolean visible) {
+    db$txtCodigo.setVisible(visible);
+    db$cmbRed.setVisible(visible);
+    //TODO: se mostrará el combo de red sólo cuando ingresa el código
+    if (visible) {
+      db$cmbRed.setDisabled(true);
     }
   }
 
-  /**
-   * busca los id's de los líderes elegidos
-   */
-  void getLideresCelulaElegidos() {
-    idLider1 = buscarIdLider(1);
-    System.out.println("CtrlCelula-lider1.id=" + idLider1);
-    if (nLideres >= 2) {
-      idLider2 = buscarIdLider(2);
-      System.out.println("CtrlCelula-lider2.id=" + idLider2);
-    }
-    if (nLideres >= 3) {
-      idLider3 = buscarIdLider(3);
-      System.out.println("CtrlCelula-lider3.id=" + idLider3);
-    }
-    if (nLideres == 4) {
-      idLider4 = buscarIdLider(4);
-      System.out.println("CtrlCelula-lider4.id=" + idLider4);
-    }
+  private int getIdRed() {
+    return (Integer) Sesion.getVariable("cmbRed.id");
   }
 
-  void ingresarLideresCelula() {
-    getLideresCelulaElegidos();
-    if (idLider1 != 0) {
-      ingresarLiderCelula(idLider1);
-    }
-    if (idLider2 != 0) {
-      ingresarLiderCelula(idLider2);
-    }
-    if (idLider3 != 0) {
-      ingresarLiderCelula(idLider3);
-    }
-    if (idLider4 != 0) {
-      ingresarLiderCelula(idLider4);
-    }
-  }
-
-  /**
-   * agregar lider a la célula
-   * @param idLider id del líder
-   */
-  private void ingresarLiderCelula(int idLider) {
-    if (servicio.agregarLiderCelula(idLider)) {
-      System.out.println("CtrlCelula. Líder registrado. Célula.id=" + idCelula + ", Lider.id=" + idLider);
-    }
-  }
-
-  /**
-   * busca el id del líder, desde las variables de sesión   * 
-   * @param nLider número de líder, {1,2,3,4}
-   */
-  private int buscarIdLider(int nLider) {
-    int id = 0;
-    if (nLider == 1) {
-      id = (Integer) Sesion.getVariable("celula.lider1.id");
-    } else if (nLider == 2) {
-      id = (Integer) Sesion.getVariable("celula.lider2.id");
-    } else if (nLider == 3) {
-      id = (Integer) Sesion.getVariable("celula.lider3.id");
-    } else if (nLider == 4) {
-      id = (Integer) Sesion.getVariable("celula.lider4.id");
-    }
-    return id;
-  }
-
-  /**
-   * captura los valores de día y hora seleccionados por el usuario,
-   * usando variables de sesión guardadas por la clase CtrlCelulaDatosBasicos
-   */
-  public void getDiaHoraSeleccionada() {
-    diaTexto = "" + Sesion.getVariable("celula.dia.texto");
-    horaTexto = "" + Sesion.getVariable("celula.hora.texto");
-    diaNumero = (Integer) Sesion.getVariable("celula.dia.numero");
-    horaNumero = (Integer) Sesion.getVariable("celula.hora.numero");
+  private void mostrarTabsRestantes(boolean visible) {
+    tabDir.setVisible(visible);
+    //+ tabOtros.setVisible(visible);
+    tabObs.setVisible(visible);
   }
 
   /** método debug
@@ -1152,43 +967,222 @@ public class CtrlCelula extends GenericForwardComposer {
     etqMensaje.setVisible(false);
     etqMensaje.setValue("");
   }
-
-  /**
-   * MUESTRA EL CÓDIGO Y LA RED, que son los datos obligatorios para crear la célula,
-   * pero la red está deshabilitada
-   */
-  private void mostrarWidgetsNew(boolean visible) {
-    db$txtCodigo.setVisible(visible);
-    db$cmbRed.setVisible(visible);
-    //TODO: se mostrará el combo de red sólo cuando ingresa el código
-    if (visible) {
-      db$cmbRed.setDisabled(true);
-    }
-
-    /*
-    db$cmbDia.setVisible(status);
-    db$cmbHora.setVisible(status);
-    db$txtNombre.setVisible(status);
-    dir$cmbEstado.setVisible(status);
-    dir$txtDetalle.setVisible(status);
-    dir$txtTelefono.setVisible(status);
-    otros$dateboxFechaApertura.setVisible(status);
-    otros$txtAnfitrion.setVisible(status);
-    obs$txtObservaciones.setVisible(status);
-     */
-  }
-
-  private void mostrarOpcionLider1() {
-    db$opcionLider1.setVisible(true);
-  }
-
-  private int getIdRed() {
-    return (Integer) Sesion.getVariable("cmbRed.id");
-  }
-
-  private void mostrarTabsRestantes(boolean visible) {
-    tabDir.setVisible(visible);
-    //+ tabOtros.setVisible(visible);
-    tabObs.setVisible(visible);
-  }
 }
+//TAREAS: sacar estos métodos de validación a una utilería si hace falta:
+//TODO: MEJORACODIGO: sacar este método para una clase de utilería
+/**
+ * valida que se seleccionó un estado
+ */
+/*
+private boolean estadoSeleccionado() {
+String valor = dir$cmbEstado.getValue();
+//TODO: ojo con el valor de nueva zona
+if ((valor != null) && !valor.equals("")) {
+ocultarMensaje();
+dir$cmbEstado.setSclass("");
+return true;
+}
+//error:
+mostrarMensaje("Selecciona el estado");
+dir$cmbEstado.setSclass("textbox_error");
+//set foco en tabPanel y widget correspondiente
+selectTab(2);
+dir$cmbEstado.setFocus(true);
+return false;
+}
+ */
+/**
+ * valida que se seleccionó una ciudad
+ */
+/*
+private boolean ciudadSeleccionada() {
+String valor = dir$cmbCiudad.getValue();
+//TODO: ojo con el valor de nueva zona
+if ((valor != null) && !valor.equals("")) {
+ocultarMensaje();
+dir$cmbCiudad.setSclass("");
+return true;
+}
+//error:
+mostrarMensaje("Selecciona la ciudad");
+dir$cmbCiudad.setSclass("textbox_error");
+//set foco en tabPanel y widget correspondiente
+selectTab(2);
+dir$cmbCiudad.setFocus(true);
+return false;
+}
+ */
+/**
+ * valida que se seleccionó una zona (Sector)
+ */
+/*
+private boolean zonaSeleccionada() {
+String valor = dir$cmbZona.getValue();
+//TODO: ojo con el valor de nueva zona
+if ((valor != null) && !valor.equals("") && !valor.contains("Nueva")) {
+ocultarMensaje();
+dir$cmbZona.setSclass("");
+return true;
+}
+//error:
+mostrarMensaje("Selecciona el sector");
+dir$cmbZona.setSclass("textbox_error");
+//set foco en tabPanel y widget correspondiente
+selectTab(2);
+dir$cmbZona.setFocus(true);
+return false;
+}
+ */
+//GARBAGE
+/**
+ * se encarga de ingresar los datos de la celula nueva
+ * con TODOS LOS DATOS
+ */
+/*
+private boolean ingresarCelula() {
+prepararCelulaInsert();
+idCelula = servicio.insertCelula(celulaInsert);
+if (idCelula == 0) {//error, no se grabó
+return false;
+}
+ingresarLideresCelula();
+return true;
+}
+ */
+/**
+ * obtiene todos los datos ingresados por el usuario en los widgets de entrada
+ * y los guarda en el objeto 'celulaInsert'
+ */
+/*
+private void prepararCelulaInsert() {
+celulaInsert = new CelulaInsert();
+//datos básicos:
+celulaInsert.setCodigo(db$txtCodigo.getValue());
+celulaInsert.setNombre(db$txtNombre.getValue());
+
+idRed = (Integer) Sesion.getVariable("cmbRed.id");
+celulaInsert.setIdRed(idRed);
+
+//TODO: en desarrollo todos los valores siguientes
+//DOING: obteniendo valores día y hora seleccionados por el usuario:
+getDiaHoraSeleccionada();
+celulaInsert.setDia(diaNumero);
+celulaInsert.setHora(horaNumero);
+
+//obtener valor de la zona por si fue cambiado por en la vista 'Direccion'
+idZona = (Integer) Sesion.getVariable("cmbZona.id");
+celulaInsert.setIdZona(idZona);
+
+celulaInsert.setDireccion(dir$txtDetalle.getValue());
+celulaInsert.setTelefono(dir$txtTelefono.getValue());
+
+prepararFechaApertura();
+System.out.println("CtrlCelula: fecha de apertura antes de grabar en bd=" + fechaAperturaBD);
+celulaInsert.setFechaApertura(fechaAperturaBD);
+celulaInsert.setAnfitrion(otros$txtAnfitrion.getValue());
+celulaInsert.setObservaciones(obs$txtObservaciones.getValue());
+}
+ */
+/**
+ * genera fecha de apertura en formato para base de datos,
+ * y lo guarda en la variable fechaAperturaBD
+ */
+/*
+void prepararFechaApertura() {
+dateFechaApertura = otros$dateboxFechaApertura.getValue();
+if (dateFechaApertura != null) {
+Calendar cal = UtilFechas.getCalendar(dateFechaApertura);
+fechaAperturaBD = UtilFechas.getFechaMySql(dateFechaApertura);
+fechaApertura = UtilFechas.getFechaTextoDiaMesAñoAbreviado(cal);
+} else {
+fechaAperturaBD = "";
+fechaApertura = "";
+}
+}
+ */
+/**
+ * busca los id's de los líderes elegidos
+ */
+/*
+void getLideresCelulaElegidos() {
+idLider1 = buscarIdLider(1);
+System.out.println("CtrlCelula-lider1.id=" + idLider1);
+if (nLideres >= 2) {
+idLider2 = buscarIdLider(2);
+System.out.println("CtrlCelula-lider2.id=" + idLider2);
+}
+if (nLideres >= 3) {
+idLider3 = buscarIdLider(3);
+System.out.println("CtrlCelula-lider3.id=" + idLider3);
+}
+if (nLideres == 4) {
+idLider4 = buscarIdLider(4);
+System.out.println("CtrlCelula-lider4.id=" + idLider4);
+}
+}
+
+void ingresarLideresCelula() {
+getLideresCelulaElegidos();
+if (idLider1 != 0) {
+ingresarLiderCelula(idLider1);
+}
+if (idLider2 != 0) {
+ingresarLiderCelula(idLider2);
+}
+if (idLider3 != 0) {
+ingresarLiderCelula(idLider3);
+}
+if (idLider4 != 0) {
+ingresarLiderCelula(idLider4);
+}
+}
+ */
+/**
+ * agregar lider a la célula
+ * @param idLider id del líder
+ */
+/*
+private void ingresarLiderCelula(int idLider) {
+if (servicio.agregarLiderCelula(idLider)) {
+System.out.println("CtrlCelula. Líder registrado. Célula.id=" + idCelula + ", Lider.id=" + idLider);
+}
+}
+ */
+/**
+ * busca el id del líder, desde las variables de sesión   * 
+ * @param nLider número de líder, {1,2,3,4}
+ */
+/*
+private int buscarIdLider(int nLider) {
+int id = 0;
+if (nLider == 1) {
+id = (Integer) Sesion.getVariable("celula.lider1.id");
+} else if (nLider == 2) {
+id = (Integer) Sesion.getVariable("celula.lider2.id");
+} else if (nLider == 3) {
+id = (Integer) Sesion.getVariable("celula.lider3.id");
+} else if (nLider == 4) {
+id = (Integer) Sesion.getVariable("celula.lider4.id");
+}
+return id;
+}
+ */
+/**
+ * captura los valores de día y hora seleccionados por el usuario,
+ * usando variables de sesión guardadas por la clase CtrlCelulaDatosBasicos
+ */
+/*
+public void getDiaHoraSeleccionada() {
+diaTexto = "" + Sesion.getVariable("celula.dia.texto");
+horaTexto = "" + Sesion.getVariable("celula.hora.texto");
+diaNumero = (Integer) Sesion.getVariable("celula.dia.numero");
+horaNumero = (Integer) Sesion.getVariable("celula.hora.numero");
+}
+ */
+/*
+private void mostrarOpcionLider1() {
+db$opcionLider1.setVisible(true);
+}
+   //objeto para insertar nueva célula
+  CelulaInsert celulaInsert;
+ */
