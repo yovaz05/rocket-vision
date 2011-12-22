@@ -352,7 +352,8 @@ public class SaCelula implements IsaCelula {
         if (conectorBD.iniciarConexion()) {
             rspCelula.setEsConexionAbiertaExitosamente(true);
             rspCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
-            String consultaSQL = "SELECT * FROM celula WHERE estado = 1";
+            String consultaSQL = "SELECT * FROM celula WHERE estado = 1"
+                               + " ORDER BY codigo ASC";
             try {
                 Statement sentencia = conectorBD.getConnection().createStatement();
                 boolean bandera = sentencia.execute(consultaSQL);
