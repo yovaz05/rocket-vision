@@ -62,5 +62,11 @@ public interface IsaAcceso {
     
     public abstract RspAcceso updateEstadoSolicitado(int idAcceso);
     
+    public abstract RspAcceso updateEstadoHabilitadoPorIdPersona(int idPersona);
+    
+    public abstract RspAcceso updateEstadoRegistradoPorIdPersona(int idPersona);
+    
+    public abstract RspAcceso updateEstadoSolicitadoPorIdPersona(int idPersona);
+    
     public abstract RspAcceso updateCorreo(String correo);
 }
