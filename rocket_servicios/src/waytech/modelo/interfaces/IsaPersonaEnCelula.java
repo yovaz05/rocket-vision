@@ -1,6 +1,5 @@
 package waytech.modelo.interfaces;
 
-import waytech.modelo.beans.sgi.PersonaEnCelula;
 import waytech.modelo.beans.sgi.PersonaEnCelulaInsert;
 import waytech.modelo.beans.sgi.PersonaEnCelulaUpdate;
 import waytech.modelo.servicios.RspPersonaEnCelula;
