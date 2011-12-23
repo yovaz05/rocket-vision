@@ -923,4 +923,160 @@ public class SaAcceso implements IsaAcceso {
     public RspAcceso updateCorreo(String correo) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public RspAcceso updateEstadoHabilitadoPorIdPersona(int idPersona) {
+        String metodo = "updateEstadoHabilitadoPorIdPersona(int idPersona)";
+        RspAcceso rspAcceso = new RspAcceso();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspAcceso.setEsConexionAbiertaExitosamente(false);
+        rspAcceso.setEsConexionCerradaExitosamente(false);
+        rspAcceso.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspAcceso.setEsRolledBackIntentado(false);
+        rspAcceso.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspAcceso.setEsConexionAbiertaExitosamente(true);
+            rspAcceso.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE acceso SET estado = '1' WHERE id_persona = '" + idPersona + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspAcceso.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspAcceso.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspAcceso.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspAcceso.setEsRolledBackIntentado(true);
+                    rspAcceso.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspAcceso.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspAcceso.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspAcceso.esRolledBackIntentado()) {
+                    rspAcceso.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspAcceso.setEsConexionCerradaExitosamente(true);
+                }
+                rspAcceso.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspAcceso;
+            }
+        } else {
+            rspAcceso.setEsRolledBackExitosamente(false);
+            rspAcceso.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspAcceso;
+        }
+    }
+
+    @Override
+    public RspAcceso updateEstadoRegistradoPorIdPersona(int idPersona) {
+        String metodo = "updateEstadoRegistradoPorIdPersona(int idPersona)";
+        RspAcceso rspAcceso = new RspAcceso();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspAcceso.setEsConexionAbiertaExitosamente(false);
+        rspAcceso.setEsConexionCerradaExitosamente(false);
+        rspAcceso.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspAcceso.setEsRolledBackIntentado(false);
+        rspAcceso.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspAcceso.setEsConexionAbiertaExitosamente(true);
+            rspAcceso.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE acceso SET estado = '2' WHERE id_persona = '" + idPersona + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspAcceso.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspAcceso.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspAcceso.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspAcceso.setEsRolledBackIntentado(true);
+                    rspAcceso.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspAcceso.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspAcceso.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspAcceso.esRolledBackIntentado()) {
+                    rspAcceso.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspAcceso.setEsConexionCerradaExitosamente(true);
+                }
+                rspAcceso.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspAcceso;
+            }
+        } else {
+            rspAcceso.setEsRolledBackExitosamente(false);
+            rspAcceso.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspAcceso;
+        }
+    }
+
+    @Override
+    public RspAcceso updateEstadoSolicitadoPorIdPersona(int idPersona) {
+        String metodo = "updateEstadoSolicitadoPorIdPersona(int idPersona)";
+        RspAcceso rspAcceso = new RspAcceso();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspAcceso.setEsConexionAbiertaExitosamente(false);
+        rspAcceso.setEsConexionCerradaExitosamente(false);
+        rspAcceso.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspAcceso.setEsRolledBackIntentado(false);
+        rspAcceso.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspAcceso.setEsConexionAbiertaExitosamente(true);
+            rspAcceso.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE acceso SET estado = '3' WHERE id_persona = '" + idPersona + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspAcceso.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspAcceso.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspAcceso.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspAcceso.setEsRolledBackIntentado(true);
+                    rspAcceso.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspAcceso.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspAcceso.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspAcceso.esRolledBackIntentado()) {
+                    rspAcceso.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspAcceso.setEsConexionCerradaExitosamente(true);
+                }
+                rspAcceso.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspAcceso;
+            }
+        } else {
+            rspAcceso.setEsRolledBackExitosamente(false);
+            rspAcceso.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspAcceso;
+        }
+    }
 }
