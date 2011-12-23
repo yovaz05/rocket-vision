@@ -20,11 +20,47 @@ public class RspPersona {
     private boolean esRolledBackIntentado;
     private boolean esRolledBackExitosamente;
     private boolean esCedulaExistente;
+    private boolean esCodigoExistente;
+    private boolean esTelefonoMovilExistente;
+    private boolean esTelefonoHabitacionExistente;
+    private boolean esTelefonoTrabajoExistente;
     private String respuestaInicioDeConexion;
     private String respuestaCierreDeConexion;
     private String respuestaServicio;
     private String respuestaRolledBack;
     private Persona persona;
+
+    public boolean esCodigoExistente() {
+        return esCodigoExistente;
+    }
+
+    public void setEsCodigoExistente(boolean esCodigoExistente) {
+        this.esCodigoExistente = esCodigoExistente;
+    }
+
+    public boolean esTelefonoHabitacionExistente() {
+        return esTelefonoHabitacionExistente;
+    }
+
+    public void setEsTelefonoHabitacionExistente(boolean esTelefonoHabitacionExistente) {
+        this.esTelefonoHabitacionExistente = esTelefonoHabitacionExistente;
+    }
+
+    public boolean esTelefonoMovilExistente() {
+        return esTelefonoMovilExistente;
+    }
+
+    public void setEsTelefonoMovilExistente(boolean esTelefonoMovilExistente) {
+        this.esTelefonoMovilExistente = esTelefonoMovilExistente;
+    }
+
+    public boolean esTelefonoTrabajoExistente() {
+        return esTelefonoTrabajoExistente;
+    }
+
+    public void setEsTelefonoTrabajoExistente(boolean esTelefonoTrabajoExistente) {
+        this.esTelefonoTrabajoExistente = esTelefonoTrabajoExistente;
+    }
 
     public boolean esCedulaExistente() {
         return esCedulaExistente;
@@ -120,5 +156,5 @@ public class RspPersona {
 
     void setRespuestaInicioDeConexion(String respuestaInicioDeConexion) {
         this.respuestaInicioDeConexion = respuestaInicioDeConexion;
-    }   
+    }
 }

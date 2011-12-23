@@ -1380,4 +1380,60 @@ public class SaPersona implements IsaPersona {
             return rspPersona;
         }        
     }
+
+    @Override
+    public RspPersona esTelefonoMovilExistente(String telefonoMovil) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public RspPersona esTelefonoHabitacionExistente(String telefonoHabitacion) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public RspPersona esTelefonoTrabajoExistente(String telefonoTrabajo) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public RspPersona esCodigoSecretoExistente(String cedula, String codigoSecreto) {
+        //INSTANCIAS DE LAS CLASES                
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        RspPersona rspPersona = new RspPersona();
+        //INICIALIZAR VARIABLES
+        rspPersona.setEsConexionAbiertaExitosamente(false);
+        rspPersona.setEsConexionCerradaExitosamente(false);
+        rspPersona.setEsSentenciaSqlEjecutadaExitosamente(false);
+        rspPersona.setEsCodigoExistente(false);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPersona.setEsConexionAbiertaExitosamente(true);
+            rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            String consultaSQL = "SELECT * FROM persona WHERE estado = 1 AND ci = '" + cedula + "' AND codigo_secreto = '"+ codigoSecreto +"'";
+            try {
+                Statement sentencia = conectorBD.getConnection().createStatement();
+                boolean bandera = sentencia.execute(consultaSQL);
+                if (bandera) {
+                    ResultSet rs = sentencia.getResultSet();
+                    rspPersona.setEsSentenciaSqlEjecutadaExitosamente(true);
+                    rspPersona.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), "esCodigoSecretoExistente(String cedula, String codigoSecreto)", this.getClass().toString()));
+                    if (rs.next()) {
+                        rspPersona.setEsCodigoExistente(true);
+                    }
+                }
+            } catch (SQLException e) {
+                rspPersona.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "esCodigoSecretoExistente(String cedula, String codigoSecreto)", this.getClass().toString()));
+            } finally {
+                if (conectorBD.cerrarConexion()) {
+                    rspPersona.setEsConexionCerradaExitosamente(true);
+                }
+                rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPersona;
+            }
+        } else {
+            rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPersona;
+        }
+    }
 }

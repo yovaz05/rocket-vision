@@ -1,4 +1,3 @@
-
 package waytech.modelo.beans.sgi;
 
 /**
@@ -29,6 +28,7 @@ public class PersonaInsert {
     private String fechaGraduacionAcademia;
     private String fechaLanzamiento;
     private String fechaBautizo;
+    private String codigoSecreto;
     private boolean esLiderRed;
     private boolean esLiderCelula;
     private boolean esSupervisor;
@@ -43,6 +43,14 @@ public class PersonaInsert {
     private int idZona;
 
     public PersonaInsert() {
+    }
+
+    public String getCodigoSecreto() {
+        return codigoSecreto;
+    }
+
+    public void setCodigoSecreto(String codigoSecreto) {
+        this.codigoSecreto = codigoSecreto;
     }
 
     public String getApellido() {

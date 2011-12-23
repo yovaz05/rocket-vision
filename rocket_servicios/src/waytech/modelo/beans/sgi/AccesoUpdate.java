@@ -8,7 +8,7 @@ package waytech.modelo.beans.sgi;
  * @see http://www.waytech.com.ve
  * Clase creada para el software SGI 
  */
-public class AccesoModificar {
+public class AccesoUpdate {
 
     private String password;
     private String correo;

@@ -17,6 +17,7 @@ public class RspAcceso {
     private boolean esPasswordExistente;
     private boolean esLoginPasswordValido;
     private boolean esCorreoExistente;
+    private boolean esCorreoCoincidente;
     private boolean esSentenciaSqlEjecutadaExitosamente;
     private boolean esConexionAbiertaExitosamente;
     private boolean esConexionCerradaExitosamente;
@@ -29,13 +30,21 @@ public class RspAcceso {
     private String respuestaServicio;
     private Acceso acceso;
 
+    public boolean esCorreoCoincidente() {
+        return esCorreoCoincidente;
+    }
+
+    public void setEsCorreoCoincidente(boolean esCorreoCoincidente) {
+        this.esCorreoCoincidente = esCorreoCoincidente;
+    }
+
     public boolean esLoginPasswordValido() {
         return esLoginPasswordValido;
     }
 
     public void setEsLoginPasswordValido(boolean esLoginPasswordValido) {
         this.esLoginPasswordValido = esLoginPasswordValido;
-    }        
+    }
 
     public String getRespuestaRolledBack() {
         return respuestaRolledBack;

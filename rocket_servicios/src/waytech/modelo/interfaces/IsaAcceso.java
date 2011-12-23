@@ -1,7 +1,7 @@
 package waytech.modelo.interfaces;
 
 import waytech.modelo.beans.sgi.AccesoInsert;
-import waytech.modelo.beans.sgi.AccesoModificar;
+import waytech.modelo.beans.sgi.AccesoUpdate;
 import waytech.modelo.servicios.RspAcceso;
 
 /**
@@ -16,7 +16,7 @@ public interface IsaAcceso {
 
     public abstract RspAcceso insertAcceso(AccesoInsert accesoInsert);
 
-    public abstract RspAcceso updateAcceso(AccesoModificar accesoModificar);
+    public abstract RspAcceso updateAcceso(AccesoUpdate accesoModificar);
 
     /**
      * Actualiza la fecha automaticamente del último ingreso
@@ -51,6 +51,16 @@ public interface IsaAcceso {
     public abstract RspAcceso esLoginPasswordValido(String login, String password);
 
     public abstract RspAcceso esCorreoExistente(String correo);
+    
+    public abstract RspAcceso esCorreoCoincidente(String correo, int id_persona);
 
     public abstract RspAcceso listAcceso();
+    
+    public abstract RspAcceso updateEstadoHabilitado(int idAcceso);
+    
+    public abstract RspAcceso updateEstadoRegistrado(int idAcceso);
+    
+    public abstract RspAcceso updateEstadoSolicitado(int idAcceso);
+    
+    public abstract RspAcceso updateCorreo(String correo);
 }
