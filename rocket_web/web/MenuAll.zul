@@ -111,8 +111,7 @@ title="SIG - Mejorando barra superior"?>
 
 <!-- barra inferior: botonera y búsqueda -->
     <div width="100%" height="40px"
- style="
-  display: block;  
+ style="display: block;  
   background: #F1F1F1;
   border-bottom: 1px solid #D2D2D2;
   border-top: 1px solid #D2D2D2;  padding:0px;
@@ -121,7 +120,7 @@ title="SIG - Mejorando barra superior"?>
   white-space: nowrap;"
   >
 <!--    barra de botones-->
-      <div id="barraNaveg" width="250px"
+      <div id="barraNaveg"
     style="display:inline-block;margin: 5px;padding-left: 15px">
 <!--        <image id="itemNombreSistema" src="/img/logo/SIG.png" style="cursor: pointer;"/>-->
 <!--        <toolbarbutton id="btnAtras" tooltiptext="Vista Anterior" sclass="botonAccion" image="/img/iconos/previous24.png" disabled="true"/>
@@ -136,9 +135,13 @@ title="SIG - Mejorando barra superior"?>
         <toolbarbutton id="btnConfirmar" label="Confirmar" visible="false"/>
       </div>
 
-      <div align="center" style="display:inline-block;margin:2px; padding: 2px 15px;">
-        <label id="etqStatus" value="Para mensajes al usuario" sclass="mensajes" visible="false"
-            style="margin: 2px; padding:2px;"/>
+      <div id="divStatus" align="left" style="display:inline-block;margin:2px; padding: 2px 5px;"
+      onClick="cerrarMensaje()">
+        <label id="etqStatus"
+          value="Para mensajes al usuario"
+          sclass="mensajes"
+          style="margin: 2px; padding:2px;"
+          visible="false"/>
       </div>
     </div>
     <toolbarbutton id="btnControl" label="" visible="false"/>
@@ -149,6 +152,9 @@ title="SIG - Mejorando barra superior"?>
      void mensaje(String msj){
       etqStatus.setValue(msj);
       etqStatus.setVisible(true);
+    }
+     void cerrarMensaje(){
+      etqStatus.setVisible(false);
     }
     ]]>        
   </zscript>    

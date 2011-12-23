@@ -11,6 +11,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Div;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Menu;
 import org.zkoss.zul.Messagebox;
@@ -25,6 +26,7 @@ public class CtrlMenu extends GenericForwardComposer {
 
   //widgets:
   Label etqStatus;
+  Div divStatus;
   Menu tbbUsuario;
   //gestión de datos:
   BD bd;
@@ -367,11 +369,13 @@ public class CtrlMenu extends GenericForwardComposer {
   public void mostrarStatus(String mensaje) {
     etqStatus.setValue(mensaje);
     etqStatus.setVisible(true);
+    //-divStatus.setVisible(true);
   }
 
   public void ocultarStatus() {
     etqStatus.setValue("");
     etqStatus.setVisible(false);
+    //-divStatus.setVisible(false);
   }
 
   public void iniciarBarraNavegacion() {

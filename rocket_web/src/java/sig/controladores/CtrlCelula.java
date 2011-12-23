@@ -440,7 +440,7 @@ public class CtrlCelula extends GenericForwardComposer {
     modo = "new";
     Sesion.setModo(modo);
     Sesion.setVariable("idCelula", 0);
-    mostrarMensaje("Ingresa el código y elige la red");
+    mensaje("Ingresa el código y elige la red");
     actualizarEstado();
   }
 
@@ -772,14 +772,14 @@ public class CtrlCelula extends GenericForwardComposer {
       //TODO: agregar la zona a la descripción
       //descripcionCelula = generarDescripcionCelula(celulaInsert.getCodigo(), dir$cmbZona.getValue());
       //modo = "ver";
-      mostrarMensaje("Célula ingresada. Agrega el resto de la información");
+      mensaje("Célula ingresada. Agrega el resto de la información");
       descripcionCelula = codigo;
       //**System.out.println("CtrlCelula.Célula creada con éxito:");
       //**System.out.println("id=" + idCelula);
       return true;
     }
     //error:
-    mostrarMensaje("Error creando la célula. Vuelve a intentar.");
+    mensaje("Error creando la célula. Vuelve a intentar.");
     return true;
   }
 
@@ -859,7 +859,7 @@ public class CtrlCelula extends GenericForwardComposer {
       ok = true;
     } else {
       //valor NO válido
-      mostrarMensaje(msjError);
+      mensaje(msjError);
       textbox.setSclass("textbox_error");
       ok = false;
     }
@@ -878,7 +878,7 @@ public class CtrlCelula extends GenericForwardComposer {
       return true;
     }
     //error:
-    mostrarMensaje(msjError);
+    mensaje(msjError);
     combo.setSclass("textbox_error");
     return false;
   }
@@ -953,7 +953,7 @@ public class CtrlCelula extends GenericForwardComposer {
    * muestra un mensaje en label
    * @param msj 
    */
-  private void mostrarMensaje(String msj) {
+  private void mensaje(String msj) {
     etqMensaje.setValue(msj);
     etqMensaje.setVisible(true);
     divMensaje.setVisible(true);
