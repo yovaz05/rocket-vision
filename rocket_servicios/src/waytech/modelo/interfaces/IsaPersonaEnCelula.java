@@ -14,24 +14,22 @@ import waytech.modelo.servicios.RspPersonaEnCelula;
  */
 public interface IsaPersonaEnCelula {
 
-    public abstract RspPersonaEnCelula insertPersonaEnCelula(PersonaEnCelulaInsert personaEnCelula);
+  public abstract RspPersonaEnCelula insertPersonaEnCelula(PersonaEnCelulaInsert personaEnCelula);
 
-    public abstract RspPersonaEnCelula updatePersonaEnCelula(PersonaEnCelulaUpdate personaEnCelula);
+  public abstract RspPersonaEnCelula updatePersonaEnCelula(PersonaEnCelulaUpdate personaEnCelula);
 
-    /**
-     * Elimina un registro lógicamente
-     * @param idPersonaEnCelula
-     * @return 
-     */
-    public abstract RspPersonaEnCelula deletePersonaEnCelula(int idPersonaEnCelula);
-    
-    public abstract RspPersonaEnCelula deletePersonaEnCelulaPorIdPersona(int idCelula, int idPersona);
+  /**
+   * Elimina un registro lógicamente
+   * @param idPersonaEnCelula
+   * @return 
+   */
+  public abstract RspPersonaEnCelula deletePersonaEnCelula(int idCelula, int idPersonaEnCelula);
 
-    public abstract RspPersonaEnCelula getPersonaEnCelulaPorIdPersonaEnCelula(int idPersonaEnCelula);
+  public abstract RspPersonaEnCelula getPersonaEnCelulaPorIdPersonaEnCelula(int idPersonaEnCelula);
 
-    public abstract RspPersonaEnCelula getPersonaEnCelulaPorTraza(String traza);
+  public abstract RspPersonaEnCelula getPersonaEnCelulaPorTraza(String traza);
 
-    public abstract RspPersonaEnCelula listPersonaEnCelula();
+  public abstract RspPersonaEnCelula listPersonaEnCelula();
 
-    public abstract RspPersonaEnCelula listPersonaEnCelulaPorIdCelula(int idCelula);
+  public abstract RspPersonaEnCelula listPersonaEnCelulaPorIdCelula(int idCelula);
 }
