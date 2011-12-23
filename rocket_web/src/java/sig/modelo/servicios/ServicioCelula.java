@@ -6,9 +6,9 @@
 package sig.modelo.servicios;
 
 import cdo.sgd.controladores.Sesion;
-import cdo.sgd.modelo.bd.simulador.CelulaListadoUtil;
-import cdo.sgd.modelo.bd.simulador.CelulaUtil;
-import cdo.sgd.modelo.bd.simulador.Direccion;
+import cdo.sgd.modelo.bd.util.CelulaListadoUtil;
+import cdo.sgd.modelo.bd.util.CelulaUtil;
+import cdo.sgd.modelo.bd.util.Direccion;
 import java.util.ArrayList;
 import java.util.List;
 import waytech.modelo.beans.sgi.Celula;

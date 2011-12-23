@@ -1,4 +1,4 @@
-package sig.controladores;
+package sig.controladores.celula;
 
 import cdo.sgd.controladores.Sesion;
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
+import sig.controladores.Constantes;
 import sig.modelo.servicios.ServicioCelula;
 import sig.modelo.servicios.ServicioRed;
 import waytech.modelo.beans.sgi.Red;

@@ -1,12 +1,12 @@
-package sig.controladores;
+package sig.controladores.celula;
 
 import cdo.sgd.controladores.Sesion;
 import cdo.sgd.controladores.Vistas;
 import cdo.sgd.controladores.widgets.BotonCelula;
 import cdo.sgd.controladores.widgets.BotonLider;
 import cdo.sgd.controladores.widgets.EtqNro;
-import cdo.sgd.modelo.bd.simulador.CelulaListadoUtil;
-import cdo.sgd.modelo.bd.simulador.BD;
+import cdo.sgd.modelo.bd.util.CelulaListadoUtil;
+import cdo.sgd.modelo.bd.util.BD;
 import java.util.ArrayList;
 import java.util.List;
 import org.zkoss.zk.ui.Component;
@@ -48,9 +48,8 @@ public class CtrlCelulaListado extends GenericForwardComposer {
   //variables de control:
   int idRedUsuario;
   //gestión de datos:
-  BD datos;
   List<CelulaListadoUtil> listaCelulaListado = new ArrayList<CelulaListadoUtil>();
-  ServicioCelula servicio = new ServicioCelula();
+  ServicioCelula servicioCelula = new ServicioCelula();
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -59,9 +58,11 @@ public class CtrlCelulaListado extends GenericForwardComposer {
   }
 
   void inicio() {
-    idRedUsuario = UtilSIG.buscarIdRed(this.getClass());
-//TODO:verificar tipo de usuario para ver qué data buscar y mostrar
-    getListado();
+    //idRed se usará más adelante
+    //+idRedUsuario = UtilSIG.buscarIdRed(this.getClass());
+    //+TODO:verificar tipo de usuario para ver qué data buscar y mostrar
+
+    buscarData();
     mostrarDatos();
     notificarBarra();
   }
@@ -69,8 +70,8 @@ public class CtrlCelulaListado extends GenericForwardComposer {
   /**
    * Obtiene la listaCelulaListado de células de la base de datos
    */
-  void getListado() {
-    listaCelulaListado = servicio.getCelulasListado();
+  void buscarData() {
+    listaCelulaListado = servicioCelula.getCelulasListado();
   }
 
   /**
@@ -121,7 +122,7 @@ public class CtrlCelulaListado extends GenericForwardComposer {
           nombre = "No asignado";
         }
         etqNombre = new Label(nombre);
-        
+
         //TODO: establecer atributos de estilo a los widgets, por ahora no ha hecho falta
 
         //se anexan los widgets a la fila del grid

@@ -1,9 +1,9 @@
-package sig.controladores;
+package sig.controladores.celula;
 
 import cdo.sgd.controladores.CtrlVista;
 import cdo.sgd.controladores.Sesion;
 import cdo.sgd.controladores.Vistas;
-import cdo.sgd.modelo.bd.simulador.CelulaUtil;
+import cdo.sgd.modelo.bd.util.CelulaUtil;
 import java.util.Date;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;
@@ -20,6 +20,7 @@ import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
+import sig.controladores.Constantes;
 import sig.modelo.servicios.ServicioCelula;
 
 /**

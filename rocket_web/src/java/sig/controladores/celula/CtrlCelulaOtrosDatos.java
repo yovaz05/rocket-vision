@@ -1,4 +1,4 @@
-package sig.controladores;
+package sig.controladores.celula;
 
 import cdo.sgd.controladores.Sesion;
 import java.util.ArrayList;

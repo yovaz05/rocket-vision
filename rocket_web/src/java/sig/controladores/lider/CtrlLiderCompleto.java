@@ -1,10 +1,10 @@
-package sig.controladores;
+package sig.controladores.lider;
 
 import cdo.sgd.controladores.CtrlVista;
 import cdo.sgd.controladores.Sesion;
 import cdo.sgd.controladores.Vistas;
-import cdo.sgd.modelo.bd.simulador.BD;
-import cdo.sgd.modelo.bd.simulador.Lider;
+import cdo.sgd.modelo.bd.util.BD;
+import cdo.sgd.modelo.bd.util.LiderUtil;
 import java.util.Calendar;
 import java.util.Date;
 import org.zkoss.zk.ui.Component;
@@ -33,11 +33,11 @@ import waytech.utilidades.UtilFechas;
 import waytech.utilidades.UtilSIG;
 
 /**
- * controlador asociado a Lider.zul
+ * controlador asociado a LiderUtil.zul
  * @author Gabriel
  */
-public class CtrlLider extends GenericForwardComposer {
-  //TODO: definir un atributo Lider, como el valor actual
+public class CtrlLiderCompleto extends GenericForwardComposer {
+  //TODO: definir un atributo LiderUtil, como el valor actual
 
   //referencias:
   Include vistaCentral;
@@ -82,13 +82,13 @@ public class CtrlLider extends GenericForwardComposer {
   Label dir$etqEstado;
   Label dir$etqCiudad;
   Label dir$etqZona;
-  Label dir$etqDirDetallada;
+  Label dir$etqDetalle;
+  Label dir$etqTelefono;
   Combobox dir$cmbEstado;
   Combobox dir$cmbCiudad;
   Textbox dir$txtZona;
   Textbox dir$txtDirDetallada;
   Textbox dir$txtTelefono;
-  Toolbarbutton dir$tbbTelefono;
   Comboitem itemZonaAdicional;
   //pestaña 'Contacto'
   Hbox contacto$hboxView;
@@ -141,8 +141,6 @@ public class CtrlLider extends GenericForwardComposer {
   Label roles$etqAnfitrionCelula;
   Label roles$etqMaestroAcademia;
   //pestaña "Observaciones"
-  Column obs$colEdit;
-  Column obs$colView;
   Label obs$etqObservaciones;
   Textbox obs$txtObservaciones;
   //gestión de datos
@@ -156,7 +154,7 @@ public class CtrlLider extends GenericForwardComposer {
   String fechaGraduacionAcademia;
   BD simuladorBD;
   //variables de control:
-  Lider lider;
+  LiderUtil lider;
   int tabSeleccionado;
   CtrlVista ctrlVista = new CtrlVista();
   //modoActual = {new,edicion,ver,imprimir}
@@ -199,7 +197,7 @@ public class CtrlLider extends GenericForwardComposer {
     System.out.println("CtrlLider.mostrarDatos >> idLider: " + id);
 
     //llenar widgets con la data
-    lider = (Lider) simuladorBD.buscarLider(id);
+    lider = (LiderUtil) simuladorBD.buscarLider(id);
     System.out.println("LIDER: " + lider.toString());
 
     /**/
@@ -219,8 +217,8 @@ public class CtrlLider extends GenericForwardComposer {
     dir$etqEstado.setValue(lider.getDireccion().getEstado());
     dir$etqCiudad.setValue(lider.getDireccion().getCiudad());
     dir$etqZona.setValue(lider.getDireccion().getZona());
-    dir$etqDirDetallada.setValue(lider.getDireccion().getDirDetallada());
-    dir$tbbTelefono.setLabel(lider.getDireccion().getTelefono());
+    dir$etqDetalle.setValue(lider.getDireccion().getDirDetallada());
+    dir$etqTelefono.setValue(lider.getDireccion().getTelefono());
 
     /**/
     contacto$tbbTlfCelular.setLabel(lider.getTelefonoCelular());
@@ -404,7 +402,6 @@ public class CtrlLider extends GenericForwardComposer {
     fechas$col2.setVisible(status);
     roles$col2.setVisible(status);
     contacto$gridEdit.setVisible(status);
-    obs$colEdit.setVisible(status);
   }
 
   /**
@@ -418,7 +415,6 @@ public class CtrlLider extends GenericForwardComposer {
     contacto$gridView.setVisible(status);
     fechas$col3.setVisible(status);
     roles$col3.setVisible(status);
-    obs$colView.setVisible(status);
   }
 
   public void onSelect$tabbox() throws InterruptedException {
@@ -480,8 +476,8 @@ public class CtrlLider extends GenericForwardComposer {
     dir$cmbEstado.setValue(dir$etqEstado.getValue());
     dir$cmbCiudad.setValue(dir$etqCiudad.getValue());
     dir$txtZona.setValue(dir$etqZona.getValue());
-    dir$txtDirDetallada.setValue(dir$etqDirDetallada.getValue());
-    dir$txtTelefono.setValue(dir$tbbTelefono.getLabel());
+    dir$txtDirDetallada.setValue(dir$etqDetalle.getValue());
+    dir$txtTelefono.setValue(dir$etqTelefono.getValue());
 
     //Contacto
     contacto$txtTlfCelular.setValue(contacto$tbbTlfCelular.getLabel());
@@ -565,8 +561,8 @@ public class CtrlLider extends GenericForwardComposer {
       dir$etqCiudad.setValue(dir$cmbCiudad.getValue());
     }
     dir$etqZona.setValue(dir$txtZona.getValue());
-    dir$etqDirDetallada.setValue(dir$txtDirDetallada.getValue());
-    dir$tbbTelefono.setLabel(dir$txtTelefono.getValue());
+    dir$etqDetalle.setValue(dir$txtDirDetallada.getValue());
+    dir$etqTelefono.setValue(dir$txtTelefono.getValue());
 
     //Contacto
     contacto$tbbTlfCelular.setLabel(contacto$txtTlfCelular.getValue());
