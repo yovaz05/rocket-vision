@@ -5,7 +5,7 @@
     <label id="etqMensaje" value="Mensajes al usuario:" sclass="mensajes" visible="false"
             style="margin: 2px; padding:2px;"/>
   </div>  
-  <grid style="border:0px" apply="sig.controladores.CtrlLiderDatosBasicos">      
+  <grid style="border:0px" apply="sig.controladores.lider.CtrlLiderDatosBasicos">      
     <columns>
       <column id="col1" width="135px"/>
       <column id="colEdit"/>
@@ -23,7 +23,9 @@
         <label id="etqNombre" value=""/>
       </row>   
       <!-- Red, v2: CON COMBOBOX-->      
-      <row apply="sig.controladores.CtrlCatalogoRed">
+<!--      TODO: asociar controlador-->
+<!--      <row apply="sig.controladores.CtrlCatalogoRed">-->
+      <row>
         <label value="Red" sclass="etiqueta_campo"/>
         <cell>
           <!-- TODO: quitar label -->
@@ -34,7 +36,7 @@
         <a id="tbbRed" label="Red elegida"/>
       </row>
 <!-- Líderes VERSIÓN 2: CON COMBOBOX DIRECTOS -->
-      <row>
+      <row visible="false">
         <label value="Líderes" sclass="etiqueta_campo"/>
         <cell>
           <vbox>
@@ -74,7 +76,7 @@
         </vbox>
       </row>            
       <!-- Pareja,v2: CON COMBOBOX-->      
-      <row>
+      <row visible="false">
         <label value="Pareja Ministerial" sclass="etiqueta_campo"/>
         <cell>
           <label id="etqPareja" value=""/>
