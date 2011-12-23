@@ -7,7 +7,7 @@ package cdo.sgd.modelo.bd.util;
  *
  * @author Gabriel Pérez
  */
-public class LiderCelula extends Lider {
+public class LiderCelula extends LiderUtil {
 
   protected String descripcionCelula;
   protected int idCelula;
@@ -27,7 +27,7 @@ public class LiderCelula extends Lider {
     super.setEdad(edad);
   }
   
-  public LiderCelula(Lider lider) {
+  public LiderCelula(LiderUtil lider) {
     this.setId(lider.getId());
     this.setIdRed(lider.getIdRed());
     this.setNombre(lider.getNombre());

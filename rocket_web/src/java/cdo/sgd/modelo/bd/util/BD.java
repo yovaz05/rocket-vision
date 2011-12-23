@@ -15,13 +15,13 @@ import waytech.modelo.servicios.SaAcceso;
 public final class BD {
 
   public ArrayList<Red> redes;
-  public ArrayList<Lider> lideres;
+  public ArrayList<LiderUtil> lideres;
   public ArrayList<LiderCelula> lideresCelula;
   public ArrayList<LiderCelulaListado> lideresCelulaListado;
   public ArrayList<CelulaUtil> celulas;
   public ArrayList<CelulaListadoUtil> celulasListado;
-  public ArrayList<DiscipuloLanzado> discipulosLanzados;
-  public ArrayList<DiscipuloLanzadoListado> discipulosLanzadosListado;
+  public ArrayList<LiderUtil> discipulosLanzados;
+  public ArrayList<LiderListadoUtil> discipulosLanzadosListado;
   public ArrayList<Discipulo> discipulos;
   public ArrayList<DiscipuloProceso> discipulosProceso;
   public ArrayList<DiscipuloProcesoListado> discipulosProcesoListado;
@@ -74,22 +74,22 @@ public final class BD {
   }
 
   public void crearLideres() {
-    lideres = new ArrayList<Lider>();
+    lideres = new ArrayList<LiderUtil>();
     int id = 0;
 
     //TODO: tener registros sin datos, para pruebas y errores de ejecución
-    Lider lider0 = new Lider("Pastor Rogelio Mora");
+    LiderUtil lider0 = new LiderUtil("Pastor Rogelio Mora");
     lider0.setId(id++);
     lideres.add(lider0);
 
-    Lider lider1 = new Lider("Pastora Irene de Mora");
+    LiderUtil lider1 = new LiderUtil("Pastora Irene de Mora");
     lider1.setId(id++);
     lideres.add(lider1);
 
     //RED 1:
     int idRed = 1;
-    Lider lider2 = new Lider("Gabriel Pérez", "El Cercado", "0416-1041108", "gabrielperez77@gmail.com", 27);
-    lider2.setCedula(16594651);
+    LiderUtil lider2 = new LiderUtil("Gabriel Pérez", "El Cercado", "0416-1041108", "gabrielperez77@gmail.com", 27);
+    lider2.setCedula("16594651");
     lider2.setNombreRed(redes.get(idRed).nombre);
     lider2.setLideres(lider0.getNombre(), "");
     lider2.setReferencias(id++, idRed, lider0.getId(), 1);
@@ -111,8 +111,8 @@ public final class BD {
     lider2.setLiderRed(true);
     lider2.setSupervisor(true);
 
-    Lider lider3 = new Lider("Jairo Rivera", "Macuto", "0426-8566452", "abdiashalom@hotmail.com", 29);
-    lider3.setCedula(12345678);
+    LiderUtil lider3 = new LiderUtil("Jairo Rivera", "Macuto", "0426-8566452", "abdiashalom@hotmail.com", 29);
+    lider3.setCedula("12345678");
     lider3.setNombreRed(redes.get(idRed).nombre);
     lider3.setLideres(lider0.getNombre(), "");
     lider3.setReferencias(id++, idRed, lider0.getId(), 0);
@@ -127,8 +127,8 @@ public final class BD {
     lideres.add(lider2);
     lideres.add(lider3);
 
-    Lider lider4 = new Lider("Wilmer Hernández", "Ruezga Norte", "0416-1234567", "wilmerhernandez@hotmail.com", 19);
-    lider4.setCedula(13456789);
+    LiderUtil lider4 = new LiderUtil("Wilmer Hernández", "Ruezga Norte", "0416-1234567", "wilmerhernandez@hotmail.com", 19);
+    lider4.setCedula("13456789");
     lider4.setNombreRed(redes.get(idRed).nombre);
     lider4.setLideres(lider2.nombre, lider3.nombre);
     lider4.setReferencias(id++, idRed, lider2.id, lider3.id);
@@ -136,8 +136,8 @@ public final class BD {
     lider4.setDireccion(new Direccion("Lara", "Barquisimeto", "Ruezga Norte", "Sector 2, casa #17", ""));
     lider4.setLiderCelula(true);
 
-    Lider lider5 = new Lider("Leo Alvarado", "Barquisimeto Centro", "0416-1234567", "leoalvarado@hotmail.com", 19);
-    lider5.setCedula(14567890);
+    LiderUtil lider5 = new LiderUtil("Leo Alvarado", "Barquisimeto Centro", "0416-1234567", "leoalvarado@hotmail.com", 19);
+    lider5.setCedula("14567890");
     lider5.setNombreRed(redes.get(idRed).nombre);
     lider5.setLideres(lider2.nombre, lider3.nombre);
     lider5.setReferencias(id++, idRed, lider2.id, lider3.id);
@@ -148,8 +148,8 @@ public final class BD {
     lideres.add(lider4);
     lideres.add(lider5);
 
-    Lider lider6 = new Lider("David Suárez", "Barquisimeto Centro", "0426-5524729", "davis_19@hotmail.com", 29);
-    lider6.setCedula(16789012);
+    LiderUtil lider6 = new LiderUtil("David Suárez", "Barquisimeto Centro", "0426-5524729", "davis_19@hotmail.com", 29);
+    lider6.setCedula("16789012");
     lider6.setNombreRed(redes.get(idRed).nombre);
     lider6.setLideres(lider2.nombre, lider3.nombre);
     lider6.setReferencias(id++, idRed, lider2.id, lider3.id);
@@ -157,8 +157,8 @@ public final class BD {
     lider6.setDireccion(new Direccion("Lara", "Barquisimeto", "Centro", "Carrera 28 con Av. Andrés Bello, casa #28-1", ""));
     lider6.setLiderCelula(true);
 
-    Lider lider7 = new Lider("José Alvarado", "Ruezga Norte", "0426-4530251", "josealvarado@hotmail.com", 21);
-    lider7.setCedula(15648790);
+    LiderUtil lider7 = new LiderUtil("José Alvarado", "Ruezga Norte", "0426-4530251", "josealvarado@hotmail.com", 21);
+    lider7.setCedula("15648790");
     lider7.setNombreRed(redes.get(idRed).nombre);
     lider7.setLideres(lider2.nombre, lider3.nombre);
     lider7.setReferencias(id++, idRed, lider2.id, lider3.id);
@@ -169,8 +169,8 @@ public final class BD {
     lideres.add(lider6);
     lideres.add(lider7);
 
-    Lider lider8 = new Lider("Jorge Méndez", "El Tostao", "0416-7024638", "jorgemendez@hotmail.com", 15);
-    lider8.setCedula(15689735);
+    LiderUtil lider8 = new LiderUtil("Jorge Méndez", "El Tostao", "0416-7024638", "jorgemendez@hotmail.com", 15);
+    lider8.setCedula("15689735");
     lider8.setNombreRed(redes.get(idRed).nombre);
     lider8.setLideres(lider6.nombre, lider7.nombre);
     lider8.setReferencias(id++, idRed, lider6.id, lider7.id);
@@ -179,8 +179,8 @@ public final class BD {
     lider8.setLiderCelula(true);
     lideres.add(lider8);
 
-    Lider lider9 = new Lider("David Di Patre", "Calle 12, Barquisimeto", "0426-3306463", "daviddipatre@hotmail.com", 27);
-    lider9.setCedula(14567821);
+    LiderUtil lider9 = new LiderUtil("David Di Patre", "Calle 12, Barquisimeto", "0426-3306463", "daviddipatre@hotmail.com", 27);
+    lider9.setCedula("14567821");
     lider9.setNombreRed(redes.get(idRed).nombre);
     lider9.setLideres(lider2.nombre, lider3.nombre);
     lider9.setReferencias(id++, idRed, lider2.id, lider3.id);
@@ -189,8 +189,8 @@ public final class BD {
     lider9.setLiderCelula(true);
     lideres.add(lider9);
 
-    Lider lider10 = new Lider("Wilfredo Barrios", "El Tostao", "0416-7521851", "wilfredobarrios@hotmail.com", 19);
-    lider10.setCedula(16597469);
+    LiderUtil lider10 = new LiderUtil("Wilfredo Barrios", "El Tostao", "0416-7521851", "wilfredobarrios@hotmail.com", 19);
+    lider10.setCedula("16597469");
     lider10.setNombreRed(redes.get(idRed).nombre);
     lider10.setLideres(lider6.nombre, lider7.nombre);
     lider10.setReferencias(id++, idRed, lider6.id, lider7.id);
@@ -201,8 +201,8 @@ public final class BD {
     //RED 2:
     idRed = 2;
 
-    Lider lider11 = new Lider("Juan Carlos Godoy", "Cabudare", "0416-6500969", "jcgodoy@casadeoracion.com.ve", 25);
-    lider11.setCedula(17890123);
+    LiderUtil lider11 = new LiderUtil("Juan Carlos Godoy", "Cabudare", "0416-6500969", "jcgodoy@casadeoracion.com.ve", 25);
+    lider11.setCedula("17890123");
     lider11.setNombreRed(redes.get(2).nombre);
     lider11.setLideres(lider0.getNombre(), "");
     lider11.setReferencias(id++, idRed, lider0.id, 0);
@@ -212,8 +212,8 @@ public final class BD {
     lider11.setLiderCelula(true);
     lider11.setSupervisor(true);
 
-    Lider lider12 = new Lider("Hernán Zambrano", "Cabudare", "0416-65456789", "hzambrano@casadeoracion.com.ve", 25);
-    lider12.setCedula(18901234);
+    LiderUtil lider12 = new LiderUtil("Hernán Zambrano", "Cabudare", "0416-65456789", "hzambrano@casadeoracion.com.ve", 25);
+    lider12.setCedula("18901234");
     lider12.setNombreRed(redes.get(2).nombre);
     lider12.setLideres(lider1.nombre, "");
     lider12.setReferencias(id++, idRed, 1, 0);
@@ -225,15 +225,15 @@ public final class BD {
     lideres.add(lider11);
     lideres.add(lider12);
 
-    Lider lider13 = new Lider("Miguel Quiñones", "El Cercado", "0426-1234567", "miguelquiñones@hotmail.com", 29);
-    lider13.setCedula(19012345);
+    LiderUtil lider13 = new LiderUtil("Miguel Quiñones", "El Cercado", "0426-1234567", "miguelquiñones@hotmail.com", 29);
+    lider13.setCedula("19012345");
     lider13.setNombreRed(redes.get(idRed).nombre);
     lider13.setLideres(lider11.nombre, lider12.nombre);
     lider13.setReferencias(id++, idRed, lider11.id, lider12.id);
     lider13.setLiderCelula(true);
 
-    Lider lider14 = new Lider("Giovanny", "Calle 45, Barquisimeto", "0426-1234567", "giovanny@hotmail.com", 29);
-    lider14.setCedula(20123456);
+    LiderUtil lider14 = new LiderUtil("Giovanny", "Calle 45, Barquisimeto", "0426-1234567", "giovanny@hotmail.com", 29);
+    lider14.setCedula("20123456");
     lider14.setNombreRed(redes.get(idRed).nombre);
     lider14.setLideres(lider11.nombre, lider12.nombre);
     lider14.setReferencias(id++, idRed, lider11.id, lider12.id);
@@ -246,16 +246,16 @@ public final class BD {
     //Red 3:
     idRed = 3;
 
-    Lider lider15 = new Lider("Dayana Zambrano", "La Mora", "0416-5555555", "dayanazambrano@hotmail.com", 25);
-    lider15.setCedula(11234432);
+    LiderUtil lider15 = new LiderUtil("Dayana Zambrano", "La Mora", "0416-5555555", "dayanazambrano@hotmail.com", 25);
+    lider15.setCedula("11234432");
     lider15.setNombreRed(redes.get(idRed).nombre);
     lider15.setLideres(lider1.nombre, "");
     lider15.setReferencias(id++, idRed, lider1.id, 0);
     lider15.setEstadoCivil("Soltera");
     lider15.setLiderRed(true);
 
-    Lider lider16 = new Lider("Fabiola Mora", "La Mora", "0416-5555555", "fabiolamora@hotmail.com", 25);
-    lider16.setCedula(12345654);
+    LiderUtil lider16 = new LiderUtil("Fabiola Mora", "La Mora", "0416-5555555", "fabiolamora@hotmail.com", 25);
+    lider16.setCedula("12345654");
     lider16.setNombreRed(redes.get(idRed).nombre);
     lider16.setLideres(lider1.nombre, "");
     lider16.setReferencias(id++, idRed, lider1.id, 0);
@@ -384,7 +384,7 @@ public final class BD {
   public void crearLideresCelula() {
     lideresCelula = new ArrayList<LiderCelula>();
     int idCelula = 0;
-    for (Lider lider : lideres) {
+    for (LiderUtil lider : lideres) {
       if ((lider.getId() == 0) || (lider.getId() == 1)) {
         continue;
       }
@@ -444,23 +444,23 @@ public final class BD {
   }
 
   public void crearLideresLanzados() {
-    discipulosLanzados = new ArrayList<DiscipuloLanzado>();
-    for (Lider lider : lideres) {
+    discipulosLanzados = new ArrayList<LiderUtil>();
+    for (LiderUtil lider : lideres) {
       if ((lider.getId() == 1) || (lider.getId() == 0)) {
         continue;
       }
       if (lider.isLiderRed()) {
         continue;
       }
-      discipulosLanzados.add(new DiscipuloLanzado(lider));
+      discipulosLanzados.add(lider);
     }
   }
 
   public void crearLideresLanzadosListado() {
-    discipulosLanzadosListado = new ArrayList<DiscipuloLanzadoListado>();
+    discipulosLanzadosListado = new ArrayList<LiderListadoUtil>();
     int i = 1;
-    for (DiscipuloLanzado liderLanzado : discipulosLanzados) {
-      discipulosLanzadosListado.add(new DiscipuloLanzadoListado(i++, liderLanzado));
+    for (LiderUtil liderLanzado : discipulosLanzados) {
+      discipulosLanzadosListado.add(new LiderListadoUtil(i++, liderLanzado));
     }
   }
 
@@ -474,7 +474,7 @@ public final class BD {
 
     //Red 1:
     DiscipuloProceso dp1 = new DiscipuloProceso("Elvis Hernández", "El Jebe", "0412-1743260", "elvishernandez@hotmail.com", 28);
-    dp1.setCedula(15986735);
+    dp1.setCedula("15986735");
     dp1.setNombreRed(buscarRed(1).getNombre());
     dp1.setLideres(buscarLider(9).getNombre(), "");
     dp1.setDescripcionCelula(buscarCelula(1).getNombre());
@@ -485,7 +485,7 @@ public final class BD {
     discipulosProceso.add(dp1);
 
     DiscipuloProceso dp2 = new DiscipuloProceso("Richard Montero", "Ruezga Norte", "0426-8080675", "richardmontero@hotmail.com", 32);
-    dp2.setCedula(13456789);
+    dp2.setCedula("13456789");
     dp2.setNombreRed(buscarRed(1).getNombre());
     dp2.setLideres(buscarLider(9).getNombre(), "");
     dp2.setDescripcionCelula(buscarCelula(1).getNombre());
@@ -501,7 +501,7 @@ public final class BD {
     idLider2 = 12;
 
     DiscipuloProceso dp3 = new DiscipuloProceso("Pablo Pérez", "Barquisimeto", "0426-5555555", "pabloperez@hotmail.com", 20);
-    dp3.setCedula(156894652);
+    dp3.setCedula("156894652");
     dp3.setNombreRed(buscarRed(idRed).getNombre());
     dp3.setLideres(buscarLider(11).getNombre(), buscarLider(12).getNombre());
     dp3.setDescripcionCelula(buscarCelula(5).getNombre());
@@ -605,7 +605,7 @@ public final class BD {
   public void crearUsuarios() {
     usuarios = new ArrayList<Usuario>();
     for (int i = 1; i < lideres.size(); i++) {
-      Lider lider = buscarLider(i);
+      LiderUtil lider = buscarLider(i);
       Usuario u = new Usuario(lider);
       int id = u.getId();
       //TODO: arreglar esto:
@@ -664,11 +664,11 @@ public final class BD {
    * @param id
    * @return 
    */
-  public Lider buscarLider(int id) {
+  public LiderUtil buscarLider(int id) {
     if (id == 0) {
       return null;//error
     }
-    for (Lider lider : lideres) {
+    for (LiderUtil lider : lideres) {
       if (lider.getId() == id) {
         return lider;
       }
@@ -681,14 +681,14 @@ public final class BD {
    * @param id
    * @return 
    */
-  public Lider buscarLiderPorRed(int idRed, int id) {
+  public LiderUtil buscarLiderPorRed(int idRed, int id) {
     if (id == 0) {
       return null;//error
     }
     if (idRed == 0) {
       return null;//error
     }
-    for (Lider lider : lideres) {
+    for (LiderUtil lider : lideres) {
       if ((lider.getIdRed() == idRed) && (lider.getId() == id)) {
         return lider;
       }
@@ -696,11 +696,11 @@ public final class BD {
     return null;//error
   }
 
-  public DiscipuloLanzado buscarLiderLanzado(int id) {
+  public LiderUtil buscarLiderLanzado(int id) {
     if (id == 0) {
       return null;//error
     }
-    for (DiscipuloLanzado lider : discipulosLanzados) {
+    for (LiderUtil lider : discipulosLanzados) {
       if (lider.getId() == id) {
         return lider;
       }
@@ -792,11 +792,11 @@ public final class BD {
     return null;//error
   }
 
-  public ArrayList<Lider> getLideres() {
+  public ArrayList<LiderUtil> getLideres() {
     return lideres;
   }
 
-  public ArrayList<DiscipuloLanzado> getLideresLanzados() {
+  public ArrayList<LiderUtil> getLideresLanzados() {
     return discipulosLanzados;
   }
 
@@ -804,7 +804,7 @@ public final class BD {
     return lideresCelulaListado;
   }
 
-  public ArrayList<DiscipuloLanzadoListado> getLideresLanzadosListado() {
+  public ArrayList<LiderListadoUtil> getLideresLanzadosListado() {
     return discipulosLanzadosListado;
   }
 
@@ -836,11 +836,11 @@ public final class BD {
     return discipulosProcesoListado;
   }
 
-  public ArrayList<DiscipuloLanzado> getDiscipulosLanzados() {
+  public ArrayList<LiderUtil> getDiscipulosLanzados() {
     return discipulosLanzados;
   }
 
-  public ArrayList<DiscipuloLanzadoListado> getDiscipulosLanzadosListado() {
+  public ArrayList<LiderListadoUtil> getDiscipulosLanzadosListado() {
     return discipulosLanzadosListado;
   }
 
@@ -900,7 +900,7 @@ public final class BD {
     if (rspAcceso.esLoginPasswordValido()) {
       Usuario u = new Usuario();
       u.setAnfitrionCelula(rspAcceso.getAcceso().getIdPersona().esAnfitrion());
-      u.setCedula(Integer.valueOf(rspAcceso.getAcceso().getIdPersona().getCi()));
+      u.setCedula(rspAcceso.getAcceso().getIdPersona().getCi());
 //            u.setDireccion(null);
 //            u.setDireccionCorta(password);
 //            u.setEdad(edad);
@@ -966,8 +966,8 @@ public final class BD {
   }
 
   public ArrayList getDiscipulosLanzadosPorRed(int idRed) {
-    lista = new ArrayList<DiscipuloLanzadoListado>();
-    for (DiscipuloLanzadoListado item : discipulosLanzadosListado) {
+    lista = new ArrayList<LiderListadoUtil>();
+    for (LiderListadoUtil item : discipulosLanzadosListado) {
       if ((item.getIdRed() == idRed)) {
         lista.add(item);
       }
@@ -996,7 +996,7 @@ public final class BD {
     }
   }
 
-  private void asignarParejasMinisteriales(Lider lider1, Lider lider2) {
+  private void asignarParejasMinisteriales(LiderUtil lider1, LiderUtil lider2) {
     lider1.setIdParejaMinisterial(lider2.getId());
     lider2.setIdParejaMinisterial(lider1.getId());
     lider1.setNombreParejaMinisterial(lider2.getNombre());

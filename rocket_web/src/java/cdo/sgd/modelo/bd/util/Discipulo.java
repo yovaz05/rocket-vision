@@ -12,7 +12,7 @@ package cdo.sgd.modelo.bd.util;
 public class Discipulo {
 
   //datos deresumen:
-  protected int cedula = 0;
+  protected String cedula = "";
   protected String nombre = "";
   protected String nombreRed = "";
   protected String direccionCorta = "";
@@ -137,11 +137,11 @@ public class Discipulo {
     this.nombreLider2 = nombreLider2;
   }
 
-  public int getCedula() {
+  public String getCedula() {
     return cedula;
   }
 
-  public void setCedula(int cedula) {
+  public void setCedula(String cedula) {
     this.cedula = cedula;
   }
 

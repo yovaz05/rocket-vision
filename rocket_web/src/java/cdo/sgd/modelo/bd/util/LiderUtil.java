@@ -1,5 +1,5 @@
 /**
- * bean Lider,
+ * bean LiderUtil,
  * representa un discípulo lanzado,
  * es la base para un líder de cualquier tipo: LiderRed, LiderCelula, DiscipuloLanzado, SupervisorCelula
  */
@@ -9,7 +9,7 @@ package cdo.sgd.modelo.bd.util;
  *
  * @author Gabriel Pérez
  */
-public class Lider extends Discipulo {
+public class LiderUtil extends Discipulo {
 
   //pareja:
   protected int idParejaMinisterial = 0;
@@ -20,31 +20,31 @@ public class Lider extends Discipulo {
   protected boolean liderCelula = false;
   protected boolean maestroAcademia = false;
 
-  public Lider(String nombre, String nombreRed, String direccionCorta, String nombreLider1, String nombreLider2, String telefono, String email, int edad) {
+  public LiderUtil(String nombre, String nombreRed, String direccionCorta, String nombreLider1, String nombreLider2, String telefono, String email, int edad) {
     super(nombre, nombreRed, direccionCorta, nombreLider1, nombreLider2, telefono, email, edad);
   }
 
-  public Lider(String nombre, String direccionCorta, String nombreLider1, String nombreLider2, String telefono, String email, int edad) {
+  public LiderUtil(String nombre, String direccionCorta, String nombreLider1, String nombreLider2, String telefono, String email, int edad) {
     super(nombre, direccionCorta, nombreLider1, nombreLider2, telefono, email, edad);
   }
 
-  public Lider(String nombre, String direccionCorta, String telefono, String email, int edad) {
+  public LiderUtil(String nombre, String direccionCorta, String telefono, String email, int edad) {
     super(nombre, direccionCorta, telefono, email, edad);
   }
 
-  public Lider(String nombre, String telefono, String email, int edad) {
+  public LiderUtil(String nombre, String telefono, String email, int edad) {
     super(nombre, telefono, email, edad);
   }
 
-  public Lider() {
+  public LiderUtil() {
     super();
   }
 
-  public Lider(int id) {
+  public LiderUtil(int id) {
     super(id);
   }
 
-  public Lider(String nombre) {
+  public LiderUtil(String nombre) {
     super(nombre);
   }
 

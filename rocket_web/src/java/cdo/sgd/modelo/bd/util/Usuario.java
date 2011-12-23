@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @author Gabriel
  */
-public class Usuario extends Lider {
+public class Usuario extends LiderUtil {
 
   //indica si está logueado 
   private boolean registrado = false;
@@ -27,7 +27,7 @@ public class Usuario extends Lider {
   public Usuario() {
   }
 
-  public Usuario(Lider lider) {
+  public Usuario(LiderUtil lider) {
     this.setReferencias(lider.getId(), lider.getIdRed(), lider.getIdLider1(), lider.getIdLider2());
     this.setNombre(lider.getNombre());
     this.setNombreRed(lider.getNombreRed());
@@ -39,7 +39,7 @@ public class Usuario extends Lider {
     this.setEdad(lider.getEdad());
   }
 
-  public Usuario(int cedula) {
+  public Usuario(String cedula) {
     this.cedula = cedula;
   }
 
@@ -89,9 +89,9 @@ public class Usuario extends Lider {
       return false;
     }
     Usuario other = (Usuario) object;
-    if ((this.cedula == 0 && other.cedula != 0) || (this.cedula != 0 && this.cedula != other.cedula)) {
-      return false;
-    }
+//    if ((this.cedula == 0 && other.cedula != 0) || (this.cedula != 0 && this.cedula != other.cedula)) {
+//      return false;
+//    }
     return true;
   }
 
