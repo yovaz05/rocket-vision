@@ -16,21 +16,29 @@ title="SIG - Mejorando barra superior"?>
   border-spacing:0px;
   white-space: nowrap;"
   >
+    
 <!-- barra de menú -->
       <div id="divIzquierdo" style="display:inline-block;float:left" width="240px" visible="false">
+          <!--        DEBUG: items en desarrollo-->
+      <menubar id="menubar" orient="horizontal" height="24px">
+        <menuitem label="Células" id="itemCelulaListado" image="/img/iconos/bullet.png"/>
+        <menuitem label="Líderes" id="itemDiscipuloLanzadoListado" image="/img/iconos/bullet.png"/>
+      </menubar>
         <hbox>
-          <menubar id="menubar" orient="horizontal" height="24px">
-<!--          <menuitem id="itemNombreSistema" label="SIG" height="22px"/>-->
-            <menuitem label="Mi Red" id="itemRed" visible="false"/>
+<!--          <menubar id="menubar" orient="horizontal" height="24px">
+                  DEBUG: items en desarrollo
             <menuitem label="Células" id="itemCelulaListado" image="/img/iconos/bullet.png"/>
-<!--            <menu label="Mis Células" visible="false">
+            <menuitem label="Lanzados" id="itemDiscipuloLanzadoListado" image="/img/iconos/bullet.png"/>
+          <menuitem id="itemNombreSistema" label="SIG" height="22px"/>
+            <menuitem label="Mi Red" id="itemRed" visible="false"/>
+            <menu label="Mis Células" visible="false">
               <menupopup>
                 <menuitem label="Células" id="itemCelulaListado" image="/img/iconos/bullet.png"/>
                 <menuitem label="Líderes" id="itemCelulaLiderListado" image="/img/iconos/bullet.png" visible="false"/>
                 <menuitem label="Reportes" id="itemCelulaReporteListado" image="/img/iconos/bullet.png" visible="false"/>
-                <menuitem label="Estadísticas" id="itemCelulaEstadisticas" image="/img/iconos/bullet.png" visible="false"/> 
+                <menuitem label="Estadísticas" id="itemCelulaEstadisticas" image="/img/iconos/bullet.png" visible="false"/>
               </menupopup>
-            </menu>-->
+            </menu>
             <menu label="Mis Discípulos" visible="false">
               <menupopup>
                 <menuitem label="Lanzados" id="itemDiscipuloLanzadoListado" image="/img/iconos/bullet.png"/>
@@ -44,7 +52,8 @@ title="SIG - Mejorando barra superior"?>
                 <menuitem label="Listado Tipos de persona" id="itemListadoTipoPersona" image="/img/iconos/bullet.png"/>
               </menupopup>
             </menu>
-          </menubar>        
+          </menubar>-->
+
     <!-- panel de búsqueda-->
 <!--          <div align="center"
             style="display:inline-block;padding-left:10px">
@@ -89,10 +98,10 @@ title="SIG - Mejorando barra superior"?>
           -->
           <menu id="tbbUsuario" label="Gabriel Pérez" visible="false">
             <menupopup>
-              <menuitem label="Perfil" id="itemPerfil" image="/img/iconos/bullet.png"/>
-              <menuitem label="Cambiar correo" id="itemCambiarEmail" image="/img/iconos/bullet.png"/>
-              <menuitem label="Cambiar contraseña" id="itemCambiarPassword" image="/img/iconos/bullet.png"/>
-              <menuitem label="Salir" id="itemCerrarSesion" image="/img/iconos/bullet.png"/>
+              <menuitem label="Perfil"              id="itemPerfil"           image="/img/iconos/bullet.png"/>
+              <menuitem label="Cambiar correo"      id="itemCambiarEmail"     image="/img/iconos/bullet.png"/>
+              <menuitem label="Cambiar contraseña"  id="itemCambiarPassword"  image="/img/iconos/bullet.png"/>
+              <menuitem label="Salir"               id="itemCerrarSesion"     image="/img/iconos/bullet.png"/>
             </menupopup>
           </menu>
 <!--          <menu tooltiptext="SIG" image="/img/iconos/tuerca2.png" hoverImage="/img/iconos/tuerca-hover.png">
@@ -125,14 +134,15 @@ title="SIG - Mejorando barra superior"?>
 <!--        <image id="itemNombreSistema" src="/img/logo/SIG.png" style="cursor: pointer;"/>-->
 <!--        <toolbarbutton id="btnAtras" tooltiptext="Vista Anterior" sclass="botonAccion" image="/img/iconos/previous24.png" disabled="true"/>
         <toolbarbutton id="btnSiguiente" tooltiptext="Vista Siguiente" sclass="botonAccion" image="/img/iconos/next24.png" disabled="true"/>-->
-        <toolbarbutton id="btnPrint" tooltiptext="Imprimir" image="/img/iconos/printer24.png" visible="false"/>
-        <toolbarbutton id="btnRefresh" tooltiptext="Refrescar" image="/img/iconos/refresh24.png"/>
-        <toolbarbutton id="btnEdit" tooltiptext="Editar" image="/img/iconos/edit24.png"/>
-        <toolbarbutton id="btnSave" tooltiptext="Guardar cambios" image="/img/iconos/ok22.png"/>
-<!--        TODO: falta botón cancelar-->
-        <toolbarbutton id="btnDelete" tooltiptext="Eliminar" image="/img/iconos/delete22.png"/>
-        <toolbarbutton id="btnNew" tooltiptext="Ingresar" image="/img/iconos/add24.png"/>
-        <toolbarbutton id="btnConfirmar" label="Confirmar" visible="false"/>
+        <toolbarbutton id="btnPrint"    tooltiptext="Imprimir"        image="/img/iconos/printer24.png" visible="false"/>
+        <toolbarbutton id="btnRefresh"  tooltiptext="Refrescar"       image="/img/iconos/refresh24.png"/>
+        <toolbarbutton id="btnEdit"     tooltiptext="Editar"          image="/img/iconos/edit24.png"/>
+        <toolbarbutton id="btnSave"     tooltiptext="Guardar cambios" image="/img/iconos/ok22.png"/>
+        <!-- TODO: falta botón cancelar -->
+        <toolbarbutton id="btnDelete"     tooltiptext="Eliminar" image="/img/iconos/delete22.png"/>
+        <toolbarbutton id="btnNew"        tooltiptext="Ingresar" image="/img/iconos/add24.png"/>
+        <!-- TODO: quitar este botón -->
+        <toolbarbutton id="btnConfirmar"  label="Confirmar" visible="false"/>
       </div>
 
       <div id="divStatus" align="left" style="display:inline-block;margin:2px; padding: 2px 5px;"
@@ -144,7 +154,7 @@ title="SIG - Mejorando barra superior"?>
           visible="false"/>
       </div>
     </div>
-    <toolbarbutton id="btnControl" label="" visible="false"/>
+    <toolbarbutton id="btnControl"  label="" visible="false"/>
     <toolbarbutton id="btnControl2" label="" visible="false"/>      
   </div>
   <zscript>

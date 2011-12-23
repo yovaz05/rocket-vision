@@ -14,11 +14,11 @@
         <label value="Celular" sclass="etiqueta_campo"/>
         <toolbarbutton id="tbbTlfCelular" label=""/>
       </row> 
-      <row visible="false">
+      <row>        
         <label value="Habitación" sclass="etiqueta_campo"/>
         <toolbarbutton id="tbbTlfHabitacion" label=""/>
       </row> 
-      <row visible="false">        
+      <row>        
         <label value="Trabajo" sclass="etiqueta_campo"/>
         <toolbarbutton  id="tbbTlfTrabajo" label=""/>
       </row> 
@@ -26,11 +26,11 @@
         <label value="Email" sclass="etiqueta_campo"/>
         <toolbarbutton  id="tbbEmail" label=""/>
       </row> 
-      <row visible="false">        
+      <row>        
         <label value="Facebook" sclass="etiqueta_campo"/>
         <toolbarbutton  id="tbbFacebook" label=""/>
       </row> 
-      <row visible="false">        
+      <row>        
         <label value="Twitter" sclass="etiqueta_campo"/>
         <toolbarbutton  id="tbbTwitter" label=""/>
       </row> 

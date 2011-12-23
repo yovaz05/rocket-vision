@@ -39,7 +39,6 @@ title="Casa de Oración - Rocket"?>
 <!--este include será donde se mostrarán las vistas de datos o formularios-->
       <div align="left" style="margin:5px 5px 5px 10px;" width="100%">
 <!--        <include id="panelCentral" src="vistaDiscipuloProceso/Listado.zul"/>-->
-<!--        <include id="panelCentral" src="vistaLider/Listado.zul"/>-->
 <!--        <include id="panelCentral" src="vistaLiderCelula/Listado.zul"/>-->
 <!--        <include id="panelCentral" src="vistaCuenta/Perfil.zul"/>-->
 <!--        <include id="panelCentral" src="vistaReporteCelula/ListadoSemana.zul"/>        -->
@@ -47,7 +46,10 @@ title="Casa de Oración - Rocket"?>
 <!--        <include id="panelCentral" src="vistaCelulaEstadisticas/CelulaEstadisticasResumen.zul"/>-->
 <!--        <include id="panelCentral" src="vistaCelulaEstadisticas/CelulaEstadisticas.zul"/>-->
 <!--        <include id="panelCentral" src="vistaReusable/Direccion.zul"/>-->
-        <include id="panelCentral" src="vistaCelula/Listado.zul"/>
+
+<!--PROGRAMADAS CON BASE DE DATOS:-->
+<!--        <include id="panelCentral" src="vistaCelula/Listado.zul"/>-->
+        <include id="panelCentral" src="vistaLider/Listado.zul"/>
       </div>
     </center>
   </borderlayout>

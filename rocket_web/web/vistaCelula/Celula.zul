@@ -4,7 +4,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
   <style src="css/estilos1.css"/>
-  <div apply="sig.controladores.CtrlCelula" width="450px">
+  <div apply="sig.controladores.celula.CtrlCelula" width="450px">
     <div>
       <label id="tituloVentana" sclass="titulo_ventana"/>
     </div>

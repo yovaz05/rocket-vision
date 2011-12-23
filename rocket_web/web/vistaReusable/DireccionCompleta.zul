@@ -139,7 +139,7 @@
           </div>        
 -->
       </row> 
-      <row visible="false">
+      <row>
         <label value="Teléfono" sclass="etiqueta_campo"
           tooltiptext="Teléfono de la casa o lugar donde se realiza la célula"/>
         <hbox align="left">

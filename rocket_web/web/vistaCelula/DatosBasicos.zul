@@ -20,7 +20,7 @@
       visible="false"/>
     </hbox>
   </div>-->
-  <grid style="border:0px" apply="sig.controladores.CtrlCelulaDatosBasicos">
+  <grid style="border:0px" apply="sig.controladores.celula.CtrlCelulaDatosBasicos">
     <columns>
       <column id="col1" width="100px"/>
       <column id="colData"/>
