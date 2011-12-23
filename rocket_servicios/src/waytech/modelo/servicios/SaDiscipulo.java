@@ -337,8 +337,13 @@ public class SaDiscipulo implements IsaDiscipulo {
         }
     }
 
+    /**
+     * lista todos los discípulos de un líder específico
+     * @param idLider
+     * @return 
+     */ 
     @Override
-    public RspDiscipulo listDiscipulo(int idDiscipulo) {
+    public RspDiscipulo listDiscipulo(int idLider) {
         //INSTANCIAS DE LAS CLASES                
         ConectorBDMySQL conectorBD = new ConectorBDMySQL();
         RspDiscipulo rspDiscipulo = new RspDiscipulo();
@@ -351,7 +356,9 @@ public class SaDiscipulo implements IsaDiscipulo {
         if (conectorBD.iniciarConexion()) {
             rspDiscipulo.setEsConexionAbiertaExitosamente(true);
             rspDiscipulo.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
-            String consultaSQL = "SELECT * FROM discipulo WHERE estado = 1 AND id_discipulo = '"+ idDiscipulo +"'";
+            String consultaSQL = "SELECT * FROM discipulo"
+                               + " WHERE estado = 1"
+                               + " AND id_persona1 = '"+ idLider +"'";
             try {
                 Statement sentencia = conectorBD.getConnection().createStatement();
                 boolean bandera = sentencia.execute(consultaSQL);

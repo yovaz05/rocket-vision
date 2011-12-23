@@ -32,5 +32,5 @@ public interface IsaDiscipulo {
 
     public abstract RspDiscipulo listDiscipulo();
     
-    public abstract RspDiscipulo listDiscipulo(int idDiscipulo);
+    public abstract RspDiscipulo listDiscipulo(int idLider);
 }
