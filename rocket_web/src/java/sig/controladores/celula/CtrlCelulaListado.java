@@ -6,7 +6,6 @@ import cdo.sgd.controladores.widgets.BotonCelula;
 import cdo.sgd.controladores.widgets.BotonLider;
 import cdo.sgd.controladores.widgets.EtqNro;
 import cdo.sgd.modelo.bd.util.CelulaListadoUtil;
-import cdo.sgd.modelo.bd.util.BD;
 import java.util.ArrayList;
 import java.util.List;
 import org.zkoss.zk.ui.Component;
@@ -21,14 +20,7 @@ import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Vbox;
 import sig.modelo.servicios.ServicioCelula;
-import waytech.modelo.beans.sgi.Celula;
-import waytech.modelo.beans.sgi.PersonaEnCelula;
-import waytech.modelo.interfaces.IsaCelula;
-import waytech.modelo.interfaces.IsaPersonaEnCelula;
-import waytech.modelo.servicios.SaCelula;
-import waytech.modelo.servicios.SaPersonaEnCelula;
 import waytech.utilidades.UtilFechas;
-import waytech.utilidades.UtilSIG;
 
 /**
  * Controlador asociado a listado de células:

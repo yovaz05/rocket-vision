@@ -74,8 +74,7 @@ public class CtrlCelula extends GenericForwardComposer {
   A db$btnEditRed, db$btnCancelarEditRed;
   A db$btnEditLideres, db$btnCancelarEditLideres;
   //pestaña "Dirección"
-  Column dir$colView;
-  Column dir$colEdit;
+  Column dir$colData;
   Combobox dir$cmbEstado;
   Combobox dir$cmbCiudad;
   Combobox dir$cmbZona;

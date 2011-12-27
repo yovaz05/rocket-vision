@@ -18,6 +18,7 @@ import org.zkoss.zul.A;
 public class BotonLider extends A {
 
   int idLider;
+  int idRed;
   CtrlVista ctrlVista = new CtrlVista();
 
   public BotonLider() {
@@ -26,7 +27,8 @@ public class BotonLider extends A {
   /**
    * crea un botón de líder
    * @param etiqueta usado para el nombre del líder
-   */public BotonLider(String etiqueta) {
+   */
+  public BotonLider(String etiqueta) {
     super(etiqueta);
     setEstilo();
   }
@@ -42,8 +44,9 @@ public class BotonLider extends A {
 //        Sesion.setVistaSiguiente(Vistas.LIDER_RESUMEN);
 //        Sesion.setModo("consulta");
         Sesion.setVistaSiguiente(Vistas.LIDER);
-        Sesion.setModo("ver");
+        Sesion.setModo("edicion-dinamica");
         Sesion.setVariable("idLider", id);
+        Sesion.setVariable("lider.idRed", idRed);
         ctrlVista.forzarCambioVista_btnControl();
       }
     });
@@ -55,7 +58,7 @@ public class BotonLider extends A {
       this.setVisible(false);
     } else {
       programarEventoClick(id);
-      asignarTooltip("Ver detalles... idLider="+idLider);
+      asignarTooltip("Ver detalles");
     }
   }
 
@@ -73,5 +76,13 @@ public class BotonLider extends A {
    */
   private void setEstilo() {
     this.setStyle("linkNaveg");
+  }
+
+  public int getIdRed() {
+    return idRed;
+  }
+
+  public void setIdRed(int idRed) {
+    this.idRed = idRed;
   }
 }

@@ -4,7 +4,7 @@
   <grid style="border:0px" apply="sig.controladores.CtrlDireccion" >
     <columns>
       <column id="col1" width="90px"/>
-      <column id="colView"/>
+      <column id="colData"/>
       <column id="colEdit" visible="false"/>
     </columns>
     <rows>
@@ -13,7 +13,7 @@
         <label value="Estado" sclass="etiqueta_campo"/>
         <hbox align="left">
 <!--          <label id="etqEstado" value="Lara"/>-->
-          <label id="etqEstado" value=""/>
+          <label id="etqEstado" value="Editar"/>
           <combobox id="cmbEstado"
           autocomplete="true" autodrop="true" readonly="true"
           visible="false">
@@ -122,7 +122,7 @@
       <row id="filaDirDetalle" tooltiptext="Calle, Avenida, Número, Referencia, etc."> 
         <label value="Detalle" sclass="etiqueta_campo"/>
         <hbox align="left">
-          <label id="etqDetalle" value="" multiline="true"/>
+          <label id="etqDetalle" value="Editar" multiline="true"/>
           <textbox id="txtDetalle" rows="3" cols="50" multiline="true"
           value="" visible="false"/>
         </hbox>
@@ -143,7 +143,7 @@
         <label value="Teléfono" sclass="etiqueta_campo"
           tooltiptext="Teléfono de la casa o lugar donde se realiza la célula"/>
         <hbox align="left">
-          <label id="etqTelefono" value=""/>
+          <label id="etqTelefono" value="Editar"/>
           <textbox id="txtTelefono" maxlength="15" value="" visible="false"/>
         </hbox>
 <!--          <div align="left" visible="false">

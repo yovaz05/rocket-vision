@@ -18,8 +18,8 @@ public class Vistas{
   public static String CELULA_ESTADISTICAS_RESUMEN = "vistaCelulaEstadisticas/CelulaEstadisticasResumen.zul";
   public static String CELULA_ESTADISTICAS_DETALLES = "vistaCelulaEstadisticas/CelulaEstadisticas.zul";
 
-  //Menú Discípulo Lanzado/Proceso:
-  public static String DISCIPULO_LANZADO_LISTADO = "vistaLiderLanzado/Listado.zul";
+  //Menú Discípulos:
+  public static String DISCIPULO_LANZADO_LISTADO = "vistaLider/Listado.zul";
   public static String DISCIPULO_PROCESO_LISTADO = "vistaDiscipuloProceso/Listado.zul";
   
 
@@ -29,13 +29,13 @@ public class Vistas{
   public static String CUENTA_CAMBIAR_PASSWORD = "vistaCuenta/CambiarPassword.zul";
   
   //vistas tipo RESUMEN:
-  public static String LIDER_RESUMEN = "vistaLiderLanzado/Resumen.zul";
+  public static String LIDER_RESUMEN = "vistaLider/Resumen.zul";
   public static String DISCIPULO_PROCESO_RESUMEN = "vistaDiscipuloProceso/Resumen.zul";
   
   //vistas tipo Maestros:
   public static String CELULA = "vistaCelula/Celula.zul";
   public static String REPORTE_CELULA = "vistaReporteCelula/Reporte.zul";
-  public static String LIDER = "vistaLiderLanzado/Lider.zul";
+  public static String LIDER = "vistaLider/Lider.zul";
   public static String DISCIPULO_PROCESO = "vistaDiscipuloProceso/Discipulo.zul";
 
   //Menú Sistema:

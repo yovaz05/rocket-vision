@@ -9,7 +9,6 @@ import cdo.sgd.modelo.bd.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Grid;
@@ -19,14 +18,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Toolbarbutton;
-import org.zkoss.zul.Vbox;
-import sig.modelo.servicios.ServicioCelula;
-import sig.modelo.servicios.ServicioLider;
-import waytech.modelo.beans.sgi.Acceso;
-import waytech.modelo.interfaces.IsaAcceso;
-import waytech.modelo.interfaces.IsaDiscipulo;
-import waytech.modelo.servicios.SaAcceso;
-import waytech.modelo.servicios.SaDiscipulo;
+import sig.modelo.servicios.ServicioPersona;
 import waytech.utilidades.UtilSIG;
 
 /**
@@ -50,7 +42,7 @@ public class CtrlLiderListado extends GenericForwardComposer {
   Include vistaCentral;
   Include panelCentral;
   //gestión de datos:
-  ServicioLider servicioLider = new ServicioLider();
+  ServicioPersona servicioLider = new ServicioPersona();
   List<LiderListadoUtil> listaLiderListado = new ArrayList<LiderListadoUtil>();
 
   @Override
@@ -99,11 +91,13 @@ public class CtrlLiderListado extends GenericForwardComposer {
         //TODO: establecer atributos de estilo a los widgets
 
         //se establecen parámetros para navegación dinámica:
-        final int idDiscipuloLanzado = lider.getId();
+        final int id = lider.getId();
+        final int idRed = lider.getIdRed();
         final int idLider1 = lider.getIdLider1();
         final int idLider2 = lider.getIdLider2();
 
-        tbbNombre.setIdLider(idDiscipuloLanzado);
+        tbbNombre.setIdRed(idRed);
+        tbbNombre.setIdLider(id);
         tbbLider1.setIdLider(idLider1);
         tbbLider2.setIdLider(idLider2);
 

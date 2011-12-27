@@ -24,7 +24,7 @@
     <columns>
       <column id="col1" width="100px"/>
       <column id="colData"/>
-<!-- botones para edición-->
+      <!-- TODO: Quitar columna-->
       <column id="colEdit" width="7%" align="rigth" visible="false"/>
     </columns>
     <rows>
@@ -35,7 +35,7 @@
           <label id="etqCodigo" value=""/>
           <textbox id="txtCodigo" value="" cols="25" maxlength="20" visible="false"/>
         </div>
-<!--botones de edición-->
+        <!--TODO: QUITAR botón de edición-->
         <div align="left" visible="false">
           <a id="btnEditCodigo" tooltiptext="Editar"
             onClick="activarEditCodigo()"
@@ -62,6 +62,7 @@
               <a id="btnEditRed" tooltiptext="Editar"
             image="/img/iconos/edit_row.png"
             hoverImage="/img/iconos/edit_row_hover.png"/>
+<!--            TODO: quitar botón cancelar-->
               <a id="btnCancelarEditRed"
             tooltiptext="Cancelar Edición"
             image="/img/iconos/cancel_row.png"

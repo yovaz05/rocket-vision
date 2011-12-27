@@ -14,10 +14,10 @@
     </toolbar>
     <tabbox id="tabbox" width="100%" mold="accordion">
       <tabs>
-        <tab label="Datos Básicos"/>
-        <tab label="Dirección"/>
-        <tab label="Contacto"/>
-        <tab label="Observaciones"/>
+        <tab label="Datos Básicos" id="tabDB"/>
+        <tab label="Dirección" id="tabDir"/>
+<!--        <tab label="Contacto"/>-->
+        <tab label="Observaciones" id="tabObs"/>
       </tabs>
       <tabpanels>
         <tabpanel>
@@ -26,9 +26,9 @@
         <tabpanel>
           <include id="dir" src="vistaReusable/Direccion.zul"/>
         </tabpanel>
-        <tabpanel>
+<!--        <tabpanel>
           <include id="contacto" src="vistaReusable/Contacto.zul"/>
-        </tabpanel>
+        </tabpanel>-->
         <tabpanel>
           <include id="obs" src="vistaReusable/Observaciones.zul"/>  
         </tabpanel>

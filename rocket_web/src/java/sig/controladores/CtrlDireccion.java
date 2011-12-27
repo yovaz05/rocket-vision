@@ -24,6 +24,7 @@ import org.zkoss.zul.Textbox;
 import sig.modelo.servicios.ServicioCelula;
 import sig.modelo.servicios.ServicioCiudad;
 import sig.modelo.servicios.ServicioEstado;
+import sig.modelo.servicios.ServicioPersona;
 import sig.modelo.servicios.ServicioZona;
 
 /**
@@ -99,7 +100,9 @@ public class CtrlDireccion extends GenericForwardComposer {
   private boolean zonaNuevaIngresada = false;
   private boolean nuevoEstado = false;
   private int idCelula = 0;
+  private int idLider = 0;
   ServicioCelula servicioCelula = new ServicioCelula();
+  ServicioPersona servicioPersona = new ServicioPersona();
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -370,16 +373,29 @@ public class CtrlDireccion extends GenericForwardComposer {
       //**System.out.println("CtrlDireccion.Zona.id=" + idZona);
 
       //actualizar valor en la base de datos:
+      //Actualizar observaciones de célula
       if (Sesion.esVistaCelula()) {
         //actualizar valor en la base de datos
         getIdCelula();
+        //TODO: unir los 2 llamados al servicio: colocar idCelula en método actualizar
         servicioCelula.setIdCelula(idCelula);
         if (servicioCelula.actualizarIdZona(idZona)) {
           mostrarMensaje("Se actualizó el sector");
         } else {
           mostrarMensaje("Error actualizando el sector");
         }
+      } else if (Sesion.esVistaLider()) {
+        //Actualizar observaciones de líder        
+        getIdLider();
+        /*+en proceso
+        if (servicioPersona.actualizarIdZona(idCelula, idZona)) {
+        mostrarMensaje("Se actualizó el sector");
+        } else {
+        mostrarMensaje("Error actualizando el sector");
+        }
+         */
       }
+
 
       //activar edición de siguiente campo: detalle
       activarEditDetalle();
@@ -762,6 +778,11 @@ public class CtrlDireccion extends GenericForwardComposer {
   private void getIdCelula() {
     System.out.println("CtrlDireccion.getIdCelula:");
     idCelula = (Integer) Sesion.getVariable("idCelula");
+  }
+
+  private void getIdLider() {
+    System.out.println("CtrlDireccion.getIdLider:");
+    idLider = (Integer) Sesion.getVariable("idLider");
   }
 
   /**
