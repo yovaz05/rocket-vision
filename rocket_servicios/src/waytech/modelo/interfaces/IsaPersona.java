@@ -14,6 +14,17 @@ import waytech.modelo.servicios.RspPersona;
 public interface IsaPersona {
 
     public abstract RspPersona insertPersona(PersonaInsert usuario);
+    
+    /**
+     * Tipo de persona LIDER LANZADO ID = 3
+     * ID ZONA = 1 = GENERICO
+     * LO CREA COMO LIDER LANZADO
+     * @param cedula
+     * @param nombre
+     * @param idRed
+     * @return RspPersona
+     */
+    public abstract RspPersona insertPersonaLiderBasico(String cedula, String nombre, int idRed);
 
     public abstract RspPersona updatePersona(PersonaUpdate usuario);
 
