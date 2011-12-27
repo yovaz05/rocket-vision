@@ -29,7 +29,7 @@
                                 <column width="200px"/>
                             </columns>
                             <rows>   
-                                <row>
+                                <row visible="false">
                                     <label sclass="etiqueta_campo" value="Elige el rol"/>
                                     <combobox id="cmbTipoPersona" width="180px"/>
                                 </row>
@@ -42,9 +42,8 @@
                                     <textbox sclass="textbox_field" id="txtCorreo" width="180px" />
                                 </row>
                                 <row>
-                                    <label sclass="etiqueta_campo" value="Teléfono:"/>
-                                    <textbox sclass="textbox_field" id="txtTelefono" width="140px" maxlength="13"/>
-                                
+                                    <label sclass="etiqueta_campo" value="Código Secreto:"/>
+                                    <textbox sclass="textbox_field" id="txtCodigoSecreto" width="140px" maxlength="13"/>                                
                                 </row>
                                 <row>
                                     <label sclass="etiqueta_campo" value="Contraseña:"/>
@@ -78,23 +77,35 @@
                             </rows>                        
                         </grid>                                      
                     
-                        <paging   id="pagingPareja"  pageSize ="4" width="93%"/>                                                   
-                        <listbox  id="listboxPareja"  mold="paging" paginal="${pagingPareja}" rows="4" width="95%">                        
+                        <paging   id="pagingPareja"  pageSize ="4" width="93%" visible="false"/>                                                   
+                        <listbox  id="listboxPareja"  mold="paging" paginal="${pagingPareja}" rows="4" width="95%" visible="false">                        
                             <listhead>                                
                                 <listheader id="listHeaderBotonVer"            label=""                   align="center" width="45px"/>                                            
                                 <listheader id="listHeaderIdPersona1"            label=""                   align="center" width="45px" visible="false"/>
                                 <listheader id="listHeaderIdPersona2"            label=""                   align="center" width="45px" visible="false"/>
-                                <listheader id="listheaderNombreUsuario"       label="Nombre"             align="center" width="160px"/>                                
-                                <listheader id="listheaderDireccionHabitacion" label="Pareja"             align="center" width="160px"/>                                            
+                                <listheader id="listHeaderIdPersona3"            label=""                   align="center" width="45px" visible="false"/>
+                                <listheader id="listHeaderIdPersona4"            label=""                   align="center" width="45px" visible="false"/>
+                                <listheader id="listheaderNombrePareja1"       label="Nombre"             align="center" width="160px"/>
+                                <listheader id="listheaderNombrePareja2"       label="Nombre"             align="center" width="160px"/>
+                                <listheader id="listheaderNombrePareja3"       label="Nombre"             align="center" width="160px"/>
+                                <listheader id="listheaderNombrePareja4"       label="Nombre"             align="center" width="160px"/>
                             </listhead>
                         </listbox>                                   
-                    </vbox>        
+                    </vbox> 
+                    
+                    <vbox visible="false">
+                        <grid id="grid" style="border:normal; margin-right:10px" mold="paging" pageSize="5" visible="false">
+                            <columns sizable="true">                                
+                                <column label="Seleccionar" width="80px"/>                                
+                                <column label="Nombre"/>
+                            </columns>
+                        </grid>
+                    </vbox>
                 </div>
                 
                 <vbox style="margin:10px">                        
                     <div>
-                        <button id="btnPaso1" label="Continuar" sclass="boton_acceso"/>
-                        <button id="btnPaso2" label="Enviar" sclass="boton_acceso" visible="false"/>
+                        <button id="btnPaso1" label="Continuar" sclass="boton_acceso"/>                        
                     </div>
                 </vbox>
             </panelchildren>
