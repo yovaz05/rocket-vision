@@ -79,5 +79,7 @@ public interface IsaPersona {
     
     public abstract RspPersona listPersonaCualquierLider();
     
+    public abstract RspPersona listPersonaLiderLanzado();
+    
     public abstract RspPersona listPersonaCualquierLiderNombre(String nombre);
 }

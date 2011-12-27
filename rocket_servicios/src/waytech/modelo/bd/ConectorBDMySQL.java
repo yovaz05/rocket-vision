@@ -40,9 +40,9 @@ public final class ConectorBDMySQL {
     private void establecerElementosDeConexion() {
         atributosConector.setUser("root");
         atributosConector.setPassword("wt.admin");
-        atributosConector.setHostname("192.168.1.100");
+        atributosConector.setHostname("127.0.0.1");
         atributosConector.setDriver("com.mysql.jdbc.Driver");
-        atributosConector.setDatabaseName("sig_local");
+        atributosConector.setDatabaseName("rocket_web");
         atributosConector.setUrl("jdbc:mysql://" + atributosConector.getHostname() + "/" + atributosConector.getDatabaseName());        
     }
 

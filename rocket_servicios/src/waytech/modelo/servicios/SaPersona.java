@@ -1336,6 +1336,57 @@ public class SaPersona implements IsaPersona {
             return rspPersona;
         }
     }
+    
+    /**
+     * lista a todos los líderes lanzados
+     * @return 
+     */
+    @Override
+    public RspPersona listPersonaLiderLanzado() {
+        //INSTANCIAS DE LAS CLASES                
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        RspPersona rspPersona = new RspPersona();
+        List<Persona> todosLosPersonas = new ArrayList<Persona>();
+        //INICIALIZAR VARIABLES
+        rspPersona.setEsConexionAbiertaExitosamente(false);
+        rspPersona.setEsConexionCerradaExitosamente(false);
+        rspPersona.setEsSentenciaSqlEjecutadaExitosamente(false);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPersona.setEsConexionAbiertaExitosamente(true);
+            rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            String consultaSQL = "SELECT * FROM persona"
+                    + " WHERE estado = 1"
+                    + " AND"
+                    + " es_lider_lanzado = 1";
+            try {
+                Statement sentencia = conectorBD.getConnection().createStatement();
+                boolean bandera = sentencia.execute(consultaSQL);
+                if (bandera) {
+                    ResultSet rs = sentencia.getResultSet();
+                    rspPersona.setEsSentenciaSqlEjecutadaExitosamente(true);
+                    rspPersona.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), "listPersonaLideresLanzados()", this.getClass().toString()));
+                    while (rs.next()) {
+                        Persona acceso = new Persona();
+                        acceso = rsPersona(rs, acceso);
+                        todosLosPersonas.add(acceso);
+                    }
+                }
+            } catch (SQLException e) {
+                rspPersona.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "listPersonaLideresLanzados()", this.getClass().toString()));
+            } finally {
+                if (conectorBD.cerrarConexion()) {
+                    rspPersona.setEsConexionCerradaExitosamente(true);
+                }
+                rspPersona.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                rspPersona.setTodasLasPersonas(todosLosPersonas);
+                return rspPersona;
+            }
+        } else {
+            rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPersona;
+        }
+    }
 
     @Override
     public RspPersona listPersonaCualquierLiderNombre(String nombre) {
