@@ -1,6 +1,5 @@
 package waytech.modelo.interfaces;
 
-import waytech.modelo.beans.sgi.Persona;
 import waytech.modelo.beans.sgi.PersonaInsert;
 import waytech.modelo.beans.sgi.PersonaUpdate;
 import waytech.modelo.servicios.RspPersona;
@@ -82,4 +81,18 @@ public interface IsaPersona {
     public abstract RspPersona listPersonaLiderLanzado();
     
     public abstract RspPersona listPersonaCualquierLiderNombre(String nombre);
+    
+    /*
+     * Gabriel dice: métodos que se necesitan para Maestro de Líder:
+     * 1. insertPersona(String cedula, String nombre, int idRed);
+     * 2. updateCedula(String valor);
+     * 3. updateNombre(String valor);
+     * 4. updateRed(int idZona);
+     * 5. updateTelefonoCelular(String valor);
+     * 6. updateCorreo(String valor);
+     * 7. updateCorreo(String valor);
+     * 8. updateZona(int idZona);
+     * 9. updateDireccionHabitacion(String valor);
+     * 10. updateObservaciones(String valor);
+     */
 }
