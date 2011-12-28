@@ -18,7 +18,8 @@ public interface IsaPersona {
     /**
      * Tipo de persona LIDER LANZADO ID = 3
      * ID ZONA = 1 = GENERICO
-     * LO CREA COMO LIDER LANZADO
+     * CREA COMO LIDER LANZADO
+     * CREA UNA RELACION EN LA TABLA persona_en_red
      * @param cedula
      * @param nombre
      * @param idRed
@@ -27,6 +28,28 @@ public interface IsaPersona {
     public abstract RspPersona insertPersonaLiderBasico(String cedula, String nombre, int idRed);
 
     public abstract RspPersona updatePersona(PersonaUpdate usuario);
+    
+    public abstract RspPersona updateCedula(int idPersona, String Cedula);
+    
+    public abstract RspPersona updateNombre(int idPersona, String nombre);
+    
+    /**
+     * Solo para el modelo donde una persona solo pertenece a una sola red.
+     * @param idPersona
+     * @param idRed
+     * @return 
+     */
+    public abstract RspPersona updateRed(int idPersona, int idRed);
+    
+    public abstract RspPersona updateTelefonoMovil(int idPersona, String telefonoMovil);
+    
+    public abstract RspPersona updateCorreo(int idPersona, String correo);
+    
+    public abstract RspPersona updateZona(int idPersona, int idZona);
+    
+    public abstract RspPersona updateDireccion(int idPersona, String direccion);
+    
+    public abstract RspPersona updateObservaciones(int idPersona, String observaciones);
 
     /**
      * Elimina un registro lógicamente
