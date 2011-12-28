@@ -1,5 +1,6 @@
-package cdo.sgd.controladores;
+package sig.controladores;
 
+import sig.controladores.Vistas;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.Include;
 

@@ -4,7 +4,7 @@
  */
 package waytech.utilidades;
 
-import cdo.sgd.controladores.Sesion;
+import sig.controladores.Sesion;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Label;
 

@@ -1,8 +1,8 @@
 package sig.controladores.celula;
 
 import cdo.sgd.controladores.CtrlVista;
-import cdo.sgd.controladores.Sesion;
-import cdo.sgd.controladores.Vistas;
+import sig.controladores.Sesion;
+import sig.controladores.Vistas;
 import cdo.sgd.modelo.bd.util.CelulaUtil;
 import java.util.Date;
 import org.zkoss.zk.ui.Component;

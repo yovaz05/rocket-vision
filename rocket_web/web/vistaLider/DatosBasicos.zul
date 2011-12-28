@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
   <style src="css/estilos1.css"/>  
-  <div align="center" style="display:inline-block;margin:2px; padding: 2px 15px;">
-    <label id="etqMensaje" value="Mensajes al usuario:" sclass="mensajes" visible="false"
-            style="margin: 2px; padding:2px;"/>
-  </div>  
-  <grid style="border:0px" apply="sig.controladores.lider.CtrlLiderDatosBasicos">      
+  <grid style="border:0px" apply="sig.controladores.lider.CtrlLiderDB">
 <!--<grid style="border:0px">-->
     <columns>
       <column id="col1" width="135px"/>
@@ -48,18 +44,18 @@
         <a id="tbbRed" label="Red elegida" visible="false"/>
       </row>
       <!--Teléfono Celular-->
-      <row> 
-        <label value="Celular" sclass="etiqueta_campo"/>
+      <row tooltiptext="Preferiblemente el teléfono celular"> 
+        <label value="Teléfono" sclass="etiqueta_campo"/>
         <div>
-          <label id="etqTlfCelular" value="celular"/>
-          <textbox id="txtTlfCelular" value="" cols="35" visible="false"/>
+          <label id="etqTelefono" value=""/>
+          <textbox id="txtTelefono" value="" cols="35" visible="false"/>
         </div>
       </row> 
       <!--Correo-->
       <row>        
         <label value="Correo" sclass="etiqueta_campo"/>
         <div>
-          <label id="etqEmail" value="correo"/>
+          <label id="etqEmail" value=""/>
           <textbox id="txtEmail" cols="35" visible="false"/>
         </div>
       </row> 

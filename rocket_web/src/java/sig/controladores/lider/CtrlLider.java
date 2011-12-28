@@ -1,8 +1,8 @@
 package sig.controladores.lider;
 
 import cdo.sgd.controladores.CtrlVista;
-import cdo.sgd.controladores.Sesion;
-import cdo.sgd.controladores.Vistas;
+import sig.controladores.Sesion;
+import sig.controladores.Vistas;
 import cdo.sgd.modelo.bd.util.LiderUtil;
 import java.util.Date;
 import org.zkoss.zk.ui.Component;
@@ -55,6 +55,8 @@ public class CtrlLider extends GenericForwardComposer {
   Textbox db$txtNombre;
   Label db$etqCedula;
   Label db$etqNombre;
+  Label db$etqTelefono;
+  Label db$etqEmail;
   Label db$etqRed;
   Combobox db$cmbRed;
   A db$tbbRed;
@@ -98,6 +100,7 @@ public class CtrlLider extends GenericForwardComposer {
   //gestión de datos
   //data en modificación:
   String cedula = "";
+  String nombre = "";
   int idRed = 1;
   String nombreRed = "";
   int idEstado = 0;
@@ -247,19 +250,19 @@ public class CtrlLider extends GenericForwardComposer {
     }
     db$etqNombre.setValue(nombre);
 
-    String tlfCelular = lider.getTelefonoCelular();
-    if (tlfCelular.isEmpty()) {
+    String telefono = lider.getTelefono();
+    if (telefono.isEmpty()) {
       //si no hay valor, mostrar una etiqueta para permitir edición
-      tlfCelular = Constantes.VALOR_EDITAR;
+      telefono = Constantes.VALOR_EDITAR;
     }
-    db$etqNombre.setValue(tlfCelular);
+    db$etqTelefono.setValue(telefono);
 
     String email = lider.getEmail();
     if (email.isEmpty()) {
-      //si no hay valor, mostrar una etiqueta para permitir edición
+      //si no hay valor, se muestra una etiqueta para permitir edición
       email = Constantes.VALOR_EDITAR;
     }
-    db$etqNombre.setValue(email);
+    db$etqEmail.setValue(email);
 
     db$etqRed.setValue(lider.getNombreRed());
     //usado en próximas versiones:
@@ -267,13 +270,15 @@ public class CtrlLider extends GenericForwardComposer {
 
     //dirección:
     idZona = lider.getDireccion().getIdZona();
-    String estado;
+    String estado = "", ciudad = "", zona = "";
     if (idZona == 1) {
       estado = Constantes.VALOR_EDITAR;
     } else {
       estado = lider.getDireccion().getEstado();
-      dir$etqCiudad.setValue(lider.getDireccion().getCiudad());
-      dir$etqZona.setValue(lider.getDireccion().getZona());
+      ciudad = lider.getDireccion().getCiudad();
+      zona = lider.getDireccion().getZona();
+      dir$etqCiudad.setValue(ciudad);
+      dir$etqZona.setValue(zona);
     }
     dir$etqEstado.setValue(estado);
 
@@ -283,11 +288,11 @@ public class CtrlLider extends GenericForwardComposer {
     }
     dir$etqDetalle.setValue(detalle);
 
-    String telefono = lider.getDireccion().getTelefono();
-    if (telefono.isEmpty()) {
-      telefono = Constantes.VALOR_EDITAR;
+    String telefonoHabit = lider.getDireccion().getTelefono();
+    if (telefonoHabit.isEmpty()) {
+      telefonoHabit = Constantes.VALOR_EDITAR;
     }
-    dir$etqTelefono.setValue(telefono);
+    dir$etqTelefono.setValue(telefonoHabit);
 
     String observaciones = lider.getObservaciones();
     if (observaciones.isEmpty()) {
@@ -298,7 +303,7 @@ public class CtrlLider extends GenericForwardComposer {
     //crear descripción de la célula, para el título:
     //TODO: si hay direcció, agregarsela al título
     //+descripcionLider = generarDescripcionLider(lider.getCedula(), lider.getDireccionCorta());
-    descripcionLider = lider.getCedula();
+    descripcionLider = lider.getNombre();
 
 
     //TODO: configurar parámetros para navegación dinámica:
@@ -361,7 +366,7 @@ public class CtrlLider extends GenericForwardComposer {
       //- mostrarOpcionLider1();
       verBotonesEdicion(false);
       selectTab(1);
-      setFocoEdicion();
+      db$txtCedula.setFocus(true);
       //- btnIngresarReporte.setVisible(false);
     } else if (modo.equals("edicion-dinamica")) {
       tituloVentana.setValue(titulo + ": " + descripcionLider);
@@ -402,7 +407,7 @@ public class CtrlLider extends GenericForwardComposer {
     modo = "new";
     Sesion.setModo(modo);
     Sesion.setVariable("idLider", 0);
-    mensaje("Ingresa el código y elige la red");
+    mensaje("Ingresa el código:");
     actualizarEstado();
   }
 
@@ -519,8 +524,11 @@ public class CtrlLider extends GenericForwardComposer {
    */
   private void mostrarWidgetsEdit(boolean status) {
     //datos básicos:
-    db$etqRed.setVisible(status);
+    db$etqCedula.setVisible(status);
     db$etqNombre.setVisible(status);
+    db$etqRed.setVisible(status);
+    db$etqTelefono.setVisible(status);
+    db$etqEmail.setVisible(status);
     /*
     if (seUsaLider(1)) {
     db$opcionLider1.setVisible(status);
@@ -595,6 +603,8 @@ public class CtrlLider extends GenericForwardComposer {
     //-db$etqCedula.setValue(cedula);
     db$tbbRed.setLabel(nombreRed);
     db$etqNombre.setValue(Constantes.VALOR_EDITAR);
+    db$etqTelefono.setValue(Constantes.VALOR_EDITAR);
+    db$etqEmail.setValue(Constantes.VALOR_EDITAR);
     dir$etqEstado.setValue(Constantes.VALOR_EDITAR);
     dir$etqCiudad.setValue("");
     dir$etqZona.setValue("");
@@ -617,7 +627,7 @@ public class CtrlLider extends GenericForwardComposer {
    * setear la variable de resultado que será usada por barraMenu para los mensajes
    * y cambiar modo de edicion dinámica
    */
-  //TODO: MEJORA CODIGO: cambiar nombre a btnCrear
+  //TODO: MEJORA CODIGO: cambiar nombre de botón a btnCrear
   public void onClick$btnGuardar() {
     if (modo.equals("new")) {
       if (ingresarNuevoLider()) {
@@ -648,7 +658,7 @@ public class CtrlLider extends GenericForwardComposer {
       //TODO: agregar la zona a la descripción
       //descripcionLider = generarDescripcionLider(LiderInsert.getCedula(), dir$cmbZona.getValue());
       //modo = "ver";
-      mensaje("Célula ingresada. Agrega el resto de la información");
+      mensaje("Líder ingresado. Agrega el resto de la información");
       descripcionLider = cedula;
       //**System.out.println("CtrlLider.Célula creada con éxito:");
       //**System.out.println("id=" + idLider);
@@ -664,10 +674,11 @@ public class CtrlLider extends GenericForwardComposer {
    */
   private boolean crearLider() {
     cedula = db$txtCedula.getValue();
+    nombre = db$txtNombre.getValue();
     idRed = getIdRed();
     System.out.println("CtrlLider.crearLider.Cedula=" + cedula);
     System.out.println("CtrlLider.crearLider.idRed=" + idRed);
-    //+ idLider = servicio.crearLider(cedula, idRed);
+    idLider = servicio.crearLider(cedula, nombre, idRed);
     System.out.println("CtrlLider.crearLider.idLider=" + idLider);
     Sesion.setVariable("idLider", idLider);
     Sesion.setVariable("Lider.idRed", idRed);
@@ -794,8 +805,12 @@ public class CtrlLider extends GenericForwardComposer {
   private void mostrarWidgetsNew(boolean visible) {
     db$txtCedula.setVisible(visible);
     db$txtNombre.setVisible(visible);
+    //TODO: se mostrará el campo de nombre deshabilitado, se habilita cuando ingresa la cédula
+    if (visible) {
+      db$txtNombre.setDisabled(true);
+    }
     db$cmbRed.setVisible(visible);
-    //TODO: se mostrará el combo de red sólo cuando ingresa el código
+    //TODO: se mostrará el campo de red deshabilitado, se habilita cuando ingresa el nombre
     if (visible) {
       db$cmbRed.setDisabled(true);
     }
@@ -803,7 +818,7 @@ public class CtrlLider extends GenericForwardComposer {
   }
 
   private int getIdRed() {
-    return (Integer) Sesion.getVariable("cmbRed.id");
+    return (Integer) Sesion.getVariable("lider.idRed");
   }
 
   private void mostrarTabsRestantes(boolean visible) {

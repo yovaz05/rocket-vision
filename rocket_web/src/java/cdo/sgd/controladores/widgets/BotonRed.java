@@ -4,8 +4,8 @@
 package cdo.sgd.controladores.widgets;
 
 import cdo.sgd.controladores.CtrlVista;
-import cdo.sgd.controladores.Sesion;
-import cdo.sgd.controladores.Vistas;
+import sig.controladores.Sesion;
+import sig.controladores.Vistas;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;

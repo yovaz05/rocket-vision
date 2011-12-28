@@ -1,7 +1,7 @@
 package sig.controladores.celula;
 
-import cdo.sgd.controladores.Sesion;
-import cdo.sgd.controladores.Vistas;
+import sig.controladores.Sesion;
+import sig.controladores.Vistas;
 import cdo.sgd.controladores.widgets.BotonCelula;
 import cdo.sgd.controladores.widgets.BotonLider;
 import cdo.sgd.controladores.widgets.EtqNro;

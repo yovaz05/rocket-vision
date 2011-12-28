@@ -1,6 +1,6 @@
 package sig.controladores.celula;
 
-import cdo.sgd.controladores.Sesion;
+import sig.controladores.Sesion;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

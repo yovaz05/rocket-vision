@@ -9,13 +9,13 @@ y esta ventana graba en la base de datos. la lista muestra el nuevo valor.
  */
 package sig.controladores;
 
-import cdo.sgd.controladores.Sesion;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
 import sig.modelo.servicios.ServicioCelula;
+import sig.modelo.servicios.ServicioPersona;
 
 /**
  * controlador asociado a Direccion.zul
@@ -39,6 +39,7 @@ public class CtrlObservaciones extends GenericForwardComposer {
   //variables de control:
   private String observaciones = "";
   ServicioCelula servicioCelula = new ServicioCelula();
+  ServicioPersona servicioPersona = new ServicioPersona();
   private int idCelula = 0;
 
   @Override
@@ -89,28 +90,48 @@ public class CtrlObservaciones extends GenericForwardComposer {
     observaciones = valorNuevo;
     System.out.println("CtrlObservaciones. valor ingresado = " + observaciones);
     //actualizar valor en la base de datos:
-    if (Sesion.esVistaCelula()) {
-      System.out.println("CtrlObservaciones. es vistaCelula");
-      //actualizar valor en la base de datos
-      servicioCelula.setIdCelula(getIdCelula());
-      if (servicioCelula.actualizarObservaciones(observaciones)) {
-          mostrarMensaje("Se actualizaron las observaciones");
-        } else {
-          mostrarMensaje("Error actualizando las observaciones");
-        }
+    if (actualizarObservaciones()) {
+      mostrarMensaje("Se actualizaron las observaciones");
+    } else {
+      mostrarMensaje("Error actualizando las observaciones");
     }
-
-    if (observaciones.isEmpty()) {//quedó en blanco, se usa etiqueta que permita edición posterior
+    
+    //si se dejó valor en blanco, se usa etiqueta que permita edición posterior
+    if (observaciones.isEmpty()) {
       observaciones = Constantes.VALOR_EDITAR;
     }
     etqObservaciones.setValue(observaciones);
   }
 
+  /**
+   * actualiza observaciones en la base de datos
+   */
+  boolean actualizarObservaciones() {
+    boolean ok = false;
+    if (Sesion.esVistaCelula()) {
+      //actualizar observaciones de célula
+      ok = servicioCelula.actualizarObservaciones(getIdCelula(), observaciones);
+    } else if (Sesion.esVistaLider()) {
+      //actualizar observaciones de líder
+      getIdLider();
+      //TODO: falta implementar el método en el servicio
+      ok = servicioPersona.actualizarObservaciones(getIdLider(), observaciones);
+    }
+    return ok;
+  }
+
+  //TODO: MEJORA CODIGO: sacar método a clase de utileria
   private int getIdCelula() {
     System.out.println("CtrlDireccion.getIdCelula:");
     return (Integer) Sesion.getVariable("idCelula");
   }
-  
+
+  //TODO: MEJORA CODIGO: sacar método a clase de utileria
+  private int getIdLider() {
+    System.out.println("CtrlDireccion.getIdLider:");
+    return (Integer) Sesion.getVariable("idLider");
+  }
+
   private void mostrarMensaje(String msj) {
     etqMensaje.setValue(msj);
     etqMensaje.setVisible(true);
@@ -125,6 +146,5 @@ public class CtrlObservaciones extends GenericForwardComposer {
     etqMensaje.setValue("");//TODO: CODIGO: línea parece redundante
     etqMensaje.setVisible(false);
     divMensaje.setVisible(false);
-  }  
-  
+  }
 }

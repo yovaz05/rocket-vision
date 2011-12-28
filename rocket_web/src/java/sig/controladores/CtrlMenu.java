@@ -1,7 +1,5 @@
 package sig.controladores;
 
-import cdo.sgd.controladores.Sesion;
-import cdo.sgd.controladores.Vistas;
 import cdo.sgd.modelo.bd.util.BD;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;

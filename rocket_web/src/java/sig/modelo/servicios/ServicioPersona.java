@@ -5,7 +5,8 @@
  */
 package sig.modelo.servicios;
 
-import cdo.sgd.controladores.Sesion;
+import sig.controladores.Sesion;
+import cdo.sgd.modelo.bd.util.Direccion;
 import cdo.sgd.modelo.bd.util.LiderListadoUtil;
 import cdo.sgd.modelo.bd.util.LiderUtil;
 import cdo.sgd.modelo.bd.util.LiderUtil;
@@ -17,6 +18,7 @@ import waytech.modelo.beans.sgi.PersonaInsert;
 import waytech.modelo.beans.sgi.Zona;
 import waytech.modelo.interfaces.IsaAcceso;
 import waytech.modelo.interfaces.IsaPersona;
+import waytech.modelo.servicios.RspAcceso;
 import waytech.modelo.servicios.RspPersona;
 import waytech.modelo.servicios.SaAcceso;
 import waytech.modelo.servicios.SaPersona;
@@ -35,6 +37,7 @@ public class ServicioPersona {
   List<String> nombreLideresLider;
   List<Persona> lideresInmediatos;
   SaPersona saPersona = new SaPersona();
+  SaAcceso saAcceso = new SaAcceso();
   String nombreLider1 = "";
   String nombreLider2 = "";
   String nombreLider3 = "";
@@ -102,7 +105,7 @@ public class ServicioPersona {
     LiderUtil lider = new LiderUtil();
 
     //**
-    System.out.println("ServicioLider.Lider=" + lider.toString());
+    System.out.println("ServicioPersona.generarLiderUtil.persona=>" + p.toString());
 
     //data resumida del líder
     idLider = p.getIdPersona();
@@ -111,19 +114,39 @@ public class ServicioPersona {
     lider.setCedula(p.getCi());
     lider.setNombre(p.getNombre());
     //TODO: OJO, asignar apropiadamente el valor de estos cmapos
-    lider.setIdRed(1);
-    lider.setDireccionCorta(p.getDireccionHabitacion());
-    lider.setTelefonoPrincipal(p.getTelefonoMovil());
-    /* pendiente: obtener el correo
+    lider.setIdRed(p.getRed().getIdRed());
+    lider.setNombreRed(p.getRed().getNombre());
+    //-es automática:
+    //-lider.setDireccionCorta(p.getDireccionHabitacion());
+    lider.setTelefono(p.getTelefonoMovil());
+    lider.setEmail(p.getCorreo());
+    
+    /* TODO: OJO: DISCUTIR: no se obtiene el correo del acceso*/
+    /*
     IsaAcceso servAcceso = new SaAcceso();
     Acceso acceso = servAcceso.getAccesoPorIdUsuario(idLider).getAcceso();
     lider.setEmail(acceso.getCorreo());    
-     * 
-     */
-    lider.setEmail("");
+    /**/
+    
+    //dirección:
+    Zona zona = p.getIdZona();
+    Direccion dir = new Direccion();
+    dir.setIdZona(zona.getIdZona());
+    dir.setIdCiudad(zona.getIdCiudad().getIdCiudad());
+    dir.setIdEstado(zona.getIdCiudad().getIdEstado().getIdEstado());
+    dir.setZona(zona.getNombre());
+    dir.setCiudad(zona.getIdCiudad().getNombre());
+    dir.setEstado(zona.getIdCiudad().getIdEstado().getNombre());
+    //+dir.setTelefono(celula.getTelefono());
+    dir.setDirDetallada(p.getDireccionHabitacion());
+    lider.setDireccion(dir);
+
+    //**
+    System.out.println("ServicioPersona.generarLiderUtil.lider=>" + lider.toString());
+    
     return lider;
   }
-  
+
   /**
    * busca en la base de datos una persona por el id proporcionado como parámetro
    * devuelve los datos en un objeto LiderUtil
@@ -144,7 +167,7 @@ public class ServicioPersona {
     LiderUtil liderUtil = generarLiderUtil(liderBD);
     return liderUtil;
   }
-  
+
   /**
    * crear una célula en la base de datos
    * con sólo el código y la red
@@ -153,33 +176,19 @@ public class ServicioPersona {
    */
   public int crearLider(String cedula, String nombre, int idRed) {
     System.out.println("ServicioLider.crearLider.Cedula=" + cedula);
+    System.out.println("ServicioLider.crearLider.nombre=" + nombre);
     System.out.println("ServicioLider.crearLider.idRed=" + idRed);
 
-    PersonaInsert personaInsert = new PersonaInsert();
-    //datos ingresados:
-    personaInsert.setCi(cedula);
-    personaInsert.setNombre(nombre);
-    //falta la red:
-    //+ personaInsert.setIdRed(idRed);
-    //DATOS POR DEFECTO:
-    //zona de utilería: 1: no definida
-    personaInsert.setIdZona(1);
-    personaInsert.setDireccionHabitacion("");
-    personaInsert.setTelefonoMovil("");
-    //+ personaInsert.setObservaciones("");
-
-    RspPersona respuesta = saPersona.insertPersona(personaInsert);
+    RspPersona respuesta = saPersona.insertPersonaLiderBasico(cedula, nombre, idRed);
     if (respuesta.esSentenciaSqlEjecutadaExitosamente()) {
-      System.out.println("ServicioLider.crearLider.Cedula=" + cedula);
-      //+idLider = respuesta.getIdPersona();
-      //-
-      idLider = 1;
+      idLider = respuesta.getPersona().getIdPersona();
+      System.out.println("ServicioLider.crearLider.id=" + idLider);
     } else {
       idLider = 0;
     }
     return idLider;
-  }  
-  
+  }
+
   /**
    * actualiza la cédula
    */
@@ -194,34 +203,58 @@ public class ServicioPersona {
    * actualiza el nombre
    */
   public boolean actualizarNombre(int idPersona, String nombre) {
-    RspPersona respuesta = saPersona.updateNombrePersona(idPersona, nombre);
+    RspPersona respuesta = saPersona.updateNombre(idPersona, nombre);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**
-   * actualiza el id de la zona (o sector)
+   * actualiza la red a la que pertenece la persona
+   * @param idPersona
+   * @param idRed
+   * @return 
+   */
+  public boolean actualizarRed(int idPersona, int idRed) {
+    RspPersona respuesta = saPersona.updateRed(idPersona, idRed);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  /**
+   * actualiza la zona (sector)
    */
   public boolean actualizarIdZona(int idPersona, int idZona) {
-    RspPersona respuesta = saPersona.updateIdZonaPersona(idPersona, idZona);
+    RspPersona respuesta = saPersona.updateZona(idPersona, idZona);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**
-   * actualiza el detalle de la dirección de la célula
+   * actualiza el detalle de la dirección
    */
   public boolean actualizarDireccionDetalle(int idPersona, String direccionDetalle) {
-    RspPersona respuesta = saPersona.updateDireccionHabitacion(idPersona, direccionDetalle);
+    RspPersona respuesta = saPersona.updateDireccion(idPersona, direccionDetalle);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
   /**
-   * actualiza el teléfono de la dirección de la célula
+   * actualiza el teléfono móvil
    */
   public boolean actualizarTelefono(int idPersona, String telefono) {
-    RspPersona respuesta = saPersona.updateTelefonoCelular(idPersona, telefono);
+    RspPersona respuesta = saPersona.updateTelefonoMovil(idPersona, telefono);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
   
+  /**
+   * actualiza el correo
+   */
+  //TODO: discutir, se actualiza código de la persona y del acceso
+  public boolean actualizarCorreo(int idPersona, String correo) {
+    boolean ok, ok2;
+    RspPersona respuesta = saPersona.updateCorreo(idPersona, correo);
+    ok = respuesta.esSentenciaSqlEjecutadaExitosamente();
+    RspAcceso respuesta2 = saAcceso.updateCorreo(idPersona, correo);
+    ok2 = respuesta2.esSentenciaSqlEjecutadaExitosamente();
+    return (ok & ok2);
+  }
+
   /**
    * actualiza las observaciones
    */
@@ -240,10 +273,13 @@ public class ServicioPersona {
     RspPersona respuesta = saPersona.deletePersona(idPersona);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
-
-  public boolean actualizarRed(int idPersona, int idRed) {
-    RspPersona respuesta = saPersona.updateIdRed(idPersona, idRed);
-    return respuesta.esSentenciaSqlEjecutadaExitosamente();
-  }  
   
+ public boolean existeCedula(String cedula) {
+    RspPersona respuesta = saPersona.esCedulaExistente(cedula);
+    boolean existe = true;
+    if (respuesta.esSentenciaSqlEjecutadaExitosamente()) {
+      existe = respuesta.esCedulaExistente();
+    }
+    return existe;
+  }  
 }

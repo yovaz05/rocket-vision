@@ -1,8 +1,8 @@
 package sig.controladores.lider;
 
 import cdo.sgd.controladores.CtrlVista;
-import cdo.sgd.controladores.Sesion;
-import cdo.sgd.controladores.Vistas;
+import sig.controladores.Sesion;
+import sig.controladores.Vistas;
 import cdo.sgd.controladores.widgets.BotonLider;
 import cdo.sgd.controladores.widgets.EtqNro;
 import cdo.sgd.modelo.bd.util.*;

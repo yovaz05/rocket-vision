@@ -9,7 +9,6 @@ y esta ventana graba en la base de datos. la lista muestra el nuevo valor.
  */
 package sig.controladores;
 
-import cdo.sgd.controladores.Sesion;
 import java.util.ArrayList;
 import java.util.List;
 import org.zkoss.zul.Div;
@@ -372,34 +371,34 @@ public class CtrlDireccion extends GenericForwardComposer {
       setVariableSesionZona();
       //**System.out.println("CtrlDireccion.Zona.id=" + idZona);
 
-      //actualizar valor en la base de datos:
       //Actualizar observaciones de célula
-      if (Sesion.esVistaCelula()) {
-        //actualizar valor en la base de datos
-        getIdCelula();
-        //TODO: unir los 2 llamados al servicio: colocar idCelula en método actualizar
-        servicioCelula.setIdCelula(idCelula);
-        if (servicioCelula.actualizarIdZona(idZona)) {
-          mostrarMensaje("Se actualizó el sector");
-        } else {
-          mostrarMensaje("Error actualizando el sector");
-        }
-      } else if (Sesion.esVistaLider()) {
-        //Actualizar observaciones de líder        
-        getIdLider();
-        /*+en proceso
-        if (servicioPersona.actualizarIdZona(idCelula, idZona)) {
+      if (actualizarZona()) {
         mostrarMensaje("Se actualizó el sector");
-        } else {
+      } else {
         mostrarMensaje("Error actualizando el sector");
-        }
-         */
       }
 
-
       //activar edición de siguiente campo: detalle
+      //TODO: evaluar: si cambió la zona, debería borrarse el valor del detalle, ya que debería ser diferente
       activarEditDetalle();
     }
+  }
+
+  /**
+   * actualiza valor de zona en la base de datos
+   */
+  boolean actualizarZona() {
+    boolean ok = false;
+    if (Sesion.esVistaCelula()) {
+      //actualizar detalle de dirección de célula
+      getIdCelula();
+      ok = servicioCelula.actualizarIdZona(idCelula, idZona);
+    } else if (Sesion.esVistaLider()) {
+      //actualizar detalle de dirección de líder
+      getIdLider();
+      ok = servicioPersona.actualizarIdZona(idLider, idZona);
+    }
+    return ok;
   }
 
   public void onOK$txtCiudad() {
@@ -688,15 +687,10 @@ public class CtrlDireccion extends GenericForwardComposer {
     detalle = nuevoValor;
 
     //actualizar valor en la base de datos:
-    if (Sesion.esVistaCelula()) {
-      //actualizar valor en la base de datos
-      getIdCelula();
-      servicioCelula.setIdCelula(idCelula);
-      if (servicioCelula.actualizarDireccionDetalle(detalle)) {
-        mostrarMensaje("Se actualizó la dirección");
-      } else {
-        mostrarMensaje("Error actualizando la dirección");
-      }
+    if (actualizarDetalleDireccion()) {
+      mostrarMensaje("Se actualizó la dirección");
+    } else {
+      mostrarMensaje("Error actualizando la dirección");
     }
 
     if (detalle.isEmpty()) {//quedó en blanco, se usa etiqueta que permita edición posterior
@@ -704,6 +698,23 @@ public class CtrlDireccion extends GenericForwardComposer {
     } else {
       etqDetalle.setValue(detalle);
     }
+  }
+
+  /**
+   * actualiza valor en la base de datos
+   */
+  boolean actualizarDetalleDireccion() {
+    boolean ok = false;
+    if (Sesion.esVistaCelula()) {
+      //actualizar detalle de dirección de célula
+      getIdCelula();
+      ok = servicioCelula.actualizarDireccionDetalle(idCelula, detalle);
+    } else if (Sesion.esVistaLider()) {
+      //actualizar detalle de dirección de líder
+      getIdLider();
+      ok = servicioPersona.actualizarDireccionDetalle(idLider, detalle);
+    }
+    return ok;
   }
 
   private void activarEditTelefono() {
@@ -752,11 +763,10 @@ public class CtrlDireccion extends GenericForwardComposer {
     if (Sesion.esVistaCelula()) {
       //actualizar teléfono de la célula
       getIdCelula();
-      servicioCelula.setIdCelula(idCelula);
-      if (servicioCelula.actualizarTelefono(telefono)) {
+      if (servicioCelula.actualizarTelefono(idCelula, telefono)) {
         mostrarMensaje("Se actualizó el teléfono");
       } else {
-        mostrarMensaje("Error actualizando la dirección");
+        mostrarMensaje("Error actualizando el teléfono");
       }
       //TODO: mensaje de éxito/error
     } else if (Sesion.esVistaLider()) {
@@ -774,12 +784,13 @@ public class CtrlDireccion extends GenericForwardComposer {
   /**
    * recupera variable de sesión 'idCelula'
    */
-  //TODO: MEJORA: evaluar forma de obtener este valor si viniera en el URL
+  //TODO: MEJORA: sacar método a clase de utileria
   private void getIdCelula() {
     System.out.println("CtrlDireccion.getIdCelula:");
     idCelula = (Integer) Sesion.getVariable("idCelula");
   }
 
+  //TODO: MEJORA: sacar método a clase de utileria
   private void getIdLider() {
     System.out.println("CtrlDireccion.getIdLider:");
     idLider = (Integer) Sesion.getVariable("idLider");

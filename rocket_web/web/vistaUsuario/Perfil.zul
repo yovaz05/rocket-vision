@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div width="450px" apply="cdo.sgd.controladores.CtrlPerfil">
+    <label value="Mi Perfil" sclass="titulo_ventana"/>  
+    <grid>
+      <columns>
+        <column width="125px"/>
+        <column label=""/>
+      </columns>
+      <rows>
+        <row>
+          <label value="Nombre" sclass="etiqueta_campo"/>
+          <label id="etqNombre" value=""/>
+        </row>
+        <row>
+          <label value="Red" sclass="etiqueta_campo"/>
+          <a id="tbbRed" label=""/>
+        </row>        
+        <row>
+          <label value="Líderes" sclass="etiqueta_campo"/>
+          <vbox>
+            <a id="tbbLider1" label=""/>
+            <a id="tbbLider2" label=""/>
+          </vbox>
+        </row>
+        <row>        
+          <label value="Dirección" sclass="etiqueta_campo"/>
+          <label id="etqDireccion" value=""/>
+        </row> 
+        <row>        
+          <label value="Teléfono" sclass="etiqueta_campo"/>
+          <toolbarbutton id="tbbTelefono" label=""/>
+        </row> 
+        <row>        
+          <label value="Email" sclass="etiqueta_campo"/>
+          <toolbarbutton id="tbbEmail" label=""/>
+        </row> 
+        <row visible="false">
+          <label value="Edad" sclass="etiqueta_campo"/>
+          <label id="etqEdad" value=""/>
+        </row>
+      </rows>
+    </grid>
+    <space height="10px"/>
+    <div>
+      <a id="tbbVerMas" label="Ver más »" sclass="botonAccion"/>
+    </div>
+    <toolbarbutton id="btnEditar" visible="false"/>
+  </div>
+</zk>

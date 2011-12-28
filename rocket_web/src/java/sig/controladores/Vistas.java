@@ -1,4 +1,4 @@
-package cdo.sgd.controladores;
+package sig.controladores;
 
 /**
  * constantes de direcciones de vistas:
@@ -23,10 +23,10 @@ public class Vistas{
   public static String DISCIPULO_PROCESO_LISTADO = "vistaDiscipuloProceso/Listado.zul";
   
 
-  //Menú Cuenta:
-  public static String CUENTA_PERFIL = "vistaCuenta/Perfil.zul";
-  public static String CUENTA_CAMBIAR_EMAIL = "vistaCuenta/CambiarEmail.zul";
-  public static String CUENTA_CAMBIAR_PASSWORD = "vistaCuenta/CambiarPassword.zul";
+  //Menú Usuario:
+  public static String CUENTA_PERFIL = "vistaUsuario/Perfil.zul";
+  public static String CUENTA_CAMBIAR_EMAIL = "vistaUsuario/CambiarEmail.zul";
+  public static String CUENTA_CAMBIAR_PASSWORD = "vistaUsuario/CambiarPassword.zul";
   
   //vistas tipo RESUMEN:
   public static String LIDER_RESUMEN = "vistaLider/Resumen.zul";

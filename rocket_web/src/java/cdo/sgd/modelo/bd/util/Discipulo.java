@@ -20,6 +20,7 @@ public class Discipulo {
   protected String nombreLider2 = "";
   //puede elegir cualquiera de sus teléfonos como el principal
   protected String telefonoPrincipal = "";
+  //TODO: MEJORA CODIGO: cambiar nombre del campo a correo
   protected String email = "";
   protected int edad = 0;
   protected Direccion direccion = new Direccion("", "", "", "", "");
@@ -154,7 +155,11 @@ public class Discipulo {
   }
 
   public void updateDireccionCorta() {
-    this.direccionCorta = direccion.zona + " - " + direccion.ciudad;
+    if (direccion.zona.isEmpty()) {
+      this.direccionCorta = "";
+    } else {
+      this.direccionCorta = direccion.zona + ", " + direccion.ciudad;
+    }
   }
 
   public int getEdad() {
@@ -267,7 +272,6 @@ public class Discipulo {
   public void setTelefono(String telefono) {
     this.telefonoPrincipal = telefono;
   }
-
 
   public boolean isAnfitrionCelula() {
     return anfitrionCelula;
@@ -413,6 +417,4 @@ public class Discipulo {
   public void setProfesionOficio(String profesionOficio) {
     this.profesionOficio = profesionOficio;
   }
-  
-  
 }

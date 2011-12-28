@@ -1,5 +1,7 @@
 package cdo.sgd.controladores;
 
+import sig.controladores.Sesion;
+import sig.controladores.Vistas;
 import cdo.sgd.modelo.bd.simulador.BD;
 import cdo.sgd.modelo.bd.simulador.Red;
 import org.zkoss.zk.ui.Component;
