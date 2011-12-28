@@ -297,6 +297,11 @@ public class SaPersonaEnRed implements IsaPersonaEnRed {
         }
     }
 
+    /**
+     * lista todos los líderes lanzados de una red específica
+     * @param idRed
+     * @return 
+     */
     @Override
     public RspPersonaEnRed listLideresLanzados(int idRed) {
         //INSTANCIAS DE LAS CLASES                
@@ -311,7 +316,10 @@ public class SaPersonaEnRed implements IsaPersonaEnRed {
         if (conectorBD.iniciarConexion()) {
             rspPersonaEnRed.setEsConexionAbiertaExitosamente(true);
             rspPersonaEnRed.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
-            String consultaSQL = "SELECT * FROM persona_en_red WHERE estado = 1 AND id_red = '" + idRed + "'";
+            String consultaSQL = "SELECT * FROM persona"
+                    + " WHERE estado = 1"
+                    + " AND id_red = '" + idRed + "'"
+                    + " AND es_lider_lanzado = 1";
             try {
                 Statement sentencia = conectorBD.getConnection().createStatement();
                 boolean bandera = sentencia.execute(consultaSQL);

@@ -118,15 +118,16 @@ public interface IsaPersona {
     
     /*
      * Gabriel dice: métodos que se necesitan para Maestro de Líder:
-     * 1. insertPersona(String cedula, String nombre, int idRed);
-     * 2. updateCedula(String valor);
-     * 3. updateNombre(String valor);
-     * 4. updateRed(int idZona);
-     * 5. updateTelefonoCelular(String valor);
-     * 6. updateCorreo(String valor);
-     * 7. updateCorreo(String valor);
-     * 8. updateZona(int idZona);
-     * 9. updateDireccionHabitacion(String valor);
-     * 10. updateObservaciones(String valor);
+     * insertPersona(String cedula, String nombre, int idRed);
+     * updateCedula(String valor)
+     * updateNombre(String valor)
+     * updateRed(int idZona)
+     * updateTelefonoCelular(String valor)
+     * updateCorreo(String valor)
+     * updateCorreo(String valor)
+     * updateZona(int idZona)
+     * updateDireccionHabitacion(String valor)
+     * updateObservaciones(String valor)
+     * boolean existeCedula(String cedula)
      */
 }

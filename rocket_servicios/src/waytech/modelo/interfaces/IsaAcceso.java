@@ -14,59 +14,61 @@ import waytech.modelo.servicios.RspAcceso;
  */
 public interface IsaAcceso {
 
-    public abstract RspAcceso insertAcceso(AccesoInsert accesoInsert);
+  public abstract RspAcceso insertAcceso(AccesoInsert accesoInsert);
 
-    public abstract RspAcceso updateAcceso(AccesoUpdate accesoModificar);
+  public abstract RspAcceso updateAcceso(AccesoUpdate accesoModificar);
 
-    /**
-     * Actualiza la fecha automaticamente del último ingreso
-     * @param idAcceso
-     * @return 
-     */
-    public abstract RspAcceso updateFechaUltimoAcceso(int idAcceso);
+  /**
+   * Actualiza la fecha automaticamente del último ingreso
+   * @param idAcceso
+   * @return 
+   */
+  public abstract RspAcceso updateFechaUltimoAcceso(int idAcceso);
 
-    /**
-     * Elimina un registro lógicamente
-     * @param idAcceso
-     * @return 
-     */
-    public abstract RspAcceso deleteAcceso(int idAcceso);
+  /**
+   * Elimina un registro lógicamente
+   * @param idAcceso
+   * @return 
+   */
+  public abstract RspAcceso deleteAcceso(int idAcceso);
 
-    public abstract RspAcceso getAccesoPorIdAcceso(int idAcceso);
+  public abstract RspAcceso getAccesoPorIdAcceso(int idAcceso);
 
-    public abstract RspAcceso getAccesoPorTraza(String traza);
+  public abstract RspAcceso getAccesoPorTraza(String traza);
 
-    public abstract RspAcceso getAccesoPorIdUsuario(int idUsuario);
+  public abstract RspAcceso getAccesoPorIdUsuario(int idUsuario);
 
-    public abstract RspAcceso getAccesoPorLogin(String login);
+  public abstract RspAcceso getAccesoPorLogin(String login);
 
-    public abstract RspAcceso getAccesoPorPassword(String password);
+  public abstract RspAcceso getAccesoPorPassword(String password);
 
-    public abstract RspAcceso getAccesoPorCorreo(String correo);
+  public abstract RspAcceso getAccesoPorCorreo(String correo);
 
-    public abstract RspAcceso esLoginExistente(String login);
+  public abstract RspAcceso esLoginExistente(String login);
 
-    public abstract RspAcceso esPasswordExistente(String password);
-    
-    public abstract RspAcceso esLoginPasswordValido(String login, String password);
+  public abstract RspAcceso esPasswordExistente(String password);
 
-    public abstract RspAcceso esCorreoExistente(String correo);
-    
-    public abstract RspAcceso esCorreoCoincidente(String correo, int id_persona);
+  public abstract RspAcceso esLoginPasswordValido(String login, String password);
 
-    public abstract RspAcceso listAcceso();
-    
-    public abstract RspAcceso updateEstadoHabilitado(int idAcceso);
-    
-    public abstract RspAcceso updateEstadoRegistrado(int idAcceso);
-    
-    public abstract RspAcceso updateEstadoSolicitado(int idAcceso);
-    
-    public abstract RspAcceso updateEstadoHabilitadoPorIdPersona(int idPersona);
-    
-    public abstract RspAcceso updateEstadoRegistradoPorIdPersona(int idPersona);
-    
-    public abstract RspAcceso updateEstadoSolicitadoPorIdPersona(int idPersona);
-    
-    public abstract RspAcceso updateCorreo(String correo);
+  public abstract RspAcceso esCorreoExistente(String correo);
+
+  public abstract RspAcceso esCorreoCoincidente(String correo, int id_persona);
+
+  public abstract RspAcceso listAcceso();
+
+  public abstract RspAcceso updateEstadoHabilitado(int idAcceso);
+
+  public abstract RspAcceso updateEstadoRegistrado(int idAcceso);
+
+  public abstract RspAcceso updateEstadoSolicitado(int idAcceso);
+
+  public abstract RspAcceso updateEstadoHabilitadoPorIdPersona(int idPersona);
+
+  public abstract RspAcceso updateEstadoRegistradoPorIdPersona(int idPersona);
+
+  public abstract RspAcceso updateEstadoSolicitadoPorIdPersona(int idPersona);
+
+  public abstract RspAcceso updateCorreo(String correo);
+
+  public abstract RspAcceso updateCorreo(int idPersona, String correo);
 }

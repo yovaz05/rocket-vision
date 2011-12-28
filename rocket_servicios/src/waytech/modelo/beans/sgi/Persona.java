@@ -24,6 +24,7 @@ public class Persona {
     private String telefonoMovil;
     private String telefonoHabitacion;
     private String telefonoTrabajo;
+    private String correo;
     private String facebook;
     private String twitter;
     private String fechaConversion;
@@ -44,6 +45,7 @@ public class Persona {
     private boolean esDiscipuloEnProceso;
     private float porcentajeCompletadoPerfil;
     private TipoPersona idTipoPersona;
+    private Red red;
     private Zona idZona;
 
     public Persona() {
@@ -312,4 +314,22 @@ public class Persona {
     public void setTwitter(String twitter) {
         this.twitter = twitter;
     }
+    
+    public Red getRed() {
+        return red;
+    }
+
+    public void setRed(Red red) {
+        this.red = red;
+    }
+
+  public String getCorreo() {
+    return correo;
+  }
+
+  public void setCorreo(String correo) {
+    this.correo = correo;
+  }
+    
+    
 }
