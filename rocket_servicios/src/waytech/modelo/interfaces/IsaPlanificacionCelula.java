@@ -15,7 +15,27 @@ public interface IsaPlanificacionCelula {
 
     public abstract RspPlanificacionCelula insertPlanificacionCelula(PlanificacionCelulaInsert planificacionCelula);
 
+    public abstract RspPlanificacionCelula insertPlanificacionCelulaDiaSemana(int idCelula);
+
     public abstract RspPlanificacionCelula updatePlanificacionCelula(PlanificacionCelulaUpdate planificacionCelula);
+
+    public abstract RspPlanificacionCelula updateIdCelula(int idPlanificacionCelula, int idCelula);
+
+    public abstract RspPlanificacionCelula updateIdSemana(int idPlanificacionCelula, int idSemana);
+
+    public abstract RspPlanificacionCelula updateFecha(int idPlanificacionCelula, String fecha);
+
+    public abstract RspPlanificacionCelula updateNuevosInvitados(int idPlanificacionCelula, int nuevosInvitados);
+
+    public abstract RspPlanificacionCelula updateReconciliados(int idPlanificacionCelula, int reconciliados);
+
+    public abstract RspPlanificacionCelula updateVisitas(int idPlanificacionCelula, int visitas);
+
+    public abstract RspPlanificacionCelula updateNumeroIntegrantes(int idPlanificacionCelula, int numeroIntegrantes);
+
+    public abstract RspPlanificacionCelula updateConvertidos(int idPlanificacionCelula, int convertidos);
+
+    public abstract RspPlanificacionCelula updateObservaciones(int idPlanificacionCelula, String observaciones);
 
     /**
      * Elimina un registro lógicamente

@@ -143,6 +143,7 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
 
     @Override
     public RspEjecucionCelula updateEjecucionCelula(EjecucionCelulaUpdate ejecucionCelula) {
+        String metodo = "updateEjecucionCelula(EjecucionCelulaUpdate ejecucionCelula)";
         RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
         ConectorBDMySQL conectorBD = new ConectorBDMySQL();
         rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
@@ -162,17 +163,17 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
-                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), "updateEjecucionCelula(EjecucionCelulaUpdate ejecucionCelula)", this.getClass().toString()));
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
                 conectorBD.getConnection().commit();
             } catch (Exception e) {
                 rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
-                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "updateEjecucionCelula(EjecucionCelulaUpdate ejecucionCelula)", this.getClass().toString()));
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
                 try {
                     rspEjecucionCelula.setEsRolledBackIntentado(true);
-                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", "updateEjecucionCelula(EjecucionCelulaUpdate ejecucionCelula)", this.getClass().toString()));
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
                     conectorBD.getConnection().rollback();
                 } catch (SQLException se2) {
-                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, "updateEjecucionCelula(EjecucionCelulaUpdate ejecucionCelula)", this.getClass().toString()));
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
                     rspEjecucionCelula.setEsRolledBackExitosamente(false);
                 }
             } finally {
@@ -194,6 +195,7 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
 
     @Override
     public RspEjecucionCelula insertEjecucionCelula(EjecucionCelulaInsert ejecucionCelula) {
+        String metodo = "insertEjecucionCelula(EjecucionCelulaInsert ejecucionCelula)";
         RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
         ConectorBDMySQL conectorBD = new ConectorBDMySQL();
         rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
@@ -249,17 +251,17 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
                 stmt.setDouble(17, ejecucionCelula.getOfrenda());
                 rows = stmt.executeUpdate();
                 stmt.close();
-                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), "insertEjecucionCelula(EjecucionCelula EjecucionCelula)", this.getClass().toString()));
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
                 conectorBD.getConnection().commit();
             } catch (Exception e) {
                 rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
-                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "insertEjecucionCelula(EjecucionCelula EjecucionCelula)", this.getClass().toString()));
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
                 try {
                     rspEjecucionCelula.setEsRolledBackIntentado(true);
-                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", "insertEjecucionCelula(EjecucionCelula EjecucionCelula)", this.getClass().toString()));
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
                     conectorBD.getConnection().rollback();
                 } catch (SQLException se2) {
-                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, "insertEjecucionCelula(EjecucionCelula EjecucionCelula)", this.getClass().toString()));
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
                     rspEjecucionCelula.setEsRolledBackExitosamente(false);
                 }
             } finally {
@@ -368,6 +370,771 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
                 return rspEjecucionCelula;
             }
         } else {
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula insertEjecucionCelulaDiaSemana(int idCelula) {
+        String metodo = "insertEjecucionCelulaDiaSemana(int idCelula)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            String traza = utilidadSistema.generarTraza();
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "INSERT INTO ejecucion_celula ("
+                        + "id_ejecucion_celula,"
+                        + "id_celula,"
+                        + "id_semana,"
+                        + "fecha,"
+                        + "nuevos_invitados,"
+                        + "reconciliados,"
+                        + "visitas,"
+                        + "numero_integrantes,"
+                        + "convertidos,"
+                        + "observaciones,"
+                        + "traza,"
+                        + "estado,"
+                        + "amigos_solo_asisten_grupo,"
+                        + "integrantes_casa_oracion,"
+                        + "integrantes_otras_iglesia,"
+                        + "asistencia_domingo_anterior,"
+                        + "ofrenda)"
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                stmt.setInt(1, 0);
+                stmt.setInt(2, idCelula);
+                stmt.setInt(3, 1);
+                stmt.setString(4, "1970-01-01");
+                stmt.setInt(5, 0);
+                stmt.setInt(6, 0);
+                stmt.setInt(7, 0);
+                stmt.setInt(8, 0);
+                stmt.setInt(9, 0);
+                stmt.setString(10, "NA");
+                stmt.setString(11, traza);
+                stmt.setShort(12, Short.valueOf("1"));
+                stmt.setInt(13, 0);
+                stmt.setInt(14, 0);
+                stmt.setInt(15, 0);
+                stmt.setInt(16, 0);
+                stmt.setDouble(17, 0);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                    rspEjecucionCelula.setEjecucionCelula(getEjecucionCelulaPorTraza(traza).getEjecucionCelula());
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula updateIdCelula(int idEjecucionCelula, int idCelula) {
+        String metodo = "updateIdCelula(int idEjecucionCelula, int idCelula)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE ejecucion_celula SET id_celula = '" + idCelula + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula updateIdSemana(int idEjecucionCelula, int idSemana) {
+        String metodo = "updateIdSemana(int idEjecucionCelula, int idSemana)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE ejecucion_celula SET id_semana = '" + idSemana + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula updateNumeroInvitados(int idEjecucionCelula, int nuevosInvitados) {
+        String metodo = "updateNumeroInvitados(int idEjecucionCelula, int nuevosInvitados)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE ejecucion_celula SET numero_invitados = '" + nuevosInvitados + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula updateReconciliados(int idEjecucionCelula, int reconciliados) {
+        String metodo = "updateReconciliados(int idEjecucionCelula, int reconciliados)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE ejecucion_celula SET reconciliados = '" + reconciliados + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula updateVisitas(int idEjecucionCelula, int visitas) {
+        String metodo = "updateVisitas(int idEjecucionCelula, int visitas)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE ejecucion_celula SET visitas = '" + visitas + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula updateNumeroIntegrantes(int idEjecucionCelula, int numeroIntegrantes) {
+        String metodo = "updateNumeroIntegrantes(int idEjecucionCelula, int numeroIntegrantes)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE ejecucion_celula SET numero_integrantes = '" + numeroIntegrantes + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula updateConvertidos(int idEjecucionCelula, int convertidos) {
+        String metodo = "updateConvertidos(int idEjecucionCelula, int convertidos)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE ejecucion_celula SET convertidos = '" + convertidos + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula updateObservaciones(int idEjecucionCelula, String observaciones) {
+        String metodo = "updateObservaciones(int idEjecucionCelula, String observaciones)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE ejecucion_celula SET observaciones = '" + observaciones + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula updateAmigosSoloAsistenGrupos(int idEjecucionCelula, int amigosSoloAsistenGrupo) {
+        String metodo = "updateAmigosSoloAsistenGrupos(int idEjecucionCelula, int amigosSoloAsistenGrupo)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE ejecucion_celula SET amigos_solo_asisten_grupo = '" + amigosSoloAsistenGrupo + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula updateIntegrantesCasaOracion(int idEjecucionCelula, int integrantesCasaOracion) {
+        String metodo = "updateIntegrantesCasaOracion(int idEjecucionCelula, int integrantesCasaOracion)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE ejecucion_celula SET integrantes_casa_oracion = '" + integrantesCasaOracion + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula updateIntegrantesOtrasIglesias(int idEjecucionCelula, int integrantesOtrasIglesias) {
+        String metodo = "updateIntegrantesOtrasIglesias(int idEjecucionCelula, int integrantesOtrasIglesias)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE ejecucion_celula SET integrantes_otras_iglesias = '" + integrantesOtrasIglesias + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula updateAsistenciaDomingoAnterior(int idEjecucionCelula, int asistenciaDomingoAnterior) {
+        String metodo = "updateAsistenciaDomingoAnterior(int idEjecucionCelula, int asistenciaDomingoAnterior)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE ejecucion_celula SET asistencia_domingo_anterior = '" + asistenciaDomingoAnterior + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspEjecucionCelula;
+        }
+    }
+
+    @Override
+    public RspEjecucionCelula updateOfrenda(int idEjecucionCelula, Double ofrenda) {
+        String metodo = "updateOfrenda(int idEjecucionCelula, Double ofrenda)";
+        RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspEjecucionCelula.setEsConexionAbiertaExitosamente(false);
+        rspEjecucionCelula.setEsConexionCerradaExitosamente(false);
+        rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspEjecucionCelula.setEsRolledBackIntentado(false);
+        rspEjecucionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
+            rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE ejecucion_celula SET ofrenda = '" + ofrenda + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspEjecucionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspEjecucionCelula.setEsRolledBackIntentado(true);
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspEjecucionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspEjecucionCelula.esRolledBackIntentado()) {
+                    rspEjecucionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspEjecucionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspEjecucionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspEjecucionCelula;
+            }
+        } else {
+            rspEjecucionCelula.setEsRolledBackExitosamente(false);
             rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
             return rspEjecucionCelula;
         }

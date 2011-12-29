@@ -138,6 +138,7 @@ public class SaPlanificacionCelula implements IsaPlanificacionCelula {
 
     @Override
     public RspPlanificacionCelula updatePlanificacionCelula(PlanificacionCelulaUpdate planificacionCelula) {
+        String metodo = "updatePlanificacionCelula(PlanificacionCelulaUpdate planificacionCelula)";
         RspPlanificacionCelula rspPlanificacionCelula = new RspPlanificacionCelula();
         ConectorBDMySQL conectorBD = new ConectorBDMySQL();
         rspPlanificacionCelula.setEsConexionAbiertaExitosamente(false);
@@ -157,17 +158,17 @@ public class SaPlanificacionCelula implements IsaPlanificacionCelula {
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
-                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), "updatePlanificacionCelula(PlanificacionCelulaUpdate planificacionCelula)", this.getClass().toString()));
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
                 conectorBD.getConnection().commit();
             } catch (Exception e) {
                 rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
-                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "updatePlanificacionCelula(PlanificacionCelulaUpdate planificacionCelula)", this.getClass().toString()));
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
                 try {
                     rspPlanificacionCelula.setEsRolledBackIntentado(true);
-                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", "updatePlanificacionCelula(PlanificacionCelulaUpdate planificacionCelula)", this.getClass().toString()));
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
                     conectorBD.getConnection().rollback();
                 } catch (SQLException se2) {
-                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, "updatePlanificacionCelula(PlanificacionCelulaUpdate planificacionCelula)", this.getClass().toString()));
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
                     rspPlanificacionCelula.setEsRolledBackExitosamente(false);
                 }
             } finally {
@@ -189,6 +190,7 @@ public class SaPlanificacionCelula implements IsaPlanificacionCelula {
 
     @Override
     public RspPlanificacionCelula insertPlanificacionCelula(PlanificacionCelulaInsert planificacionCelula) {
+        String metodo = "insertPlanificacionCelula(PlanificacionCelulaInsert planificacionCelula)";
         RspPlanificacionCelula rspPlanificacionCelula = new RspPlanificacionCelula();
         ConectorBDMySQL conectorBD = new ConectorBDMySQL();
         rspPlanificacionCelula.setEsConexionAbiertaExitosamente(false);
@@ -235,17 +237,17 @@ public class SaPlanificacionCelula implements IsaPlanificacionCelula {
 
                 rows = stmt.executeUpdate();
                 stmt.close();
-                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), "insertPlanificacionCelula(PlanificacionCelulaInsert planificacionCelula)", this.getClass().toString()));
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
                 conectorBD.getConnection().commit();
             } catch (Exception e) {
                 rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
-                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "insertPlanificacionCelula(PlanificacionCelulaInsert planificacionCelula)", this.getClass().toString()));
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
                 try {
                     rspPlanificacionCelula.setEsRolledBackIntentado(true);
-                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", "insertPlanificacionCelula(PlanificacionCelulaInsert planificacionCelula)", this.getClass().toString()));
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
                     conectorBD.getConnection().rollback();
                 } catch (SQLException se2) {
-                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, "insertPlanificacionCelula(PlanificacionCelulaInsert planificacionCelula)", this.getClass().toString()));
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
                     rspPlanificacionCelula.setEsRolledBackExitosamente(false);
                 }
             } finally {
@@ -354,6 +356,555 @@ public class SaPlanificacionCelula implements IsaPlanificacionCelula {
                 return rspPlanificacionCelula;
             }
         } else {
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPlanificacionCelula;
+        }
+    }
+
+    @Override
+    public RspPlanificacionCelula insertPlanificacionCelulaDiaSemana(int idCelula) {
+        String metodo = "insertPlanificacionCelulaDiaSemana(int idCelula)";
+        RspPlanificacionCelula rspPlanificacionCelula = new RspPlanificacionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspPlanificacionCelula.setEsConexionAbiertaExitosamente(false);
+        rspPlanificacionCelula.setEsConexionCerradaExitosamente(false);
+        rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspPlanificacionCelula.setEsRolledBackIntentado(false);
+        rspPlanificacionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPlanificacionCelula.setEsConexionAbiertaExitosamente(true);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            String traza = utilidadSistema.generarTraza();
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "INSERT INTO planificacion_celula ("
+                        + "id_planificacion_celula,"
+                        + "id_celula,"
+                        + "id_semana,"
+                        + "fecha,"
+                        + "nuevos_invitados,"
+                        + "reconciliados,"
+                        + "visitas,"
+                        + "numero_integrantes,"
+                        + "convertidos,"
+                        + "observaciones,"
+                        + "traza,"
+                        + "estado)"
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                stmt.setInt(1, 0);
+                stmt.setInt(2, idCelula);
+                stmt.setInt(3, 1);
+                stmt.setString(4, "1970-01-01");
+                stmt.setInt(5, 0);
+                stmt.setInt(6, 0);
+                stmt.setInt(7, 0);
+                stmt.setInt(8, 0);
+                stmt.setInt(9, 0);
+                stmt.setString(10, "NA");
+                stmt.setString(11, traza);
+                stmt.setShort(12, Short.valueOf("1"));
+
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspPlanificacionCelula.setEsRolledBackIntentado(true);
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspPlanificacionCelula.esRolledBackIntentado()) {
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspPlanificacionCelula.setEsConexionCerradaExitosamente(true);
+                    rspPlanificacionCelula.setPlanificacionCelula(getPlanificacionCelulaPorTraza(traza).getPlanificacionCelula());
+                }
+                rspPlanificacionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPlanificacionCelula;
+            }
+        } else {
+            rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPlanificacionCelula;
+        }
+    }
+
+    @Override
+    public RspPlanificacionCelula updateIdCelula(int idPlanificacionCelula, int idCelula) {
+        String metodo = "updateIdCelula(int idPlanificacionCelula, int idCelula)";
+        RspPlanificacionCelula rspPlanificacionCelula = new RspPlanificacionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspPlanificacionCelula.setEsConexionAbiertaExitosamente(false);
+        rspPlanificacionCelula.setEsConexionCerradaExitosamente(false);
+        rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspPlanificacionCelula.setEsRolledBackIntentado(false);
+        rspPlanificacionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPlanificacionCelula.setEsConexionAbiertaExitosamente(true);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE planificacion_celula SET id_celula = '" + idCelula + "' WHERE id_planificacion_celula = '" + idPlanificacionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspPlanificacionCelula.setEsRolledBackIntentado(true);
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspPlanificacionCelula.esRolledBackIntentado()) {
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspPlanificacionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspPlanificacionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPlanificacionCelula;
+            }
+        } else {
+            rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPlanificacionCelula;
+        }
+    }
+
+    @Override
+    public RspPlanificacionCelula updateIdSemana(int idPlanificacionCelula, int idSemana) {
+        String metodo = "updateIdSemana(int idPlanificacionCelula, int idSemana)";
+        RspPlanificacionCelula rspPlanificacionCelula = new RspPlanificacionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspPlanificacionCelula.setEsConexionAbiertaExitosamente(false);
+        rspPlanificacionCelula.setEsConexionCerradaExitosamente(false);
+        rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspPlanificacionCelula.setEsRolledBackIntentado(false);
+        rspPlanificacionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPlanificacionCelula.setEsConexionAbiertaExitosamente(true);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE planificacion_celula SET id_semana = '" + idSemana + "' WHERE id_planificacion_celula = '" + idPlanificacionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspPlanificacionCelula.setEsRolledBackIntentado(true);
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspPlanificacionCelula.esRolledBackIntentado()) {
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspPlanificacionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspPlanificacionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPlanificacionCelula;
+            }
+        } else {
+            rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPlanificacionCelula;
+        }
+
+    }
+
+    @Override
+    public RspPlanificacionCelula updateFecha(int idPlanificacionCelula, String fecha) {
+        String metodo = "updateFecha(int idPlanificacionCelula, String fecha)";
+        RspPlanificacionCelula rspPlanificacionCelula = new RspPlanificacionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspPlanificacionCelula.setEsConexionAbiertaExitosamente(false);
+        rspPlanificacionCelula.setEsConexionCerradaExitosamente(false);
+        rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspPlanificacionCelula.setEsRolledBackIntentado(false);
+        rspPlanificacionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPlanificacionCelula.setEsConexionAbiertaExitosamente(true);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE planificacion_celula SET fecha = '" + fecha + "' WHERE id_planificacion_celula = '" + idPlanificacionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspPlanificacionCelula.setEsRolledBackIntentado(true);
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspPlanificacionCelula.esRolledBackIntentado()) {
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspPlanificacionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspPlanificacionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPlanificacionCelula;
+            }
+        } else {
+            rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPlanificacionCelula;
+        }
+    }
+
+    @Override
+    public RspPlanificacionCelula updateNuevosInvitados(int idPlanificacionCelula, int nuevosInvitados) {
+        String metodo = "updateNuevosInvitados(int idPlanificacionCelula, int nuevosInvitados)";
+        RspPlanificacionCelula rspPlanificacionCelula = new RspPlanificacionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspPlanificacionCelula.setEsConexionAbiertaExitosamente(false);
+        rspPlanificacionCelula.setEsConexionCerradaExitosamente(false);
+        rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspPlanificacionCelula.setEsRolledBackIntentado(false);
+        rspPlanificacionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPlanificacionCelula.setEsConexionAbiertaExitosamente(true);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE planificacion_celula SET nuevos_invitados = '" + nuevosInvitados + "' WHERE id_planificacion_celula = '" + idPlanificacionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspPlanificacionCelula.setEsRolledBackIntentado(true);
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspPlanificacionCelula.esRolledBackIntentado()) {
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspPlanificacionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspPlanificacionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPlanificacionCelula;
+            }
+        } else {
+            rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPlanificacionCelula;
+        }
+    }
+
+    @Override
+    public RspPlanificacionCelula updateReconciliados(int idPlanificacionCelula, int reconciliados) {
+        String metodo = "updateReconciliados(int idPlanificacionCelula, int reconciliados)";
+        RspPlanificacionCelula rspPlanificacionCelula = new RspPlanificacionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspPlanificacionCelula.setEsConexionAbiertaExitosamente(false);
+        rspPlanificacionCelula.setEsConexionCerradaExitosamente(false);
+        rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspPlanificacionCelula.setEsRolledBackIntentado(false);
+        rspPlanificacionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPlanificacionCelula.setEsConexionAbiertaExitosamente(true);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE planificacion_celula SET reconciliados = '" + reconciliados + "' WHERE id_planificacion_celula = '" + idPlanificacionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspPlanificacionCelula.setEsRolledBackIntentado(true);
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspPlanificacionCelula.esRolledBackIntentado()) {
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspPlanificacionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspPlanificacionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPlanificacionCelula;
+            }
+        } else {
+            rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPlanificacionCelula;
+        }
+    }
+
+    @Override
+    public RspPlanificacionCelula updateVisitas(int idPlanificacionCelula, int visitas) {
+        String metodo = "updateVisitas(int idPlanificacionCelula, int visitas)";
+        RspPlanificacionCelula rspPlanificacionCelula = new RspPlanificacionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspPlanificacionCelula.setEsConexionAbiertaExitosamente(false);
+        rspPlanificacionCelula.setEsConexionCerradaExitosamente(false);
+        rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspPlanificacionCelula.setEsRolledBackIntentado(false);
+        rspPlanificacionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPlanificacionCelula.setEsConexionAbiertaExitosamente(true);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE planificacion_celula SET visitas = '" + visitas + "' WHERE id_planificacion_celula = '" + idPlanificacionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspPlanificacionCelula.setEsRolledBackIntentado(true);
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspPlanificacionCelula.esRolledBackIntentado()) {
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspPlanificacionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspPlanificacionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPlanificacionCelula;
+            }
+        } else {
+            rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPlanificacionCelula;
+        }
+    }
+
+    @Override
+    public RspPlanificacionCelula updateNumeroIntegrantes(int idPlanificacionCelula, int numeroIntegrantes) {
+        String metodo = "updateNumeroIntegrantes(int idPlanificacionCelula, int numeroIntegrantes)";
+        RspPlanificacionCelula rspPlanificacionCelula = new RspPlanificacionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspPlanificacionCelula.setEsConexionAbiertaExitosamente(false);
+        rspPlanificacionCelula.setEsConexionCerradaExitosamente(false);
+        rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspPlanificacionCelula.setEsRolledBackIntentado(false);
+        rspPlanificacionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPlanificacionCelula.setEsConexionAbiertaExitosamente(true);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE planificacion_celula SET numero_integrantes = '" + numeroIntegrantes + "' WHERE id_planificacion_celula = '" + idPlanificacionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspPlanificacionCelula.setEsRolledBackIntentado(true);
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspPlanificacionCelula.esRolledBackIntentado()) {
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspPlanificacionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspPlanificacionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPlanificacionCelula;
+            }
+        } else {
+            rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPlanificacionCelula;
+        }
+    }
+
+    @Override
+    public RspPlanificacionCelula updateConvertidos(int idPlanificacionCelula, int convertidos) {
+        String metodo = "updateConvertidos(int idPlanificacionCelula, int convertidos)";
+        RspPlanificacionCelula rspPlanificacionCelula = new RspPlanificacionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspPlanificacionCelula.setEsConexionAbiertaExitosamente(false);
+        rspPlanificacionCelula.setEsConexionCerradaExitosamente(false);
+        rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspPlanificacionCelula.setEsRolledBackIntentado(false);
+        rspPlanificacionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPlanificacionCelula.setEsConexionAbiertaExitosamente(true);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE planificacion_celula SET convertidos = '" + convertidos + "' WHERE id_planificacion_celula = '" + idPlanificacionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspPlanificacionCelula.setEsRolledBackIntentado(true);
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspPlanificacionCelula.esRolledBackIntentado()) {
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspPlanificacionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspPlanificacionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPlanificacionCelula;
+            }
+        } else {
+            rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPlanificacionCelula;
+        }
+    }
+
+    @Override
+    public RspPlanificacionCelula updateObservaciones(int idPlanificacionCelula, String observaciones) {
+        String metodo = "updateObservaciones(int idPlanificacionCelula, String observaciones)";
+        RspPlanificacionCelula rspPlanificacionCelula = new RspPlanificacionCelula();
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        rspPlanificacionCelula.setEsConexionAbiertaExitosamente(false);
+        rspPlanificacionCelula.setEsConexionCerradaExitosamente(false);
+        rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+        rspPlanificacionCelula.setEsRolledBackIntentado(false);
+        rspPlanificacionCelula.setEsRolledBackExitosamente(true);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPlanificacionCelula.setEsConexionAbiertaExitosamente(true);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            int rows;
+            PreparedStatement stmt = null;
+            try {
+                conectorBD.getConnection().setAutoCommit(false);
+                String consultaSQL = "UPDATE planificacion_celula SET observaciones = '" + observaciones + "' WHERE id_planificacion_celula = '" + idPlanificacionCelula + "'";
+                stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
+                rows = stmt.executeUpdate();
+                stmt.close();
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
+                conectorBD.getConnection().commit();
+            } catch (Exception e) {
+                rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+                try {
+                    rspPlanificacionCelula.setEsRolledBackIntentado(true);
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirConsulta("Intentando Rollback", metodo, this.getClass().toString()));
+                    conectorBD.getConnection().rollback();
+                } catch (SQLException se2) {
+                    rspPlanificacionCelula.setRespuestaRolledBack(utilidadSistema.imprimirExcepcion(se2, metodo, this.getClass().toString()));
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+            } finally {
+                if (!rspPlanificacionCelula.esRolledBackIntentado()) {
+                    rspPlanificacionCelula.setEsRolledBackExitosamente(false);
+                }
+                if (conectorBD.cerrarConexion()) {
+                    rspPlanificacionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspPlanificacionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPlanificacionCelula;
+            }
+        } else {
+            rspPlanificacionCelula.setEsRolledBackExitosamente(false);
             rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
             return rspPlanificacionCelula;
         }
