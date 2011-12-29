@@ -38,6 +38,14 @@ public interface IsaCelula {
     public abstract RspCelula updateIdZonaCelula(int idCelula, int idZona);
 
     public abstract RspCelula updateFechaAperturaCelula(int idCelula, String fechaApertura);
+    
+    /**
+     * 1,2,3,4
+     * @param idCelula
+     * @param estado
+     * @return 
+     */
+    public abstract RspCelula updateEstadoCelula(int idCelula, int estado);
 
     /**
      * Elimina un registro lógicamente
@@ -59,4 +67,11 @@ public interface IsaCelula {
     public abstract RspCelula esCelulaConIntegrantes(int idCelula);
 
     public abstract RspCelula listCelula();
+    
+    /**
+     * 1,2,3,4
+     * @param estado
+     * @return 
+     */
+    public abstract RspCelula listCelulaPorEstado(int estado);
 }
