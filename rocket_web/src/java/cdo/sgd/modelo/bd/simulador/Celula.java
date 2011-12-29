@@ -8,7 +8,7 @@ package cdo.sgd.modelo.bd.simulador;
  *
  * @author Gabriel Pérez
  */
-public class CelulaUtil {
+public class Celula {
 
   protected int id = 0;
   protected String codigo = "";
@@ -36,17 +36,17 @@ public class CelulaUtil {
   private int diaSemana;
   private int numeroLideres;
 
-  public CelulaUtil() {
+  public Celula() {
   }
 
-  public CelulaUtil(int id) {
+  public Celula(int id) {
     this.id = id;
   }
 
   /**
    * constructor de celula con datos de resumen
    */
-  public CelulaUtil(String codigo, String nombre, String nombreRed, String nombreLider1, String nombreLider2, String dia, String hora) {
+  public Celula(String codigo, String nombre, String nombreRed, String nombreLider1, String nombreLider2, String dia, String hora) {
     this.codigo = codigo;
     this.nombre = nombre;
     this.nombreRed = nombreRed;
@@ -56,7 +56,7 @@ public class CelulaUtil {
     this.hora = hora;
   }
 
-  public CelulaUtil(String codigo, String nombre, String dia, String hora) {
+  public Celula(String codigo, String nombre, String dia, String hora) {
     this.codigo = codigo;
     this.nombre = nombre;
     this.dia = dia;

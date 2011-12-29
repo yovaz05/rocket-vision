@@ -1,14 +1,16 @@
-package cdo.sgd.controladores;
+package rocket.controladores.celula.reporte;
 
+import cdo.sgd.controladores.CtrlVista;
 import sig.controladores.Sesion;
 import sig.controladores.Vistas;
 import cdo.sgd.controladores.widgets.BotonCelula;
 import cdo.sgd.controladores.widgets.BotonLider;
 import cdo.sgd.controladores.widgets.EtqNro;
 import cdo.sgd.modelo.bd.simulador.BD;
-import cdo.sgd.modelo.bd.simulador.ReporteCelula;
-import cdo.sgd.modelo.bd.simulador.ReporteCelulaListado;
+import cdo.sgd.modelo.bd.util.ReporteCelulaListadoUtil;
+import cdo.sgd.modelo.bd.util.ReporteCelulaUtil;
 import java.util.ArrayList;
+import java.util.List;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -22,30 +24,14 @@ import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Vbox;
-import waytech.utilidades.UtilSIG;
+import sig.modelo.servicios.ServicioReporteCelula;
+import waytech.utilidades.Util;
 
 /**
  * controlador asociado a vistaReporteCelula/Listado.zul
  * @author Gabriel
  */
-public class CtrlReporteCelulaListadoSemana extends GenericForwardComposer {
-
-  //widgets:
-  Grid grid;
-  Label etqNro, etqDireccion, etqDiaHora, etqNombre;
-  BotonCelula tbbCodigo;
-  BotonLider tbbLider1, tbbLider2;
-  Toolbarbutton tbbEstatus;
-  //Column colEstadosReporte;
-  //datos:
-  ArrayList lista;
-  BD bd;
-  //variable de control:
-  int idRed;
-  CtrlVista ctrlVista = new CtrlVista();
-  //referencias:
-  Include vistaCentral;
-  Include panelCentral;
+public class CtrlReporteCelulaSemana extends GenericForwardComposer {
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -54,27 +40,35 @@ public class CtrlReporteCelulaListadoSemana extends GenericForwardComposer {
   }
 
   public void inicio() {
-    idRed = UtilSIG.buscarIdRed(this.getClass());
-    mostrarDatos();
+    //TODO: MEJORA CODIGO: Mejorar esta línea
+    idRed = Util.buscarIdRed(this.getClass());
+    buscarData();
+    mostrarData();
     notificarBarra();
   }
 
-  public void mostrarDatos() {
+  public void buscarData() {
+    /*-
+     * bd = new BD();
+     * lista = bd.getReportesCelulaPorRed(idRed);
+     */
     //TODO:verificar tipo de usuario para ver qué data buscar y mostrar
-    bd = new BD();
-    lista = bd.getReportesCelulaPorRed(idRed);
+    //-lista = servicioCelula.getCelulasListado();
+    lista = servicioReporteCelula.getReporteCelulaListado();
+  }
+
+  public void mostrarData() {
     System.out.println("CtrlReporteListado.mostrarDatos() -> lista de datos. size = " + lista.size());
     ListModelList model = new ListModelList(lista);
     grid.setModel(model);
     grid.setRowRenderer(new RowRenderer() {
 
       public void render(Row row, Object data) throws Exception {
-        ReporteCelulaListado reporte = (ReporteCelulaListado) data;
+        ReporteCelulaListadoUtil reporte = (ReporteCelulaListadoUtil) data;
         //se crean los widgets con la data
         etqNro = new EtqNro("" + reporte.getNroItem());
         etqDireccion = new Label("" + reporte.getDireccionCorta());
-        etqDiaHora = new Label("" + reporte.getDia());
-        etqNombre = new Label("" + reporte.getNombre());
+        etqDiaHora = new Label(Util.getDiaHora(reporte.getDia(), reporte.getHora()));
         tbbCodigo = new BotonCelula("" + reporte.getCodigo());
         tbbLider1 = new BotonLider("" + reporte.getNombreLider1());
         tbbLider2 = new BotonLider("" + reporte.getNombreLider2());
@@ -83,13 +77,15 @@ public class CtrlReporteCelulaListadoSemana extends GenericForwardComposer {
         final int idCelula = reporte.getIdCelula();
         final int idLider1 = reporte.getIdLider1();
         final int idLider2 = reporte.getIdLider2();
+        final int idLider3 = reporte.getIdLider3();
+        final int idLider4 = reporte.getIdLider4();
 
         //TODO: asociar eventos de acuerdo al estatus
         tbbEstatus = new Toolbarbutton();
         int status = reporte.getEstatus();
-        if (status == ReporteCelula.REPORTE_INGRESADO) {
-          tbbEstatus.setTooltiptext(ReporteCelula.STATUS_INGRESADO);
-          tbbEstatus.setImage(ReporteCelula.IMAGEN_INGRESADO);
+        if (status == ReporteCelulaUtil.REPORTE_INGRESADO) {
+          tbbEstatus.setTooltiptext(ReporteCelulaUtil.STATUS_INGRESADO);
+          tbbEstatus.setImage(ReporteCelulaUtil.IMAGEN_INGRESADO);
           tbbEstatus.addEventListener(Events.ON_CLICK, new EventListener() {
 
             public void onEvent(Event event) throws Exception {
@@ -99,9 +95,9 @@ public class CtrlReporteCelulaListadoSemana extends GenericForwardComposer {
               ctrlVista.forzarCambioVista_btnControl();
             }
           });
-        } else if (status == ReporteCelula.REPORTE_NO_INGRESADO) {
-          tbbEstatus.setTooltiptext(ReporteCelula.STATUS_NO_INGRESADO);
-          tbbEstatus.setImage(ReporteCelula.IMAGEN_NO_INGRESADO);
+        } else if (status == ReporteCelulaUtil.REPORTE_NO_INGRESADO) {
+          tbbEstatus.setTooltiptext(ReporteCelulaUtil.STATUS_NO_INGRESADO);
+          tbbEstatus.setImage(ReporteCelulaUtil.IMAGEN_NO_INGRESADO);
           tbbEstatus.addEventListener(Events.ON_CLICK, new EventListener() {
 
             public void onEvent(Event event) throws Exception {
@@ -112,9 +108,9 @@ public class CtrlReporteCelulaListadoSemana extends GenericForwardComposer {
               ctrlVista.forzarCambioVista_btnControl();
             }
           });
-        } else if (status == ReporteCelula.CELULA_NO_REALIZADA) {
-          tbbEstatus.setTooltiptext(ReporteCelula.STATUS_NO_REALIZADA);
-          tbbEstatus.setImage(ReporteCelula.IMAGEN_NO_REALIZADA);
+        } else if (status == ReporteCelulaUtil.CELULA_NO_REALIZADA) {
+          tbbEstatus.setTooltiptext(ReporteCelulaUtil.STATUS_NO_REALIZADA);
+          tbbEstatus.setImage(ReporteCelulaUtil.IMAGEN_NO_REALIZADA);
           tbbEstatus.addEventListener(Events.ON_CLICK, new EventListener() {
 
             public void onEvent(Event event) throws Exception {
@@ -124,7 +120,9 @@ public class CtrlReporteCelulaListadoSemana extends GenericForwardComposer {
               ctrlVista.forzarCambioVista_btnControl();
             }
           });
-        }/* else if (status == ReporteCelula.CONFIRMADO) {
+        }
+        /*+posiblemente se use este código + adelante:
+        else if (status == ReporteCelula.CONFIRMADO) {
         tbbEstatus.setTooltiptext(ReporteCelula.STATUS_CONFIRMADO);
         tbbEstatus.setImage(ReporteCelula.IMAGEN_CONFIRMADO);
         tbbEstatus.addEventListener(Events.ON_CLICK, new EventListener() {
@@ -135,23 +133,24 @@ public class CtrlReporteCelulaListadoSemana extends GenericForwardComposer {
         panelCentral.setSrc(Vistas.REPORTE_CELULA);
         }
         });
-        }*/
-
+        }
+         */
 
         tbbCodigo.setIdCelula(idCelula);
         tbbLider1.setIdLider(idLider1);
         tbbLider2.setIdLider(idLider2);
+        tbbLider3.setIdLider(idLider3);
+        tbbLider4.setIdLider(idLider4);
 
         //se anexan los widgets a la fila
         etqNro.setParent(row);
         tbbCodigo.setParent(row);
-        etqDireccion.setParent(row);
         Vbox vbox = new Vbox();
         tbbLider1.setParent(vbox);
         tbbLider2.setParent(vbox);
         vbox.setParent(row);
+        etqDireccion.setParent(row);
         etqDiaHora.setParent(row);
-        //-etqNombre.setParent(row);
         tbbEstatus.setParent(row);
       }
     });
@@ -167,17 +166,31 @@ public class CtrlReporteCelulaListadoSemana extends GenericForwardComposer {
     Toolbarbutton btnControl2 = (Toolbarbutton) vistaCentral.getFellow("btnControl2");
     Events.postEvent(1, "onClick", btnControl2, null);
   }
-  
-  
+
   /**
    * Redirige a la vista de estadísticas detalladas, donde se pueden elegir las fechas a conveniencia
    */
+  //+: será usado en versiones próximas
   public void onClick$btnReportesAnteriores() {
     Sesion.setVistaActual(Vistas.REPORTE_CELULA_LISTADO_SEMANA);
     Sesion.setVistaSiguiente(Vistas.REPORTE_CELULA_LISTADO_ANTERIORES);
     //forzar cambio de vista:
     ctrlVista.forzarCambioVista_btnControl();
   }
-  
-  
+  //referencias:
+  Include vistaCentral;
+  Include panelCentral;
+  //widgets:
+  Grid grid;
+  Label etqNro, etqDireccion, etqDiaHora;
+  BotonCelula tbbCodigo;
+  BotonLider tbbLider1, tbbLider2,tbbLider3, tbbLider4;
+  Toolbarbutton tbbEstatus;
+  //variable de control:
+  CtrlVista ctrlVista = new CtrlVista();
+  int idRed;
+  //datos:
+  List<ReporteCelulaListadoUtil> lista = new ArrayList<ReporteCelulaListadoUtil>();
+  BD bd;
+  ServicioReporteCelula servicioReporteCelula = new ServicioReporteCelula();
 }

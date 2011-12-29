@@ -21,6 +21,7 @@ import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Vbox;
 import sig.modelo.servicios.ServicioCelula;
 import waytech.utilidades.UtilFechas;
+import waytech.utilidades.Util;
 
 /**
  * Controlador asociado a listado de células:
@@ -40,7 +41,7 @@ public class CtrlCelulaListado extends GenericForwardComposer {
   //variables de control:
   int idRedUsuario;
   //gestión de datos:
-  List<CelulaListadoUtil> listaCelulaListado = new ArrayList<CelulaListadoUtil>();
+  List<CelulaListadoUtil> lista = new ArrayList<CelulaListadoUtil>();
   ServicioCelula servicioCelula = new ServicioCelula();
 
   @Override
@@ -51,26 +52,25 @@ public class CtrlCelulaListado extends GenericForwardComposer {
 
   void inicio() {
     //idRed se usará más adelante
-    //+idRedUsuario = UtilSIG.buscarIdRed(this.getClass());
+    //+idRedUsuario = Util.buscarIdRed(this.getClass());
     //+TODO:verificar tipo de usuario para ver qué data buscar y mostrar
-
     buscarData();
     mostrarDatos();
     notificarBarra();
   }
 
   /**
-   * Obtiene la listaCelulaListado de células de la base de datos
+   * Obtiene la lista de células de la base de datos
    */
   void buscarData() {
-    listaCelulaListado = servicioCelula.getCelulasListado();
+    lista = servicioCelula.getCelulasListado();
   }
 
   /**
    * se encarga de traer los datos, y mostrarlos en el grid
    */
   public void mostrarDatos() {
-    ListModelList model = new ListModelList(listaCelulaListado);
+    ListModelList model = new ListModelList(lista);
     grid.setModel(model);
     grid.setRowRenderer(new RowRenderer() {
 
@@ -92,7 +92,7 @@ public class CtrlCelulaListado extends GenericForwardComposer {
         //se crean los widgets con la data
         etqNro = new EtqNro("" + celula.getNroItem());
         etqDireccion = new Label(celula.getDireccionCorta());
-        etqDiaHora = new Label(getDiaHora(celula.getDia(), celula.getHora()));
+        etqDiaHora = new Label(Util.getDiaHora(celula.getDia(), celula.getHora()));
         tbbCelula = new BotonCelula(celula.getCodigo());
 
         tbbCelula.setIdCelula(idCelula);
@@ -138,19 +138,6 @@ public class CtrlCelulaListado extends GenericForwardComposer {
     });
   }
 
-  /**
-   * arman cadena día y hora de la célula
-   * @param dia 1:lunes,..., 7:domingo
-   * @param hora 8>>800am,..., 20>>8.00 pm
-   * @return día y hora formateada
-   */
-  //TODO: hacer las conversiones necesarias
-  String getDiaHora(String dia, String hora) {
-    if (dia.isEmpty() || hora.isEmpty()) {
-      return "No asignado";
-    }
-    return UtilFechas.convertirDiaSemanaTextoCompleto(dia) + ", " + UtilFechas.convertirHoraTextoCompleto(hora);
-  }
 
   /**
    * notifica a barraMenu sobre la vista actual, para el manejo de estados

@@ -127,7 +127,6 @@ public class CtrlMenu extends GenericForwardComposer {
 
   public void onClick$itemCelulaReporteListado() {
     cambiarVista(Vistas.REPORTE_CELULA_LISTADO_SEMANA);
-    mostrarStatus("En construcción");
   }
 
   public void onClick$itemCelulaEstadisticas() {

@@ -25,8 +25,8 @@ public final class BD {
   public ArrayList<Discipulo> discipulos;
   public ArrayList<DiscipuloProceso> discipulosProceso;
   public ArrayList<DiscipuloProcesoListado> discipulosProcesoListado;
-  public ArrayList<ReporteCelula> reportesCelula;
-  public ArrayList<ReporteCelulaListado> reportesCelulaListado;
+  public ArrayList<ReporteCelulaUtil> reportesCelula;
+  public ArrayList<ReporteCelulaListadoUtil> reportesCelulaListado;
   public ArrayList<Usuario> usuarios;
   //variable reusable:
   ArrayList lista;
@@ -520,42 +520,42 @@ public final class BD {
   }
 
   public void crearReportesCelulas() {
-    reportesCelula = new ArrayList<ReporteCelula>();
+    reportesCelula = new ArrayList<ReporteCelulaUtil>();
     int id = 0;
     int idRed = 1;
 
     //Datos de Resumen:
     CelulaUtil celula1 = buscarCelula(1);
     //-System.out.println("BD: celula1: " + celula1.toString());
-    ReporteCelula reporte1 = new ReporteCelula(celula1);
-    reporte1.setEstatus(ReporteCelula.REPORTE_INGRESADO);
-    reporte1.setDescripcionEstatus(ReporteCelula.STATUS_INGRESADO);
+    ReporteCelulaUtil reporte1 = new ReporteCelulaUtil(celula1);
+    reporte1.setEstatus(ReporteCelulaUtil.REPORTE_INGRESADO);
+    reporte1.setDescripcionEstatus(ReporteCelulaUtil.STATUS_INGRESADO);
 
     CelulaUtil celula2 = buscarCelula(2);
-    ReporteCelula reporte2 = new ReporteCelula(celula2);
-    reporte2.setEstatus(ReporteCelula.REPORTE_NO_INGRESADO);
-    reporte2.setDescripcionEstatus(ReporteCelula.STATUS_NO_INGRESADO);
+    ReporteCelulaUtil reporte2 = new ReporteCelulaUtil(celula2);
+    reporte2.setEstatus(ReporteCelulaUtil.REPORTE_NO_INGRESADO);
+    reporte2.setDescripcionEstatus(ReporteCelulaUtil.STATUS_NO_INGRESADO);
 
     CelulaUtil celula3 = buscarCelula(3);
-    ReporteCelula reporte3 = new ReporteCelula(celula3);
-    reporte3.setEstatus(ReporteCelula.REPORTE_INGRESADO);
-    reporte3.setDescripcionEstatus(ReporteCelula.STATUS_INGRESADO);
+    ReporteCelulaUtil reporte3 = new ReporteCelulaUtil(celula3);
+    reporte3.setEstatus(ReporteCelulaUtil.REPORTE_INGRESADO);
+    reporte3.setDescripcionEstatus(ReporteCelulaUtil.STATUS_INGRESADO);
 
     CelulaUtil celula4 = buscarCelula(4);
-    ReporteCelula reporte4 = new ReporteCelula(celula4);
-    reporte4.setEstatus(ReporteCelula.CELULA_NO_REALIZADA);
-    reporte4.setDescripcionEstatus(ReporteCelula.STATUS_NO_REALIZADA);
+    ReporteCelulaUtil reporte4 = new ReporteCelulaUtil(celula4);
+    reporte4.setEstatus(ReporteCelulaUtil.CELULA_NO_REALIZADA);
+    reporte4.setDescripcionEstatus(ReporteCelulaUtil.STATUS_NO_REALIZADA);
     reporte4.setObservaciones("Aquí se explicará el porqué no se realizó la célula");
 
     CelulaUtil celula5 = buscarCelula(5);
-    ReporteCelula reporte5 = new ReporteCelula(celula5);
-    reporte5.setEstatus(ReporteCelula.REPORTE_INGRESADO);
-    reporte5.setDescripcionEstatus(ReporteCelula.STATUS_INGRESADO);
+    ReporteCelulaUtil reporte5 = new ReporteCelulaUtil(celula5);
+    reporte5.setEstatus(ReporteCelulaUtil.REPORTE_INGRESADO);
+    reporte5.setDescripcionEstatus(ReporteCelulaUtil.STATUS_INGRESADO);
 
     CelulaUtil celula6 = buscarCelula(6);
-    ReporteCelula reporte6 = new ReporteCelula(celula6);
-    reporte6.setEstatus(ReporteCelula.REPORTE_NO_INGRESADO);
-    reporte6.setDescripcionEstatus(ReporteCelula.STATUS_NO_INGRESADO);
+    ReporteCelulaUtil reporte6 = new ReporteCelulaUtil(celula6);
+    reporte6.setEstatus(ReporteCelulaUtil.REPORTE_NO_INGRESADO);
+    reporte6.setDescripcionEstatus(ReporteCelulaUtil.STATUS_NO_INGRESADO);
 
 
     //Números de los Reportes:
@@ -594,10 +594,10 @@ public final class BD {
   }
 
   public void crearReportesCelulaListado() {
-    reportesCelulaListado = new ArrayList<ReporteCelulaListado>();
+    reportesCelulaListado = new ArrayList<ReporteCelulaListadoUtil>();
     int i = 1;
-    for (ReporteCelula reporte : reportesCelula) {
-      reportesCelulaListado.add(new ReporteCelulaListado(i, reporte));
+    for (ReporteCelulaUtil reporte : reportesCelula) {
+      reportesCelulaListado.add(new ReporteCelulaListadoUtil(i, reporte));
       i++;
     }
   }
@@ -768,11 +768,11 @@ public final class BD {
     return null;//error
   }
 
-  public ReporteCelula buscarReporteCelula(int id) {
+  public ReporteCelulaUtil buscarReporteCelula(int id) {
     if (id == 0) {
-      return new ReporteCelula();
+      return new ReporteCelulaUtil();
     }
-    for (ReporteCelula r : reportesCelula) {
+    for (ReporteCelulaUtil r : reportesCelula) {
       if (r.getIdReporte() == id) {
         return r;
       }
@@ -780,11 +780,11 @@ public final class BD {
     return null;//error
   }
 
-  public ReporteCelulaListado buscarReporteCelulaListado(int id) {
+  public ReporteCelulaListadoUtil buscarReporteCelulaListado(int id) {
     if (id == 0) {
       return null;//error
     }
-    for (ReporteCelulaListado r : reportesCelulaListado) {
+    for (ReporteCelulaListadoUtil r : reportesCelulaListado) {
       if (r.getId() == id) {
         return r;
       }
@@ -844,11 +844,11 @@ public final class BD {
     return discipulosLanzadosListado;
   }
 
-  public ArrayList<ReporteCelula> getReportesCelulas() {
+  public ArrayList<ReporteCelulaUtil> getReportesCelulas() {
     return reportesCelula;
   }
 
-  public ArrayList<ReporteCelulaListado> getReportesCelulasListado() {
+  public ArrayList<ReporteCelulaListadoUtil> getReportesCelulasListado() {
     return reportesCelulaListado;
   }
 
@@ -956,8 +956,8 @@ public final class BD {
   }
 
   public ArrayList getReportesCelulaPorRed(int idRed) {
-    lista = new ArrayList<ReporteCelulaListado>();
-    for (ReporteCelulaListado item : reportesCelulaListado) {
+    lista = new ArrayList<ReporteCelulaListadoUtil>();
+    for (ReporteCelulaListadoUtil item : reportesCelulaListado) {
       if ((item.getIdRed() == idRed)) {
         lista.add(item);
       }

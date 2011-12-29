@@ -3,7 +3,7 @@ package cdo.sgd.controladores;
 import sig.controladores.Sesion;
 import sig.controladores.Vistas;
 import cdo.sgd.modelo.bd.simulador.BD;
-import cdo.sgd.modelo.bd.simulador.CelulaUtil;
+import cdo.sgd.modelo.bd.simulador.Celula;
 import cdo.sgd.modelo.bd.simulador.ReporteCelula;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +28,7 @@ import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
-import waytech.utilidades.UtilSIG;
+import waytech.utilidades.Util;
 import waytech.utilidades.UtilFechas;
 
 //TODO: MEJORAR EL MANEJO DE FOCOS DE LOS widgets
@@ -141,7 +141,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
   BD datos;
   ArrayList lista;
   ReporteCelula reporte = new ReporteCelula();
-  CelulaUtil celula;
+  Celula celula;
   //referencias:
   Include vistaCentral;
   Include panelCentral;
@@ -162,7 +162,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     }
     System.out.println("CtrlReporteCelula.modo: " + modo);
     getIdCelula();
-    celula = (CelulaUtil) datos.buscarCelula(id);
+    celula = (Celula) datos.buscarCelula(id);
     reporte = (ReporteCelula) datos.buscarReporteCelula(id);
     ocultarPregunta();
     mostrarDatosCelula();
@@ -518,7 +518,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     result$spnDomingoAnterior.setValue(Integer.parseInt(result$etqDomingoAnterior.getValue()));
     //ofrendas
     ofrendas$txtOfrendasMonto.setValue("" + Double.parseDouble(ofrendas$etqOfrendasMonto.getValue()));
-    UtilSIG.mostrarRol(ofrendas$etqOfrendasEntregadas, ofrendas$chkEntregadas.isChecked());
+    Util.mostrarRol(ofrendas$etqOfrendasEntregadas, ofrendas$chkEntregadas.isChecked());
     //Observaciones
     obs$txtObservaciones.setValue(obs$etqObservaciones.getValue());
   }
@@ -542,7 +542,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     result$etqTotalAsistencia.setValue("" + getTotalAsistencia());
     //ofrendas
     ofrendas$etqOfrendasMonto.setValue("" + ofrendas$txtOfrendasMonto.getValue());
-    UtilSIG.marcarRol(ofrendas$chkEntregadas, reporte.isOfrendasEntregadas());
+    Util.marcarRol(ofrendas$chkEntregadas, reporte.isOfrendasEntregadas());
     //Observaciones
     obs$etqObservaciones.setValue(obs$txtObservaciones.getValue());
   }

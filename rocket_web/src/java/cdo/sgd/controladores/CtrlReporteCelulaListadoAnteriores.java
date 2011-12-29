@@ -14,7 +14,6 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
-import org.zkoss.zul.Div;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
@@ -23,7 +22,7 @@ import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Vbox;
-import waytech.utilidades.UtilSIG;
+import waytech.utilidades.Util;
 
 /**
  * controlador asociado a vistaReporteCelula/Listado.zul
@@ -63,7 +62,7 @@ public class CtrlReporteCelulaListadoAnteriores extends GenericForwardComposer {
   }
 
   public void inicio() {
-    idRed = UtilSIG.buscarIdRed(this.getClass());
+    idRed = Util.buscarIdRed(this.getClass());
     mostrarDatos();
     notificarBarra();
   }

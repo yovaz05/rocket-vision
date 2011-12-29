@@ -53,7 +53,7 @@ public class ServicioCelula {
   int idCelula = 0;
 
   public List getAll() {
-    RspCelula rspCelula = saCelula.listCelula();
+    RspCelula rspCelula = saCelula.listCelulaActiva();
     System.out.println("INICIO DE LA CONEXION " + rspCelula.getRespuestaInicioDeConexion());
     celulas = rspCelula.getTodosLosCelulas();
     if (celulas == null) {
@@ -155,6 +155,7 @@ public class ServicioCelula {
    * @return listado de células
    * @author Gerardo Montilla
    */
+  //MEJORAR CODIGO CON generarReporteCelulaUtil  
   public List<CelulaListadoUtil> getCelulasListado() {
     getAll();
     int n = 0;
@@ -163,7 +164,8 @@ public class ServicioCelula {
       idCelula = celulaBD.getIdCelula();
       //**System.out.println("ServicioCelula.getCelulasListado.celulaBD.id=" + idCelula);
       celulaListado.setId(idCelula);
-
+      
+      celulaListado.setNroItem(++n);
       String codigoCelula = celulaBD.getCodigo();
       celulaListado.setCodigo(codigoCelula);
 
@@ -186,40 +188,26 @@ public class ServicioCelula {
       celulaListado.setFechaApertura(celulaBD.getFechaApertura());
 
       List<PersonaEnCelula> listaPersonaCelula = new ArrayList<PersonaEnCelula>();
-      listaPersonaCelula = saPersonaCelula.listPersonaEnCelulaPorIdCelula(idCelula).getAllPersonaEnCelulas();
+      listaPersonaCelula = saPersonaCelula.listLiderCelulaPorIdCelula(idCelula).getAllPersonaEnCelulas();
 
-      /*-
-      String nombreLider1 = "";
-      String nombreLider2 = "";
-      String nombreLider3 = "";
-      String nombreLider4 = "";
-      int idLider1 = 0;
-      int idLider2 = 0;
-      int idLider3 = 0;
-      int idLider4 = 0;
-       */
       int i = 0;
 
-      //**System.out.println("ServicioCelula.CELULA.id=" + idCelula + ", codigo=" + codigoCelula);
-      //**System.out.println("ServicioCelula.recorrido de líderes de la célula");
       for (PersonaEnCelula personaCelula : listaPersonaCelula) {
-        if (personaCelula.esLiderCelula()) {
-          i++;
-          int idLider = personaCelula.getIdPersona().getIdPersona();
-          String nombreLider = personaCelula.getIdPersona().getNombre();
-          if (i == 1) {
-            celulaListado.setIdLider1(idLider);
-            celulaListado.setNombreLider1(nombreLider);
-          } else if (i == 2) {
-            celulaListado.setIdLider2(idLider);
-            celulaListado.setNombreLider2(nombreLider);
-          } else if (i == 3) {
-            celulaListado.setIdLider3(idLider);
-            celulaListado.setNombreLider3(nombreLider);
-          } else if (i == 4) {
-            celulaListado.setIdLider4(idLider);
-            celulaListado.setNombreLider4(nombreLider);
-          }
+        i++;
+        int idLider = personaCelula.getIdPersona().getIdPersona();
+        String nombreLider = personaCelula.getIdPersona().getNombre();
+        if (i == 1) {
+          celulaListado.setIdLider1(idLider);
+          celulaListado.setNombreLider1(nombreLider);
+        } else if (i == 2) {
+          celulaListado.setIdLider2(idLider);
+          celulaListado.setNombreLider2(nombreLider);
+        } else if (i == 3) {
+          celulaListado.setIdLider3(idLider);
+          celulaListado.setNombreLider3(nombreLider);
+        } else if (i == 4) {
+          celulaListado.setIdLider4(idLider);
+          celulaListado.setNombreLider4(nombreLider);
         }
         celulaListado.setNumeroLideres(i);
       }
@@ -227,10 +215,8 @@ public class ServicioCelula {
       celulaListado.setIdRed(celulaBD.getRed().getIdRed());
       celulaListado.setNombreRed(celulaBD.getRed().getNombre());
       n++;
-      celulaListado.setNroItem(n);
       listadoCelulas.add(celulaListado);
     }
-    System.out.println("ServicioCelula.listado.tamaño" + listadoCelulas.size());
     return listadoCelulas;
   }
 
@@ -477,12 +463,11 @@ public class ServicioCelula {
     }
     return existe;
   }
-  
+
   private String generarDireccionCorta(String ciudad, String zona) {
     if (zona.isEmpty()) {
       return "No asignada";
     }
     return zona + ", " + ciudad;
   }
-  
 }

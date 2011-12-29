@@ -7,7 +7,7 @@ import waytech.utilidades.UtilFechas;
  *
  * @author Gabriel
  */
-public class ReporteCelula extends CelulaUtil {
+public class ReporteCelula extends Celula {
   //id del reporte
   int idReporte = 0;
   //datos de resumen:
@@ -63,7 +63,7 @@ public class ReporteCelula extends CelulaUtil {
     super(idCelula);
   }
 
-  public ReporteCelula(CelulaUtil celula) {
+  public ReporteCelula(Celula celula) {
     this.idCelula = celula.id;
     this.codigo = celula.codigo;
     this.descripcionCelula = celula.direccionCorta;

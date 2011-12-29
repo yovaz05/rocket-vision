@@ -57,8 +57,8 @@ public class ServicioPersona {
     if (lideresLanzados == null) {
       System.out.println("ServicioLider. rspLider.getTodosLosLiders(). devuelve null");
     }
-    listarConsolaAll();
-    //**System.out.println("CIERRE DE LA CONEXION " + respuesta.getRespuestaInicioDeConexion());
+    //** listarConsolaAll();
+    //** System.out.println("CIERRE DE LA CONEXION " + respuesta.getRespuestaInicioDeConexion());
     return lideresLanzados;
   }
 

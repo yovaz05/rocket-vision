@@ -15,7 +15,7 @@ import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Toolbarbutton;
 import waytech.utilidades.UtilFechas;
-import waytech.utilidades.UtilSIG;
+import waytech.utilidades.Util;
 
 /**
  * controlador asociado a vistaPerfil/CambiarCorreo
@@ -90,7 +90,7 @@ public class CtrlCelulaEstadisticas extends GenericForwardComposer {
    * recupera variables de sesión
    */
   private void buscarVarSesion() throws InterruptedException {
-    idRed = UtilSIG.buscarIdRed(this.getClass());
+    idRed = Util.buscarIdRed(this.getClass());
     fechaInicio = (Calendar) Sesion.getVariable("fechaInicio");
     fechaFin = (Calendar) Sesion.getVariable("fechaFin");
   }

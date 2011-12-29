@@ -41,7 +41,6 @@ title="Casa de Oración - Rocket"?>
 <!--        <include id="panelCentral" src="vistaDiscipuloProceso/Listado.zul"/>-->
 <!--        <include id="panelCentral" src="vistaLiderCelula/Listado.zul"/>-->
 <!--        <include id="panelCentral" src="vistaCuenta/Perfil.zul"/>-->
-<!--        <include id="panelCentral" src="vistaReporteCelula/ListadoSemana.zul"/>        -->
 <!--        <include id="panelCentral" src="vistaReporteCelula/ListadoAnteriores.zul"/>        -->
 <!--        <include id="panelCentral" src="vistaCelulaEstadisticas/CelulaEstadisticasResumen.zul"/>-->
 <!--        <include id="panelCentral" src="vistaCelulaEstadisticas/CelulaEstadisticas.zul"/>-->
@@ -49,7 +48,8 @@ title="Casa de Oración - Rocket"?>
 
 <!--PROGRAMADAS CON BASE DE DATOS:-->
 <!--        <include id="panelCentral" src="vistaCelula/Listado.zul"/>-->
-        <include id="panelCentral" src="vistaLider/Listado.zul"/>
+<!--        <include id="panelCentral" src="vistaLider/Listado.zul"/>-->
+        <include id="panelCentral" src="vistaReporteCelula/ListadoSemana.zul"/>        
       </div>
     </center>
   </borderlayout>

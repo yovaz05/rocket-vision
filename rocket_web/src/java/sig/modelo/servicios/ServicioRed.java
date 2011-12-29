@@ -108,9 +108,9 @@ public class ServicioRed {
   }
 
   public List getLideresLanzados(int idRed) {
-    IsaPersonaEnRed isaPersonaRed = new SaPersonaEnRed();
+    SaPersonaEnRed saPersonaRed = new SaPersonaEnRed();
     RspPersonaEnRed rspPersonaRed = new RspPersonaEnRed();
-    rspPersonaRed = isaPersonaRed.listLideresLanzados(idRed);
+    rspPersonaRed = saPersonaRed.listLideresLanzados(idRed);
     System.out.println("INICIO DE LA CONEXION " + rspPersonaRed.getRespuestaInicioDeConexion());
     lideresLanzados = rspPersonaRed.getAllPersonaEnReds();
     /**/ listarLideresLanzados();

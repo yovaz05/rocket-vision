@@ -17,7 +17,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Toolbarbutton;
-import waytech.utilidades.UtilSIG;
+import waytech.utilidades.Util;
 
 /**
  * controlador asociado a vistaLiderResumen/Listado
@@ -44,7 +44,7 @@ public class CtrlLiderCelulaListado extends GenericForwardComposer {
   }
 
   void inicio() {
-    idRed = UtilSIG.buscarIdRed(this.getClass());
+    idRed = Util.buscarIdRed(this.getClass());
     mostrarDatos();
     notificarBarra();
   }

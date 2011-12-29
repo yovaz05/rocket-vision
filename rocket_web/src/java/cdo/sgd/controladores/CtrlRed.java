@@ -15,7 +15,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Vbox;
-import waytech.utilidades.UtilSIG;
+import waytech.utilidades.Util;
 
 /**
  * controlador asociado a vistaRed
@@ -46,7 +46,7 @@ public class CtrlRed extends GenericForwardComposer {
 
   public void inicio() throws InterruptedException {
     bd = new BD();
-    id = UtilSIG.buscarIdRed(this.getClass());
+    id = Util.buscarIdRed(this.getClass());
     mostrarDatos();
     actualizarBoton();
     notificarBarra();

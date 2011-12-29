@@ -19,7 +19,7 @@ import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Vbox;
-import waytech.utilidades.UtilSIG;
+import waytech.utilidades.Util;
 
 /**
  * controlador asociado a vista: DiscipuloProceso/Listado
@@ -51,7 +51,7 @@ public class CtrlDiscipuloProcesoListado extends GenericForwardComposer {
   }
 
   void inicio() {
-    idRed = UtilSIG.buscarIdRed(this.getClass());
+    idRed = Util.buscarIdRed(this.getClass());
     mostrarDatos();
     notificarBarra();
   }

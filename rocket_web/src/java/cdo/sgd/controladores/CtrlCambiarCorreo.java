@@ -9,7 +9,7 @@ import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Toolbarbutton;
-import waytech.utilidades.UtilSIG;
+import waytech.utilidades.Util;
 
 /**
  * controlador asociado a vistaPerfil/CambiarCorreo
@@ -34,7 +34,7 @@ public class CtrlCambiarCorreo extends GenericForwardComposer {
   public void inicio() throws InterruptedException {
     datos = new BD();
     buscarId();
-    idRed = UtilSIG.buscarIdRed(this.getClass());
+    idRed = Util.buscarIdRed(this.getClass());
     mostrarEmailAnterior();
     notificarBarra();
   }

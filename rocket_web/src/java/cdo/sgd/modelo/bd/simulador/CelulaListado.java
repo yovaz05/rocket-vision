@@ -5,18 +5,18 @@ package cdo.sgd.modelo.bd.simulador;
  *
  * @author Gabriel
  */
-public class CelulaListadoUtil extends CelulaUtil {
+public class CelulaListado extends Celula {
 
   protected int nroItem;
 
-  public CelulaListadoUtil() {
+  public CelulaListado() {
   }
   
-  public CelulaListadoUtil(int nroItem) {
+  public CelulaListado(int nroItem) {
     this.nroItem = nroItem;
   }
 
-  public CelulaListadoUtil(int nroItem, CelulaUtil celula) {
+  public CelulaListado(int nroItem, Celula celula) {
     this.nroItem = nroItem;
     this.id = celula.getId();
     this.idRed = celula.getIdRed();

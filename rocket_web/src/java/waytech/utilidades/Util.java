@@ -12,7 +12,7 @@ import org.zkoss.zul.Label;
  *
  * @author root
  */
-public class UtilSIG {
+public class Util {
 
   /**
    * setea un label de 'rol' de estado, true o false
@@ -55,4 +55,17 @@ public class UtilSIG {
     }
   }
 
+  /**
+   * concatena día y hora de la célula
+   * @param dia 1:lunes,..., 7:domingo
+   * @param hora 8>>800am,..., 20>>8.00 pm
+   * @return día y hora formateada, ejemplo: "Jueves, 7:30 p.m."
+   */
+  //TODO: hacer las conversiones necesarias
+  public static String getDiaHora(String dia, String hora) {
+    if (dia.isEmpty() || hora.isEmpty()) {
+      return "No asignado";
+    }
+    return UtilFechas.convertirDiaSemanaTextoCompleto(dia) + ", " + UtilFechas.convertirHoraTextoCompleto(hora);
+  }
 }

@@ -20,10 +20,11 @@ title="SIG - Mejorando barra superior"?>
 <!-- barra de menú -->
       <div id="divIzquierdo" style="display:inline-block;float:left" width="240px" visible="false">
           <!--        DEBUG: items en desarrollo-->
-      <menubar id="menubar" orient="horizontal" height="24px">
-        <menuitem label="Células" id="itemCelulaListado" image="/img/iconos/bullet.png"/>
-        <menuitem label="Líderes" id="itemDiscipuloLanzadoListado" image="/img/iconos/bullet.png"/>
-      </menubar>
+        <menubar id="menubar" orient="horizontal" height="24px">
+          <menuitem label="Líderes" id="itemDiscipuloLanzadoListado" image="/img/iconos/bullet.png"/>
+          <menuitem label="Células" id="itemCelulaListado" image="/img/iconos/bullet.png"/>
+          <menuitem label="Reportes" id="itemCelulaReporteListado" image="/img/iconos/bullet.png"/>
+        </menubar>
         <hbox>
 <!--          <menubar id="menubar" orient="horizontal" height="24px">
                   DEBUG: items en desarrollo
@@ -96,7 +97,7 @@ title="SIG - Mejorando barra superior"?>
             </menupopup>
           </menu>         
           -->
-          <menu id="tbbUsuario" label="Gabriel Pérez" visible="false">
+          <menu id="tbbUsuario" label="Gabriel Pérez">
             <menupopup>
               <menuitem label="Perfil"              id="itemPerfil"           image="/img/iconos/bullet.png"/>
               <menuitem label="Cambiar correo"      id="itemCambiarEmail"     image="/img/iconos/bullet.png"/>

@@ -19,7 +19,7 @@ import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Toolbarbutton;
 import sig.modelo.servicios.ServicioPersona;
-import waytech.utilidades.UtilSIG;
+import waytech.utilidades.Util;
 
 /**
  * controlador asociado a vistaDiscipuloLanzado/Listado
@@ -52,7 +52,7 @@ public class CtrlLiderListado extends GenericForwardComposer {
   }
 
   void inicio() {
-    idRed = UtilSIG.buscarIdRed(this.getClass());
+    idRed = Util.buscarIdRed(this.getClass());
     buscarData();
     mostrarData();
     notificarBarra();

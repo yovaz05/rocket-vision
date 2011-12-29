@@ -4,18 +4,18 @@ package cdo.sgd.modelo.bd.util;
  *
  * @author Gabriel
  */
-public class ReporteCelulaListado extends ReporteCelula{
+public class ReporteCelulaListadoUtil extends ReporteCelulaUtil{
   int nroItem;
   
-  public ReporteCelulaListado() {
+  public ReporteCelulaListadoUtil() {
     super();
   }
 
-  public ReporteCelulaListado(int idCelula) {
+  public ReporteCelulaListadoUtil(int idCelula) {
     super(idCelula);
   }
 
-  public ReporteCelulaListado(int nroItem, ReporteCelula reporte) {
+  public ReporteCelulaListadoUtil(int nroItem, ReporteCelulaUtil reporte) {
     this.nroItem = nroItem;
     this.id = reporte.id;
     this.idReporte = reporte.idReporte;
@@ -33,7 +33,7 @@ public class ReporteCelulaListado extends ReporteCelula{
     this.setReferencias(reporte.idRed, reporte.idLider1, reporte.idLider2);
 }
 
-  public ReporteCelulaListado(int idCelula, int nroItem) {
+  public ReporteCelulaListadoUtil(int idCelula, int nroItem) {
     super(idCelula);
     this.nroItem = nroItem;
   }

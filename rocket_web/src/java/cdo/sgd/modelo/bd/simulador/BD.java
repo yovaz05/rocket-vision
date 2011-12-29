@@ -18,8 +18,8 @@ public final class BD {
   public ArrayList<Lider> lideres;
   public ArrayList<LiderCelula> lideresCelula;
   public ArrayList<LiderCelulaListado> lideresCelulaListado;
-  public ArrayList<CelulaUtil> celulas;
-  public ArrayList<CelulaListadoUtil> celulasListado;
+  public ArrayList<Celula> celulas;
+  public ArrayList<CelulaListado> celulasListado;
   public ArrayList<DiscipuloLanzado> discipulosLanzados;
   public ArrayList<DiscipuloLanzadoListado> discipulosLanzadosListado;
   public ArrayList<Discipulo> discipulos;
@@ -275,10 +275,10 @@ public final class BD {
   }
 
   public void crearCelulas() {
-    celulas = new ArrayList<CelulaUtil>();
+    celulas = new ArrayList<Celula>();
     int id = 0;
 
-    CelulaUtil celula0 = new CelulaUtil(id++);
+    Celula celula0 = new Celula(id++);
     celulas.add(celula0);
 
     //Red 1
@@ -287,7 +287,7 @@ public final class BD {
     int idLider2 = 1; //OJO
     int idSuperv1 = 2;
     int idSuperv2 = 3;
-    CelulaUtil celula = new CelulaUtil("GJG-I-01", "Blood and Fire 1", "Jueves", "7:00 p.m.");
+    Celula celula = new Celula("GJG-I-01", "Blood and Fire 1", "Jueves", "7:00 p.m.");
     celula.setId(id++);
     celula.setNombreRed(redes.get(idRed).getNombre());
     celula.setLideres(buscarLider(idLider1).nombre, "");
@@ -303,7 +303,7 @@ public final class BD {
     idLider2 = 5;
     idSuperv1 = 2;
     idSuperv2 = 3;
-    celula = new CelulaUtil("GJG-II-01", "Jóvenes con voz de estruendo", "Martes", "7:00 p.m.");
+    celula = new Celula("GJG-II-01", "Jóvenes con voz de estruendo", "Martes", "7:00 p.m.");
     celula.setId(id++);
     celula.setNombreRed(redes.get(idRed).getNombre());
     celula.setDireccion(new Direccion("Lara", "Barquisimeto", "Ruezga Norte", "Sector 4, calle 2", ""));
@@ -318,7 +318,7 @@ public final class BD {
     idLider2 = 7;
     idSuperv1 = 2;
     idSuperv2 = 3;
-    celula = new CelulaUtil("GJG-III-01", "Bread of Live", "Martes", "6:30 p.m.");
+    celula = new Celula("GJG-III-01", "Bread of Live", "Martes", "6:30 p.m.");
     celula.setId(id++);
     celula.setNombreRed(redes.get(idRed).getNombre());
     celula.setLideres(buscarLider(idLider1).nombre, buscarLider(idLider2).nombre);
@@ -333,7 +333,7 @@ public final class BD {
     idLider2 = 1; //OJO
     idSuperv1 = 6;
     idSuperv2 = 7;
-    celula = new CelulaUtil("GJG-III-02", "Oasis", "Lunes", "7:00 p.m.");
+    celula = new Celula("GJG-III-02", "Oasis", "Lunes", "7:00 p.m.");
     celula.setId(id++);
     celula.setNombreRed(redes.get(idRed).getNombre());
     celula.setDireccion(new Direccion("Lara", "Barquisimeto", "El Tostao", "", ""));
@@ -351,7 +351,7 @@ public final class BD {
     idLider2 = 12; //OJO
 
 
-    CelulaUtil celula5 = new CelulaUtil("GJH-I-01", "Super Vida", "Viernes", "6:30 p.m.");
+    Celula celula5 = new Celula("GJH-I-01", "Super Vida", "Viernes", "6:30 p.m.");
     celula5.setId(id++);
     celula5.setNombreRed(redes.get(idRed).getNombre());
     celula5.setLideres(lideres.get(idLider1).nombre, lideres.get(idLider2).nombre);
@@ -361,7 +361,7 @@ public final class BD {
 
     idLider1 += 2;
     idLider2 += 2;
-    CelulaUtil celula6 = new CelulaUtil("GJH-II-01", "Super Fuerza", "Martes", "6:30 p.m.");
+    Celula celula6 = new Celula("GJH-II-01", "Super Fuerza", "Martes", "6:30 p.m.");
     celula6.setId(id++);
     celula6.setNombreRed(redes.get(idRed).getNombre());
     celula6.setLideres(lideres.get(idLider1).nombre, lideres.get(idLider2).nombre);
@@ -372,11 +372,11 @@ public final class BD {
   }
 
   public void crearCelulasListado() {
-    celulasListado = new ArrayList<CelulaListadoUtil>();
+    celulasListado = new ArrayList<CelulaListado>();
     int i = 1;
-    for (CelulaUtil celula : celulas) {
+    for (Celula celula : celulas) {
       if (celula.getId() != 0) {
-        celulasListado.add(new CelulaListadoUtil(i++, celula));
+        celulasListado.add(new CelulaListado(i++, celula));
       }
     }
   }
@@ -525,34 +525,34 @@ public final class BD {
     int idRed = 1;
 
     //Datos de Resumen:
-    CelulaUtil celula1 = buscarCelula(1);
+    Celula celula1 = buscarCelula(1);
     //-System.out.println("BD: celula1: " + celula1.toString());
     ReporteCelula reporte1 = new ReporteCelula(celula1);
     reporte1.setEstatus(ReporteCelula.REPORTE_INGRESADO);
     reporte1.setDescripcionEstatus(ReporteCelula.STATUS_INGRESADO);
 
-    CelulaUtil celula2 = buscarCelula(2);
+    Celula celula2 = buscarCelula(2);
     ReporteCelula reporte2 = new ReporteCelula(celula2);
     reporte2.setEstatus(ReporteCelula.REPORTE_NO_INGRESADO);
     reporte2.setDescripcionEstatus(ReporteCelula.STATUS_NO_INGRESADO);
 
-    CelulaUtil celula3 = buscarCelula(3);
+    Celula celula3 = buscarCelula(3);
     ReporteCelula reporte3 = new ReporteCelula(celula3);
     reporte3.setEstatus(ReporteCelula.REPORTE_INGRESADO);
     reporte3.setDescripcionEstatus(ReporteCelula.STATUS_INGRESADO);
 
-    CelulaUtil celula4 = buscarCelula(4);
+    Celula celula4 = buscarCelula(4);
     ReporteCelula reporte4 = new ReporteCelula(celula4);
     reporte4.setEstatus(ReporteCelula.CELULA_NO_REALIZADA);
     reporte4.setDescripcionEstatus(ReporteCelula.STATUS_NO_REALIZADA);
     reporte4.setObservaciones("Aquí se explicará el porqué no se realizó la célula");
 
-    CelulaUtil celula5 = buscarCelula(5);
+    Celula celula5 = buscarCelula(5);
     ReporteCelula reporte5 = new ReporteCelula(celula5);
     reporte5.setEstatus(ReporteCelula.REPORTE_INGRESADO);
     reporte5.setDescripcionEstatus(ReporteCelula.STATUS_INGRESADO);
 
-    CelulaUtil celula6 = buscarCelula(6);
+    Celula celula6 = buscarCelula(6);
     ReporteCelula reporte6 = new ReporteCelula(celula6);
     reporte6.setEstatus(ReporteCelula.REPORTE_NO_INGRESADO);
     reporte6.setDescripcionEstatus(ReporteCelula.STATUS_NO_INGRESADO);
@@ -708,11 +708,11 @@ public final class BD {
     return null;//error
   }
 
-  public CelulaUtil buscarCelula(int id) {
+  public Celula buscarCelula(int id) {
     if (id == 0) {
       return null;//error
     }
-    for (CelulaUtil celula : celulas) {
+    for (Celula celula : celulas) {
       if (celula.getId() == id) {
         return celula;
       }
@@ -732,11 +732,11 @@ public final class BD {
     return null;//error
   }
 
-  public CelulaListadoUtil buscarCelulaListado(int id) {
+  public CelulaListado buscarCelulaListado(int id) {
     if (id == 0) {
       return null;//error
     }
-    for (CelulaListadoUtil celulaListado : celulasListado) {
+    for (CelulaListado celulaListado : celulasListado) {
       if (celulaListado.getId() == id) {
         return celulaListado;
       }
@@ -812,11 +812,11 @@ public final class BD {
     return lideresCelula;
   }
 
-  public ArrayList<CelulaUtil> getCelulas() {
+  public ArrayList<Celula> getCelulas() {
     return celulas;
   }
 
-  public ArrayList<CelulaListadoUtil> getCelulasListado() {
+  public ArrayList<CelulaListado> getCelulasListado() {
     return celulasListado;
   }
 
@@ -936,8 +936,8 @@ public final class BD {
   }
 
   public ArrayList getCelulasPorRed(int idRed) {
-    lista = new ArrayList<CelulaListadoUtil>();
-    for (CelulaListadoUtil celulaListado : celulasListado) {
+    lista = new ArrayList<CelulaListado>();
+    for (CelulaListado celulaListado : celulasListado) {
       if ((celulaListado.getIdRed() == idRed)) {
         lista.add(celulaListado);
       }

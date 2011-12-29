@@ -23,7 +23,7 @@ import waytech.modelo.interfaces.IsaAcceso;
 import waytech.modelo.interfaces.IsaDiscipulo;
 import waytech.modelo.servicios.SaAcceso;
 import waytech.modelo.servicios.SaDiscipulo;
-import waytech.utilidades.UtilSIG;
+import waytech.utilidades.Util;
 
 /**
  * controlador asociado a vistaDiscipuloLanzado/Listado
@@ -53,7 +53,7 @@ public class CtrlLiderLanzadoListado extends GenericForwardComposer {
   }
 
   void inicio() {
-    idRed = UtilSIG.buscarIdRed(this.getClass());
+    idRed = Util.buscarIdRed(this.getClass());
     mostrarDatos();
     notificarBarra();
   }

@@ -7,7 +7,7 @@ import waytech.utilidades.UtilFechas;
  *
  * @author Gabriel
  */
-public class ReporteCelula extends CelulaUtil {
+public class ReporteCelulaUtil extends CelulaUtil {
   //id del reporte
   int idReporte = 0;
   //datos de resumen:
@@ -16,7 +16,7 @@ public class ReporteCelula extends CelulaUtil {
   int estatus = 0;
   String descripcionEstatus = "";
   //estatus de reporte:
-  public static final int REPORTE_INGRESADO = 0;//INGRESADO, PERO NO CONFIRMADO
+  public static final int REPORTE_INGRESADO = 4;//INGRESADO, PERO NO CONFIRMADO
   //public static final int CONFIRMADO = 1;;
   public static final int REPORTE_NO_INGRESADO = 2;
   public static final int CELULA_NO_REALIZADA = 3;
@@ -27,7 +27,7 @@ public class ReporteCelula extends CelulaUtil {
   public static final String IMAGEN_INGRESADO = "/img/iconos/status_ok_16.gif";
   public static final String IMAGEN_NO_INGRESADO = "/img/iconos/status_not_16.png";
   public static final String IMAGEN_NO_REALIZADA = "/img/iconos/status_alert_16.gif";
-  //public static final String IMAGEN_CONFIRMADO = "/img/iconos/status_ok.gif";
+  //public static final String IMAGE  N_CONFIRMADO = "/img/iconos/status_ok.gif";
   public static final String ESTILO_NO_INGRESADO = "background: url(/sig2/img/iconos/status_not_16.jpg) no-repeat; width:16px; height:16px";
   public static final String ACCION_VER_DETALLES = "Ver detalles";
   public static final String ACCION_INGRESAR = "Ingresar";
@@ -56,14 +56,14 @@ public class ReporteCelula extends CelulaUtil {
   double ofrendasMonto = 0.00;
   boolean ofrendasEntregadas = false;
 
-  public ReporteCelula() {
+  public ReporteCelulaUtil() {
   }
 
-  public ReporteCelula(int idCelula) {
+  public ReporteCelulaUtil(int idCelula) {
     super(idCelula);
   }
 
-  public ReporteCelula(CelulaUtil celula) {
+  public ReporteCelulaUtil(CelulaUtil celula) {
     this.idCelula = celula.id;
     this.codigo = celula.codigo;
     this.descripcionCelula = celula.direccionCorta;
@@ -79,7 +79,7 @@ public class ReporteCelula extends CelulaUtil {
     this.setPlanificacion(0, 0, 0, 0);
     this.setResultados(0, 0, 0, 0, 0, 0, 0, 0);
     this.setOfrendas(0.00, false);
-    this.setEstatus(ReporteCelula.REPORTE_NO_INGRESADO);
+    this.setEstatus(ReporteCelulaUtil.REPORTE_NO_INGRESADO);
   }
 
   @Override
