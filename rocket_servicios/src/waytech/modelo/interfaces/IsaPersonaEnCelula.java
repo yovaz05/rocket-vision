@@ -31,4 +31,6 @@ public interface IsaPersonaEnCelula {
   public abstract RspPersonaEnCelula listPersonaEnCelula();
 
   public abstract RspPersonaEnCelula listPersonaEnCelulaPorIdCelula(int idCelula);
+  
+  public abstract RspPersonaEnCelula listLiderCelulaPorIdCelula(int idCelula);
 }
