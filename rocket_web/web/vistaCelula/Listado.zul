@@ -16,7 +16,7 @@
   ]]>
   </zscript>
 <!--  <div apply="sig.controladores.CtrlCelulaListado" width="675px">-->
-  <div apply="sig.controladores.celula.CtrlCelulaListado" width="800px"> 
+  <div apply="sig.controladores.celula.CtrlCelulaListado" width="760px"> 
     <label id="tituloVentana" value="Células" sclass="titulo_ventana"/>
     <toolbar width="100%" height="20px" sclass="barraBotones"  visible="false">
       <toolbarbutton id="btnNew" label="Nueva" sclass="botonAccion" onClick="nuevaCelula()"/>

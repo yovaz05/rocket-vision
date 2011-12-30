@@ -64,7 +64,7 @@ public class Util {
   //TODO: hacer las conversiones necesarias
   public static String getDiaHora(String dia, String hora) {
     if (dia.isEmpty() || hora.isEmpty()) {
-      return "No asignado";
+      return "No asignados";
     }
     return UtilFechas.convertirDiaSemanaTextoCompleto(dia) + ", " + UtilFechas.convertirHoraTextoCompleto(hora);
   }

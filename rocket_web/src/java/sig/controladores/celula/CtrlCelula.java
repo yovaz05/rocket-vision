@@ -136,7 +136,7 @@ public class CtrlCelula extends GenericForwardComposer {
   //objeto con la data ingresada por el usuario
   CelulaUtil celulaActual = new CelulaUtil();
 
-  ServicioCelula servicio = new ServicioCelula();
+  ServicioCelula servicioCelula = new ServicioCelula();
   private int idCelula;
 
   @Override
@@ -197,7 +197,7 @@ public class CtrlCelula extends GenericForwardComposer {
    * con el id de la célula
    */
   void buscarData() {
-    celula = servicio.getCelula(idCelula);
+    celula = servicioCelula.getCelula(idCelula);
     if (celula == null) {
       System.out.println("CtrlCelula.buscarCelulaBD: NULL");
     } else {
@@ -791,7 +791,7 @@ public class CtrlCelula extends GenericForwardComposer {
     idRed = getIdRed();
     System.out.println("CtrlCelula.crearCelula.codigo=" + codigo);
     System.out.println("CtrlCelula.crearCelula.idRed=" + idRed);
-    idCelula = servicio.crearCelula(codigo, idRed);
+    idCelula = servicioCelula.crearCelula(codigo, idRed);
     System.out.println("CtrlCelula.crearCelula.idCelula=" + idCelula);
     Sesion.setVariable("idCelula", idCelula);
     Sesion.setVariable("celula.idRed", idRed);
@@ -1041,7 +1041,7 @@ return false;
 /*
 private boolean ingresarCelula() {
 prepararCelulaInsert();
-idCelula = servicio.insertCelula(celulaInsert);
+idCelula = servicioCelula.insertCelula(celulaInsert);
 if (idCelula == 0) {//error, no se grabó
 return false;
 }
@@ -1143,7 +1143,7 @@ ingresarLiderCelula(idLider4);
  */
 /*
 private void ingresarLiderCelula(int idLider) {
-if (servicio.agregarLiderCelula(idLider)) {
+if (servicioCelula.agregarLiderCelula(idLider)) {
 System.out.println("CtrlCelula. Líder registrado. Célula.id=" + idCelula + ", Lider.id=" + idLider);
 }
 }

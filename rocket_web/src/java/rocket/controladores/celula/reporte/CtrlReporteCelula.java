@@ -1,10 +1,9 @@
-package cdo.sgd.controladores;
+package rocket.controladores.celula.reporte;
 
+import cdo.sgd.modelo.bd.util.CelulaUtil;
+import cdo.sgd.modelo.bd.util.ReporteCelulaUtil;
 import sig.controladores.Sesion;
 import sig.controladores.Vistas;
-import cdo.sgd.modelo.bd.simulador.BD;
-import cdo.sgd.modelo.bd.simulador.Celula;
-import cdo.sgd.modelo.bd.simulador.ReporteCelula;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -28,6 +27,8 @@ import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
+import sig.modelo.servicios.ServicioCelula;
+import sig.modelo.servicios.ServicioReporteCelula;
 import waytech.utilidades.Util;
 import waytech.utilidades.UtilFechas;
 
@@ -38,115 +39,6 @@ import waytech.utilidades.UtilFechas;
  */
 public class CtrlReporteCelula extends GenericForwardComposer {
 
-  //widgets:
-  Label tituloVentana;
-  //botones:
-  Toolbarbutton btnGuardar;
-  Toolbarbutton btnSave;
-  Toolbarbutton btnEditar;
-  Toolbarbutton btnConfirmar;
-  Toolbarbutton btnImprimir;
-  Hbox hboxPreguntaCelulaRealizada;
-  //tabbox:
-  Tabbox tabbox;
-  Tab tabCelula;
-  Tab tabFechas;
-  Tab tabPlanificacion;
-  Tab tabResultados;
-  Tab tabOfrendas;
-  Tab tabObservaciones;
-  Tabpanel tabPanelCelula;
-  Tabpanel tabPanelFechas;
-  Tabpanel tabPanelPlanificacion;
-  Tabpanel tabPanelResultados;
-  Tabpanel tabPanelOfrendas;
-  Tabpanel tabPanelObservaciones;
-  //pestaña "Datos Célula"
-  Textbox db$txtNombre;
-  Textbox db$txtRed;
-  Textbox db$txtDiaHora;
-  Label db$etqNombre;
-  Label db$etqCodigo;
-  Label db$etqDireccion;
-  Label db$etqDiaHora;
-  Grid db$gridLideres;
-  Toolbarbutton db$tbbCodigo;
-  Toolbarbutton db$btnCatLideres;
-  Toolbarbutton db$tbbRed;
-  Toolbarbutton db$tbbLider1;
-  Toolbarbutton db$tbbLider2;
-  Toolbarbutton db$tbbDiaHora;
-  //pestaña "Fechas"
-  Label fechas$etqHoy;
-  Label fechas$etqSemanaInicio;
-  Label fechas$etqSemanaFin;
-  Label fechas$etqDiaCelula;
-  Label fechas$etqSemana;
-//pestaña "Planificación"
-  Column planif$colEdit;
-  Column planif$colView;
-  Spinner planif$spnInvitados;
-  Spinner planif$spnReconciliados;
-  Spinner planif$spnVisitas;
-  Spinner planif$spnPersonasEnPlanif;
-  Toolbarbutton planif$tbbInvitados;
-  Toolbarbutton planif$tbbReconciliados;
-  Toolbarbutton planif$tbbVisitas;
-  Toolbarbutton planif$tbbPersonasEnPlanif;
-  //pestaña "Resultados"
-  Grid result$gridEdit;
-  Grid result$gridView;
-  Spinner result$spnInvitados;
-  Spinner result$spnConvertidos;
-  Spinner result$spnAmigos;
-  Spinner result$spnReconciliados;
-  Spinner result$spnCDO;
-  Spinner result$spnVisitas;
-  Spinner result$spnOtrasIglesias;
-  Spinner result$spnDomingoAnterior;
-  Label result$etqTotalAsistencia;
-  Label result$etqInvitados;
-  Label result$etqConvertidos;
-  Label result$etqAmigos;
-  Label result$etqReconciliados;
-  Label result$etqCDO;
-  Label result$etqVisitas;
-  Label result$etqOtrasIglesias;
-  Label result$etqDomingoAnterior;
-  //pestaña Ofrendas:
-  Column ofrendas$colEdit;
-  Column ofrendas$colView;
-  Decimalbox ofrendas$txtOfrendasMonto;
-  Checkbox ofrendas$chkEntregadas;
-  Label ofrendas$etqOfrendasMonto;
-  Label ofrendas$etqOfrendasEntregadas;
-  //pestaña Observaciones:
-  Column obs$colEdit;
-  Column obs$colView;
-  Textbox obs$txtObservaciones;
-  Label obs$etqObservaciones;
-  //interacción con usuario:
-  Label etqMensaje;
-  //variables de control:
-  int tabSeleccionado;
-  //modo = {new,edicion,ver,imprimir,confirmado}
-  String modo;
-  String titulo = "Reporte de Célula";
-  String hoy;
-  String domingo;
-  String sabado;
-  String semana;
-  String diaCelula;  //gestión de datos
-  int id;
-  BD datos;
-  ArrayList lista;
-  ReporteCelula reporte = new ReporteCelula();
-  Celula celula;
-  //referencias:
-  Include vistaCentral;
-  Include panelCentral;
-  private Tab tabSelected;
-
   @Override
   public void doAfterCompose(Component comp) throws Exception {
     super.doAfterCompose(comp);
@@ -155,25 +47,28 @@ public class CtrlReporteCelula extends GenericForwardComposer {
 
   ///TODO: hacer este método simular a CtrlCelula.inicio()
   public void inicio() throws InterruptedException {
-    datos = new BD();
+    //- datos = new BD();
     modo = Sesion.getModo();
     if (modo == null) {
       modo = "ver";
     }
     System.out.println("CtrlReporteCelula.modo: " + modo);
     getIdCelula();
-    celula = (Celula) datos.buscarCelula(id);
-    reporte = (ReporteCelula) datos.buscarReporteCelula(id);
+    if (idCelula == 0) {
+      return;
+    }
+    buscarData();
     ocultarPregunta();
-    mostrarDatosCelula();
+    mostrarDatosCelula();    
     mostrarFechas();
     mostrarObservaciones();
     if (modo.equals("ver")) {
       System.out.println("estado reporte: " + reporte.getDescripcionEstatus());
-      if (reporte.getEstatus() == ReporteCelula.REPORTE_INGRESADO) {
-        mostrarDatosReporte();
+      System.out.println("reporte.estatus: " + reporte.getEstatus());
+      if (reporte.getEstatus() == ReporteCelulaUtil.REPORTE_INGRESADO) {
+        mostrarDatosReporteModoView();
         seleccionarTab(tabResultados);
-      } else if (reporte.getEstatus() == ReporteCelula.CELULA_NO_REALIZADA) {
+      } else if (reporte.getEstatus() == ReporteCelulaUtil.CELULA_NO_REALIZADA) {
         System.out.println("estatus = CELULA_NO_REALIZADA");
         ocultarPregunta();
         mostrarMensaje("La célula NO se realizó esta semana");
@@ -196,27 +91,32 @@ public class CtrlReporteCelula extends GenericForwardComposer {
    * recupera parámetro idCelula que viene de la vista llamante
    */
   private void getIdCelula() throws InterruptedException {
-    id = 0;
+    idCelula = 0;
     try {
-      id = (Integer) Sesion.getVariable("idCelula");
+      idCelula = (Integer) Sesion.getVariable("idCelula");
     } catch (Exception e) {
       System.out.println("CtrlReporteCelula -> ERROR: parámetro idCelula nulo... " + e);
+      Messagebox.show("Error buscando datos de célula");
     } finally {
       //TODO:
-      //id = UtilFechas.calcularIdReporteCelula(id);
-      System.out.println("CtrlReporteCelula -> idCelula = " + id);
+      //id = UtilFechas.calcularIdReporteCelula(idCelula);
+      System.out.println("CtrlReporteCelula -> idCelula = " + idCelula);
     }
+  }
+
+  private void buscarData() throws InterruptedException {
+    //- celula = (CelulaUtil) datos.buscarCelula(idCelula);
+    //- reporte = (ReporteCelula) datos.buscarReporteCelula(idCelula);
+    celula = servicioCelula.getCelula(idCelula);
+    System.out.println("CtrlReporteCelula.celula=" + celula.toString());
+    reporte = servicioReporteCelula.getReporteCelula(idCelula);
   }
 
   /**
    * muestra datos de la célula y las fechas correspondiente a la semana actual
    */
-  public void mostrarDatosCelula() {
-    if (id == 0) {
-      System.out.println("ERROR: CtrlReporteCelula.idCelula");
-      return;
-    }
-    System.out.println("CtrlReporteCelule - célula:" + celula.toString());
+  private void mostrarDatosCelula() {
+    //* System.out.println("CtrlReporteCelule - célula:" + celula.toString());
     db$tbbCodigo.setLabel(celula.getCodigo());
     db$etqDireccion.setValue(celula.getDireccionCorta());
     db$etqDiaHora.setValue(celula.getDia());
@@ -227,7 +127,6 @@ public class CtrlReporteCelula extends GenericForwardComposer {
 
 
     //parámetros para navegación dinámica:
-    final int idCelula = celula.getId();
     final int idLider1 = celula.getIdLider1();
     final int idLider2 = celula.getIdLider2();
 
@@ -260,9 +159,41 @@ public class CtrlReporteCelula extends GenericForwardComposer {
   }
 
   /**
-   * muestra datos del reporte, por ahora son simulados  
+   * muestra datos del reporte en widgets que sólo permiten visualizar
    */
-  public void mostrarDatosReporte() {
+  private void mostrarDatosReporteModoView() {
+    //llenar widgets con la data
+    if (reporte == null) {
+      System.out.println("ERROR: CtrlReporteCelula - mostrarDatos: reporte == null");
+    }
+    System.out.println("CtrlReporteCelula - reporte:" + reporte.toString());
+
+    //planif
+    /**/
+    planif$etqInvitados.setValue("" + reporte.getPlanificacionInvitados());
+    planif$etqReconciliados.setValue("" + reporte.getPlanificacionReconciliados());
+    planif$etqVisitas.setValue("" + reporte.getPlanificacionVisitas());
+    planif$etqPersonasEnPlanif.setValue("" + reporte.getPlanificacionPersonasEnplanificacion());
+    /**/
+    //result
+    result$etqInvitados.setValue("" + reporte.getResultadoInvitados());
+    result$etqConvertidos.setValue("" + reporte.getResultadoConvertidos());
+    result$etqAmigos.setValue("" + reporte.getResultadoAmigosNoAsistenIglesia());
+    result$etqReconciliados.setValue("" + reporte.getResultadoReconciliados());
+    result$etqCDO.setValue("" + reporte.getResultadoCDO());
+    result$etqVisitas.setValue("" + reporte.getResultadoVisitas());
+    result$etqOtrasIglesias.setValue("" + reporte.getResultadoOtrasIglesias());
+    result$etqDomingoAnterior.setValue("" + reporte.getResultadoAsistenciaDomingoAnterior());
+    result$etqTotalAsistencia.setValue("" + reporte.getTotalAsistenciaCelula());
+    //ofrendas
+    ofrendas$etqOfrendasMonto.setValue("" + reporte.getOfrendasMonto());
+    ofrendas$chkEntregadas.setChecked(reporte.isOfrendasEntregadas());
+  }
+
+  /**
+   * muestra datos del reporte en widgets que permiten edición
+   */
+  private void mostrarDatosReporteModoEditable() {
     //llenar widgets con la data
     if (reporte == null) {
       System.out.println("ERROR: CtrlReporteCelula - mostrarDatos: reporte == null");
@@ -309,12 +240,15 @@ public class CtrlReporteCelula extends GenericForwardComposer {
       //btnGuardar.setVisible(true);
       setFocoEdicion();
     } else if (modo.equals("ver")) {
-      tituloVentana.setValue(titulo);
+      //TODO: mostrar código en titulo
+      //tituloVentana.setValue(titulo + " " + celula.getCodigo() + " << 'TAREA: Agregar fechas aquí'");
+      tituloVentana.setValue(titulo + " << 'código y fechas van aquí'");
       //camposModoEdicion(false);
       verElementosEntrada(false);
       mostrarElementosVisualizacion(true);
       //btnGuardar.setVisible(false);
-      //btnEditar.setVisible(true);
+      //TODO: dependiendo de los permisos y el usuario que está consultando, se muestra el botón de edición
+      btnEditar.setVisible(false);
       //btnConfirmar.setVisible(true);
       //+verElementosEntrada(false);
       //+mostrarElementosVisualizacion(true);      
@@ -373,7 +307,6 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     result$gridEdit.setVisible(status);
     planif$colEdit.setVisible(status);
     ofrendas$colEdit.setVisible(status);
-    obs$colEdit.setVisible(status);
   }
 
   /**
@@ -384,7 +317,6 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     result$gridView.setVisible(status);
     planif$colView.setVisible(status);
     ofrendas$colView.setVisible(status);
-    obs$colView.setVisible(status);
   }
 
   public void onClick$btnNew() throws InterruptedException {
@@ -398,7 +330,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
      * aquí va el procesamiento de los datos...
      */
     if (reporteNoIngresado()) {
-      reporte.setEstatus(ReporteCelula.REPORTE_INGRESADO);
+      reporte.setEstatus(ReporteCelulaUtil.REPORTE_INGRESADO);
     }
     copiarValoresDeEntradaAVisualizacion();
     modo = "ver";
@@ -620,7 +552,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     mostrarTabsDatosReporte();
     mostrarWidget(tabObservaciones);
     mostrarMensaje("Ingrese la planificación y los resultados de la célula");
-    reporte.setEstatus(ReporteCelula.REPORTE_NO_INGRESADO);
+    reporte.setEstatus(ReporteCelulaUtil.REPORTE_NO_INGRESADO);
     seleccionarTab(tabResultados);//Resultados    
     modo = "new";
     actualizarEstado();
@@ -630,7 +562,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
   public void onClick$btnCelulaNoRealizada() {
     System.out.println("llamada a CtrlReporteCelula.btnCelulaRealizada");
     ocultarPregunta();
-    reporte.setEstatus(ReporteCelula.CELULA_NO_REALIZADA);
+    reporte.setEstatus(ReporteCelulaUtil.CELULA_NO_REALIZADA);
     mostrarWidget(tabObservaciones);
     seleccionarTab(tabObservaciones);//tabObservaciones
     obs$txtObservaciones.setFocus(true);
@@ -749,14 +681,131 @@ public class CtrlReporteCelula extends GenericForwardComposer {
   }
 
   private boolean celulaNoRealizada() {
-    return (reporte.getEstatus() == ReporteCelula.CELULA_NO_REALIZADA);
+    return (reporte.getEstatus() == ReporteCelulaUtil.CELULA_NO_REALIZADA);
   }
 
   private boolean reporteNoIngresado() {
-    return (reporte.getEstatus() == ReporteCelula.REPORTE_NO_INGRESADO);
+    return (reporte.getEstatus() == ReporteCelulaUtil.REPORTE_NO_INGRESADO);
   }
 
   private boolean reporteIngresado() {
-    return (reporte.getEstatus() == ReporteCelula.REPORTE_INGRESADO);
+    return (reporte.getEstatus() == ReporteCelulaUtil.REPORTE_INGRESADO);
   }
+  /**
+   * atributos
+   */
+  //referencias:
+  Include vistaCentral;
+  Include panelCentral;
+  //widgets:
+  Label tituloVentana;
+  //botones:
+  Toolbarbutton btnGuardar;
+  Toolbarbutton btnSave;
+  Toolbarbutton btnEditar;
+  Toolbarbutton btnConfirmar;
+  Toolbarbutton btnImprimir;
+  Hbox hboxPreguntaCelulaRealizada;
+  //tabbox:
+  Tabbox tabbox;
+  Tab tabCelula;
+  Tab tabFechas;
+  Tab tabPlanificacion;
+  Tab tabResultados;
+  Tab tabOfrendas;
+  Tab tabObservaciones;
+  Tabpanel tabPanelCelula;
+  Tabpanel tabPanelFechas;
+  Tabpanel tabPanelPlanificacion;
+  Tabpanel tabPanelResultados;
+  Tabpanel tabPanelOfrendas;
+  Tabpanel tabPanelObservaciones;
+  //pestaña "Datos Célula"
+  Textbox db$txtNombre;
+  Textbox db$txtRed;
+  Textbox db$txtDiaHora;
+  Label db$etqNombre;
+  Label db$etqCodigo;
+  Label db$etqDireccion;
+  Label db$etqDiaHora;
+  Grid db$gridLideres;
+  Toolbarbutton db$tbbCodigo;
+  Toolbarbutton db$tbbRed;
+  Toolbarbutton db$tbbLider1;
+  Toolbarbutton db$tbbLider2;
+  Toolbarbutton db$tbbDiaHora;
+  //pestaña "Fechas"
+  Label fechas$etqHoy;
+  Label fechas$etqSemanaInicio;
+  Label fechas$etqSemanaFin;
+  Label fechas$etqDiaCelula;
+  Label fechas$etqSemana;
+//pestaña "Planificación"
+  Column planif$colEdit;
+  Column planif$colView;
+  Spinner planif$spnInvitados;
+  Spinner planif$spnReconciliados;
+  Spinner planif$spnVisitas;
+  Spinner planif$spnPersonasEnPlanif;
+  Label planif$etqInvitados;
+  Label planif$etqReconciliados;
+  Label planif$etqVisitas;
+  Label planif$etqPersonasEnPlanif;
+  Toolbarbutton planif$tbbInvitados;
+  Toolbarbutton planif$tbbReconciliados;
+  Toolbarbutton planif$tbbVisitas;
+  Toolbarbutton planif$tbbPersonasEnPlanif;
+  //pestaña "Resultados"
+  Grid result$gridEdit;
+  Grid result$gridView;
+  Spinner result$spnInvitados;
+  Spinner result$spnConvertidos;
+  Spinner result$spnAmigos;
+  Spinner result$spnReconciliados;
+  Spinner result$spnCDO;
+  Spinner result$spnVisitas;
+  Spinner result$spnOtrasIglesias;
+  Spinner result$spnDomingoAnterior;
+  Label result$etqTotalAsistencia;
+  Label result$etqInvitados;
+  Label result$etqConvertidos;
+  Label result$etqAmigos;
+  Label result$etqReconciliados;
+  Label result$etqCDO;
+  Label result$etqVisitas;
+  Label result$etqOtrasIglesias;
+  Label result$etqDomingoAnterior;
+  //pestaña Ofrendas:
+  Column ofrendas$colEdit;
+  Column ofrendas$colView;
+  Decimalbox ofrendas$txtOfrendasMonto;
+  Checkbox ofrendas$chkEntregadas;
+  Label ofrendas$etqOfrendasMonto;
+  Label ofrendas$etqOfrendasEntregadas;
+  //pestaña Observaciones:
+  Column obs$colEdit;
+  Column obs$colView;
+  Textbox obs$txtObservaciones;
+  Label obs$etqObservaciones;
+  //interacción con usuario:
+  Label etqMensaje;
+  //variables de control:
+  int tabSeleccionado;
+  //modo = {new,edicion,ver,imprimir,confirmado}
+  String modo;
+  String titulo = "Reporte de Célula";
+  String hoy;
+  String domingo;
+  String sabado;
+  String semana;
+  String diaCelula;
+  private Tab tabSelected;
+  //gestión de datos:
+  //-BD datos;
+  int idCelula;
+  ArrayList lista;
+  CelulaUtil celula = new CelulaUtil();
+  ReporteCelulaUtil reporte = new ReporteCelulaUtil();
+  ServicioCelula servicioCelula = new ServicioCelula();
+  ServicioReporteCelula servicioReporteCelula = new ServicioReporteCelula();
 }

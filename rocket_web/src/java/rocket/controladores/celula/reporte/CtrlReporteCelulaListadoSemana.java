@@ -6,7 +6,6 @@ import sig.controladores.Vistas;
 import cdo.sgd.controladores.widgets.BotonCelula;
 import cdo.sgd.controladores.widgets.BotonLider;
 import cdo.sgd.controladores.widgets.EtqNro;
-import cdo.sgd.modelo.bd.simulador.BD;
 import cdo.sgd.modelo.bd.util.ReporteCelulaListadoUtil;
 import cdo.sgd.modelo.bd.util.ReporteCelulaUtil;
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ import waytech.utilidades.Util;
  * controlador asociado a vistaReporteCelula/Listado.zul
  * @author Gabriel
  */
-public class CtrlReporteCelulaSemana extends GenericForwardComposer {
+public class CtrlReporteCelulaListadoSemana extends GenericForwardComposer {
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -48,12 +47,7 @@ public class CtrlReporteCelulaSemana extends GenericForwardComposer {
   }
 
   public void buscarData() {
-    /*-
-     * bd = new BD();
-     * lista = bd.getReportesCelulaPorRed(idRed);
-     */
     //TODO:verificar tipo de usuario para ver qué data buscar y mostrar
-    //-lista = servicioCelula.getCelulasListado();
     lista = servicioReporteCelula.getReporteCelulaListado();
   }
 
@@ -72,9 +66,12 @@ public class CtrlReporteCelulaSemana extends GenericForwardComposer {
         tbbCodigo = new BotonCelula("" + reporte.getCodigo());
         tbbLider1 = new BotonLider("" + reporte.getNombreLider1());
         tbbLider2 = new BotonLider("" + reporte.getNombreLider2());
+        tbbLider3 = new BotonLider("" + reporte.getNombreLider3());
+        tbbLider4 = new BotonLider("" + reporte.getNombreLider4());
 
         //se establecen parámetros para navegación dinámica:
         final int idCelula = reporte.getIdCelula();
+        int nroLideres = reporte.getNumeroLideres();
         final int idLider1 = reporte.getIdLider1();
         final int idLider2 = reporte.getIdLider2();
         final int idLider3 = reporte.getIdLider3();
@@ -84,7 +81,7 @@ public class CtrlReporteCelulaSemana extends GenericForwardComposer {
         tbbEstatus = new Toolbarbutton();
         int status = reporte.getEstatus();
         if (status == ReporteCelulaUtil.REPORTE_INGRESADO) {
-          tbbEstatus.setTooltiptext(ReporteCelulaUtil.STATUS_INGRESADO);
+          tbbEstatus.setTooltiptext(ReporteCelulaUtil.TOOLTIPTEXT_INGRESADO);
           tbbEstatus.setImage(ReporteCelulaUtil.IMAGEN_INGRESADO);
           tbbEstatus.addEventListener(Events.ON_CLICK, new EventListener() {
 
@@ -96,7 +93,7 @@ public class CtrlReporteCelulaSemana extends GenericForwardComposer {
             }
           });
         } else if (status == ReporteCelulaUtil.REPORTE_NO_INGRESADO) {
-          tbbEstatus.setTooltiptext(ReporteCelulaUtil.STATUS_NO_INGRESADO);
+          tbbEstatus.setTooltiptext(ReporteCelulaUtil.TOOLTIPTEXT_NO_INGRESADO);
           tbbEstatus.setImage(ReporteCelulaUtil.IMAGEN_NO_INGRESADO);
           tbbEstatus.addEventListener(Events.ON_CLICK, new EventListener() {
 
@@ -137,20 +134,25 @@ public class CtrlReporteCelulaSemana extends GenericForwardComposer {
          */
 
         tbbCodigo.setIdCelula(idCelula);
-        tbbLider1.setIdLider(idLider1);
-        tbbLider2.setIdLider(idLider2);
-        tbbLider3.setIdLider(idLider3);
-        tbbLider4.setIdLider(idLider4);
 
         //se anexan los widgets a la fila
         etqNro.setParent(row);
         tbbCodigo.setParent(row);
-        Vbox vbox = new Vbox();
-        tbbLider1.setParent(vbox);
-        tbbLider2.setParent(vbox);
-        vbox.setParent(row);
+        /**/
+        if (nroLideres == 0) {//célula no tiene líderes          
+          Label etqNoTieneLideres = new Label("No asignados");
+          etqNoTieneLideres.setParent(row);
+        } else {
+          Vbox vbox = new Vbox();
+          tbbLider1.setParent(vbox);
+          tbbLider2.setParent(vbox);
+          tbbLider3.setParent(vbox);
+          tbbLider4.setParent(vbox);
+          vbox.setParent(row);
+        }
         etqDireccion.setParent(row);
-        etqDiaHora.setParent(row);
+        etqDiaHora.setParent(row);        
+        /**/
         tbbEstatus.setParent(row);
       }
     });
@@ -184,13 +186,12 @@ public class CtrlReporteCelulaSemana extends GenericForwardComposer {
   Grid grid;
   Label etqNro, etqDireccion, etqDiaHora;
   BotonCelula tbbCodigo;
-  BotonLider tbbLider1, tbbLider2,tbbLider3, tbbLider4;
+  BotonLider tbbLider1, tbbLider2, tbbLider3, tbbLider4;
   Toolbarbutton tbbEstatus;
   //variable de control:
   CtrlVista ctrlVista = new CtrlVista();
   int idRed;
   //datos:
   List<ReporteCelulaListadoUtil> lista = new ArrayList<ReporteCelulaListadoUtil>();
-  BD bd;
   ServicioReporteCelula servicioReporteCelula = new ServicioReporteCelula();
 }

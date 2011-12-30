@@ -10,22 +10,22 @@
       <row>
         <label value="Nuevos Invitados" sclass="etiqueta_campo" />
         <spinner id="spnInvitados" cols="2" width="50px" value="0" constraint="min 0 max 100" />
-        <toolbarbutton id="tbbInvitados" label="2"/>
+        <label id="etqInvitados" value="0"/>
       </row>        
       <row>
         <label value="Por Reconciliarse" sclass="etiqueta_campo"/>
         <spinner id="spnReconciliados" cols="2" width="50px" value="0" constraint="min 0 max 100"/>
-        <toolbarbutton id="tbbReconciliados" label="2"/>
+        <label id="etqReconciliados" value="0"/>
       </row>
       <row>
         <label value="Visitas a Realizar" sclass="etiqueta_campo"/>
         <spinner id="spnVisitas" cols="2" width="50px" value="0" constraint="min 0 max 100"/>
-        <toolbarbutton id="tbbVisitas" label="0"/>
+        <label id="etqVisitas" value="0"/>
       </row>           
       <row>
         <label value="Personas en Planificación" sclass="etiqueta_campo" tooltiptext="Líderes + Estacas"/>
         <spinner id="spnPersonasEnPlanif" cols="2" width="50px" value="0" constraint="min 0 max 100"/>
-        <toolbarbutton id="tbbPersonasEnPlanif" label="2"/>
+        <label id="etqPersonasEnPlanif" value="0"/>
       </row>
     </rows>
   </grid>

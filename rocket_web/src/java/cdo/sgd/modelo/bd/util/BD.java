@@ -529,17 +529,17 @@ public final class BD {
     //-System.out.println("BD: celula1: " + celula1.toString());
     ReporteCelulaUtil reporte1 = new ReporteCelulaUtil(celula1);
     reporte1.setEstatus(ReporteCelulaUtil.REPORTE_INGRESADO);
-    reporte1.setDescripcionEstatus(ReporteCelulaUtil.STATUS_INGRESADO);
+    reporte1.setDescripcionEstatus(ReporteCelulaUtil.TOOLTIPTEXT_INGRESADO);
 
     CelulaUtil celula2 = buscarCelula(2);
     ReporteCelulaUtil reporte2 = new ReporteCelulaUtil(celula2);
     reporte2.setEstatus(ReporteCelulaUtil.REPORTE_NO_INGRESADO);
-    reporte2.setDescripcionEstatus(ReporteCelulaUtil.STATUS_NO_INGRESADO);
+    reporte2.setDescripcionEstatus(ReporteCelulaUtil.TOOLTIPTEXT_NO_INGRESADO);
 
     CelulaUtil celula3 = buscarCelula(3);
     ReporteCelulaUtil reporte3 = new ReporteCelulaUtil(celula3);
     reporte3.setEstatus(ReporteCelulaUtil.REPORTE_INGRESADO);
-    reporte3.setDescripcionEstatus(ReporteCelulaUtil.STATUS_INGRESADO);
+    reporte3.setDescripcionEstatus(ReporteCelulaUtil.TOOLTIPTEXT_INGRESADO);
 
     CelulaUtil celula4 = buscarCelula(4);
     ReporteCelulaUtil reporte4 = new ReporteCelulaUtil(celula4);
@@ -550,12 +550,12 @@ public final class BD {
     CelulaUtil celula5 = buscarCelula(5);
     ReporteCelulaUtil reporte5 = new ReporteCelulaUtil(celula5);
     reporte5.setEstatus(ReporteCelulaUtil.REPORTE_INGRESADO);
-    reporte5.setDescripcionEstatus(ReporteCelulaUtil.STATUS_INGRESADO);
+    reporte5.setDescripcionEstatus(ReporteCelulaUtil.TOOLTIPTEXT_INGRESADO);
 
     CelulaUtil celula6 = buscarCelula(6);
     ReporteCelulaUtil reporte6 = new ReporteCelulaUtil(celula6);
     reporte6.setEstatus(ReporteCelulaUtil.REPORTE_NO_INGRESADO);
-    reporte6.setDescripcionEstatus(ReporteCelulaUtil.STATUS_NO_INGRESADO);
+    reporte6.setDescripcionEstatus(ReporteCelulaUtil.TOOLTIPTEXT_NO_INGRESADO);
 
 
     //Números de los Reportes:

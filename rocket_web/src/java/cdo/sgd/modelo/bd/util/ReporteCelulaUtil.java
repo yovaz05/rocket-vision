@@ -20,9 +20,9 @@ public class ReporteCelulaUtil extends CelulaUtil {
   //public static final int CONFIRMADO = 1;;
   public static final int REPORTE_NO_INGRESADO = 2;
   public static final int CELULA_NO_REALIZADA = 3;
-  public static final String STATUS_INGRESADO = "Ingresado";
+  public static final String TOOLTIPTEXT_INGRESADO = "Reporte ingresado. Haga click para ver detalles";
   //public static final String STATUS_CONFIRMADO = "Confirmado";
-  public static final String STATUS_NO_INGRESADO = "NO Ingresado";
+  public static final String TOOLTIPTEXT_NO_INGRESADO = "Reporte no ingresado. Click para ver opciones";
   public static final String STATUS_NO_REALIZADA = "Célula NO Realizada";
   public static final String IMAGEN_INGRESADO = "/img/iconos/status_ok_16.gif";
   public static final String IMAGEN_NO_INGRESADO = "/img/iconos/status_not_16.png";
@@ -57,6 +57,21 @@ public class ReporteCelulaUtil extends CelulaUtil {
   boolean ofrendasEntregadas = false;
 
   public ReporteCelulaUtil() {
+    planificacionInvitados = 0;
+    planificacionReconciliados = 0;
+    planificacionVisitas = 0;
+    personasEnPlanificacion = 0;
+    resultadoInvitados = 0;
+    resultadoConvertidos = 0;
+    resultadoReconciliados = 0;
+    resultadoAmigosNoAsistenIglesia = 0;
+    resultadoCDO = 0;
+    resultadoVisitas = 0;
+    resultadoOtrasIglesias = 0;
+    resultadoAsistenciaDomingoAnterior = 0;
+    totalAsistenciaCelula = 0;
+    ofrendasMonto = 0.00;
+    ofrendasEntregadas = false;    
   }
 
   public ReporteCelulaUtil(int idCelula) {
@@ -240,7 +255,7 @@ public class ReporteCelulaUtil extends CelulaUtil {
     return resultadoAmigosNoAsistenIglesia;
   }
 
-  public void setResultadoAmigosNoAsistenIglesia(int resultadoAmigosNoAsistenIglesia) {
+  public void setResultadoAmigosSoloAsistenCelula(int resultadoAmigosNoAsistenIglesia) {
     this.resultadoAmigosNoAsistenIglesia = resultadoAmigosNoAsistenIglesia;
   }
 

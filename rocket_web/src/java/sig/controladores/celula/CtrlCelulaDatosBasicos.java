@@ -154,9 +154,11 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    */
   //todo: MEJORA DE CODIGO. un método que diga sólo si tiene líderes, y otro para traer los datos
   private boolean cargarLideresLanzadosRed() {
+    /*
     if (idRed == 0) {//REDUNDANTE?
       return false;
     }
+     */
     lideresLanzadosNombres = servicioRed.getLideresLanzadosNombres(idRed);
     if (lideresLanzadosNombres.isEmpty()) {//la red elegida no tiene líderes lanzados que puedan ser líderes de células      
       mensajeLideres(msjNoHayLideres);

@@ -36,7 +36,8 @@
       </row>
       <row>
         <label value="Cristianos de otras iglesias" sclass="etiqueta_campo"/>
-        <spinner id="spnOtrasIglesias" cols="2" width="50px" value="0" constraint="min 0 max 100" onChange="calcularTotalAsistencia()"/>
+        <spinner id="spnOtrasIglesias" cols="2" width="50px" 
+        value="0" constraint="min 0 max 100" onChange="calcularTotalAsistencia()"/>
         <label value="Asistencia Domingo Anterior" sclass="etiqueta_campo"/>
         <spinner cols="2" width="50px" id="spnDomingoAnterior" value="0" constraint="min 0 max 100"/>
       </row>           
@@ -60,31 +61,31 @@
     <rows>
       <row height="32px">
         <label value="Nuevos Invitados" sclass="etiqueta_campo"/>
-        <label id="etqInvitados" value="7"/>
+        <label id="etqInvitados" value="0"/>
         <label value="Convertidos" sclass="etiqueta_campo" tooltiptext="Líderes + Estacas"/>
-        <label id="etqConvertidos" value="7"/>
+        <label id="etqConvertidos" value="0"/>
       </row>
       <row height="32px" >
         <label value="Amigos que sólo asisten al grupo" sclass="etiqueta_campo" tooltiptext="Ya se entregaron en la célula, pero aún no han asistido a la iglesia por primera vez"/>
-        <label id="etqAmigos" value="7"/>
+        <label id="etqAmigos" value="0"/>
         <label value="Reconciliados" sclass="etiqueta_campo"/>
-        <label id="etqReconciliados" value="7"/>
+        <label id="etqReconciliados" value="0"/>
       </row>
       <row height="32px" >
         <label value="Cristianos de Casa de Oración" sclass="etiqueta_campo" tooltiptext="Líderes + Estacas"/>
-        <label id="etqCDO" value="7"/>
+        <label id="etqCDO" value="0"/>
         <label value="Visitas Realizadas" sclass="etiqueta_campo"/>
-        <label id="etqVisitas" value="7"/>
+        <label id="etqVisitas" value="0"/>
       </row>
       <row height="32px" >
         <label value="Cristianos de otras iglesias" sclass="etiqueta_campo"/>
-        <label id="etqOtrasIglesias" value="7"/>
+        <label id="etqOtrasIglesias" value="0"/>
         <label value="Asistencia Domingo Anterior" sclass="etiqueta_campo"/>
-        <label id="etqDomingoAnterior" value="7"/>
+        <label id="etqDomingoAnterior" value="0"/>
       </row>           
       <row height="32px" >
         <label value="Total Asistencia" sclass="total" tooltiptext="Se suman los 4 valores de arriba"/>
-        <label id="etqTotalAsistencia" value="28" sclass="total"/>
+        <label id="etqTotalAsistencia" value="0" sclass="total"/>
         <label value=""/>
         <label value=""/>
           

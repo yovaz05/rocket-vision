@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import waytech.modelo.beans.sgi.PersonaEnRed;
 import waytech.modelo.beans.sgi.Red;
-import waytech.modelo.interfaces.IsaPersonaEnRed;
 import waytech.modelo.interfaces.IsaRed;
 import waytech.modelo.servicios.RspPersonaEnRed;
 import waytech.modelo.servicios.RspRed;
@@ -84,9 +83,9 @@ public class ServicioRed {
   }
 
   public void listarLideresLanzados() {
+    System.out.println("ServicioRed. listarLideresLanzados. Número de Líderes: " + lideresLanzados.size());    
     /*
     System.out.println("NOMBRE DE LOS LIDERES LANZADOS DE LA RED: " + nombreRed);
-    System.out.println("Número de Líderes: " + lideresLanzados.size());
     for (PersonaEnRed p : lideresLanzados) {
     System.out.println("Líder: " + p.getIdPersona().getNombre());
     }
@@ -110,7 +109,7 @@ public class ServicioRed {
   public List getLideresLanzados(int idRed) {
     SaPersonaEnRed saPersonaRed = new SaPersonaEnRed();
     RspPersonaEnRed rspPersonaRed = new RspPersonaEnRed();
-    rspPersonaRed = saPersonaRed.listLideresLanzados(idRed);
+    rspPersonaRed = saPersonaRed.listLideresLanzados(idRed);    
     System.out.println("INICIO DE LA CONEXION " + rspPersonaRed.getRespuestaInicioDeConexion());
     lideresLanzados = rspPersonaRed.getAllPersonaEnReds();
     /**/ listarLideresLanzados();

@@ -16,8 +16,6 @@ import waytech.modelo.beans.sgi.CelulaInsert;
 import waytech.modelo.beans.sgi.PersonaEnCelula;
 import waytech.modelo.beans.sgi.PersonaEnCelulaInsert;
 import waytech.modelo.beans.sgi.Zona;
-import waytech.modelo.interfaces.IsaCelula;
-import waytech.modelo.interfaces.IsaPersonaEnCelula;
 import waytech.modelo.servicios.RspCelula;
 import waytech.modelo.servicios.RspPersonaEnCelula;
 import waytech.modelo.servicios.SaCelula;
@@ -37,8 +35,8 @@ public class ServicioCelula {
   List<String> nombreLideresCelula;
   List<PersonaEnCelula> lideresCelula;
   //TODO: OPTIMIZACION: sacar estas 2 líneas en todos los servicios
-  IsaCelula saCelula = new SaCelula();
-  IsaPersonaEnCelula saPersonaCelula = new SaPersonaEnCelula();
+  SaCelula saCelula = new SaCelula();
+  SaPersonaEnCelula saPersonaCelula = new SaPersonaEnCelula();
   List<CelulaListadoUtil> listadoCelulas = new ArrayList();
   String nombreLider1 = "";
   String nombreLider2 = "";
@@ -214,7 +212,6 @@ public class ServicioCelula {
       celulaListado.setNombre(celulaBD.getNombre());
       celulaListado.setIdRed(celulaBD.getRed().getIdRed());
       celulaListado.setNombreRed(celulaBD.getRed().getNombre());
-      n++;
       listadoCelulas.add(celulaListado);
     }
     return listadoCelulas;

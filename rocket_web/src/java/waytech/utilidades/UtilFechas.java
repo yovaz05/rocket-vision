@@ -236,7 +236,7 @@ public class UtilFechas {
    * @return 
    */
   public static String getDiaSemanaTexto(Calendar cal) {
-    return "" + cal.get(Calendar.DAY_OF_WEEK);
+    return "" + getDiaSemanaTexto(cal.get(Calendar.DAY_OF_WEEK));
   }
 
   /**

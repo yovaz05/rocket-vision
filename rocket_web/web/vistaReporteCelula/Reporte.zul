@@ -4,11 +4,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
   <style src="css/estilos1.css"/>
-  <div apply="cdo.sgd.controladores.CtrlReporteCelula" width="500px">
+  <div apply="rocket.controladores.celula.reporte.CtrlReporteCelula" width="500px">
+    <label id="tituloVentana" sclass="titulo_ventana" value="titulo"/>
     <vbox>
-      <label id="tituloVentana" sclass="titulo_ventana" visible="true"/>
       <label id="etqMensaje" value="" sclass="mensajes" visible="false"/>
-<!--    <space height="15px"/>-->
     </vbox>
     <hbox id="hboxPreguntaCelulaRealizada" sclass="mensajes" visible="false">
       <label id="etqPregunta" value="¿La célula se realizó esta semana?"/>
