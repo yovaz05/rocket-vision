@@ -50,6 +50,10 @@ public interface IsaPersona {
     public abstract RspPersona updateDireccion(int idPersona, String direccion);
     
     public abstract RspPersona updateObservaciones(int idPersona, String observaciones);
+    
+    public abstract RspPersona updatePersonaALiderCelula(int idPersona);
+    
+    public abstract RspPersona updatePersonaALiderRed(int idPersona);
 
     /**
      * Elimina un registro lógicamente
@@ -75,6 +79,10 @@ public interface IsaPersona {
     public abstract RspPersona esTelefonoHabitacionExistente(String telefonoHabitacion);
     
     public abstract RspPersona esTelefonoTrabajoExistente(String telefonoTrabajo);
+    
+    public abstract RspPersona esLiderRed(int idPersona);
+    
+    public abstract RspPersona esLiderCelula(int idPersona);
 
     public abstract RspPersona renovarPersona(int idPersona);
 

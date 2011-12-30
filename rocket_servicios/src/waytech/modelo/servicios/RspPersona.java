@@ -24,11 +24,31 @@ public class RspPersona {
     private boolean esTelefonoMovilExistente;
     private boolean esTelefonoHabitacionExistente;
     private boolean esTelefonoTrabajoExistente;
+    private boolean esLiderRed;
+    private boolean esLiderPersona;
     private String respuestaInicioDeConexion;
     private String respuestaCierreDeConexion;
     private String respuestaServicio;
     private String respuestaRolledBack;
     private Persona persona;
+
+    public boolean esLiderPersona() {
+        return esLiderPersona;
+    }
+
+    public void setEsLiderPersona(boolean esLiderPersona) {
+        this.esLiderPersona = esLiderPersona;
+    }
+
+    public boolean esLiderRed() {
+        return esLiderRed;
+    }
+
+    public void setEsLiderRed(boolean esLiderRed) {
+        this.esLiderRed = esLiderRed;
+    }
+    
+    
 
     public boolean esCodigoExistente() {
         return esCodigoExistente;
