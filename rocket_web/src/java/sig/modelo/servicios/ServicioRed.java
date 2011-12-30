@@ -5,12 +5,12 @@ package sig.modelo.servicios;
 
 import java.util.ArrayList;
 import java.util.List;
-import waytech.modelo.beans.sgi.PersonaEnRed;
+import waytech.modelo.beans.sgi.Persona;
 import waytech.modelo.beans.sgi.Red;
 import waytech.modelo.interfaces.IsaRed;
-import waytech.modelo.servicios.RspPersonaEnRed;
+import waytech.modelo.servicios.RspPersona;
 import waytech.modelo.servicios.RspRed;
-import waytech.modelo.servicios.SaPersonaEnRed;
+import waytech.modelo.servicios.SaPersona;
 import waytech.modelo.servicios.SaRed;
 
 /**
@@ -23,7 +23,8 @@ public class ServicioRed {
   //tendrá los RedesNombres de las redes
   List<String> RedesNombres = new ArrayList();
   //tendrá los RedesNombres de todos los líderes lanzados de la red (quienes pueden tener célula)
-  List<PersonaEnRed> lideresLanzados = new ArrayList();
+  //-List<Persona> lideresLanzados = new ArrayList();
+  List<Persona> lideresLanzados = new ArrayList();
   List<String> lideresLanzadosNombres = new ArrayList();
   int idRed;
   String nombreRed = "";
@@ -83,10 +84,10 @@ public class ServicioRed {
   }
 
   public void listarLideresLanzados() {
-    System.out.println("ServicioRed. listarLideresLanzados. Número de Líderes: " + lideresLanzados.size());    
+    System.out.println("ServicioRed. listarLideresLanzados. Número de Líderes: " + lideresLanzados.size());
     /*
     System.out.println("NOMBRE DE LOS LIDERES LANZADOS DE LA RED: " + nombreRed);
-    for (PersonaEnRed p : lideresLanzados) {
+    for (Persona p : lideresLanzados) {
     System.out.println("Líder: " + p.getIdPersona().getNombre());
     }
      * 
@@ -97,31 +98,66 @@ public class ServicioRed {
    * devuelve el id del líder lanzado cuyo nombre es  pasadocomo parámetro
    * @return id del líder, devuelve 0 si la persona no existe
    */
+  /*
   public int getIdPersonaRed(String nombrePersonaRed) {
-    for (PersonaEnRed p : lideresLanzados) {
+    for (Persona p : lideresLanzados) {
       if (p.getIdPersona().getNombre().equals(nombrePersonaRed)) {
         return p.getIdPersona().getIdPersona();
       }
     }
     return 0;
   }
+   */
+  /**
+   * devuelve el id del líder lanzado cuyo nombre es  pasado como parámetro
+   * @return id del líder, devuelve 0 si la persona no existe
+   */
+  public int getIdPersona(String nombrePersona) {
+    for (Persona p : lideresLanzados) {
+      if (p.getNombre().equals(nombrePersona)) {
+        return p.getIdPersona();
+      }
+    }
+    return 0;
+  }
 
+  /**
+   * 1ER ENFOQUE, USANDO TABLA PERSONA_EN_RED
+   * @param idRed
+   * @return 
+   */
+  /*-
   public List getLideresLanzados(int idRed) {
-    SaPersonaEnRed saPersonaRed = new SaPersonaEnRed();
-    RspPersonaEnRed rspPersonaRed = new RspPersonaEnRed();
-    rspPersonaRed = saPersonaRed.listLideresLanzados(idRed);    
-    System.out.println("INICIO DE LA CONEXION " + rspPersonaRed.getRespuestaInicioDeConexion());
-    lideresLanzados = rspPersonaRed.getAllPersonaEnReds();
+  SaPersona saPersonaRed = new SaPersona();
+  RspPersona rspPersonaRed = new RspPersona();
+  rspPersonaRed = saPersonaRed.listLideresLanzados(idRed);    
+  System.out.println("INICIO DE LA CONEXION " + rspPersonaRed.getRespuestaInicioDeConexion());
+  lideresLanzados = rspPersonaRed.getAllPersonas();
+  System.out.println("CIERRE DE LA CONEXION " + rspPersonaRed.getRespuestaInicioDeConexion());
+  return lideresLanzados;
+  }
+   */
+  /**
+   * lista todos los líderes lanzados de una red específica
+   * 2do enfoque, usando campo 'id_red' en tabla 'persona'
+   * @param idRed la red
+   * @return 
+   **/
+  public List getLideresLanzados(int idRed) {
+    SaPersona saPersona = new SaPersona();
+    RspPersona respuesta = saPersona.listPersonaLiderLanzadoPorRed(idRed);
+    System.out.println("INICIO DE LA CONEXION " + respuesta.getRespuestaInicioDeConexion());
+    lideresLanzados = respuesta.getTodasLasPersonas();
     /**/ listarLideresLanzados();
-    System.out.println("CIERRE DE LA CONEXION " + rspPersonaRed.getRespuestaInicioDeConexion());
+    System.out.println("CIERRE DE LA CONEXION " + respuesta.getRespuestaInicioDeConexion());
     return lideresLanzados;
   }
 
   public List getLideresLanzadosNombres(int idRed) {
     lideresLanzadosNombres = new ArrayList();
     getLideresLanzados(idRed);
-    for (PersonaEnRed p : lideresLanzados) {
-      lideresLanzadosNombres.add(p.getIdPersona().getNombre());
+    for (Persona p : lideresLanzados) {
+      lideresLanzadosNombres.add(p.getNombre());
     }
     return lideresLanzadosNombres;
   }
@@ -135,9 +171,9 @@ public class ServicioRed {
    * @return 
    */
   public int getIdLider(String nombreLider) {
-    for (PersonaEnRed p : lideresLanzados) {
-      if (p.getIdPersona().getNombre().equals(nombreLider)) {
-        return p.getIdPersona().getIdPersona();
+    for (Persona p : lideresLanzados) {
+      if (p.getNombre().equals(nombreLider)) {
+        return p.getIdPersona();
       }
     }
     return 0;
@@ -152,9 +188,9 @@ public class ServicioRed {
    */
   public boolean quitarLiderLista(int idLider) {
     System.out.print("ServicioRed.quitarLiderLista.idLider=" + idLider);
-    for (PersonaEnRed p : lideresLanzados) {
-      if (p.getIdPersona().getIdPersona() == idLider) {
-        lideresLanzadosNombres.remove(p.getIdPersona().getNombre());
+    for (Persona p : lideresLanzados) {
+      if (p.getIdPersona() == idLider) {
+        lideresLanzadosNombres.remove(p.getNombre());
         System.out.println("->DONE");
         return true;
       }
@@ -175,9 +211,9 @@ public class ServicioRed {
    * @return true/false si se pudo realizar la operación
    */
   public boolean agregarLiderLista(int idLider) {
-    for (PersonaEnRed p : lideresLanzados) {
-      if (p.getIdPersona().getIdPersona() == idLider) {
-        lideresLanzadosNombres.add(p.getIdPersona().getNombre());
+    for (Persona p : lideresLanzados) {
+      if (p.getIdPersona() == idLider) {
+        lideresLanzadosNombres.add(p.getNombre());
         return true;
       }
     }

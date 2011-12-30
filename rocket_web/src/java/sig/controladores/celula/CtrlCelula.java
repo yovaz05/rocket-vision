@@ -798,6 +798,7 @@ public class CtrlCelula extends GenericForwardComposer {
     return (idCelula != 0) ? true : false;
   }
 
+  //TODO: usar cuando se asigna o cambia la zona
   private String generarDescripcionCelula(String codigo, String zona) {
     String desc = codigo;
     if (!zona.isEmpty()) {

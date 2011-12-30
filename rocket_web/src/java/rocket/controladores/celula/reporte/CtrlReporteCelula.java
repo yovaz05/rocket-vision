@@ -116,20 +116,34 @@ public class CtrlReporteCelula extends GenericForwardComposer {
    * muestra datos de la célula y las fechas correspondiente a la semana actual
    */
   private void mostrarDatosCelula() {
-    //* System.out.println("CtrlReporteCelule - célula:" + celula.toString());
-    db$tbbCodigo.setLabel(celula.getCodigo());
+    //* System.out.println("CtrlReporteCelula - célula:" + celula.toString());
+    db$etqCodigo.setValue(celula.getCodigo());
     db$etqDireccion.setValue(celula.getDireccionCorta());
-    db$etqDiaHora.setValue(celula.getDia());
-    db$tbbRed.setLabel(celula.getNombreRed());
-    db$tbbLider1.setLabel(celula.getNombreLider1());
-    db$tbbLider2.setLabel(celula.getNombreLider2());
-    //db$etqNombre.setValue(celula.getNombre());
-
+    
+    String diaTexto, horaTexto, diaHora;
+    diaTexto = celula.getDia();
+    horaTexto = celula.getHora();    
+    if (diaTexto.isEmpty() || horaTexto.isEmpty()) {
+      //si no hay valor, mostrar no asignados
+      diaHora = "No asignados";
+    }else{
+      diaHora = diaTexto + " - " + horaTexto;
+    }
+    db$etqDiaHora.setValue(diaHora);
+    
+    db$etqRed.setValue(celula.getNombreRed());
+    db$etqLider1.setValue(celula.getNombreLider1());
+    db$etqLider2.setValue(celula.getNombreLider2());
+    db$etqLider3.setValue(celula.getNombreLider3());
+    db$etqLider4.setValue(celula.getNombreLider4());
 
     //parámetros para navegación dinámica:
     final int idLider1 = celula.getIdLider1();
     final int idLider2 = celula.getIdLider2();
+    final int idLider3 = celula.getIdLider3();
+    final int idLider4 = celula.getIdLider4();
 
+    /*
     db$tbbCodigo.addEventListener(Events.ON_CLICK, new EventListener() {
 
       public void onEvent(Event event) throws Exception {
@@ -156,6 +170,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
         System.out.println("CtrlCelula -> idLider2 = " + idLider2);
       }
     });
+     */
   }
 
   /**
@@ -724,15 +739,24 @@ public class CtrlReporteCelula extends GenericForwardComposer {
   Textbox db$txtNombre;
   Textbox db$txtRed;
   Textbox db$txtDiaHora;
-  Label db$etqNombre;
   Label db$etqCodigo;
+  Label db$etqNombre;
+  Label db$etqRed;
   Label db$etqDireccion;
   Label db$etqDiaHora;
+  Label db$etqLider1;
+  Label db$etqLider2;
+  Label db$etqLider3;
+  Label db$etqLider4;
   Grid db$gridLideres;
+  /*
   Toolbarbutton db$tbbCodigo;
   Toolbarbutton db$tbbRed;
   Toolbarbutton db$tbbLider1;
   Toolbarbutton db$tbbLider2;
+  Toolbarbutton db$tbbLider3;
+  Toolbarbutton db$tbbLider4;
+   */
   Toolbarbutton db$tbbDiaHora;
   //pestaña "Fechas"
   Label fechas$etqHoy;

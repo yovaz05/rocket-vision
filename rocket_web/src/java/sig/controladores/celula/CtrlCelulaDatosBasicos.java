@@ -149,6 +149,368 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     cmbRed.setModel(modelRedes);
   }
 
+  public void onClick$etqCodigo() {
+    //TODO: chequear permiso de edición de campo: celula.codigo
+    if (Sesion.modoEditable()) {//sólo se permite modo editable
+      codigo = etqCodigo.getValue();
+      activarEditCodigo();
+    }
+  }
+
+  /**
+   * activa la edición de código
+   */
+  private void activarEditCodigo() {
+    txtCodigo.setValue(codigo);
+    txtCodigo.setVisible(true);
+    txtCodigo.setFocus(true);
+    etqCodigo.setVisible(false);
+  }
+
+  /**
+   * desactiva la edición de Codigo
+   */
+  void cancelarEditCodigo() {
+    txtCodigo.setVisible(false);
+    etqCodigo.setVisible(true);
+  }
+
+  public void onBlur$txtCodigo() {
+    //if para evitar proceso doble
+    if (!codigoProcesado) {
+      procesarCodigo();
+    }
+    codigoProcesado = false;
+  }
+
+  public void onOK$txtCodigo() {
+    procesarCodigo();
+  }
+
+  //procesamiento de valor de código (nuevo y edición)
+  private void procesarCodigo() {
+    codigoProcesado = false;
+    ocultarMensaje();
+    String nuevoCodigo = txtCodigo.getValue();
+    //quitar espacios en blanco
+    nuevoCodigo = nuevoCodigo.trim();
+    //validar códigos en uso
+    //modo ingresar:
+    if (Sesion.modoIngresar()) {
+      if (!codigoIngresado(nuevoCodigo) || codigoEnUso(nuevoCodigo)) {//se ingresó valor vacío o repetido
+        //forzar a usuario a tipear algo y que código no esté repetido
+        txtCodigo.setVisible(true);
+        txtCodigo.setFocus(true);
+        return;
+      }
+      //código ingresado y válido
+      codigo = nuevoCodigo.toUpperCase();
+      etqCodigo.setValue(codigo);
+      codigoProcesado = true;
+      cancelarEditCodigo();
+      activarEditRed();
+      return;
+    }
+    //modo edición
+    if (Sesion.modoEditable()) {
+      if (!codigoIngresado(nuevoCodigo)) {//se ingresó valor vacío...
+        cancelarEditCodigo();//se deja el valor actual
+        return;
+      }
+      if (nuevoCodigo.equals(codigo)) {//no se cambió el valor
+        cancelarEditCodigo();
+        codigoProcesado = true;
+        return;
+      }
+      codigo = nuevoCodigo.toUpperCase();
+      if (!codigoEnUso(nuevoCodigo)) {
+        actualizarCodigo();
+        codigoProcesado = true;
+        cancelarEditCodigo();
+        etqCodigo.setValue(codigo);
+        tituloVentana.setValue("Célula: " + " " + codigo);
+      }
+    }
+    /*
+    String nuevoValor = txtCodigo.getValue();
+    //quitar espacios en blanco
+    nuevoValor = nuevoValor.trim();
+    
+    if (nuevoValor.isEmpty()) {
+    txtCodigo.setVisible(true);
+    txtCodigo.setFocus(true);
+    return;
+    }
+    if (nuevoValor.equals(codigo)) {//no se cambió el valor
+    return;
+    }
+    if (codigoEnUso(nuevoValor)) {
+    txtCodigo.setVisible(true);
+    txtCodigo.setFocus(true);
+    return;
+    }
+    if (Sesion.modoIngresar()) {
+    activarEditRed();
+    }    
+    codigo = nuevoValor;
+    if (Sesion.modoEditable()) {
+    actualizarCodigo();
+    codigoEditado = true;
+    }
+    etqCodigo.setValue(codigo);    
+    //TODO: MEJORA CODIGO: mover generación de titulo de ventana a clase de utilidad
+    //actualizar título de ventana:
+    descripcionCelula = codigo;
+    tituloVentana.setValue("Célula: " + " " + descripcionCelula);
+     */
+  }
+
+  boolean codigoIngresado(String codigoCelula) {
+    if (codigoCelula.isEmpty()) {
+      mensaje("Ingresa el código");
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * busca en la base de datos si el código ya está en uso
+   * devuelve true o false si existe o no.
+   * además muestra mensaje de error cuando aplica.
+   * @return 
+   */
+  boolean codigoEnUso(String codigoCelula) {
+    if (servicioCelula.existeCelula(codigoCelula)) {
+      mensaje("Error: El código ya está en uso: " + codigoCelula);
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * actualiza el código de la célula en la base de datos
+   */
+  void actualizarCodigo() {
+    getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
+    servicioCelula.setIdCelula(idCelula);
+    if (servicioCelula.actualizarCodigo(codigo)) {
+      mensaje("Se actualizó el código");
+    } else {
+      mensaje("Error actualizando el código");
+    }
+  }
+
+  public void onClick$etqDia() {
+    diaTexto = etqDia.getValue();
+    activarEditDia();
+  }
+
+  void activarEditDia() {
+    etqDia.setVisible(false);
+    cmbDia.setValue(diaTexto);
+    cmbDia.setVisible(true);
+    cmbDia.setFocus(true);
+    cmbDia.open();
+  }
+
+  void cancelarEditDia() {
+    etqDia.setVisible(true);
+    cmbDia.setVisible(false);
+  }
+
+  /**
+   * cuando se pierde el foco, se cancela la edición
+   */
+  public void onBlur$cmbDia() {
+    cancelarEditDia();
+  }
+
+  public void onSelect$cmbDia() {
+    procesarDia();
+  }
+
+  void procesarDia() {
+    if (cmbDia.getValue().equals(diaTexto)) { //no se cambió el valor
+      return;
+    }
+    diaTexto = cmbDia.getValue();
+    mostrarValorDia();
+    diaNumero = Integer.parseInt("" + cmbDia.getSelectedItem().getValue());
+    setVarSesionDia();
+
+    //**
+    System.out.println("cmbDia.label=" + diaTexto);
+    System.out.println("cmbDia.value=" + cmbDia.getSelectedItem().getValue());
+    //**
+
+    //actualizar cambio en la bd:
+    //TODO: MEJORA-CODIGO: este 'if' redundante
+    if (Sesion.modoEditable()) {
+      actualizarDia();
+    }
+    cancelarEditDia();
+  }
+
+  void mostrarValorDia() {
+    etqDia.setValue(diaTexto);
+    etqDia.setVisible(true);
+  }
+
+  /**
+   * actualiza el día de la célula en la base de datos
+   */
+  void actualizarDia() {
+    getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
+    servicioCelula.setIdCelula(idCelula);
+    if (servicioCelula.actualizarDia(diaNumero)) {
+      mensaje("Se actualizó el día");
+    } else {
+      mensaje("Error actualizando el día");
+    }
+  }
+
+  public void onClick$etqHora() {
+    horaTexto = etqHora.getValue();
+    activarEditHora();
+  }
+
+  void activarEditHora() {
+    etqHora.setVisible(false);
+    cmbHora.setValue(horaTexto);
+    cmbHora.setVisible(true);
+    cmbHora.setFocus(true);
+    cmbHora.open();
+  }
+
+  void cancelarEditHora() {
+    etqHora.setVisible(true);
+    cmbHora.setVisible(false);
+  }
+
+  /**
+   * cuando se pierde el foco, se cancela la edición
+   */
+  public void onBlur$cmbHora() {
+    cancelarEditHora();
+  }
+
+  public void onSelect$cmbHora() {
+    procesarHora();
+    cancelarEditHora();
+  }
+
+  private void procesarHora() {
+    if (cmbHora.getValue().equals(horaTexto)) { //no se cambió el valor
+      return;
+    }
+    horaTexto = cmbHora.getValue();
+    mostrarValorHora();
+    cancelarEditHora();
+    horaNumero = Integer.parseInt("" + cmbHora.getSelectedItem().getValue());
+    setVarSesionHora();
+
+    //**
+    System.out.println("cmbHora.label=" + horaTexto);
+    System.out.println("cmbHora.value=" + cmbHora.getSelectedItem().getValue());
+    //**
+
+    //TODO: MEJORA-CODIGO: este 'if' redundante
+    if (Sesion.modoEditable()) {
+      actualizarHora();
+    }
+    cancelarEditHora();
+  }
+
+  void mostrarValorHora() {
+    System.out.println("CrtrlCelulaDatosBasicos.horaTexto=" + horaTexto);
+    etqHora.setValue(horaTexto);
+    etqHora.setVisible(true);
+  }
+
+  /**
+   * actualiza la hora de la célula en la base de datos
+   */
+  void actualizarHora() {
+    getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
+    servicioCelula.setIdCelula(idCelula);
+    if (servicioCelula.actualizarHora(horaNumero)) {
+      mensaje("Se actualizó la hora");
+    } else {
+      mensaje("Error actualizando la hora");
+    }
+  }
+
+  public void onClick$etqNombre() {
+    activarEditNombre();
+  }
+
+  /**
+   * activa la edición de Nombre
+   */
+  private void activarEditNombre() {
+    etqNombre.setVisible(false);
+    nombre = etqNombre.getValue();
+    if (nombre.equals(Constantes.VALOR_EDITAR)) {
+      nombre = "";
+    }
+    txtNombre.setValue(nombre);
+    txtNombre.setVisible(true);
+    txtNombre.setFocus(true);
+  }
+
+  /**
+   * desactiva la edición de Nombre
+   * y muestra el valor actual
+   */
+  private void cancelarEditNombre() {
+    txtNombre.setVisible(false);
+    etqNombre.setVisible(true);
+    etqNombre.setFocus(true);
+  }
+
+  public void onOK$txtNombre() {
+    procesarNombre();
+    cancelarEditNombre();
+  }
+
+  public void onBlur$txtNombre() {
+    procesarNombre();
+    cancelarEditNombre();
+  }
+
+  private void procesarNombre() {
+    ocultarMensaje();
+    String nuevoValor = txtNombre.getValue();
+    //quitar espacios en blanco
+    nuevoValor = nuevoValor.trim();
+
+    if (nuevoValor.isEmpty() || nuevoValor.equals(nombre)) {//no se cambió el valor
+      return;
+    }
+
+    nombre = nuevoValor;
+
+    //TODO: MEJORA: chequear si existe una célula con ese mismo nombre, y sugerir al usuario que use otro.
+    //No es obligatorio que sea único
+    if (Sesion.modoEditable()) {
+      actualizarNombre();
+    }
+    etqNombre.setValue(nombre);
+  }
+
+  /**
+   * actualiza el nombre de la célula en la base de datos
+   */
+  void actualizarNombre() {
+    getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
+    servicioCelula.setIdCelula(idCelula);
+    if (servicioCelula.actualizarNombre(nombre)) {
+      mensaje("Se actualizó el nombre");
+    } else {
+      mensaje("Error actualizando el nombre");
+    }
+  }
+
   /**
    * obtiene todos los líderes lanzados de la red seleccionada
    */
@@ -156,7 +518,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   private boolean cargarLideresLanzadosRed() {
     /*
     if (idRed == 0) {//REDUNDANTE?
-      return false;
+    return false;
     }
      */
     lideresLanzadosNombres = servicioRed.getLideresLanzadosNombres(idRed);
@@ -174,23 +536,6 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     modelLideresLanzados.addAll(lideresLanzadosNombres);
 
     return true;
-  }
-
-  /**
-   * método debug
-   * obtiene y muestra todos los valores de los elemeentos de entrada
-   * tal como serán usados para trabajar con la base de datos
-   */
-  public void mostrarTodosValoresIngresados() {
-    System.out.println("CELULA. DATOSBASICOS. VALORES INGRESADOS:");
-    System.out.println("Código: " + txtCodigo.getValue());
-    System.out.println("Nombre: " + txtNombre.getValue());
-    System.out.println("Líder 1: nombre=" + cmbLider1.getValue());
-    System.out.println("Líder 1: id=" + servicioRed.getIdPersonaRed(cmbLider1.getValue()));
-    System.out.println("Día.label=" + cmbDia.getValue());
-    System.out.println("Día.value=" + cmbDia.getSelectedItem().getValue());
-    System.out.println("Hora.label: " + cmbHora.getValue());
-    System.out.println("Hora.value: " + cmbHora.getSelectedItem().getValue());
   }
 
   /**
@@ -224,7 +569,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       cancelarEditRed();
       return;
     }
-    
+
     //valor de red cambiado
     btnEditLideres.setVisible(true);
 
@@ -332,50 +677,6 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     }
     if (seUsaLider(4)) {
       servicioCelula.eliminarLider(idCelula, idLider4);
-    }
-  }
-
-  public void onSelect$cmbDia() {
-    procesarDia();
-  }
-
-  void procesarDia() {
-    if (cmbDia.getValue().equals(diaTexto)) { //no se cambió el valor
-      return;
-    }
-    diaTexto = cmbDia.getValue();
-    mostrarValorDia();
-    diaNumero = Integer.parseInt("" + cmbDia.getSelectedItem().getValue());
-    setVarSesionDia();
-
-    //**
-    System.out.println("cmbDia.label=" + diaTexto);
-    System.out.println("cmbDia.value=" + cmbDia.getSelectedItem().getValue());
-    //**
-
-    //actualizar cambio en la bd:
-    //TODO: MEJORA-CODIGO: este 'if' redundante
-    if (Sesion.modoEditable()) {
-      actualizarDia();
-    }
-    cancelarEditDia();
-  }
-
-  public void onSelect$cmbHora() {
-    procesarHora();
-    cancelarEditHora();
-  }
-
-  /**
-   * actualiza el día de la célula en la base de datos
-   */
-  void actualizarDia() {
-    getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
-    servicioCelula.setIdCelula(idCelula);
-    if (servicioCelula.actualizarDia(diaNumero)) {
-      mensaje("Se actualizó el día");
-    } else {
-      mensaje("Error actualizando el día");
     }
   }
 
@@ -670,317 +971,6 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     etqMensajeLideres.setVisible(true);
   }
 
-  public void onClick$etqNombre() {
-    activarEditNombre();
-  }
-
-  /**
-   * activa la edición de Nombre
-   */
-  private void activarEditNombre() {
-    etqNombre.setVisible(false);
-    nombre = etqNombre.getValue();
-    if (nombre.equals(Constantes.VALOR_EDITAR)) {
-      nombre = "";
-    }
-    txtNombre.setValue(nombre);
-    txtNombre.setVisible(true);
-    txtNombre.setFocus(true);
-  }
-
-  /**
-   * desactiva la edición de Nombre
-   * y muestra el valor actual
-   */
-  private void cancelarEditNombre() {
-    txtNombre.setVisible(false);
-    etqNombre.setVisible(true);
-    etqNombre.setFocus(true);
-  }
-
-  public void onOK$txtNombre() {
-    procesarNombre();
-    cancelarEditNombre();
-  }
-
-  public void onBlur$txtNombre() {
-    procesarNombre();
-    cancelarEditNombre();
-  }
-
-  private void procesarNombre() {
-    ocultarMensaje();
-    String nuevoValor = txtNombre.getValue();
-    //quitar espacios en blanco
-    nuevoValor = nuevoValor.trim();
-
-    if (nuevoValor.isEmpty() || nuevoValor.equals(nombre)) {//no se cambió el valor
-      return;
-    }
-
-    nombre = nuevoValor;
-
-    //TODO: MEJORA: chequear si existe una célula con ese mismo nombre, y sugerir al usuario que use otro.
-    //No es obligatorio que sea único
-    if (Sesion.modoEditable()) {
-      actualizarNombre();
-    }
-    etqNombre.setValue(nombre);
-  }
-
-  /**
-   * actualiza el nombre de la célula en la base de datos
-   */
-  void actualizarNombre() {
-    getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
-    servicioCelula.setIdCelula(idCelula);
-    if (servicioCelula.actualizarNombre(nombre)) {
-      mensaje("Se actualizó el nombre");
-    } else {
-      mensaje("Error actualizando el nombre");
-    }
-  }
-
-  /*
-  void procesarNombre() {
-  nombre = txtNombre.getValue();
-  //obligar a usuario a ingresar algo
-  if (nombre.isEmpty()) {
-  txtNombre.setFocus(true);
-  return;
-  }
-  //**
-  System.out.println("celula.Nombre=" + codigo);
-  //tomar valor del textbox, darselo a la etiqueta, y ocultar el txtCodigo
-  tomarValorNombre();
-  }
-  
-  private void tomarValorNombre() {
-  txtNombre.setVisible(false);
-  etqNombre.setValue(nombre);
-  etqNombre.setVisible(true);
-  cancelarEditNombre();
-  }
-  
-  void cancelarEditNombre() {
-  if (Sesion.modoEditable()) {
-  btnCancelarEditNombre.setVisible(false);
-  btnEditNombre.setVisible(true);
-  }
-  }
-   */
-  public void onClick$etqDia() {
-    diaTexto = etqDia.getValue();
-    activarEditDia();
-  }
-
-  void activarEditDia() {
-    etqDia.setVisible(false);
-    cmbDia.setValue(diaTexto);
-    cmbDia.setVisible(true);
-    cmbDia.setFocus(true);
-    cmbDia.open();
-  }
-
-  void cancelarEditDia() {
-    etqDia.setVisible(true);
-    cmbDia.setVisible(false);
-  }
-
-  public void onClick$etqHora() {
-    horaTexto = etqHora.getValue();
-    activarEditHora();
-  }
-
-  void activarEditHora() {
-    etqHora.setVisible(false);
-    cmbHora.setValue(horaTexto);
-    cmbHora.setVisible(true);
-    cmbHora.setFocus(true);
-    cmbHora.open();
-  }
-
-  void cancelarEditHora() {
-    etqHora.setVisible(true);
-    cmbHora.setVisible(false);
-  }
-
-  void mostrarValorDia() {
-    etqDia.setValue(diaTexto);
-    etqDia.setVisible(true);
-  }
-
-  void mostrarValorHora() {
-    System.out.println("CrtrlCelulaDatosBasicos.horaTexto=" + horaTexto);
-    etqHora.setValue(horaTexto);
-    etqHora.setVisible(true);
-  }
-
-  /**
-   * cuando se pierde el foco, se cancela la edición
-   */
-  public void onBlur$cmbDia() {
-    cancelarEditDia();
-  }
-
-  /**
-   * cuando se pierde el foco, se cancela la edición
-   */
-  public void onBlur$cmbHora() {
-    cancelarEditHora();
-  }
-
-  public void onClick$etqCodigo() {
-    //TODO: chequear permiso de edición de campo: celula.codigo
-    if (Sesion.modoEditable()) {//sólo se permite modo editable
-      codigo = etqCodigo.getValue();
-      activarEditCodigo();
-    }
-  }
-
-  /**
-   * activa la edición de código
-   */
-  private void activarEditCodigo() {
-    txtCodigo.setValue(codigo);
-    txtCodigo.setVisible(true);
-    txtCodigo.setFocus(true);
-    etqCodigo.setVisible(false);
-  }
-
-  /**
-   * desactiva la edición de Codigo
-   */
-  void cancelarEditCodigo() {
-    txtCodigo.setVisible(false);
-    etqCodigo.setVisible(true);
-  }
-
-  public void onBlur$txtCodigo() {
-    //if para evitar proceso doble
-    if (!codigoProcesado) {
-      procesarCodigo();
-    }
-    codigoProcesado = false;
-  }
-
-  public void onOK$txtCodigo() {
-    procesarCodigo();
-  }
-
-  //procesamiento de valor de código (nuevo y edición)
-  private void procesarCodigo() {
-    codigoProcesado = false;
-    ocultarMensaje();
-    String nuevoCodigo = txtCodigo.getValue();
-    //quitar espacios en blanco
-    nuevoCodigo = nuevoCodigo.trim();
-    //validar códigos en uso
-    //modo ingresar:
-    if (Sesion.modoIngresar()) {
-      if (!codigoIngresado(nuevoCodigo) || codigoEnUso(nuevoCodigo)) {//se ingresó valor vacío o repetido
-        //forzar a usuario a tipear algo y que código no esté repetido
-        txtCodigo.setVisible(true);
-        txtCodigo.setFocus(true);
-        return;
-      }
-      //código ingresado y válido
-      codigo = nuevoCodigo.toUpperCase();
-      etqCodigo.setValue(codigo);
-      codigoProcesado = true;
-      cancelarEditCodigo();
-      activarEditRed();
-      return;
-    }
-    //modo edición
-    if (Sesion.modoEditable()) {
-      if (!codigoIngresado(nuevoCodigo)) {//se ingresó valor vacío...
-        cancelarEditCodigo();//se deja el valor actual
-        return;
-      }
-      if (nuevoCodigo.equals(codigo)) {//no se cambió el valor
-        cancelarEditCodigo();
-        codigoProcesado = true;
-        return;
-      }
-      codigo = nuevoCodigo.toUpperCase();
-      if (!codigoEnUso(nuevoCodigo)) {
-        actualizarCodigo();
-        codigoProcesado = true;
-        cancelarEditCodigo();
-        etqCodigo.setValue(codigo);
-        tituloVentana.setValue("Célula: " + " " + codigo);
-      }
-    }
-    /*
-    String nuevoValor = txtCodigo.getValue();
-    //quitar espacios en blanco
-    nuevoValor = nuevoValor.trim();
-    
-    if (nuevoValor.isEmpty()) {
-    txtCodigo.setVisible(true);
-    txtCodigo.setFocus(true);
-    return;
-    }
-    if (nuevoValor.equals(codigo)) {//no se cambió el valor
-    return;
-    }
-    if (codigoEnUso(nuevoValor)) {
-    txtCodigo.setVisible(true);
-    txtCodigo.setFocus(true);
-    return;
-    }
-    if (Sesion.modoIngresar()) {
-    activarEditRed();
-    }    
-    codigo = nuevoValor;
-    if (Sesion.modoEditable()) {
-    actualizarCodigo();
-    codigoEditado = true;
-    }
-    etqCodigo.setValue(codigo);    
-    //TODO: MEJORA CODIGO: mover generación de titulo de ventana a clase de utilidad
-    //actualizar título de ventana:
-    descripcionCelula = codigo;
-    tituloVentana.setValue("Célula: " + " " + descripcionCelula);
-     */
-  }
-
-  boolean codigoIngresado(String codigoCelula) {
-    if (codigoCelula.isEmpty()) {
-      mensaje("Ingresa el código");
-      return false;
-    }
-    return true;
-  }
-
-  /**
-   * busca en la base de datos si el código ya está en uso
-   * devuelve true o false si existe o no.
-   * además muestra mensaje de error cuando aplica.
-   * @return 
-   */
-  boolean codigoEnUso(String codigoCelula) {
-    if (servicioCelula.existeCelula(codigoCelula)) {
-      mensaje("Error: El código ya está en uso: " + codigoCelula);
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * actualiza el código de la célula en la base de datos
-   */
-  void actualizarCodigo() {
-    getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
-    servicioCelula.setIdCelula(idCelula);
-    if (servicioCelula.actualizarCodigo(codigo)) {
-      mensaje("Se actualizó el código");
-    } else {
-      mensaje("Error actualizando el código");
-    }
-  }
-
   /**
    * determina el líder N es usado N: {2,3, 4}
    * @param posLider
@@ -1185,41 +1175,6 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     }
     if (seUsaLider(4)) {
       idLider4 = (Integer) Sesion.getVariable("celula.idLider4");
-    }
-  }
-
-  private void procesarHora() {
-    if (cmbHora.getValue().equals(horaTexto)) { //no se cambió el valor
-      return;
-    }
-    horaTexto = cmbHora.getValue();
-    mostrarValorHora();
-    cancelarEditHora();
-    horaNumero = Integer.parseInt("" + cmbHora.getSelectedItem().getValue());
-    setVarSesionHora();
-
-    //**
-    System.out.println("cmbHora.label=" + horaTexto);
-    System.out.println("cmbHora.value=" + cmbHora.getSelectedItem().getValue());
-    //**
-
-    //TODO: MEJORA-CODIGO: este 'if' redundante
-    if (Sesion.modoEditable()) {
-      actualizarHora();
-    }
-    cancelarEditHora();
-  }
-
-  /**
-   * actualiza la hora de la célula en la base de datos
-   */
-  void actualizarHora() {
-    getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
-    servicioCelula.setIdCelula(idCelula);
-    if (servicioCelula.actualizarHora(horaNumero)) {
-      mensaje("Se actualizó la hora");
-    } else {
-      mensaje("Error actualizando la hora");
     }
   }
 

@@ -77,6 +77,8 @@ public class ServicioPersona {
     }
     return listaLiderListado;
   }
+  
+  
 
   public List getTodosLideresLanzadosNombres() {
     getTodosLideresLanzados();

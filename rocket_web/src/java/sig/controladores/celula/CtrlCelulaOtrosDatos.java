@@ -1,21 +1,11 @@
 package sig.controladores.celula;
 
-import sig.controladores.Sesion;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
-import org.zkoss.zul.A;
-import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
-import org.zkoss.zul.Div;
 import org.zkoss.zul.Label;
-import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
-import sig.modelo.servicios.ServicioRed;
-import waytech.modelo.beans.sgi.Red;
 import waytech.utilidades.UtilFechas;
 
 /**

@@ -56,7 +56,7 @@ public class Util {
   }
 
   /**
-   * concatena día y hora de la célula
+   * concatena día y hora
    * @param dia 1:lunes,..., 7:domingo
    * @param hora 8>>800am,..., 20>>8.00 pm
    * @return día y hora formateada, ejemplo: "Jueves, 7:30 p.m."
@@ -66,6 +66,6 @@ public class Util {
     if (dia.isEmpty() || hora.isEmpty()) {
       return "No asignados";
     }
-    return UtilFechas.convertirDiaSemanaTextoCompleto(dia) + ", " + UtilFechas.convertirHoraTextoCompleto(hora);
+    return UtilFechas.convertirDiaSemanaTextoCompleto(dia) + " - " + UtilFechas.convertirHoraTextoCompleto(hora);
   }
 }

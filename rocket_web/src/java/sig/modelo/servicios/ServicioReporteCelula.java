@@ -5,9 +5,7 @@
  */
 package sig.modelo.servicios;
 
-import cdo.sgd.modelo.bd.simulador.Direccion;
 import cdo.sgd.modelo.bd.simulador.ReporteCelula;
-import cdo.sgd.modelo.bd.util.CelulaUtil;
 import cdo.sgd.modelo.bd.util.ReporteCelulaListadoUtil;
 import cdo.sgd.modelo.bd.util.ReporteCelulaUtil;
 import java.util.ArrayList;
@@ -16,7 +14,6 @@ import waytech.modelo.beans.sgi.Celula;
 import waytech.modelo.beans.sgi.EjecucionCelula;
 import waytech.modelo.beans.sgi.PersonaEnCelula;
 import waytech.modelo.beans.sgi.PlanificacionCelula;
-import waytech.modelo.beans.sgi.Zona;
 import waytech.modelo.servicios.RspCelula;
 import waytech.modelo.servicios.RspEjecucionCelula;
 import waytech.modelo.servicios.RspPlanificacionCelula;
@@ -199,14 +196,15 @@ public class ServicioReporteCelula {
     reporte.setPlanificacionPersonasEnplanificacion(planifCelula.getNumeroIntegrantes());
     return reporte;
   }
+  
+  /**
+   * actualiza el número de invitados en los resultados de la célula de la semana actual
+   */
+  public boolean actualizarResultadoInvitados(int invitados) {
+    RspEjecucionCelula respuesta = saEjecucionCelula.updateNumeroInvitados(idReporteCelula, invitados);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }  
 
-  public int getIdCelula() {
-    return idCelula;
-  }
-
-  public void setIdCelula(int idCelula) {
-    this.idCelula = idCelula;
-  }
   List<Celula> celulas = new ArrayList();
   List<Celula> celulasReportes = new ArrayList();
   List<String> nombres = new ArrayList();
@@ -233,4 +231,6 @@ public class ServicioReporteCelula {
   int nLideresUsados = 1;
   //TODO: usar este id para las modificaciones
   int idCelula = 0;
+  //id del reporte que se está trabajando actualmente, servirá para EjecucionCelula y PlanificacionCelula
+  int idReporteCelula = 1;
 }
