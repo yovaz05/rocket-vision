@@ -67,7 +67,8 @@ public class SaCelula implements IsaCelula {
         if (conectorBD.iniciarConexion()) {
             rspCelula.setEsConexionAbiertaExitosamente(true);
             rspCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
-            String consultaSQL = "SELECT * FROM celula WHERE estado = 1 AND id_celula= '" + idCelula + "'";
+            String consultaSQL = "SELECT * FROM celula"
+                               + " WHERE id_celula= '" + idCelula + "'";
             try {
                 Statement sentencia = conectorBD.getConnection().createStatement();
                 boolean bandera = sentencia.execute(consultaSQL);
@@ -338,8 +339,13 @@ public class SaCelula implements IsaCelula {
         }
     }
 
+    /**
+     * lista todas las células de todas las red, que están activas
+     * ordenadas por código de red y código de célula
+     * @return 
+     */
     @Override
-    public RspCelula listCelula() {
+    public RspCelula listCelulaActiva() {
         //INSTANCIAS DE LAS CLASES                
         ConectorBDMySQL conectorBD = new ConectorBDMySQL();
         RspCelula rspCelula = new RspCelula();
@@ -352,7 +358,8 @@ public class SaCelula implements IsaCelula {
         if (conectorBD.iniciarConexion()) {
             rspCelula.setEsConexionAbiertaExitosamente(true);
             rspCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
-            String consultaSQL = "SELECT * FROM celula WHERE estado = 1"
+            String consultaSQL = "SELECT * FROM celula"
+                               + " WHERE estado != 0 AND estado != 1"                    
                                + " ORDER BY id_red ASC, codigo ASC";
             try {
                 Statement sentencia = conectorBD.getConnection().createStatement();
@@ -382,7 +389,58 @@ public class SaCelula implements IsaCelula {
             return rspCelula;
         }
     }
-
+    
+  /**
+     * lista todas las células de todas las red,
+     * que están activas
+     * @return 
+     */
+    @Override
+    public RspCelula listCelulaActivaOrdenadasPorEstatus() {
+        //INSTANCIAS DE LAS CLASES                
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        RspCelula rspCelula = new RspCelula();
+        List<Celula> todosLosCelulas = new ArrayList<Celula>();
+        //INICIALIZAR VARIABLES
+        rspCelula.setEsConexionAbiertaExitosamente(false);
+        rspCelula.setEsConexionCerradaExitosamente(false);
+        rspCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspCelula.setEsConexionAbiertaExitosamente(true);
+            rspCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            String consultaSQL = "SELECT * FROM celula"
+                               + " WHERE estado != 0 AND estado != 1"                    
+                               + " ORDER BY estado ASC, id_red ASC, codigo ASC";
+            try {
+                Statement sentencia = conectorBD.getConnection().createStatement();
+                boolean bandera = sentencia.execute(consultaSQL);
+                if (bandera) {
+                    ResultSet rs = sentencia.getResultSet();
+                    rspCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+                    rspCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), "listCelula()", this.getClass().toString()));
+                    while (rs.next()) {
+                        Celula celula = new Celula();
+                        celula = rsCelula(rs, celula);
+                        todosLosCelulas.add(celula);
+                    }
+                }
+            } catch (SQLException e) {
+                rspCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "listCelula()", this.getClass().toString()));
+            } finally {
+                if (conectorBD.cerrarConexion()) {
+                    rspCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                rspCelula.setTodosLosCelulas(todosLosCelulas);
+                return rspCelula;
+            }
+        } else {
+            rspCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspCelula;
+        }
+    }    
+    
     @Override
     public RspCelula esCelulaConIntegrantes(int idCelula) {
         //INSTANCIAS DE LAS CLASES                

@@ -56,7 +56,7 @@ public class Rocket_Servicios {
     List<Celula> celulas = new ArrayList();
     IsaCelula isaCelula = new SaCelula();
     RspCelula rspCelula = new RspCelula();
-    rspCelula = isaCelula.listCelula();
+    rspCelula = isaCelula.listCelulaActiva();
     System.out.println("INICIO DE LA CONEXION " + rspCelula.getRespuestaInicioDeConexion());
     celulas = rspCelula.getTodosLosCelulas();
     System.out.println("CIERRE DE LA CONEXION " + rspCelula.getRespuestaInicioDeConexion());

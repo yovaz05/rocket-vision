@@ -55,6 +55,12 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
         return ejecucionCelula;
     }
 
+    /**
+     * Recupera una ejecución de célula por el id de célula,
+     * sin importar el estado
+     * @param idEjecucionCelula
+     * @return 
+     */
     @Override
     public RspEjecucionCelula getEjecucionCelulaPorIdEjecucionCelula(int idEjecucionCelula) {
         //INSTANCIAS DE LAS CLASES                
@@ -68,7 +74,8 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
         if (conectorBD.iniciarConexion()) {
             rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
             rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
-            String consultaSQL = "SELECT * FROM ejecucion_celula WHERE estado = 1 AND id_ejecucion_celula = '" + idEjecucionCelula + "'";
+            String consultaSQL = "SELECT * FROM ejecucion_celula"
+                               + " WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
             try {
                 Statement sentencia = conectorBD.getConnection().createStatement();
                 boolean bandera = sentencia.execute(consultaSQL);

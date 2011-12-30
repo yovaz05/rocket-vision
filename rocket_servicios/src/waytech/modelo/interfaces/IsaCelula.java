@@ -66,7 +66,10 @@ public interface IsaCelula {
 
     public abstract RspCelula esCelulaConIntegrantes(int idCelula);
 
-    public abstract RspCelula listCelula();
+    public abstract RspCelula listCelulaActiva();
+
+    public abstract RspCelula listCelulaActivaOrdenadasPorEstatus();
+    
     
     /**
      * 1,2,3,4

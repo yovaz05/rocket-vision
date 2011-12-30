@@ -91,6 +91,48 @@ public class SaPlanificacionCelula implements IsaPlanificacionCelula {
             return rspPlanificacionCelula;
         }
     }
+    @Override
+    public RspPlanificacionCelula getPlanificacionCelulaPorIdCelula(int idCelula) {
+        //INSTANCIAS DE LAS CLASES                
+        ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+        RspPlanificacionCelula rspPlanificacionCelula = new RspPlanificacionCelula();
+        //INICIALIZAR VARIABLES
+        rspPlanificacionCelula.setEsConexionAbiertaExitosamente(false);
+        rspPlanificacionCelula.setEsConexionCerradaExitosamente(false);
+        rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+        //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+        if (conectorBD.iniciarConexion()) {
+            rspPlanificacionCelula.setEsConexionAbiertaExitosamente(true);
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            String consultaSQL = "SELECT * FROM planificacion_celula"
+                                + " WHERE id_celula = '" + idCelula + "'";
+            try {
+                Statement sentencia = conectorBD.getConnection().createStatement();
+                boolean bandera = sentencia.execute(consultaSQL);
+                if (bandera) {
+                    ResultSet rs = sentencia.getResultSet();
+                    rspPlanificacionCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+                    rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), "getPlanificacionCelulaPorIdPlanificacionCelula(int idPlanificacionCelula)", this.getClass().toString()));
+                    if (rs.next()) {
+                        PlanificacionCelula PlanificacionCelula = new PlanificacionCelula();
+                        PlanificacionCelula = rsPlanificacionCelula(rs, PlanificacionCelula);
+                        rspPlanificacionCelula.setPlanificacionCelula(PlanificacionCelula);
+                    }
+                }
+            } catch (SQLException e) {
+                rspPlanificacionCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, "getPlanificacionCelulaPorIdPlanificacionCelula(int idPlanificacionCelula)", this.getClass().toString()));
+            } finally {
+                if (conectorBD.cerrarConexion()) {
+                    rspPlanificacionCelula.setEsConexionCerradaExitosamente(true);
+                }
+                rspPlanificacionCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+                return rspPlanificacionCelula;
+            }
+        } else {
+            rspPlanificacionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+            return rspPlanificacionCelula;
+        }
+    }
 
     @Override
     public RspPlanificacionCelula listPlanificacionCelula() {

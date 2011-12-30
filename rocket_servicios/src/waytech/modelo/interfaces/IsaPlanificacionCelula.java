@@ -45,6 +45,8 @@ public interface IsaPlanificacionCelula {
     public abstract RspPlanificacionCelula deletePlanificacionCelulaLogicamente(int idPlanificacionCelula);
 
     public abstract RspPlanificacionCelula getPlanificacionCelulaPorIdPlanificacionCelula(int idPlanificacionCelula);
+    
+    public abstract RspPlanificacionCelula getPlanificacionCelulaPorIdCelula(int idCelula);
 
     public abstract RspPlanificacionCelula getPlanificacionCelulaPorTraza(String traza);
 

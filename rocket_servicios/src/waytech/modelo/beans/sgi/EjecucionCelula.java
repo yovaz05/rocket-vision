@@ -167,4 +167,28 @@ public class EjecucionCelula {
     public void setVisitas(int visitas) {
         this.visitas = visitas;
     }
+
+  @Override
+  public String toString() {
+    return "EjecucionCelula{" 
+            + "idEjecucionCelula=" + idEjecucionCelula 
+            + ", fecha=" + fecha 
+            + ", nuevosInvitados=" + nuevosInvitados 
+            + ", reconciliados=" + reconciliados
+            + ", visitas=" + visitas 
+            + ", numeroIntegrantes=" + numeroIntegrantes 
+            + ", convertidos=" + convertidos 
+            + ", observaciones=" + observaciones 
+            + ", traza=" + traza 
+            + ", estado=" + estado 
+            + ", amigosSoloAsistenGrupo=" + amigosSoloAsistenGrupo 
+            + ", integrantesCasaOracion=" + integrantesCasaOracion
+            + ", integrantesOtrasIglesias=" + integrantesOtrasIglesias 
+            + ", asistenciaDomingoAnterior=" + asistenciaDomingoAnterior 
+            + ", ofrenda=" + ofrenda 
+            //+ ", idSemana=" + idSemana.getIdSemana()
+            //+ ", idCelula=" + idCelula.getIdCelula()
+            + '}';
+  }
+    
 }
