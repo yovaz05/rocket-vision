@@ -40,7 +40,7 @@ public interface IsaEjecucionCelula {
 
     public abstract RspEjecucionCelula updateObservaciones(int idEjecucionCelula, String observaciones);
 
-    public abstract RspEjecucionCelula updateAmigosSoloAsistenGrupos(int idEjecucionCelula, int amigosSoloAsistenGrupo);
+    public abstract RspEjecucionCelula updateAmigosSoloAsistenGrupo(int idEjecucionCelula, int amigosSoloAsistenGrupo);
 
     public abstract RspEjecucionCelula updateIntegrantesCasaOracion(int idEjecucionCelula, int integrantesCasaOracion);
 

@@ -593,7 +593,9 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE ejecucion_celula SET numero_invitados = '" + nuevosInvitados + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                String consultaSQL = "UPDATE ejecucion_celula"
+                        + " SET nuevos_invitados = '" + nuevosInvitados + "'"
+                        + " WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
@@ -645,7 +647,9 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE ejecucion_celula SET reconciliados = '" + reconciliados + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                String consultaSQL = "UPDATE ejecucion_celula"
+                        + " SET reconciliados = '" + reconciliados + "'"
+                        + " WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
@@ -697,7 +701,9 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE ejecucion_celula SET visitas = '" + visitas + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                String consultaSQL = "UPDATE ejecucion_celula"
+                        + " SET visitas = '" + visitas + "'"
+                        + " WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
@@ -749,7 +755,9 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE ejecucion_celula SET numero_integrantes = '" + numeroIntegrantes + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                String consultaSQL = "UPDATE ejecucion_celula"
+                        + " SET numero_integrantes = '" + numeroIntegrantes + "'"
+                        + " WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
@@ -801,7 +809,9 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE ejecucion_celula SET convertidos = '" + convertidos + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                String consultaSQL = "UPDATE ejecucion_celula"
+                        + " SET convertidos = '" + convertidos + "'"
+                        + " WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
@@ -853,7 +863,9 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE ejecucion_celula SET observaciones = '" + observaciones + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                String consultaSQL = "UPDATE ejecucion_celula"
+                        + " SET observaciones = '" + observaciones + "'"
+                        + " WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
@@ -888,7 +900,7 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
     }
 
     @Override
-    public RspEjecucionCelula updateAmigosSoloAsistenGrupos(int idEjecucionCelula, int amigosSoloAsistenGrupo) {
+    public RspEjecucionCelula updateAmigosSoloAsistenGrupo(int idEjecucionCelula, int amigosSoloAsistenGrupo) {
         String metodo = "updateAmigosSoloAsistenGrupos(int idEjecucionCelula, int amigosSoloAsistenGrupo)";
         RspEjecucionCelula rspEjecucionCelula = new RspEjecucionCelula();
         ConectorBDMySQL conectorBD = new ConectorBDMySQL();
@@ -905,7 +917,9 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE ejecucion_celula SET amigos_solo_asisten_grupo = '" + amigosSoloAsistenGrupo + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                String consultaSQL = "UPDATE ejecucion_celula"
+                        + " SET amigos_solo_asisten_grupo = '" + amigosSoloAsistenGrupo + "'"
+                        + " WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
@@ -957,7 +971,9 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE ejecucion_celula SET integrantes_casa_oracion = '" + integrantesCasaOracion + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                String consultaSQL = "UPDATE ejecucion_celula"
+                        + " SET integrantes_casa_oracion = '" + integrantesCasaOracion + "'"
+                        + " WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
@@ -1009,7 +1025,9 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE ejecucion_celula SET integrantes_otras_iglesias = '" + integrantesOtrasIglesias + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                String consultaSQL = "UPDATE ejecucion_celula"
+                        + " SET integrantes_otras_iglesias = '" + integrantesOtrasIglesias + "'"
+                        + " WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
@@ -1061,7 +1079,9 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE ejecucion_celula SET asistencia_domingo_anterior = '" + asistenciaDomingoAnterior + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                String consultaSQL = "UPDATE ejecucion_celula"
+                        + " SET asistencia_domingo_anterior = '" + asistenciaDomingoAnterior + "'"
+                        + " WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
@@ -1113,7 +1133,9 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE ejecucion_celula SET ofrenda = '" + ofrenda + "' WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
+                String consultaSQL = "UPDATE ejecucion_celula"
+                        + " SET ofrenda = '" + ofrenda + "'"
+                        + " WHERE id_ejecucion_celula = '" + idEjecucionCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();

@@ -238,23 +238,24 @@ public class SaCelula implements IsaCelula {
                         + "fecha_apertura)"
                         + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
-                stmt.setInt(1, 0);
-                stmt.setInt(2, celula.getIdRed());
-                stmt.setString(3, celula.getCodigo());
-                stmt.setString(4, celula.getNombre());
-                stmt.setString(5, celula.getAnfitrion());
-                stmt.setString(6, celula.getDireccion());
-                stmt.setString(7, traza);
-                stmt.setShort(8, Short.valueOf("1"));
-                stmt.setInt(9, celula.getDia());
-                stmt.setInt(10, celula.getHora());
-                stmt.setString(11, celula.getTelefono());
-                stmt.setString(12, celula.getObservaciones());
-                stmt.setInt(13, celula.getIdZona());
+                int i = 0;
+                stmt.setInt(++i, 0);
+                stmt.setInt(++i, celula.getIdRed());
+                stmt.setString(++i, celula.getCodigo());
+                stmt.setString(++i, celula.getNombre());
+                stmt.setString(++i, celula.getAnfitrion());
+                stmt.setString(++i, celula.getDireccion());
+                stmt.setString(++i, traza);
+                stmt.setShort(++i, Short.valueOf("2"));//reporte no ingresado
+                stmt.setInt(++i, celula.getDia());
+                stmt.setInt(++i, celula.getHora());
+                stmt.setString(++i, celula.getTelefono());
+                stmt.setString(++i, celula.getObservaciones());
+                stmt.setInt(++i, celula.getIdZona());
                 if (celula.getFechaApertura().isEmpty() || celula.getFechaApertura() == null) {
                   celula.setFechaApertura("1970-01-01 00:00:00");
                 }
-                stmt.setString(14, celula.getFechaApertura());
+                stmt.setString(++i, celula.getFechaApertura());
                 rows = stmt.executeUpdate();
                 stmt.close();
                 rspCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), "insertCelula(CelulaInsert celula)", this.getClass().toString()));

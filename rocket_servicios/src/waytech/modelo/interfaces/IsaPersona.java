@@ -100,6 +100,8 @@ public interface IsaPersona {
 
     public abstract RspPersona listPersonaFiltradoPorDireccionTrabajo(String direccionTrabajo);
 
+    public abstract RspPersona listPersonaLiderLanzadoPorRed(int idRed);
+      
     public abstract RspPersona listPersonaLideresDeRed();
 
     public abstract RspPersona listPersonaLideresDeCelula();
@@ -125,17 +127,8 @@ public interface IsaPersona {
     public abstract RspPersona listPersonaCualquierLiderNombre(String nombre);
     
     /*
-     * Gabriel dice: métodos que se necesitan para Maestro de Líder:
-     * insertPersona(String cedula, String nombre, int idRed);
-     * updateCedula(String valor)
-     * updateNombre(String valor)
-     * updateRed(int idZona)
-     * updateTelefonoCelular(String valor)
-     * updateCorreo(String valor)
-     * updateCorreo(String valor)
-     * updateZona(int idZona)
-     * updateDireccionHabitacion(String valor)
-     * updateObservaciones(String valor)
-     * boolean existeCedula(String cedula)
+     * métodos necesarios:
+     * 
+     * 
      */
 }

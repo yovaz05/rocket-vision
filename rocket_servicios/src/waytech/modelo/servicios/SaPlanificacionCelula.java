@@ -762,7 +762,9 @@ public class SaPlanificacionCelula implements IsaPlanificacionCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);
-                String consultaSQL = "UPDATE planificacion_celula SET visitas = '" + visitas + "' WHERE id_planificacion_celula = '" + idPlanificacionCelula + "'";
+                String consultaSQL = "UPDATE planificacion_celula"
+                        + " SET visitas = '" + visitas + "'"
+                        + " WHERE id_planificacion_celula = '" + idPlanificacionCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();
