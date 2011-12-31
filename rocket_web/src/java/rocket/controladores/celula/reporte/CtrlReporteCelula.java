@@ -27,6 +27,7 @@ import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
+import sig.controladores.Constantes;
 import sig.modelo.servicios.ServicioCelula;
 import sig.modelo.servicios.ServicioReporteCelula;
 import waytech.utilidades.Util;
@@ -67,11 +68,12 @@ public class CtrlReporteCelula extends GenericForwardComposer {
       System.out.println("reporte.estatus: " + reporte.getEstatus());
       if (reporte.getEstatus() == ReporteCelulaUtil.REPORTE_INGRESADO) {
         mostrarDatosReporteModoView();
+        //- seleccionarTab(tabPlanificacion);
         seleccionarTab(tabResultados);
       } else if (reporte.getEstatus() == ReporteCelulaUtil.CELULA_NO_REALIZADA) {
         System.out.println("estatus = CELULA_NO_REALIZADA");
         ocultarPregunta();
-        mostrarMensaje("La célula NO se realizó esta semana");
+        mensaje("La célula NO se realizó esta semana");
         mostrarTabsBasicos();
         ocultarTabsDatosReporte();
         seleccionarTab(tabObservaciones);
@@ -105,10 +107,8 @@ public class CtrlReporteCelula extends GenericForwardComposer {
   }
 
   private void buscarData() throws InterruptedException {
-    //- celula = (CelulaUtil) datos.buscarCelula(idCelula);
-    //- reporte = (ReporteCelula) datos.buscarReporteCelula(idCelula);
     celula = servicioCelula.getCelula(idCelula);
-    System.out.println("CtrlReporteCelula.celula=" + celula.toString());
+    //**System.out.println("CtrlReporteCelula.celula=" + celula.toString());
     reporte = servicioReporteCelula.getReporteCelula(idCelula);
   }
 
@@ -122,7 +122,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     
     String diaTexto, horaTexto, diaHora;
     diaTexto = celula.getDia();
-    horaTexto = celula.getHora();    
+    horaTexto = celula.getHora();
     if (diaTexto.isEmpty() || horaTexto.isEmpty()) {
       //si no hay valor, mostrar no asignados
       diaHora = "No asignados";
@@ -198,11 +198,17 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     result$etqCDO.setValue("" + reporte.getResultadoCDO());
     result$etqVisitas.setValue("" + reporte.getResultadoVisitas());
     result$etqOtrasIglesias.setValue("" + reporte.getResultadoOtrasIglesias());
-    result$etqDomingoAnterior.setValue("" + reporte.getResultadoAsistenciaDomingoAnterior());
+    result$etqAsistenciaDomingoAnterior.setValue("" + reporte.getResultadoAsistenciaDomingoAnterior());
     result$etqTotalAsistencia.setValue("" + reporte.getTotalAsistenciaCelula());
     //ofrendas
-    ofrendas$etqOfrendasMonto.setValue("" + reporte.getOfrendasMonto());
-    ofrendas$chkEntregadas.setChecked(reporte.isOfrendasEntregadas());
+    result$etqOfrendasMonto.setValue("" + reporte.getOfrendasMonto());
+    //+ ofrendas$chkEntregadas.setChecked(reporte.isOfrendasEntregadas());
+    
+    String observaciones = reporte.getObservaciones();
+    if (observaciones.isEmpty()) {
+      observaciones = Constantes.VALOR_EDITAR;
+    }
+    obs$etqObservaciones.setValue(observaciones);    
   }
 
   /**
@@ -227,11 +233,11 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     result$spnCDO.setValue(reporte.getResultadoCDO());
     result$spnVisitas.setValue(reporte.getResultadoVisitas());
     result$spnOtrasIglesias.setValue(reporte.getResultadoOtrasIglesias());
-    result$spnDomingoAnterior.setValue(reporte.getResultadoAsistenciaDomingoAnterior());
+    result$spnAsistenciaDomingoAnterior.setValue(reporte.getResultadoAsistenciaDomingoAnterior());
     result$etqTotalAsistencia.setValue("" + reporte.getTotalAsistenciaCelula());
     //ofrendas
-    ofrendas$txtOfrendasMonto.setValue("" + reporte.getOfrendasMonto());
-    ofrendas$chkEntregadas.setChecked(reporte.isOfrendasEntregadas());
+    result$etqOfrendasMonto.setValue("" + reporte.getOfrendasMonto());
+    //+ ofrendas$chkEntregadas.setChecked(reporte.isOfrendasEntregadas());
   }
 
   /**
@@ -248,8 +254,8 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     if (modo.equals("new")) {
       tituloVentana.setValue(titulo + " » Ingresar");
       //camposModoEdicion(true);
-      verElementosEntrada(true);
-      mostrarElementosVisualizacion(false);
+      //-verElementosEntrada(true);
+      //-mostrarElementosVisualizacion(false);
       //btnConfirmar.setVisible(false);
       //btnEditar.setVisible(false);
       //btnGuardar.setVisible(true);
@@ -259,8 +265,8 @@ public class CtrlReporteCelula extends GenericForwardComposer {
       //tituloVentana.setValue(titulo + " " + celula.getCodigo() + " << 'TAREA: Agregar fechas aquí'");
       tituloVentana.setValue(titulo + " << 'código y fechas van aquí'");
       //camposModoEdicion(false);
-      verElementosEntrada(false);
-      mostrarElementosVisualizacion(true);
+      //-verElementosEntrada(false);
+      //-mostrarElementosVisualizacion(true);
       //btnGuardar.setVisible(false);
       //TODO: dependiendo de los permisos y el usuario que está consultando, se muestra el botón de edición
       btnEditar.setVisible(false);
@@ -270,16 +276,16 @@ public class CtrlReporteCelula extends GenericForwardComposer {
       //seleccionarTab(3);  //tab resultados
     } else if (modo.equals("edit")) {
       tituloVentana.setValue(titulo + " » Editar");
-      verElementosEntrada(true);
-      mostrarElementosVisualizacion(false);
+      //-verElementosEntrada(true);
+      //-mostrarElementosVisualizacion(false);
       //camposModoEdicion(true);
       setFocoEdicion();
       //btnEditar.setVisible(false);
       //btnGuardar.setVisible(true);
       //btnConfirmar.setVisible(false);
     } else if (modo.equals("confirmado")) {
-      verElementosEntrada(false);
-      mostrarElementosVisualizacion(true);
+      //-verElementosEntrada(false);
+      //-mostrarElementosVisualizacion(true);
       //camposModoEdicion(false);
       //btnGuardar.setVisible(false);
       //btnEditar.setVisible(false);
@@ -310,35 +316,41 @@ public class CtrlReporteCelula extends GenericForwardComposer {
   result$spnOtrasIglesias.setDisabled(!status);
   result$spnAsistenciaDomingoAnterior.setDisabled(!status);
   result$etqTotalAsistencia.setDisabled(!status);
-  ofrendas$txtOfrendasMonto.setDisabled(!status);
+  result$etqOfrendasMonto.setDisabled(!status);
   ofrendas$chkEntregadas.setDisabled(!status);
   }
    */
+  
   /**
    * oculta o muestra los elementos de entrada
    * @param status el estado del grid true o false
    */
+  /*DEPRECATED
   public void verElementosEntrada(boolean status) {
     result$gridEdit.setVisible(status);
     planif$colEdit.setVisible(status);
     ofrendas$colEdit.setVisible(status);
   }
-
+   */
+  
   /**
    * oculta o muestra la columna donde están los elementos de visualización
    * @param status el estado true o false
    */
+  /*DEPRECATED
   public void mostrarElementosVisualizacion(boolean status) {
     result$gridView.setVisible(status);
     planif$colView.setVisible(status);
     ofrendas$colView.setVisible(status);
   }
+   */
 
   public void onClick$btnNew() throws InterruptedException {
     modo = "new";
     actualizarEstado();
   }
 
+  //TODO: hacer el crear reporte
   public void onClick$btnGuardar() throws InterruptedException {
     /**
      * modoActual = "procesando";
@@ -347,16 +359,20 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     if (reporteNoIngresado()) {
       reporte.setEstatus(ReporteCelulaUtil.REPORTE_INGRESADO);
     }
-    copiarValoresDeEntradaAVisualizacion();
+    //-copiarValoresDeEntradaAVisualizacion();
     modo = "ver";
     actualizarEstado();
   }
 
 //TODO: Mejorar: elegir automáticamente el tab más apropiado de acuerdo al modo y estatus del reporte
+  //TODO: no usado
   public void onClick$btnEditar() {
+    mensaje("Este botón no debería estar al");
+    /*
     modo = "edit";
     copiarValoresDeVisualizacionAEntrada();
     actualizarEstado();
+     */
   }
 
   public void onClick$btnImprimir() throws InterruptedException {
@@ -397,8 +413,8 @@ public class CtrlReporteCelula extends GenericForwardComposer {
       result$spnInvitados.setFocus(true);
     } else if (tabSelected == tabOfrendas) {
       //TODO: no funciona
-      ofrendas$txtOfrendasMonto.setFocus(true);
-      ofrendas$txtOfrendasMonto.select();
+      result$txtOfrendasMonto.setFocus(true);
+      result$txtOfrendasMonto.select();
     } else if (tabSelected == tabObservaciones) {
       obs$txtObservaciones.setFocus(true);
       obs$txtObservaciones.select();
@@ -418,8 +434,8 @@ public class CtrlReporteCelula extends GenericForwardComposer {
 //      result$spnInvitados.setFocus(true);
 //    } else if (tabSeleccionado == 4) {
 //      //TODO: no funciona
-//      ofrendas$txtOfrendasMonto.setFocus(true);
-//      ofrendas$txtOfrendasMonto.select();
+//      result$etqOfrendasMonto.setFocus(true);
+//      result$etqOfrendasMonto.select();
 //    } else if (tabSeleccionado == 5) {
 //      obs$txtObservaciones.setFocus(true);
 //    }
@@ -447,6 +463,8 @@ public class CtrlReporteCelula extends GenericForwardComposer {
    * pasa valores de elementosz de visualización a elementos de entrada
    * 
    */
+  //TODO: NO USADO
+  /*
   private void copiarValoresDeVisualizacionAEntrada() {
     //TODO: usar variable 'reporte'       
     //planif
@@ -462,14 +480,18 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     result$spnCDO.setValue(Integer.parseInt(result$etqCDO.getValue()));
     result$spnVisitas.setValue(Integer.parseInt(result$etqVisitas.getValue()));
     result$spnOtrasIglesias.setValue(Integer.parseInt(result$etqOtrasIglesias.getValue()));
-    result$spnDomingoAnterior.setValue(Integer.parseInt(result$etqDomingoAnterior.getValue()));
+    result$spnAsistenciaDomingoAnterior.setValue(Integer.parseInt(result$etqAsistenciaDomingoAnterior.getValue()));
     //ofrendas
-    ofrendas$txtOfrendasMonto.setValue("" + Double.parseDouble(ofrendas$etqOfrendasMonto.getValue()));
-    Util.mostrarRol(ofrendas$etqOfrendasEntregadas, ofrendas$chkEntregadas.isChecked());
+    result$etqOfrendasMonto.setValue("" + Double.parseDouble(result$etqOfrendasMonto.getValue()));
+    //+Util.mostrarRol(ofrendas$etqOfrendasEntregadas, ofrendas$chkEntregadas.isChecked());
     //Observaciones
     obs$txtObservaciones.setValue(obs$etqObservaciones.getValue());
   }
+   * 
+   */
 
+  //TODO: Mejorar código: NO USADO
+  /*
   private void copiarValoresDeEntradaAVisualizacion() {
     //TODO: usar variable 'reporte'    
     //planif
@@ -485,14 +507,16 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     result$etqCDO.setValue("" + result$spnCDO.getValue());
     result$etqVisitas.setValue("" + result$spnVisitas.getValue());
     result$etqOtrasIglesias.setValue("" + result$spnOtrasIglesias.getValue());
-    result$etqDomingoAnterior.setValue("" + result$spnDomingoAnterior.getValue());
+    result$etqAsistenciaDomingoAnterior.setValue("" + result$spnAsistenciaDomingoAnterior.getValue());
     result$etqTotalAsistencia.setValue("" + getTotalAsistencia());
     //ofrendas
-    ofrendas$etqOfrendasMonto.setValue("" + ofrendas$txtOfrendasMonto.getValue());
-    Util.marcarRol(ofrendas$chkEntregadas, reporte.isOfrendasEntregadas());
+    result$etqOfrendasMonto.setValue("" + result$etqOfrendasMonto.getValue());
+    //+ Util.marcarRol(ofrendas$chkEntregadas, reporte.isOfrendasEntregadas());
     //Observaciones
     obs$etqObservaciones.setValue(obs$txtObservaciones.getValue());
   }
+   * 
+   */
 
   /**
    * notifica a barraMenu sobre la vista actual, para el manejo de estados
@@ -566,7 +590,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     ocultarPregunta();
     mostrarTabsDatosReporte();
     mostrarWidget(tabObservaciones);
-    mostrarMensaje("Ingrese la planificación y los resultados de la célula");
+    mensaje("Ingrese la planificación y los resultados de la célula");
     reporte.setEstatus(ReporteCelulaUtil.REPORTE_NO_INGRESADO);
     seleccionarTab(tabResultados);//Resultados    
     modo = "new";
@@ -581,7 +605,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     mostrarWidget(tabObservaciones);
     seleccionarTab(tabObservaciones);//tabObservaciones
     obs$txtObservaciones.setFocus(true);
-    mostrarMensaje("Explique por qué no se realizó la célula");
+    mensaje("Explique por qué no se realizó la célula");
     modo = "new";
     actualizarEstado();
     notificarBarra();
@@ -591,7 +615,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
    * muestra un mensaje en label
    * @param msj 
    */
-  private void mostrarMensaje(String msj) {
+  private void mensaje(String msj) {
     etqMensaje.setValue(msj);
     etqMensaje.setVisible(true);
     System.out.println(this.getClass().toString() + ": msj");
@@ -765,8 +789,6 @@ public class CtrlReporteCelula extends GenericForwardComposer {
   Label fechas$etqDiaCelula;
   Label fechas$etqSemana;
 //pestaña "Planificación"
-  Column planif$colEdit;
-  Column planif$colView;
   Spinner planif$spnInvitados;
   Spinner planif$spnReconciliados;
   Spinner planif$spnVisitas;
@@ -789,7 +811,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
   Spinner result$spnCDO;
   Spinner result$spnVisitas;
   Spinner result$spnOtrasIglesias;
-  Spinner result$spnDomingoAnterior;
+  Spinner result$spnAsistenciaDomingoAnterior;
   Label result$etqTotalAsistencia;
   Label result$etqInvitados;
   Label result$etqConvertidos;
@@ -798,14 +820,18 @@ public class CtrlReporteCelula extends GenericForwardComposer {
   Label result$etqCDO;
   Label result$etqVisitas;
   Label result$etqOtrasIglesias;
-  Label result$etqDomingoAnterior;
+  Label result$etqAsistenciaDomingoAnterior;
+  //ofrendas (dentro de la pestaña resultados:
+  Decimalbox result$txtOfrendasMonto;
+  Label result$etqOfrendasMonto;
+  Label result$etqOfrendasEntregadas;
   //pestaña Ofrendas:
-  Column ofrendas$colEdit;
-  Column ofrendas$colView;
-  Decimalbox ofrendas$txtOfrendasMonto;
-  Checkbox ofrendas$chkEntregadas;
-  Label ofrendas$etqOfrendasMonto;
-  Label ofrendas$etqOfrendasEntregadas;
+  /*+
+  Decimalbox +ofrendas+$txtOfrendasMonto;
+  Checkbox +ofrendas+$chkEntregadas;
+  Label +ofrendas+$etqOfrendasMonto;
+  Label +ofrendas+$etqOfrendasEntregadas;
+   */
   //pestaña Observaciones:
   Column obs$colEdit;
   Column obs$colView;

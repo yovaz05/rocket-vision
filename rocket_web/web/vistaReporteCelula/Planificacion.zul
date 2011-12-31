@@ -1,31 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
-  <grid style="border:0px">      
+  <grid style="border:0px"
+  apply="rocket.controladores.celula.reporte.CtrlReporteCelulaPlanificacion">
     <columns>
       <column id="col1" width="180px"/>
-      <column id="colEdit" visible="false"/>
-      <column id="colView"/>
+      <column id="colData"/>
     </columns>
     <rows>
       <row>
         <label value="Nuevos Invitados" sclass="etiqueta_campo" />
-        <spinner id="spnInvitados" cols="2" width="50px" value="0" constraint="min 0 max 100" />
-        <label id="etqInvitados" value="0"/>
+        <div>
+          <div id="divInvitados" tooltiptext="Click para editar">
+            <label id="etqInvitados" value="0"/>
+          </div>
+          <spinner id="spnInvitados" cols="2" width="50px" value="0" constraint="min 0 max 100"
+        visible="false"/>
+        </div>
       </row>        
       <row>
         <label value="Por Reconciliarse" sclass="etiqueta_campo"/>
-        <spinner id="spnReconciliados" cols="2" width="50px" value="0" constraint="min 0 max 100"/>
-        <label id="etqReconciliados" value="0"/>
+        <div>
+          <div id="divReconciliados" tooltiptext="Click para editar">            
+            <label id="etqReconciliados" value="0"/>
+          </div>
+          <spinner id="spnReconciliados" cols="2" width="50px" value="0" constraint="min 0 max 100"
+        visible="false"/>
+        </div>
       </row>
       <row>
         <label value="Visitas a Realizar" sclass="etiqueta_campo"/>
-        <spinner id="spnVisitas" cols="2" width="50px" value="0" constraint="min 0 max 100"/>
-        <label id="etqVisitas" value="0"/>
+        <div>
+          <div id="divVisitas" tooltiptext="Click para editar">            
+            <label id="etqVisitas" value="0"/>
+          </div>
+          <spinner id="spnVisitas" cols="2" width="50px" value="0" constraint="min 0 max 100"
+        visible="false"/>
+        </div>
       </row>           
       <row>
         <label value="Personas en Planificación" sclass="etiqueta_campo" tooltiptext="Líderes + Estacas"/>
-        <spinner id="spnPersonasEnPlanif" cols="2" width="50px" value="0" constraint="min 0 max 100"/>
-        <label id="etqPersonasEnPlanif" value="0"/>
+        <div>
+          <div id="divPersonasEnPlanif" tooltiptext="Click para editar">            
+            <label id="etqPersonasEnPlanif" value="0"/>
+          </div>
+          <spinner id="spnPersonasEnPlanif" cols="2" width="50px" value="0" constraint="min 1 max 100"
+        visible="false"/>
+        </div>
       </row>
     </rows>
   </grid>

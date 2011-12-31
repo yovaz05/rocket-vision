@@ -18,7 +18,7 @@ title="SIG - Mejorando barra superior"?>
   >
     
 <!-- barra de menú -->
-      <div id="divIzquierdo" style="display:inline-block;float:left" width="240px" visible="false">
+      <div id="divIzquierdo" style="display:inline-block;float:left" width="250px" visible="false">
           <!--        DEBUG: items en desarrollo-->
         <menubar id="menubar" orient="horizontal" height="24px">
           <menuitem label="Líderes" id="itemDiscipuloLanzadoListado" image="/img/iconos/bullet.png"/>

@@ -18,7 +18,7 @@ import waytech.modelo.beans.sgi.Red;
  * Para validaciones independientes
  * @author Gabriel
  */
-public class CtrlLiderDatosBasicos1 extends GenericForwardComposer {
+public class CtrlLiderDatosBasicos extends GenericForwardComposer {
 
   //widgets:
   Label etqMensaje;
@@ -172,7 +172,7 @@ public class CtrlLiderDatosBasicos1 extends GenericForwardComposer {
     System.out.println("Código: " + txtCedula.getValue());
     System.out.println("Nombre: " + txtCedula.getValue());
     System.out.println("Líder 1: nombre=" + cmbLider1.getValue());
-    System.out.println("Líder 1: id=" + servRed.getIdPersonaRed(cmbLider1.getValue()));
+    System.out.println("Líder 1: id=" + servRed.getIdPersona(cmbLider1.getValue()));
     System.out.println("Día.label=" + cmbDia.getValue());
     System.out.println("Día.value=" + cmbDia.getSelectedItem().getValue());
     System.out.println("Hora.label: " + cmbHora.getValue());

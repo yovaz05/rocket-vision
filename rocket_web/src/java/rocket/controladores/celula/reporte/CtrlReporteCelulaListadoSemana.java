@@ -151,7 +151,7 @@ public class CtrlReporteCelulaListadoSemana extends GenericForwardComposer {
           vbox.setParent(row);
         }
         etqDireccion.setParent(row);
-        etqDiaHora.setParent(row);        
+        etqDiaHora.setParent(row);
         /**/
         tbbEstatus.setParent(row);
       }

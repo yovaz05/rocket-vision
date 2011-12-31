@@ -23,7 +23,7 @@ import waytech.modelo.beans.sgi.Red;
  *
  * @author Gabriel
  */
-public class CtrlLiderDB extends GenericForwardComposer {
+public class CtrlLiderDatosBasicos extends GenericForwardComposer {
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {

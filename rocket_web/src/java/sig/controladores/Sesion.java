@@ -140,4 +140,7 @@ public class Sesion {
   public static boolean esVistaLider(){
     return Sesion.getVistaActual().equals(Vistas.LIDER);
   }
+  public static boolean esVistaReporteCelula(){
+    return Sesion.getVistaActual().equals(Vistas.REPORTE_CELULA);
+  }
 }

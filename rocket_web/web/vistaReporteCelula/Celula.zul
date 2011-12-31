@@ -8,7 +8,10 @@
     <rows>
       <row>
         <label value="Código" sclass="etiqueta_campo"/>
-        <toolbarbutton id="tbbCodigo" label=""/>
+        <label id="etqCodigo" value=""/>
+<!--  
+      <toolbarbutton id="tbbCodigo" label=""/>
+-->
       </row>        
       <row>
         <label value="Dirección" sclass="etiqueta_campo"/>
@@ -16,17 +19,26 @@
       </row>        
       <row>
         <label value="Red" sclass="etiqueta_campo"/>
-        <toolbarbutton id="tbbRed" label="" onClick='panelCentral.src="vistaRed/Red.zul"'/>
+        <label id="etqRed" value=""/>
+<!--
+      <toolbarbutton id="tbbRed" label="" onClick='panelCentral.src="vistaRed/Red.zul"'/>
+-->
       </row>           
       <row>        
         <label value="Líderes" sclass="etiqueta_campo"/>
         <vbox>
+          <label id="etqLider1" value=""/>
+          <label id="etqLider2" value=""/>
+          <label id="etqLider3" value=""/>
+          <label id="etqLider4" value=""/>
+        </vbox>
+<!--        <vbox>
           <toolbarbutton id="tbbLider1" label="" />
           <toolbarbutton id="tbbLider2" label="" />
-        </vbox>
+        </vbox>-->
       </row>
       <row>        
-        <label value="Día de Reunión" sclass="etiqueta_campo"/>
+        <label value="Día y Hora" sclass="etiqueta_campo"/>
         <label id="etqDiaHora"/>
       </row> 
 <!--

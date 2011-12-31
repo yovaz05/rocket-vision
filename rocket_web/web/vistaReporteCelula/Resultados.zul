@@ -1,99 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
   <style src="css/estilos1.css"/>  
-<!--  Grid de Edición -->
-  <grid id="gridEdit" style="border:0px" visible="false">
+  <!-- Grid de Visualización y Edición dinámica -->
+  <grid id="gridView" style="border:0px"
+  apply="rocket.controladores.celula.reporte.CtrlReporteCelulaResultados">
     <columns>
       <column width="190px"/>
       <column width="70px"/>
       <column width="170px"/>
       <column/>
     </columns>
-    <rows>
-      <row>
+    <rows>      
+      <row height="32px">
+        <!--Nuevos invitados-->
         <label value="Nuevos Invitados" sclass="etiqueta_campo"/>
-        <spinner cols="2" width="50px" id="spnInvitados" value="0" constraint="min 0 max 100" onChange="calcularTotalAsistencia();validarDesgloseInvitados();"/>
-
+        <div>
+          <div id="divInvitados" tooltiptext="Click para editar">
+            <label id="etqInvitados" value="0"/>
+          </div>
+          <spinner id="spnInvitados" cols="2" width="50px" value="0" constraint="min 0 max 100"
+        visible="false"/>
+<!--        onChange="calcularTotalAsistencia();validarDesgloseInvitados();"-->
+        </div>
+        <!--Convertidos-->
         <label value="Convertidos" sclass="etiqueta_campo" tooltiptext="Líderes + Estacas"/>
-        <spinner cols="2" width="50px" id="spnConvertidos" value="0" constraint="min 0 max 100" onChange="validarDesgloseInvitados()"/>
+        <div>
+          <div id="divConvertidos" tooltiptext="Click para editar">
+            <label id="etqConvertidos" value="0"/>
+          </div>
+          <spinner id="spnConvertidos" cols="2" width="50px" constraint="min 0 max 100"
+          value="0" visible="false"/>
+<!--          onChange="validarDesgloseInvitados()"-->
+        </div>        
       </row>
+      
+<!--      Mensaje de error-->
       <row id="rowMsjError" visible="false" sclass="msjError">
         <cell colspan="4">
-          <label value="La suma de convertidos y reconciliados NO PUEDE ser mayor a la cantidad de invitados"/>
+          <label value="La suma de convertidos y reconciliados NO DEBE EXCEDER a la cantidad de invitados"/>
         </cell>
       </row>
-      <row>
+
+      <row height="32px" >
+        <!--Amigos que sólo asisten al grupo-->
         <label value="Amigos que sólo asisten al grupo" sclass="etiqueta_campo" tooltiptext="Ya se entregaron en la célula, pero aún no han asistido a la iglesia por primera vez"/>
-        <spinner cols="2" width="50px" id="spnAmigos" value="0" constraint="min 0 max 100" onChange="calcularTotalAsistencia()"/>
+        <div>
+          <div id="divAmigos" tooltiptext="Click para editar">
+            <label id="etqAmigos" value="0"/>
+          </div>
+          <spinner cols="2" width="50px" id="spnAmigos"  constraint="min 0 max 100" 
+          value="0" visible="false"/>
+<!--          onChange="calcularTotalAsistencia()"-->
+        </div>
+       <!--Reconciliados--> 
         <label value="Reconciliados" sclass="etiqueta_campo"/>
-        <spinner id="spnReconciliados" cols="2" width="50px" value="0" constraint="min 0 max 100" onChange="validarDesgloseInvitados()"/>
+        <div>
+          <div id="divReconciliados" tooltiptext="Click para editar">            
+            <label id="etqReconciliados" value="0"/>
+            <spinner id="spnReconciliados" cols="2" width="50px" constraint="min 0 max 100" 
+        value="0" visible="false"/>
+<!--            onChange="validarDesgloseInvitados()"-->
+          </div>          
+        </div>
       </row>
-      <row>
-        <label value="Cristianos de Casa de Oración" sclass="etiqueta_campo" tooltiptext="Líderes y Estacas"/>
-        <spinner id="spnCDO" cols="2" width="50px" value="0" constraint="min 0 max 100" onChange="calcularTotalAsistencia()" tooltiptext="Líderes y Estacas"/>
+      
+      <row height="32px" >
+        <!--Cristianos de esta iglesia--> 
+        <label value="Cristianos de Casa de Oración" sclass="etiqueta_campo" tooltiptext="Líderes + Estacas"/>
+        <div>
+          <div id="divCDO" tooltiptext="Click para editar">            
+            <label id="etqCDO" value="0"/>
+          </div>
+          <spinner id="spnCDO" tooltiptext="Líderes y Estacas" cols="2" width="50px" constraint="min 0 max 100"
+           value="0" visible="false"/>
+<!--          onChange="calcularTotalAsistencia()" -->
+        </div>
+        <!--Visitas Realizadas--> 
         <label value="Visitas Realizadas" sclass="etiqueta_campo"/>
-        <spinner cols="2" width="50px" id="spnVisitas" value="0" constraint="min 0 max 100"/>
+        <div>
+          <div id="divVisitas" tooltiptext="Click para editar">            
+            <label id="etqVisitas" value="0"/>
+          </div>
+          <spinner id="spnVisitas" cols="2" width="50px" constraint="min 0 max 100"
+          value="0" visible="false"/>
+        </div>
       </row>
-      <row>
+      <row height="32px" >
+        <!--Cristianos de otras iglesias-->
         <label value="Cristianos de otras iglesias" sclass="etiqueta_campo"/>
-        <spinner id="spnOtrasIglesias" cols="2" width="50px" 
-        value="0" constraint="min 0 max 100" onChange="calcularTotalAsistencia()"/>
+        <div>
+          <div id="divOtrasIglesias" tooltiptext="Click para editar">            
+            <label id="etqOtrasIglesias" value="0"/>
+          </div>
+          <spinner id="spnOtrasIglesias" cols="2" width="50px" constraint="min 0 max 100"
+           value="0" visible="false"/>
+<!--          onChange="calcularTotalAsistencia()"-->
+        </div>
+        
+        <!--Asistencia Domingo Anterior-->
         <label value="Asistencia Domingo Anterior" sclass="etiqueta_campo"/>
-        <spinner cols="2" width="50px" id="spnDomingoAnterior" value="0" constraint="min 0 max 100"/>
+        <div>
+          <div id="divAsistenciaDomingoAnterior" tooltiptext="Click para editar">            
+            <label id="etqAsistenciaDomingoAnterior" value="0"/>
+          </div>
+          <spinner id="spnAsistenciaDomingoAnterior" cols="2" width="50px" constraint="min 0 max 100"
+           value="0" visible="false"/>
+        </div>        
+      </row>
+      
+      <!--Total Asistencia-->
+      <row height="32px" tooltiptext="Suma de los 4 valores de arriba">
+        <div align="right">
+          <label value="Total Asistencia" sclass="total"/>
+        </div>
+        <cell colspan="3">
+          <label id="etqTotalAsistencia" value="0" sclass="total"/>
+        </cell>
       </row>           
-      <row>
-        <label value="Total Asistencia" sclass="total" tooltiptext="Se suman los 4 valores de arriba"/>
-        <label id="etqTotalAsistCelula" value="0" sclass="total" width="50px"/>
-        <label value=""/>
-        <label value=""/>          
-      </row>           
+      <row tooltiptext="Monto en bolívares fuertes. Ejemplo: 10,00 BF. son 10 mil Bs anteriores">
+        <div align="right">
+          <label value="Ofrendas" sclass="total"/>
+        </div>
+        <div>
+          <div id="divOfrendasMonto" tooltiptext="Click para editar">            
+            <label id="etqOfrendasMonto" value="0.00"/>
+          </div>
+          <decimalbox id="txtOfrendasMonto" cols="9"  constraint="no empty,no negative"
+          tooltiptext="Importante: El monto es en bolívares fuertes, separe los céntimos con la coma"
+          value="0" visible="false"/>
+        </div>
+        <cell colspan="2">
+          <label id="etqOfrendasMoneda" value="BsF."/>
+        </cell>
+      </row>     
+      <!--TODO: debería colocarse un icono de ayuda ayuda para advertir al usuario que use montos en BS Fuertes, no valores en Bs de los viejos, y también validar los valores ingresados-->
     </rows>
   </grid>
   
-  <!--  Grid de Visualización -->
-  <grid id="gridView" style="border:0px" visible="true">
-    <columns>
-      <column width="190px"/>
-      <column width="70px"/>
-      <column width="170px"/>
-      <column/>
-    </columns>
-    <rows>
-      <row height="32px">
-        <label value="Nuevos Invitados" sclass="etiqueta_campo"/>
-        <label id="etqInvitados" value="0"/>
-        <label value="Convertidos" sclass="etiqueta_campo" tooltiptext="Líderes + Estacas"/>
-        <label id="etqConvertidos" value="0"/>
-      </row>
-      <row height="32px" >
-        <label value="Amigos que sólo asisten al grupo" sclass="etiqueta_campo" tooltiptext="Ya se entregaron en la célula, pero aún no han asistido a la iglesia por primera vez"/>
-        <label id="etqAmigos" value="0"/>
-        <label value="Reconciliados" sclass="etiqueta_campo"/>
-        <label id="etqReconciliados" value="0"/>
-      </row>
-      <row height="32px" >
-        <label value="Cristianos de Casa de Oración" sclass="etiqueta_campo" tooltiptext="Líderes + Estacas"/>
-        <label id="etqCDO" value="0"/>
-        <label value="Visitas Realizadas" sclass="etiqueta_campo"/>
-        <label id="etqVisitas" value="0"/>
-      </row>
-      <row height="32px" >
-        <label value="Cristianos de otras iglesias" sclass="etiqueta_campo"/>
-        <label id="etqOtrasIglesias" value="0"/>
-        <label value="Asistencia Domingo Anterior" sclass="etiqueta_campo"/>
-        <label id="etqDomingoAnterior" value="0"/>
-      </row>           
-      <row height="32px" >
-        <label value="Total Asistencia" sclass="total" tooltiptext="Se suman los 4 valores de arriba"/>
-        <label id="etqTotalAsistencia" value="0" sclass="total"/>
-        <label value=""/>
-        <label value=""/>
-          
-      </row>           
-    </rows>
-  </grid>
-  <zscript>
-<!--TODO: pasar esto al controlador-->
+<!--  <zscript>
+TODO: pasar este bloque de código al controlador
   <![CDATA[
     void calcularTotalAsistencia() {
       int total = 0;
@@ -102,7 +147,7 @@
       int v3 = spnCDO.getValue().intValue();
       int v4 = spnOtrasIglesias.getValue().intValue();
       total = v1 + v2 + v3 + v4;
-      etqTotalAsistCelula.setValue(""+total);
+      etqTotalAsistencia.setValue(""+total);
     }
     //valida que se cumpla:(convertidos + reconciliados) <= invitados
     void validarDesgloseInvitados() {
@@ -124,5 +169,12 @@
       }
     }
   ]]>
-  </zscript>
+  </zscript>-->
 </zk>
+<!--
+TODO:
+1. mostrar tooltiptext de edición sólo si el usuario puede editar el reporte
+2. MEJORA CODIGO: cambiar nombres de variables:
+cristianosCDO por integrantesEstaIglesia
+cristianosOtrasIglesias por integrantesOtrasIglesias
+-->

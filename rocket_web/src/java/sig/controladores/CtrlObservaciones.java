@@ -16,6 +16,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
 import sig.modelo.servicios.ServicioCelula;
 import sig.modelo.servicios.ServicioPersona;
+import sig.modelo.servicios.ServicioReporteCelula;
 
 /**
  * controlador asociado a Direccion.zul
@@ -40,6 +41,7 @@ public class CtrlObservaciones extends GenericForwardComposer {
   private String observaciones = "";
   ServicioCelula servicioCelula = new ServicioCelula();
   ServicioPersona servicioPersona = new ServicioPersona();
+  ServicioReporteCelula servicioReporteCelula = new ServicioReporteCelula();
   private int idCelula = 0;
 
   @Override
@@ -95,7 +97,7 @@ public class CtrlObservaciones extends GenericForwardComposer {
     } else {
       mostrarMensaje("Error actualizando las observaciones");
     }
-    
+
     //si se dejó valor en blanco, se usa etiqueta que permita edición posterior
     if (observaciones.isEmpty()) {
       observaciones = Constantes.VALOR_EDITAR;
@@ -113,9 +115,10 @@ public class CtrlObservaciones extends GenericForwardComposer {
       ok = servicioCelula.actualizarObservaciones(getIdCelula(), observaciones);
     } else if (Sesion.esVistaLider()) {
       //actualizar observaciones de líder
-      getIdLider();
-      //TODO: falta implementar el método en el servicio
       ok = servicioPersona.actualizarObservaciones(getIdLider(), observaciones);
+    } else if (Sesion.esVistaReporteCelula()) {
+      //actualizar observaciones de reporte de célula
+      ok = servicioReporteCelula.actualizarObservaciones(getIdReporteCelula(), observaciones);
     }
     return ok;
   }
@@ -130,6 +133,14 @@ public class CtrlObservaciones extends GenericForwardComposer {
   private int getIdLider() {
     System.out.println("CtrlDireccion.getIdLider:");
     return (Integer) Sesion.getVariable("idLider");
+  }
+
+  //TODO: MEJORA CODIGO: sacar método a clase de utileria
+  private int getIdReporteCelula() {
+    System.out.println("CtrlDireccion.getIdReporteCelula:");
+    //TODO: OJO urgente, arreglar: debe ser idReporteCelula
+    //+ return (Integer) Sesion.getVariable("idReporteCelula");
+    return 1;
   }
 
   private void mostrarMensaje(String msj) {

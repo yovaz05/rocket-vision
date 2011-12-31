@@ -6,9 +6,13 @@
   <style src="css/estilos1.css"/>
   <div apply="rocket.controladores.celula.reporte.CtrlReporteCelula" width="500px">
     <label id="tituloVentana" sclass="titulo_ventana" value="titulo"/>
-    <vbox>
-      <label id="etqMensaje" value="" sclass="mensajes" visible="false"/>
-    </vbox>
+    <div id="divMensaje" align="center" style="margin:2px;padding:5px"
+    onClick="self.visible=false">
+      <label id="etqMensaje" value="Mensajes al usuario:"
+      sclass="mensajes" style="margin: 2px; padding:2px;"
+      onClick="self.visible=false"
+      visible="false"/>
+    </div>    
     <hbox id="hboxPreguntaCelulaRealizada" sclass="mensajes" visible="false">
       <label id="etqPregunta" value="¿La célula se realizó esta semana?"/>
       <toolbarbutton id="btnCelulaRealizada" label="Sí"/>
@@ -26,7 +30,7 @@
         <tab label="Fechas" id="tabFechas"/>
         <tab label="Planificación" id="tabPlanificacion"/>
         <tab label="Resultados" id="tabResultados"/>
-        <tab label="Ofrendas" id="tabOfrendas"/>
+        <tab label="Ofrendas" id="tabOfrendas" visible="false"/>
         <tab label="Observaciones" id="tabObservaciones"/>
       </tabs>
       <tabpanels>
@@ -42,7 +46,7 @@
         <tabpanel id="tabPanelResultados">
           <include id="result" src="vistaReporteCelula/Resultados.zul"/>
         </tabpanel>
-        <tabpanel id="tabPanelOfrendas">
+        <tabpanel id="tabPanelOfrendas" visible="false">
           <include id="ofrendas" src="vistaReporteCelula/Ofrendas.zul"/>
         </tabpanel>
         <tabpanel id="tabPanelObservaciones">

@@ -115,6 +115,7 @@ public class ServicioReporteCelula {
       celulaListado.setIdRed(celulaBD.getRed().getIdRed());
       celulaListado.setNombreRed(celulaBD.getRed().getNombre());
       celulaListado.setEstatus(celulaBD.getEstado());
+      celulaListado.setObservaciones(celulaBD.getObservaciones());
       i++;
       listadoCelulas.add(celulaListado);
     }
@@ -154,7 +155,7 @@ public class ServicioReporteCelula {
       System.out.println("Error en ServicioReporteCelula.getReporteCelula:ejecucionCelulaBD = NULL");
       return new ReporteCelulaUtil();//error, objeto vacío
     }
-    System.out.println("ServicioReporteCelula.getReporteCelula.ejecucionCelulaBD:" + ejecucionCelulaBD.toString());
+    //**System.out.println("ServicioReporteCelula.getReporteCelula.ejecucionCelulaBD:" + ejecucionCelulaBD.toString());
     ReporteCelulaUtil reporteCelulaUtil = generarReporteCelulaUtil(idCelula, planificacionCelulaBD, ejecucionCelulaBD);
     return reporteCelulaUtil;
   }
@@ -180,6 +181,7 @@ public class ServicioReporteCelula {
     reporte.setResultadoCDO(ejecucionCelula.getIntegrantesCasaOracion());
     reporte.setResultadoOtrasIglesias(ejecucionCelula.getIntegrantesOtrasIglesias());
     reporte.setResultadoAsistenciaDomingoAnterior(ejecucionCelula.getAsistenciaDomingoAnterior());
+    reporte.setOfrendasMonto(ejecucionCelula.getOfrenda());
     reporte.setEstatus(ejecucionCelula.getEstado());
     reporte.setObservaciones(ejecucionCelula.getObservaciones());
 
@@ -196,15 +198,89 @@ public class ServicioReporteCelula {
     reporte.setPlanificacionPersonasEnplanificacion(planifCelula.getNumeroIntegrantes());
     return reporte;
   }
+
+  public boolean actualizarResultadoInvitados(int valor) {
+    RspEjecucionCelula respuesta = saEjecucionCelula.updateNumeroInvitados(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public boolean actualizarResultadoConvertidos(int valor) {
+    RspEjecucionCelula respuesta = saEjecucionCelula.updateConvertidos(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public boolean actualizarResultadoReconciliados(int valor) {
+    RspEjecucionCelula respuesta = saEjecucionCelula.updateReconciliados(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public boolean actualizarResultadoVisitas(int valor) {
+    RspEjecucionCelula respuesta = saEjecucionCelula.updateVisitas(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public boolean actualizarResultadoAmigos(int valor) {
+    RspEjecucionCelula respuesta = saEjecucionCelula.updateAmigosSoloAsistenGrupo(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public boolean actualizarResultadoIntegrantesEstaIglesia(int valor) {
+    RspEjecucionCelula respuesta = saEjecucionCelula.updateIntegrantesCasaOracion(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public boolean actualizarResultadoIntegrantesOtrasIglesias(int valor) {
+    RspEjecucionCelula respuesta = saEjecucionCelula.updateIntegrantesOtrasIglesias(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public boolean actualizarResultadoAsistenciaDomingoAnterior(int valor) {
+    RspEjecucionCelula respuesta = saEjecucionCelula.updateAsistenciaDomingoAnterior(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public boolean actualizarResultadoTotalAsistencia(int valor) {
+    RspEjecucionCelula respuesta = saEjecucionCelula.updateNumeroIntegrantes(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public boolean actualizarResultadoOfrendas(double valor) {
+    RspEjecucionCelula respuesta = saEjecucionCelula.updateOfrenda(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public boolean actualizarPlanificacionInvitados(int valor) {
+    RspPlanificacionCelula respuesta = saPlanificacionCelula.updateNuevosInvitados(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public boolean actualizarPlanificacionReconciliados(int valor) {
+    RspPlanificacionCelula respuesta = saPlanificacionCelula.updateReconciliados(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public boolean actualizarPlanificacionVisitas(int valor) {
+    RspPlanificacionCelula respuesta = saPlanificacionCelula.updateVisitas(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public boolean actualizarPlanificacionNumeroIntegrantes(int valor) {
+    RspPlanificacionCelula respuesta = saPlanificacionCelula.updateNumeroIntegrantes(idReporteCelula, valor);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+  
+
+  /**
+   * actualiza las observaciones
+   */
+  public boolean actualizarObservaciones(int idReporteCelula, String observaciones) {
+    RspEjecucionCelula respuesta = saEjecucionCelula.updateObservaciones(idReporteCelula, observaciones);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
   
   /**
-   * actualiza el número de invitados en los resultados de la célula de la semana actual
+   * atributos
    */
-  public boolean actualizarResultadoInvitados(int invitados) {
-    RspEjecucionCelula respuesta = saEjecucionCelula.updateNumeroInvitados(idReporteCelula, invitados);
-    return respuesta.esSentenciaSqlEjecutadaExitosamente();
-  }  
-
   List<Celula> celulas = new ArrayList();
   List<Celula> celulasReportes = new ArrayList();
   List<String> nombres = new ArrayList();
@@ -232,5 +308,6 @@ public class ServicioReporteCelula {
   //TODO: usar este id para las modificaciones
   int idCelula = 0;
   //id del reporte que se está trabajando actualmente, servirá para EjecucionCelula y PlanificacionCelula
+  //TODO: buscar este valor
   int idReporteCelula = 1;
 }
