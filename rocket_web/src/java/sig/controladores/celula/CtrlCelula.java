@@ -791,7 +791,7 @@ public class CtrlCelula extends GenericForwardComposer {
     idRed = getIdRed();
     System.out.println("CtrlCelula.crearCelula.codigo=" + codigo);
     System.out.println("CtrlCelula.crearCelula.idRed=" + idRed);
-    idCelula = servicioCelula.crearCelula(codigo, idRed);
+    idCelula = servicioCelula.ingresarCelula(codigo, idRed);
     System.out.println("CtrlCelula.crearCelula.idCelula=" + idCelula);
     Sesion.setVariable("idCelula", idCelula);
     Sesion.setVariable("celula.idRed", idRed);

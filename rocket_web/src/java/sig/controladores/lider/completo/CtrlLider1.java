@@ -792,7 +792,7 @@ public class CtrlLider1 extends GenericForwardComposer {
     idRed = getIdRed();
     System.out.println("CtrlCelula.crearCelula.codigo=" + codigo);
     System.out.println("CtrlCelula.crearCelula.idRed=" + idRed);
-    idCelula = servicio.crearCelula(codigo, idRed);
+    idCelula = servicio.ingresarCelula(codigo, idRed);
     System.out.println("CtrlCelula.crearCelula.idCelula=" + idCelula);
     Sesion.setVariable("idCelula", idCelula);
     Sesion.setVariable("celula.idRed", idRed);

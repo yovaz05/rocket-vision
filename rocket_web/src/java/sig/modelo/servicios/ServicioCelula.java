@@ -87,6 +87,7 @@ public class ServicioCelula {
    * @param celulaInsert el objeto con los datos
    * @return el id de la célula creada, sino se insertó se devuelve 0
    */
+  //TODO: MEJORA CODIGO: método no usado
   public int insertCelula(CelulaInsert celulaInsert) {
     RspCelula rspCelula = saCelula.insertCelula(celulaInsert);
     boolean ok = rspCelula.esSentenciaSqlEjecutadaExitosamente();
@@ -103,7 +104,7 @@ public class ServicioCelula {
    * @param nuevaCelula el objeto Celula con los datos
    * @return el id de la célula creada
    */
-  public int crearCelula(String codigo, int idRed) {
+  public int ingresarCelula(String codigo, int idRed) {
     System.out.println("ServicioCelula.crearCelula.codigo=" + codigo);
     System.out.println("ServicioCelula.crearCelula.idRed=" + idRed);
 
@@ -466,5 +467,10 @@ public class ServicioCelula {
       return "No asignada";
     }
     return zona + ", " + ciudad;
+  }
+
+  public boolean actualizarEstado(int estatus) {
+    RspCelula respuesta = saCelula.updateEstadoCelula(idCelula, estatus);
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 }

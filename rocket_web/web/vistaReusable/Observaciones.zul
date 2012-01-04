@@ -8,9 +8,9 @@
     </columns>
     <rows>
       <row>
-        <a label="Agregar" sclass="etiqueta_campo"/>
+        <a label="Agregar prueba" sclass="etiqueta_campo"/>
         <vbox>
-          <label id="etqObservaciones" value="Comentarios..." multiline="true" visible="true"/>
+          <label id="etqObservaciones" value="Editar" multiline="true" visible="true"/>
           <textbox id="txtObservaciones" cols="100" rows="5" maxlength="500" visible="false"/> 
         </vbox>
       </row>       

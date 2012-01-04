@@ -1,5 +1,5 @@
 /*
- * Capa que usa los servicios
+ * Capa que usa los servicios relacionados a 'Reportes de Célula'
  * para que los controladores accedan a la base de datos
  * de una manera más sencilla
  */
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import waytech.modelo.beans.sgi.Celula;
 import waytech.modelo.beans.sgi.EjecucionCelula;
+import waytech.modelo.beans.sgi.EjecucionCelulaInsert;
 import waytech.modelo.beans.sgi.PersonaEnCelula;
 import waytech.modelo.beans.sgi.PlanificacionCelula;
 import waytech.modelo.servicios.RspCelula;
@@ -21,6 +22,7 @@ import waytech.modelo.servicios.SaCelula;
 import waytech.modelo.servicios.SaEjecucionCelula;
 import waytech.modelo.servicios.SaPersonaEnCelula;
 import waytech.modelo.servicios.SaPlanificacionCelula;
+import waytech.utilidades.Util;
 
 /**
  *
@@ -69,7 +71,7 @@ public class ServicioReporteCelula {
       celulaListado.setCodigo(codigoCelula);
       String ciudad = celulaBD.getZona().getIdCiudad().getNombre();
       String zona = celulaBD.getZona().getNombre();
-      celulaListado.setDireccionCorta(generarDireccionCorta(ciudad, zona));
+      celulaListado.setDireccionCorta(Util.generarDireccionCorta(ciudad, zona));
       //día
       if (celulaBD.getDia() == 0) {
         celulaListado.setDia("");
@@ -122,11 +124,23 @@ public class ServicioReporteCelula {
     return listadoCelulas;
   }
 
-  private String generarDireccionCorta(String ciudad, String zona) {
-    if (zona.isEmpty()) {
-      return "No asignada";
+  /**
+   * Ingresa una ejecución de célula en la base de datos
+   * con sólo el id de la célula y el estado
+   * @param idCelula el id de la célula
+   * @param estado, 3: célula no realizada, 4: célula realizada
+   * @return el id de la ejecución de célula insertada
+   */
+  public int ingresarReporteCelula(int idCelula, int estado) {
+    System.out.println("ServicioReporteCelula.ingresarReporteCelula. id célula=" + idCelula);
+    RspEjecucionCelula respuesta = saEjecucionCelula.insertEjecucionCelula(idCelula, estado);
+    if (respuesta.esSentenciaSqlEjecutadaExitosamente()) {
+      idReporteCelula = respuesta.getEjecucionCelula().getIdEjecucionCelula();
+    } else {
+      System.out.println("ServicioReporteCelula.ingresarReporteCelula.resultado=ERROR");
+      idReporteCelula = 0;
     }
-    return zona + ", " + ciudad;
+    return idReporteCelula;
   }
 
   /**
@@ -136,31 +150,45 @@ public class ServicioReporteCelula {
    * @param idCelula
    * @return ReporteCelula reporte de celula, o un objeto vacío si no hay ejecución o planificación
    */
-  public ReporteCelulaUtil getReporteCelula(int idCelula) {
+  //TODO: agregar parámetro idSemana
+  //mejorar gestión de errores
+  public ReporteCelulaUtil getReporteCelulaSemanaActual(int idCelula) {
 
+    //traer datos de ejecución (resultados)
+    //TODO: buscar nro de semana actual, para pasar como parámetro
+    RspEjecucionCelula respuestaEjecucion = saEjecucionCelula.getEjecucionCelula(idCelula, 1);
+    EjecucionCelula ejecucionCelulaBD = respuestaEjecucion.getEjecucionCelula();
+
+    //**System.out.println("ServicioReporteCelula.respuestaEjecucion.getEjecucionCelula().estado=" + ejecucionCelulaBD.getEstado());
+
+    /*
+    if (respuestaEjecucion.getEjecucionCelula() == null) {
+      System.out.println("Error en ServicioReporteCelula.getReporteCelula:ejecucionCelulaBD = NULL");
+      return new ReporteCelulaUtil();//error, objeto vacío
+    }
+    //**System.out.println("ServicioReporteCelula.getReporteCelulaSemanaActual.ejecucionCelulaBD:" + ejecucionCelulaBD.toString());
+    
+    if (ejecucionCelulaBD.getEstado() == ReporteCelulaUtil.CELULA_NO_REALIZADA) {
+      System.out.println("ServicioReporteCelula.respuestaEjecucion.getEjecucionCelula().estado=CELULA_NO_REALIZADA");
+      //no hay datos que buscar, todo en '0'      
+      return generarReporteCelulaUtil(idCelula, new PlanificacionCelula(), ejecucionCelulaBD);
+    }
+    */
+    
     //traer datos de planificación
-    //TODO: arreglar >> cambiar método a: getEjecucionCelulaSemanaActual(idCelula)
     RspPlanificacionCelula respuestaPlanificacion = saPlanificacionCelula.getPlanificacionCelulaPorIdCelula(idCelula);
     PlanificacionCelula planificacionCelulaBD = respuestaPlanificacion.getPlanificacionCelula();
     if (planificacionCelulaBD == null) {
       System.out.println("Error en ServicioReporteCelula.getReporteCelula:planificacionCelulaBD = NULL");
-      return new ReporteCelulaUtil();//error, objeto vacío
+      //+return new ReporteCelulaUtil();//error, objeto vacío
+      return generarReporteCelulaUtil(idCelula, new PlanificacionCelula(), ejecucionCelulaBD);
     }
-    System.out.println("ServicioReporteCelula.getReporteCelula.ejecucionCelulaBD:" + planificacionCelulaBD.toString());
+    //**System.out.println("ServicioReporteCelula.getReporteCelula.ejecucionCelulaBD:" + planificacionCelulaBD.toString());
 
-    //traer datos de ejecución (resultados)
-    RspEjecucionCelula respuestaEjecucion = saEjecucionCelula.getEjecucionCelulaPorIdEjecucionCelula(1);
-    EjecucionCelula ejecucionCelulaBD = respuestaEjecucion.getEjecucionCelula();
-    if (ejecucionCelulaBD == null) {
-      System.out.println("Error en ServicioReporteCelula.getReporteCelula:ejecucionCelulaBD = NULL");
-      return new ReporteCelulaUtil();//error, objeto vacío
-    }
-    //**System.out.println("ServicioReporteCelula.getReporteCelula.ejecucionCelulaBD:" + ejecucionCelulaBD.toString());
     ReporteCelulaUtil reporteCelulaUtil = generarReporteCelulaUtil(idCelula, planificacionCelulaBD, ejecucionCelulaBD);
     return reporteCelulaUtil;
   }
 
-  //TODO: agregar 1 parámetro de tipo 'PlanificacionCelula' a este  método:
   ReporteCelulaUtil generarReporteCelulaUtil(int idCelula, PlanificacionCelula planifCelula, EjecucionCelula ejecucionCelula) {
     ReporteCelulaUtil reporte = new ReporteCelulaUtil();
 
@@ -268,7 +296,6 @@ public class ServicioReporteCelula {
     RspPlanificacionCelula respuesta = saPlanificacionCelula.updateNumeroIntegrantes(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
-  
 
   /**
    * actualiza las observaciones
@@ -277,7 +304,6 @@ public class ServicioReporteCelula {
     RspEjecucionCelula respuesta = saEjecucionCelula.updateObservaciones(idReporteCelula, observaciones);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
-  
   /**
    * atributos
    */

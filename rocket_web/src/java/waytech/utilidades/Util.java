@@ -68,4 +68,11 @@ public class Util {
     }
     return UtilFechas.convertirDiaSemanaTextoCompleto(dia) + " - " + UtilFechas.convertirHoraTextoCompleto(hora);
   }
+
+  public static String generarDireccionCorta(String ciudad, String zona) {
+    if (zona.isEmpty()) {
+      return "No asignada";
+    }
+    return zona + ", " + ciudad;
+  }
 }

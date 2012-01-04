@@ -51,7 +51,7 @@ public class CtrlMenu extends GenericForwardComposer {
     } catch (Exception e) {
     } finally {
       Sesion.setVistaCentral(vistaCentral);
-      bd = new BD();
+      //- bd = new BD();
       mostrarNombreUsuario();
       iniciarBarraNavegacion();
     }
@@ -514,20 +514,18 @@ public class CtrlMenu extends GenericForwardComposer {
     if (vistaActual.equals(Vistas.REPORTE_CELULA)) {
       if (modo.equals("new-pregunta")) {//mostrando la pregunta
         btnSave.setVisible(false);
-      } else if (modo.equals("new")) {
-        btnSave.setVisible(true);
       } else if (modo.equals("ver")) {
-        //+ btnEdit.setVisible(true);
+        btnEdit.setVisible(false);
         btnSave.setVisible(false);
         btnDelete.setVisible(false);
         btnNew.setVisible(false);
         //-btnConfirmar.setVisible(true);
-      } else if (modo.equals("confirmado")) {
-        btnEdit.setVisible(false);
-        //-btnConfirmar.setVisible(false);
       } else if (modo.equals("editar")) {
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
+        //-btnConfirmar.setVisible(false);
+      } else if (modo.equals("confirmado")) {
+        btnEdit.setVisible(false);
         //-btnConfirmar.setVisible(false);
       }
     } else if (modo.equals("new")) {
@@ -580,15 +578,16 @@ public class CtrlMenu extends GenericForwardComposer {
    * y modifica los estado de la barra correspondiente a la nueva vista
    */
   public void onClick$btnControl() {
-    System.out.println("CtrlBarraMenu: btnControl");
+    System.out.println("CtrlMenu");
+    System.out.println(":llamada a btnControl");
     vistaActual = Sesion.getVistaActual();
-    System.out.println("CtrlMenuLiderRed.vistaActual: " + vistaActual);
+    System.out.println("CtrlMenu.vistaActual: " + vistaActual);
     vistaSiguiente = Sesion.getVistaSiguiente();
     modo = Sesion.getModo();
-    System.out.println("CtrlMenuLiderRed.vistaSiguiente: " + vistaSiguiente);
+    System.out.println("CtrlMenu.vistaSiguiente: " + vistaSiguiente);
     //si vistaSiguiente es igual a vistaActual sólo simular un click al botón Refresh      
     cambiarVista(vistaSiguiente);
-    System.out.println("CtrlMenuLiderRed.vistaActual: " + vistaActual);
+    System.out.println("CtrlMenu.vistaActual: " + vistaActual);
   }
 
   /**

@@ -42,7 +42,6 @@ public class CtrlObservaciones extends GenericForwardComposer {
   ServicioCelula servicioCelula = new ServicioCelula();
   ServicioPersona servicioPersona = new ServicioPersona();
   ServicioReporteCelula servicioReporteCelula = new ServicioReporteCelula();
-  private int idCelula = 0;
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -138,9 +137,8 @@ public class CtrlObservaciones extends GenericForwardComposer {
   //TODO: MEJORA CODIGO: sacar método a clase de utileria
   private int getIdReporteCelula() {
     System.out.println("CtrlDireccion.getIdReporteCelula:");
-    //TODO: OJO urgente, arreglar: debe ser idReporteCelula
-    //+ return (Integer) Sesion.getVariable("idReporteCelula");
-    return 1;
+    //OJO: DOING
+    return (Integer) Sesion.getVariable("idReporteCelula");
   }
 
   private void mostrarMensaje(String msj) {

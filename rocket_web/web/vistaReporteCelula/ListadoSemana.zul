@@ -11,10 +11,10 @@
       <columns sizable="true">
         <column label="#" width="25px" align="center"/>
         <column label="Código" width="80px"/>        
-        <column label="Líderes" width="120px"/>
-        <column label="Dirección" width="200px"/>
-        <column label="Día y Hora" width="110px"/>
         <column label="Reporte" id="colEstadosReporte" align="center" width="100px"/>
+        <column label="Líderes" width="120px" visible="false"/>
+        <column label="Dirección" width="200px" visible="false"/>
+        <column label="Día y Hora" width="110px" visible="false"/>
 <!--        <column label="Nombre" width="180px" visible="false"/>-->
       </columns>      
       <rows>

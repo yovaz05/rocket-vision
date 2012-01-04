@@ -402,7 +402,7 @@ public class UtilFechas {
   public static String getMesTextoCorto(int mes) {
     String mesTexto = "";
     if (mes == 1) {
-      mesTexto = "Ener";
+      mesTexto = "Ene";
     } else if (mes == 2) {
       mesTexto = "Feb";
     } else if (mes == 3) {
