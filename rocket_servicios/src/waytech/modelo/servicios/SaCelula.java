@@ -24,6 +24,7 @@ import waytech.utilidades.UtilidadSistema;
  * @author Gerardo José Montilla Virgüez, Way Technologies Consulting Group C.A.
  * @see http://www.waytech.com.ve
  * Clase creada para el software SGI 
+ * 
  */
 public class SaCelula implements IsaCelula {
 
@@ -1197,8 +1198,8 @@ public class SaCelula implements IsaCelula {
             PreparedStatement stmt = null;
             try {
                 conectorBD.getConnection().setAutoCommit(false);                
-                String consultaSQL = "UPDATE celula SET estado = '" + estado + "' "                        
-                        + "WHERE id_celula = '" + idCelula + "'";
+                String consultaSQL = "UPDATE celula SET estado = '" + estado + "'"
+                        + " WHERE id_celula = '" + idCelula + "'";
                 stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
                 rows = stmt.executeUpdate();
                 stmt.close();

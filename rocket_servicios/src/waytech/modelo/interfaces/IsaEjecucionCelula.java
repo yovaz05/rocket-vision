@@ -20,7 +20,7 @@ public interface IsaEjecucionCelula {
      * Por ahora solo inserta con la semana 1
      * @return 
      */
-    public abstract RspEjecucionCelula insertEjecucionCelulaDiaSemana(int idCelula);
+    public abstract RspEjecucionCelula insertEjecucionCelula(int idCelula, int estado);
 
     public abstract RspEjecucionCelula updateEjecucionCelula(EjecucionCelulaUpdate ejecucionCelula);
 
@@ -60,6 +60,8 @@ public interface IsaEjecucionCelula {
     public abstract RspEjecucionCelula getEjecucionCelulaPorIdEjecucionCelula(int idEjecucionCelula);
 
     public abstract RspEjecucionCelula getEjecucionCelulaPorTraza(String traza);
+
+    public abstract RspEjecucionCelula getEjecucionCelula(int idCelula, int idSemana);
 
     public abstract RspEjecucionCelula listEjecucionCelula();
 }

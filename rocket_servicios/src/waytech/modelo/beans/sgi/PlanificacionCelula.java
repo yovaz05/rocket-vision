@@ -10,18 +10,18 @@ package waytech.modelo.beans.sgi;
  */
 public class PlanificacionCelula {
 
-    private int idPlanificacionCelula;
-    private String fecha;
-    private int nuevosInvitados;
-    private int reconciliados;
-    private int visitas;
-    private int numeroIntegrantes;
-    private int convertidos;
-    private String observaciones;
-    private String traza;
-    private short estado;
-    private Semana idSemana;
-    private Celula idCelula;
+    private int idPlanificacionCelula = 0;
+    private String fecha = "";
+    private int nuevosInvitados = 0;
+    private int reconciliados = 0;
+    private int visitas = 0;
+    private int numeroIntegrantes = 0;
+    private int convertidos = 0;
+    private String observaciones = "";
+    private String traza = "";
+    private short estado = 0;
+    private Semana idSemana = new Semana();
+    private Celula idCelula = new Celula();
 
     public PlanificacionCelula() {
     }
