@@ -1,6 +1,3 @@
-/**
- * CtrlRegistro.java
- */
 package cdo.sgd.controladores;
 
 import java.util.ArrayList;
@@ -42,12 +39,15 @@ import waytech.utilidades.UtilidadValidacion;
 /**
  * @since Viernes 15/12/2011 02:35 PM.
  * @version 1.0 Viernes 15/12/2011 02:35 PM.
- * @author Gerardo José Montilla Virgüez, Gabriel Pérez Way Technologies Consulting Group C.A.
+ * @author Gerardo José Montilla Virgüez
+ * @author Gabriel Pérez 
+ * @author Way Technologies Consulting Group C.A.
  * @see http://www.waytech.com.ve
- * Clase creada para el software SIG 
+ * @see gerardomontilla@waytech.com.ve
+ * @see gabrielperez@waytech.com.ve 
  */
 public class CtrlRegistro extends Window implements AfterCompose {
-    
+
     protected Intbox txtCedula;
     protected Textbox txtTelefono;
     protected Textbox txtNombre;
@@ -56,13 +56,10 @@ public class CtrlRegistro extends Window implements AfterCompose {
     protected Textbox txtRepetirPassword;
     protected Textbox txtBuscarLider;
     protected Button btnIngresar;
-    protected Button btnPaso2;
     protected Button btnPaso1;
     protected Button btnVerificarCedula;
     protected Button btnBuscarLider;
-    protected Listbox listboxPareja;
     protected Label etqInstrucciones;
-    protected Paging pagingPareja;
     protected Hbox hbox1;
     protected Vbox vbox2;
     protected Vbox vbox3;
@@ -76,109 +73,21 @@ public class CtrlRegistro extends Window implements AfterCompose {
     private int idLider2 = 0;
     UtilidadSistema utilidadSistema = new UtilidadSistema();
     UtilidadValidacion utilidadValidacion = new UtilidadValidacion();
-    
+
     public void afterCompose() {
         Components.wireVariables(this, this);
         Components.addForwards(this, this);
-        inicializar();
+        inicializarComponentes();
     }
-    
-    public void inicializar() {
-        vbox3.setVisible(false);
-        vbox2.setVisible(true);
-        hbox1.setVisible(true);
-        limpiarCampos();
-        llenarListaLider("");
-        listboxPareja.setVisible(false);
-        pagingPareja.setVisible(false);
+
+    public void inicializarComponentes() {
         txtCedula.setText("");
         txtCedula.setFocus(true);
         btnPaso1.setVisible(true);
-        btnPaso2.setVisible(false);
+
     }
-    
-    public void limpiarCampos() {
-        txtCorreo.setText("");
-        txtNombre.setText("");
-        txtPassword.setText("");
-        txtRepetirPassword.setText("");
-        txtTelefono.setText("");
-        txtBuscarLider.setText("");
-    }
-    
-    public void llenarListaLider(String nombre) {
-        listboxPareja.setVisible(true);
-        pagingPareja.setVisible(true);
-        listboxPareja.getItems().clear();
-        if (nombre.isEmpty()) {
-            List<Persona> todosLosLideres = new ArrayList<Persona>();
-            todosLosLideres = isaPersona.listPersonaCualquierLider().getTodasLasPersonas();
-            for (Persona personaLider : todosLosLideres) {
-                List<Pareja> todosLasParejas = new ArrayList<Pareja>();
-                todosLasParejas = isaPareja.listParejaPorIdPersona(personaLider.getIdPersona()).getAllParejas();
-                for (Pareja personaPareja : todosLasParejas) {
-                    agregarItemListboxPareja(personaPareja);
-                }
-            }
-        } else {
-            List<Persona> todosLosLideres = new ArrayList<Persona>();
-            todosLosLideres = isaPersona.listPersonaCualquierLiderNombre(nombre).getTodasLasPersonas();
-            for (Persona personaLider : todosLosLideres) {
-                List<Pareja> todosLasParejas = new ArrayList<Pareja>();
-                todosLasParejas = isaPareja.listParejaPorIdPersona(personaLider.getIdPersona()).getAllParejas();
-                for (Pareja personaPareja : todosLasParejas) {
-                    agregarItemListboxPareja(personaPareja);
-                }
-            }
-        }
-    }
-    
-    public void agregarItemListboxPareja(Pareja pareja) {
-        Listitem item = new Listitem();
-        Listcell listCellVer = new Listcell();
-        
-        Listcell listCellIdPersona1 = new Listcell();
-        Listcell listCellIdPersona2 = new Listcell();
-        
-        Listcell listCellNombre = new Listcell();
-        Listcell listCellPareja = new Listcell();
-        Button btnVer = new Button();
-        btnVer.setImage("/Imagenes/Iconos/verModal16.png");
-        listCellVer.appendChild(btnVer);
-        btnVer.addEventListener("onClick", new EventListener() {
-            
-            public void onEvent(org.zkoss.zk.ui.event.Event arg0) throws Exception {
-                Listitem listItemEnCurso = (Listitem) arg0.getTarget().getParent().getParent();
-                Listitem fila = new Listitem();
-                fila = listboxPareja.getItemAtIndex(listItemEnCurso.getIndex());
-                List listaCelda = fila.getChildren();
-                Listcell listCellIdPersona1 = (Listcell) listaCelda.get(1);
-                Listcell listCellIdPersona2 = (Listcell) listaCelda.get(2);
-                Listcell listCellNombre = (Listcell) listaCelda.get(3);
-                Listcell listCellPareja = (Listcell) listaCelda.get(4);
-                idLider1 = Integer.valueOf(listCellIdPersona1.getLabel());
-                idLider2 = Integer.valueOf(listCellIdPersona2.getLabel());
-                listboxPareja.setVisible(false);
-                pagingPareja.setVisible(false);
-                etqInstrucciones.setValue(listCellNombre.getLabel() + ", " + listCellPareja.getLabel() + " fueron seleccionados...");
-                txtBuscarLider.setText(listCellNombre.getLabel() + ", " + listCellPareja.getLabel());
-                btnPaso2.setFocus(true);
-            }
-        });
-        listCellNombre.setLabel(pareja.getIdPersona1().getNombre());
-        listCellPareja.setLabel(pareja.getIdPersona2().getNombre());
-        listCellIdPersona1.setLabel(String.valueOf(pareja.getIdPersona1().getIdPersona()));
-        listCellIdPersona2.setLabel(String.valueOf(pareja.getIdPersona2().getIdPersona()));
-        item.appendChild(listCellVer);
-        item.appendChild(listCellIdPersona1);
-        item.appendChild(listCellIdPersona2);
-        item.appendChild(listCellNombre);
-        item.appendChild(listCellPareja);
-        listboxPareja.appendChild(item);
-    }
-    
+
     public void verificarCedula() {
-        limpiarCampos();
         if (!txtCedula.getText().isEmpty()) {
             if (isaPersona.esCedulaExistente(txtCedula.getText()).esCedulaExistente()) {
                 persona = isaPersona.getPersonaPorCedula(txtCedula.getText().trim()).getPersona();
@@ -189,7 +98,7 @@ public class CtrlRegistro extends Window implements AfterCompose {
                     vbox2.setVisible(false);
                     vbox3.setVisible(true);
                     btnPaso1.setVisible(false);
-                    btnPaso2.setVisible(true);
+
                     txtBuscarLider.setFocus(true);
                 } else {
                     etqInstrucciones.setValue("La cédula ya está registrada...");
@@ -203,7 +112,7 @@ public class CtrlRegistro extends Window implements AfterCompose {
                     txtRepetirPassword.setDisabled(true);
                     txtTelefono.setDisabled(true);
                     btnPaso1.setVisible(false);
-                    btnPaso2.setVisible(false);
+
                 }
             } else {
                 etqInstrucciones.setValue("LLena tus datos básicos.");
@@ -214,11 +123,11 @@ public class CtrlRegistro extends Window implements AfterCompose {
                 txtTelefono.setDisabled(false);
                 txtNombre.setFocus(true);
                 btnPaso1.setVisible(true);
-                btnPaso2.setVisible(false);
+
             }
         }
     }
-    
+
     public void registrarDatosPaso1() throws InterruptedException {
         if (!txtCedula.getText().isEmpty()) {
             if (!txtCorreo.getText().isEmpty() && utilidadValidacion.esCorreoValido(txtCorreo.getText())) {
@@ -226,7 +135,7 @@ public class CtrlRegistro extends Window implements AfterCompose {
                     if (!txtPassword.getText().isEmpty()) {
                         if (!txtRepetirPassword.getText().isEmpty()) {
                             if (txtPassword.getText().equals(txtRepetirPassword.getText())) {
-                                if (!txtTelefono.getText().isEmpty() && utilidadValidacion.sonSoloNumeros(txtTelefono.getText())) {                                    
+                                if (!txtTelefono.getText().isEmpty() && utilidadValidacion.sonSoloNumeros(txtTelefono.getText())) {
                                     PersonaInsert personaInsert = new PersonaInsert();
                                     personaInsert.setApellido("NA");
                                     personaInsert.setCi(txtCedula.getText());
@@ -275,7 +184,7 @@ public class CtrlRegistro extends Window implements AfterCompose {
                                         vbox2.setVisible(false);
                                         vbox3.setVisible(true);
                                         btnPaso1.setVisible(false);
-                                        btnPaso2.setVisible(true);
+
                                         txtBuscarLider.setFocus(true);
                                     } else {
                                         etqInstrucciones.setValue("Registros iniciales no fueron almacenados exitosamente..");
@@ -301,7 +210,7 @@ public class CtrlRegistro extends Window implements AfterCompose {
                 } else {
                     etqInstrucciones.setValue("Revise el campo del nombre..");
                     txtNombre.setFocus(true);
-                    
+
                 }
             } else {
                 etqInstrucciones.setValue("Revise el campo de correo..");
@@ -312,27 +221,7 @@ public class CtrlRegistro extends Window implements AfterCompose {
             txtCedula.setFocus(true);
         }
     }
-    
-    public void registrarDatosPaso2() {
-        if (idLider2 != 0 && idLider1 != 0) {
-            DiscipuloInsert discipuloInsert = new DiscipuloInsert();
-            discipuloInsert.setFechaInicio("1900-01-01");
-            discipuloInsert.setIdPersona1(idLider1);
-            discipuloInsert.setIdPersona2(persona.getIdPersona());
-            if (isaDiscipulo.insertDiscipulo(discipuloInsert).esSentenciaSqlEjecutadaExitosamente()) {
-                etqInstrucciones.setValue("Información almacenada apropiadamente..");
-                inicializar();
-            } else {
-                etqInstrucciones.setValue("Ah ocurrido un error al guardar los datos..");
-            }
-        } else {
-            etqInstrucciones.setValue("No se ha elegido la pareja, intenta de nuevo..");
-            txtBuscarLider.setText("");
-            txtBuscarLider.setFocus(true);
-            llenarListaLider(txtBuscarLider.getText());
-        }
-    }
-    
+
     public void verificarCorreo() {
         if (!txtCorreo.getText().isEmpty() && utilidadValidacion.esCorreoValido(txtCorreo.getText())) {
             if (isaAcceso.esCorreoExistente(txtCorreo.getText()).esCorreoExistente()) {
@@ -343,72 +232,63 @@ public class CtrlRegistro extends Window implements AfterCompose {
                 etqInstrucciones.setValue("Correo electrónico válido");
             }
         } else {
-            etqInstrucciones.setValue("El correo tiene un formato incorrecto, intentalo de nuevo...");            
+            etqInstrucciones.setValue("El correo tiene un formato incorrecto, intentalo de nuevo...");
         }
     }
-    
+
     public void verificarTelefono() throws InterruptedException {
         if (utilidadValidacion.sonSoloNumeros(txtTelefono.getText())) {
             txtPassword.setFocus(true);
             etqInstrucciones.setValue("Número telefonico válido");
         } else {
-            etqInstrucciones.setValue("El telefono no tiene el formato correcto, use solo numeros.");            
-            
+            etqInstrucciones.setValue("El telefono no tiene el formato correcto, use solo numeros.");
+
         }
     }
-    
+
     public void onClick$btnBuscarLider(Event event) throws InterruptedException {
-        llenarListaLider(txtBuscarLider.getText());
     }
-    
+
     public void onClick$btnVerificarCedula(Event event) throws InterruptedException {
         verificarCedula();
     }
-    
+
     public void onClick$btnPaso1(Event event) throws InterruptedException {
         registrarDatosPaso1();
     }
-    
-    public void onClick$btnPaso2(Event event) throws InterruptedException {
-        registrarDatosPaso2();
-    }
-    
+
     public void onBlur$txtCedula(Event event) throws InterruptedException {
         verificarCedula();
     }
-    
+
     public void onBlur$txtCorreo(Event event) throws InterruptedException {
         verificarCorreo();
     }
-    
+
     public void onBlur$txtTelefono(Event event) throws InterruptedException {
         verificarTelefono();
     }
-    
+
     public void onOK$txtCedula(Event event) throws InterruptedException {
         verificarCedula();
     }
-    
-    public void onOK$txtBuscarLider(Event event) throws InterruptedException {
-        llenarListaLider(txtBuscarLider.getText());
-    }
-    
+
     public void onOK$txtNombre(Event event) throws InterruptedException {
         txtCorreo.setFocus(true);
     }
-    
+
     public void onOK$txtCorreo(Event event) throws InterruptedException {
         txtTelefono.setFocus(true);
     }
-    
+
     public void onOK$txtTelefono(Event event) throws InterruptedException {
         verificarTelefono();
     }
-    
+
     public void onOK$txtPassword(Event event) throws InterruptedException {
         txtRepetirPassword.setFocus(true);
     }
-    
+
     public void onOK$txtRepetirPassword(Event event) throws InterruptedException {
         registrarDatosPaso1();
     }
