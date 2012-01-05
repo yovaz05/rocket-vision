@@ -38,12 +38,19 @@ public final class ConectorBDMySQL {
      * Establece los elementos para la conexión de la base de datos
      */
     private void establecerElementosDeConexion() {
+//        atributosConector.setUser("waytech_root");
+//        atributosConector.setPassword("Lux3.3Et7dm");
+//        atributosConector.setHostname("localhost");
+//        atributosConector.setDriver("com.mysql.jdbc.Driver");
+//        atributosConector.setDatabaseName("waytech_rocket");
+//        atributosConector.setUrl("jdbc:mysql://" + atributosConector.getHostname() + "/" + atributosConector.getDatabaseName());        
         atributosConector.setUser("root");
         atributosConector.setPassword("wt.admin");
-        atributosConector.setHostname("127.0.0.1");
+        atributosConector.setHostname("192.168.1.101");
         atributosConector.setDriver("com.mysql.jdbc.Driver");
         atributosConector.setDatabaseName("rocket2");
         atributosConector.setUrl("jdbc:mysql://" + atributosConector.getHostname() + "/" + atributosConector.getDatabaseName());        
+        
     }
 
     /**

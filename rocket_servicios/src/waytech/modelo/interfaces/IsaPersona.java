@@ -14,7 +14,7 @@ import waytech.modelo.servicios.RspPersona;
 public interface IsaPersona {
 
     public abstract RspPersona insertPersona(PersonaInsert usuario);
-    
+
     /**
      * Tipo de persona LIDER LANZADO ID = 3
      * ID ZONA = 1 = GENERICO
@@ -28,11 +28,11 @@ public interface IsaPersona {
     public abstract RspPersona insertPersonaLiderBasico(String cedula, String nombre, int idRed);
 
     public abstract RspPersona updatePersona(PersonaUpdate usuario);
-    
+
     public abstract RspPersona updateCedula(int idPersona, String Cedula);
-    
+
     public abstract RspPersona updateNombre(int idPersona, String nombre);
-    
+
     /**
      * Solo para el modelo donde una persona solo pertenece a una sola red.
      * @param idPersona
@@ -40,19 +40,19 @@ public interface IsaPersona {
      * @return 
      */
     public abstract RspPersona updateRed(int idPersona, int idRed);
-    
+
     public abstract RspPersona updateTelefonoMovil(int idPersona, String telefonoMovil);
-    
+
     public abstract RspPersona updateCorreo(int idPersona, String correo);
-    
+
     public abstract RspPersona updateZona(int idPersona, int idZona);
-    
+
     public abstract RspPersona updateDireccion(int idPersona, String direccion);
-    
+
     public abstract RspPersona updateObservaciones(int idPersona, String observaciones);
-    
+
     public abstract RspPersona updatePersonaALiderCelula(int idPersona);
-    
+
     public abstract RspPersona updatePersonaALiderRed(int idPersona);
 
     /**
@@ -67,21 +67,21 @@ public interface IsaPersona {
     public abstract RspPersona getPersonaPorTraza(String traza);
 
     public abstract RspPersona getLiderLanzadoPorIdPersona(int idPersona);
-    
+
     public abstract RspPersona getPersonaPorCedula(String cedula);
-    
+
     public abstract RspPersona esCedulaExistente(String cedula);
-    
+
     public abstract RspPersona esCodigoSecretoExistente(String cedula, String codigoSecreto);
-    
+
     public abstract RspPersona esTelefonoMovilExistente(String telefonoMovil);
-    
+
     public abstract RspPersona esTelefonoHabitacionExistente(String telefonoHabitacion);
-    
+
     public abstract RspPersona esTelefonoTrabajoExistente(String telefonoTrabajo);
-    
+
     public abstract RspPersona esLiderRed(int idPersona);
-    
+
     public abstract RspPersona esLiderCelula(int idPersona);
 
     public abstract RspPersona renovarPersona(int idPersona);
@@ -119,11 +119,11 @@ public interface IsaPersona {
     public abstract RspPersona listPersonaLiderSupervizor();
 
     public abstract RspPersona listPersonaDiscipulosEnProceso();
-    
+
     public abstract RspPersona listPersonaCualquierLider();
-    
+
     public abstract RspPersona listPersonaLiderLanzado();
-    
+
     public abstract RspPersona listPersonaCualquierLiderNombre(String nombre);
     
     /*
