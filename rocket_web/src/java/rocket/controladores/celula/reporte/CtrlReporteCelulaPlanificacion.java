@@ -12,12 +12,47 @@ import sig.modelo.servicios.ServicioCelula;
 import sig.modelo.servicios.ServicioReporteCelula;
 
 /**
- * controlador asociado a vistaReporteCelula/Resultados.zul
+ * controlador asociado a vistaReporteCelula/Planificacion.zul
  * para actualizar valores
  * @author Gabriel
  */
 public class CtrlReporteCelulaPlanificacion extends GenericForwardComposer {
 
+  //referencias:
+  Include vistaCentral;
+  Include panelCentral;
+  //widgets:
+  Label tituloVentana;
+  Label etqInvitados;
+  Label etqReconciliados;
+  Label etqPersonasEnPlanif;
+  Label etqVisitas;
+  Label etqOtrasIglesias;
+  Label etqAsistenciaDomingoAnterior;
+  Label etqTotalAsistencia;
+  Spinner spnInvitados;
+  Spinner spnConvertidos;
+  Spinner spnAmigos;
+  Spinner spnReconciliados;
+  Spinner spnPersonasEnPlanif;
+  Spinner spnVisitas;
+  Spinner spnOtrasIglesias;
+  Spinner spnAsistenciaDomingoAnterior;
+  //mensajes:
+  Div divMensaje;
+  Label etqMensaje;
+  //variables de control:
+  //modo = {new,edicion,ver,imprimir,confirmado}
+  int invitados = 0;
+  int reconciliados = 0;
+  int visitas = 0;
+  int asistenciaDomingoAnterior = 0;
+  int personasEnPlanif = 0;
+  //gestión de datos:
+  int idReporteCelula;
+  ReporteCelulaUtil reporte = new ReporteCelulaUtil();
+  ServicioCelula servicioCelula = new ServicioCelula();
+  ServicioReporteCelula servicioReporteCelula = new ServicioReporteCelula();
   private boolean datosRecuperadosPrimeraVez = false;
 
   @Override
@@ -30,7 +65,7 @@ public class CtrlReporteCelulaPlanificacion extends GenericForwardComposer {
     if (Sesion.modoIngresar()) {
       //+ setVarSesionDefault();
     } else {
-      getIdReporte();
+      //- getIdReporte();
       //traer variables de sesión de valores de resultados
     }
   }
@@ -38,10 +73,10 @@ public class CtrlReporteCelulaPlanificacion extends GenericForwardComposer {
   /**
    * trae valor idReporteCelula de variable de sesión
    **/
-  private void getIdReporte() {
+  private int getIdReporte() {
     System.out.println("CtrlReporteCelulaResultados.getIdReporteCelula");
-    idReporteCelula = (Integer) Sesion.getVariable("idCelula");
-    //TODO: debe ser idReporteCelula 
+    idReporteCelula = (Integer) Sesion.getVariable("idReporteCelula");
+    return idReporteCelula;
   }
 
   /**
@@ -154,7 +189,7 @@ public class CtrlReporteCelulaPlanificacion extends GenericForwardComposer {
    * actualiza el invitados de la célula en la base de datos
    */
   boolean actualizarInvitados(int nuevoValor) {
-    if (servicioReporteCelula.actualizarPlanificacionInvitados(nuevoValor)) {
+    if (servicioReporteCelula.actualizarPlanificacionInvitados(getIdReporte(), nuevoValor)) {
       mensaje("Se guardaron los cambios");
       return true;
     }
@@ -225,7 +260,7 @@ public class CtrlReporteCelulaPlanificacion extends GenericForwardComposer {
    * actualiza el Reconciliados de la célula en la base de datos
    */
   boolean actualizarReconciliados(int nuevoValor) {
-    if (servicioReporteCelula.actualizarPlanificacionReconciliados(nuevoValor)) {
+    if (servicioReporteCelula.actualizarPlanificacionReconciliados(getIdReporte(), nuevoValor)) {
       mensaje("Se guardaron los cambios");
       return true;
     }
@@ -299,7 +334,7 @@ public class CtrlReporteCelulaPlanificacion extends GenericForwardComposer {
    * actualiza el PersonasEnPlanif de la célula en la base de datos
    */
   boolean actualizarPersonasEnPlanif(int nuevoValor) {
-    if (servicioReporteCelula.actualizarPlanificacionNumeroIntegrantes(nuevoValor)) {
+    if (servicioReporteCelula.actualizarPlanificacionNumeroIntegrantes(getIdReporte(), nuevoValor)) {
       mensaje("Se guardaron los cambios");
       return true;
     }
@@ -370,51 +405,14 @@ public class CtrlReporteCelulaPlanificacion extends GenericForwardComposer {
    * actualiza el Visitas de la célula en la base de datos
    */
   boolean actualizarVisitas(int nuevoValor) {
-    if (servicioReporteCelula.actualizarPlanificacionVisitas(nuevoValor)) {
+    if (servicioReporteCelula.actualizarPlanificacionVisitas(getIdReporte(), nuevoValor)) {
       mensaje("Se guardaron los cambios");
       return true;
     }
     mensaje("Error guardando cambios");
     return false;
   }
-  /**
-   * atributos
-   */
-  //referencias:
-  Include vistaCentral;
-  Include panelCentral;
-  //widgets:
-  Label tituloVentana;
-  Label etqInvitados;
-  Label etqReconciliados;
-  Label etqPersonasEnPlanif;
-  Label etqVisitas;
-  Label etqOtrasIglesias;
-  Label etqAsistenciaDomingoAnterior;
-  Label etqTotalAsistencia;
-  Spinner spnInvitados;
-  Spinner spnConvertidos;
-  Spinner spnAmigos;
-  Spinner spnReconciliados;
-  Spinner spnPersonasEnPlanif;
-  Spinner spnVisitas;
-  Spinner spnOtrasIglesias;
-  Spinner spnAsistenciaDomingoAnterior;
-  //mensajes:
-  Div divMensaje;
-  Label etqMensaje;
-  //variables de control:
-  //modo = {new,edicion,ver,imprimir,confirmado}
-  int invitados = 0;
-  int reconciliados = 0;
-  int visitas = 0;
-  int asistenciaDomingoAnterior = 0;
-  int personasEnPlanif = 0;
-  //gestión de datos:
-  int idReporteCelula;
-  ReporteCelulaUtil reporte = new ReporteCelulaUtil();
-  ServicioCelula servicioCelula = new ServicioCelula();
-  ServicioReporteCelula servicioReporteCelula = new ServicioReporteCelula();
+
 }
 /**
  * TAREAS:

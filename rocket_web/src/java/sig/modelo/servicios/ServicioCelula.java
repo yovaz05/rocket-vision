@@ -296,6 +296,7 @@ public class ServicioCelula {
     dir.setDirDetallada(celula.getDireccion());
     /**/
     c.setDireccion(dir);
+    c.setEstatusReporteSemanaActual(celula.getEstado());
     return c;
   }
 

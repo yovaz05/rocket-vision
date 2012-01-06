@@ -35,6 +35,7 @@ public class CelulaUtil {
   //1:domingo, 2:lunes, ... , 7:sábado
   private int diaSemana;
   private int numeroLideres;
+  int estatusReporteSemanaActual = 0;
 
   public CelulaUtil() {
   }
@@ -303,4 +304,13 @@ public class CelulaUtil {
   public void setNumeroLideres(int numeroLideres) {
     this.numeroLideres = numeroLideres;
   }
+
+  public int getEstatusReporteSemanaActual() {
+    return estatusReporteSemanaActual;
+  }
+
+  public void setEstatusReporteSemanaActual(int estatusReporteSemanaActual) {
+    this.estatusReporteSemanaActual = estatusReporteSemanaActual;
+  }
+    
 }

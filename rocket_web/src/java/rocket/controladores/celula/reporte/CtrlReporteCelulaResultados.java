@@ -36,7 +36,7 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
     if (Sesion.modoIngresar()) {
       //+ setVarSesionDefault();
     } else {
-      getIdReporte();
+      //- getIdReporte();
       //traer variables de sesión de valores de resultados
     }
   }
@@ -44,10 +44,10 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
   /**
    * trae valor idReporteCelula de variable de sesión
    **/
-  private void getIdReporte() {
+  private int getIdReporte() {
     System.out.println("CtrlReporteCelulaResultados.getIdReporteCelula");
-    idReporteCelula = (Integer) Sesion.getVariable("idCelula");
-    //TODO: debe ser idReporteCelula 
+    idReporteCelula = (Integer) Sesion.getVariable("idReporteCelula");
+    return idReporteCelula;
   }
 
   /**
@@ -97,7 +97,7 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
     }
     return valor;
   }
-  
+
   //TODO: mejora código: pasar a clase de utilería
   int getValorEnteroEtiqueta(Label etiqueta) {
     int valor = 0;
@@ -109,16 +109,16 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
     }
     return valor;
   }
-  
+
   //TODO: mejora código: pasar a clase de utilería
   double getValorDoubleEtiqueta(Label etiqueta) {
     double monto = 0;
     try {
       String valor = etiqueta.getValue();
       if (valor.equals("0,00")) {
-        return monto = 0.00;        
+        return monto = 0.00;
       }
-      return monto = Double.parseDouble(etiqueta.getValue());      
+      return monto = Double.parseDouble(etiqueta.getValue());
     } catch (Exception e) {
       monto = 0.00;
       System.out.println("CtrlReporteCelulaResultados.activarEditInvitados");
@@ -193,7 +193,7 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
    * actualiza el invitados de la célula en la base de datos
    */
   boolean actualizarInvitados(int nuevoValor) {
-    if (servicioReporteCelula.actualizarResultadoInvitados(nuevoValor)) {
+    if (servicioReporteCelula.actualizarResultadoInvitados(getIdReporte(), nuevoValor)) {
       mensaje("Se guardaron los cambios");
       return true;
     }
@@ -266,7 +266,7 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
    * actualiza Convertidos de la célula en la base de datos
    */
   boolean actualizarConvertidos(int nuevoValor) {
-    if (servicioReporteCelula.actualizarResultadoConvertidos(nuevoValor)) {
+    if (servicioReporteCelula.actualizarResultadoConvertidos(getIdReporte(), nuevoValor)) {
       mensaje("Se guardaron los cambios");
       return true;
     }
@@ -338,7 +338,7 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
    * actualiza el Amigos de la célula en la base de datos
    */
   boolean actualizarAmigos(int nuevoValor) {
-    if (servicioReporteCelula.actualizarResultadoAmigos(nuevoValor)) {
+    if (servicioReporteCelula.actualizarResultadoAmigos(getIdReporte(), nuevoValor)) {
       mensaje("Se guardaron los cambios");
       return true;
     }
@@ -411,7 +411,7 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
    * actualiza el Reconciliados de la célula en la base de datos
    */
   boolean actualizarReconciliados(int nuevoValor) {
-    if (servicioReporteCelula.actualizarResultadoReconciliados(nuevoValor)) {
+    if (servicioReporteCelula.actualizarResultadoReconciliados(getIdReporte(), nuevoValor)) {
       mensaje("Se guardaron los cambios");
       return true;
     }
@@ -482,7 +482,7 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
    * actualiza el CDO de la célula en la base de datos
    */
   boolean actualizarCDO(int nuevoValor) {
-    if (servicioReporteCelula.actualizarResultadoIntegrantesEstaIglesia(nuevoValor)) {
+    if (servicioReporteCelula.actualizarResultadoIntegrantesEstaIglesia(getIdReporte(), nuevoValor)) {
       mensaje("Se guardaron los cambios");
       return true;
     }
@@ -538,7 +538,7 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
       //usuario dejó el valor vacío o dejó el valor anterior
       return;
     }
-    if (actualizarVisitas()) {
+    if (actualizarVisitas(nuevoValor)) {
       //se cambió el valor
       visitas = nuevoValor;
       mostrarValorVisitas();
@@ -552,8 +552,8 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
   /**
    * actualiza el Visitas de la célula en la base de datos
    */
-  boolean actualizarVisitas() {
-    if (servicioReporteCelula.actualizarResultadoVisitas(visitas)) {
+  boolean actualizarVisitas(int nuevoValor) {
+    if (servicioReporteCelula.actualizarResultadoVisitas(getIdReporte(), nuevoValor)) {
       mensaje("Se guardaron los cambios");
       return true;
     }
@@ -625,7 +625,7 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
    * actualiza el OtrasIglesias de la célula en la base de datos
    */
   boolean actualizarOtrasIglesias(int nuevoValor) {
-    if (servicioReporteCelula.actualizarResultadoIntegrantesOtrasIglesias(nuevoValor)) {
+    if (servicioReporteCelula.actualizarResultadoIntegrantesOtrasIglesias(getIdReporte(), nuevoValor)) {
       mensaje("Se guardaron los cambios");
       return true;
     }
@@ -696,7 +696,7 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
    * actualiza el DomingoAnterior de la célula en la base de datos
    */
   boolean actualizarDomingoAnterior(int nuevoValor) {
-    if (servicioReporteCelula.actualizarResultadoAsistenciaDomingoAnterior(nuevoValor)) {
+    if (servicioReporteCelula.actualizarResultadoAsistenciaDomingoAnterior(getIdReporte(), nuevoValor)) {
       mensaje("Se guardaron los cambios");
       return true;
     }
@@ -713,7 +713,7 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
     }
     totalAsistencia = invitados + amigos + integrantesEstaIglesia + integrantesOtrasIglesias;
     etqTotalAsistencia.setValue("" + totalAsistencia);
-    servicioReporteCelula.actualizarResultadoTotalAsistencia(totalAsistencia);
+    servicioReporteCelula.actualizarResultadoTotalAsistencia(getIdReporte(), totalAsistencia);
   }
 
   /**
@@ -765,7 +765,7 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
     }
     return ok;
   }
-  
+
   public void onClick$divOfrendasMonto() {
     System.out.println("CtrlReporteCelulaResultados. click en divAmigos");
     activarEditOfrendas();
@@ -830,13 +830,13 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
    * actualiza el Ofrendas de la célula en la base de datos
    */
   boolean actualizarOfrendas(double nuevoValor) {
-    if (servicioReporteCelula.actualizarResultadoOfrendas(nuevoValor)) {
+    if (servicioReporteCelula.actualizarResultadoOfrendas(getIdReporte(), nuevoValor)) {
       mensaje("Se guardaron los cambios");
       return true;
     }
     mensaje("Error guardando cambios");
     return false;
-  }  
+  }
   /**
    * atributos
    */
@@ -880,7 +880,7 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
   int totalAsistencia = 0;
   double ofrendas = 0.00;
   Row rowMsjError;
-//gestión de datos:
+  //gestión de datos:
   int idReporteCelula;
   ArrayList lista;
   CelulaUtil celula = new CelulaUtil();
@@ -890,5 +890,6 @@ public class CtrlReporteCelulaResultados extends GenericForwardComposer {
 }
 /**
  * TAREAS:
+ * >. agregar parámetro 'idReporte' para todos los métodos de actualización
  * >. en futuras versiones: comprobar permiso de edición de reporte
  */

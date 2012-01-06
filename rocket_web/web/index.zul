@@ -30,7 +30,7 @@ title="Casa de Oración - Rocket"?>
        vistaCentralDefecto  = "vistaAcceso/Acceso.zul";
        panelCentralDefecto  = "";
        //comentar línea siguiente, para mostrar la pantalla de login:
-       loginConDatosPrecargados();
+       //loginConDatosPrecargados();
     ]]>
   </zscript>
   <borderlayout>

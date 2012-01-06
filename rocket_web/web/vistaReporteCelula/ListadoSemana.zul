@@ -11,11 +11,10 @@
       <columns sizable="true">
         <column label="#" width="25px" align="center"/>
         <column label="Código" width="80px"/>        
+        <column label="Líderes" width="120px"/>
+        <column label="Dirección" width="200px"/>
+        <column label="Día y Hora" width="110px"/>
         <column label="Reporte" id="colEstadosReporte" align="center" width="100px"/>
-        <column label="Líderes" width="120px" visible="false"/>
-        <column label="Dirección" width="200px" visible="false"/>
-        <column label="Día y Hora" width="110px" visible="false"/>
-<!--        <column label="Nombre" width="180px" visible="false"/>-->
       </columns>      
       <rows>
       </rows>
@@ -34,7 +33,7 @@
       </div>
     </div>
     
-<!-- Será usado en próximas versiones -->
+<!-- Será usado en próximas versiones, botón para ver semanas anteriores -->
 <!--
 <div align="right">
       <space height="15px"/>
@@ -47,7 +46,7 @@
       <label id="etqMensaje" sclass="mensajes" style="padding:2px" value="" visible="false"/>
     </div>    
   </div>
-<!--TODO: pasar esto al controlador-->
+<!--TODO: pasar este bloque de código al controlador-->
   <zscript>
     <![CDATA[
     void mensaje(String msj){

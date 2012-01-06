@@ -16,14 +16,23 @@ public class ReporteCelulaUtil extends CelulaUtil {
   int estatus = 0;
   String descripcionEstatus = "";
   //estatus de reporte:
+  /**
+   * indica reporte no ingresado
+   */
+  public static final int REPORTE_NO_INGRESADO = 2;
+  /**
+   * indica reporte ingresado, pero célula NO realizada 
+   */
+  public static final int CELULA_NO_REALIZADA = 3;
+  /**
+   * indica reporte ingresado y célula realizada 
+   */
   public static final int REPORTE_INGRESADO = 4;//INGRESADO, PERO NO CONFIRMADO
   //public static final int CONFIRMADO = 1;;
-  public static final int REPORTE_NO_INGRESADO = 2;
-  public static final int CELULA_NO_REALIZADA = 3;
-  public static final String TOOLTIPTEXT_INGRESADO = "Reporte ingresado. Haga click para ver detalles";
+  public static final String TOOLTIPTEXT_INGRESADO = "Reporte ingresado. Click para ver detalles";
   //public static final String STATUS_CONFIRMADO = "Confirmado";
-  public static final String TOOLTIPTEXT_NO_INGRESADO = "Reporte no ingresado. Click para ver opciones";
-  public static final String STATUS_NO_REALIZADA = "Célula NO Realizada";
+  public static final String TOOLTIPTEXT_NO_INGRESADO = "Reporte no ingresado. Click para ingresar";
+  public static final String STATUS_NO_REALIZADA = "Célula NO Realizada. Click para ver detalles";
   public static final String IMAGEN_INGRESADO = "/img/iconos/status_ok_16.gif";
   public static final String IMAGEN_NO_INGRESADO = "/img/iconos/status_not_16.png";
   public static final String IMAGEN_NO_REALIZADA = "/img/iconos/status_alert_16.gif";

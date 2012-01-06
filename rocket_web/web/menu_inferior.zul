@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
   <div sclass="barra_inferior">
     <toolbar mold="panel" style="background-color: white;">
-      <label value="SIG"/>
+      <label value="Rocket"/>
       <label value="© 2011"/>
       <toolbarbutton label="Casa de Oración"  href="http://www.casadeoracion.com.ve/" target="_BLANK" tooltiptext="Ir al sitio web"/>
       <separator orient="vertical" bar="true"/>

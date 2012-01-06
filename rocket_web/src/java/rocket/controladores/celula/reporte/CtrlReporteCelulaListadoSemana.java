@@ -138,7 +138,7 @@ public class CtrlReporteCelulaListadoSemana extends GenericForwardComposer {
         //se anexan los widgets a la fila
         etqNro.setParent(row);
         tbbCodigo.setParent(row);
-        /**
+        /**/
         if (nroLideres == 0) {//célula no tiene líderes          
           Label etqNoTieneLideres = new Label("No asignados");
           etqNoTieneLideres.setParent(row);

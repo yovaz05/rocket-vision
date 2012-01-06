@@ -11,9 +11,8 @@ import cdo.sgd.modelo.bd.util.ReporteCelulaUtil;
 import java.util.ArrayList;
 import java.util.List;
 import waytech.modelo.beans.sgi.Celula;
-import waytech.modelo.beans.sgi.EjecucionCelula;
-import waytech.modelo.beans.sgi.EjecucionCelulaInsert;
 import waytech.modelo.beans.sgi.PersonaEnCelula;
+import waytech.modelo.beans.sgi.EjecucionCelula;
 import waytech.modelo.beans.sgi.PlanificacionCelula;
 import waytech.modelo.servicios.RspCelula;
 import waytech.modelo.servicios.RspEjecucionCelula;
@@ -133,9 +132,17 @@ public class ServicioReporteCelula {
    */
   public int ingresarReporteCelula(int idCelula, int estado) {
     System.out.println("ServicioReporteCelula.ingresarReporteCelula. id célula=" + idCelula);
+    //crear ejecución
     RspEjecucionCelula respuesta = saEjecucionCelula.insertEjecucionCelula(idCelula, estado);
     if (respuesta.esSentenciaSqlEjecutadaExitosamente()) {
       idReporteCelula = respuesta.getEjecucionCelula().getIdEjecucionCelula();
+      //crear planificación:
+      RspPlanificacionCelula respuesta2 = saPlanificacionCelula.insertPlanificacionCelula(idCelula);
+      if (!respuesta.esSentenciaSqlEjecutadaExitosamente()) {
+        System.out.println("ERROR -> ServicioReporteCelula.ingresarReporteCelula.planificación = ERROR ingresando registro en planificación");
+        idReporteCelula = 0;
+        System.out.println(">>>" + respuesta.getRespuestaServicio());
+      }
     } else {
       System.out.println("ServicioReporteCelula.ingresarReporteCelula.resultado=ERROR");
       idReporteCelula = 0;
@@ -152,147 +159,162 @@ public class ServicioReporteCelula {
    */
   //TODO: agregar parámetro idSemana
   //mejorar gestión de errores
+  //TODO: nro de semana actual, para pasar como parámetro o buscar dentro de este método
   public ReporteCelulaUtil getReporteCelulaSemanaActual(int idCelula) {
+    EjecucionCelula ejecucionCelula;
+    PlanificacionCelula planificacionCelula;
 
     //traer datos de ejecución (resultados)
-    //TODO: buscar nro de semana actual, para pasar como parámetro
+    System.out.println("ServicioReporteCelula.getReporteCelulaSemanaActual.idCelula= " + idCelula);
+    System.out.println("ServicioReporteCelula.getReporteCelulaSemanaActual.Semana= " + 1);
+
     RspEjecucionCelula respuestaEjecucion = saEjecucionCelula.getEjecucionCelula(idCelula, 1);
-    EjecucionCelula ejecucionCelulaBD = respuestaEjecucion.getEjecucionCelula();
+    ejecucionCelula = respuestaEjecucion.getEjecucionCelula();
 
     //**System.out.println("ServicioReporteCelula.respuestaEjecucion.getEjecucionCelula().estado=" + ejecucionCelulaBD.getEstado());
 
-    /*
     if (respuestaEjecucion.getEjecucionCelula() == null) {
-      System.out.println("Error en ServicioReporteCelula.getReporteCelula:ejecucionCelulaBD = NULL");
+      System.out.println("Error -> ServicioReporteCelula.getReporteCelula: ejecucionCelulaBD == NULL");
       return new ReporteCelulaUtil();//error, objeto vacío
     }
     //**System.out.println("ServicioReporteCelula.getReporteCelulaSemanaActual.ejecucionCelulaBD:" + ejecucionCelulaBD.toString());
-    
-    if (ejecucionCelulaBD.getEstado() == ReporteCelulaUtil.CELULA_NO_REALIZADA) {
+
+    System.out.println("ServicioReporteCelula.antes de IF");
+    /**/
+    if (ejecucionCelula.getEstado() == ReporteCelulaUtil.CELULA_NO_REALIZADA) {
       System.out.println("ServicioReporteCelula.respuestaEjecucion.getEjecucionCelula().estado=CELULA_NO_REALIZADA");
-      //no hay datos que buscar, todo en '0'      
-      return generarReporteCelulaUtil(idCelula, new PlanificacionCelula(), ejecucionCelulaBD);
+      //no hay datos que buscar, datos de planificación y ejecución en '0'
+      ejecucionCelula = new EjecucionCelula();
+      planificacionCelula = new PlanificacionCelula();
+      return generarReporteCelulaUtil(idCelula, planificacionCelula, ejecucionCelula);
     }
-    */
-    
-    //traer datos de planificación
+    /**/
+
+    //traer datos de planificación:
     RspPlanificacionCelula respuestaPlanificacion = saPlanificacionCelula.getPlanificacionCelulaPorIdCelula(idCelula);
-    PlanificacionCelula planificacionCelulaBD = respuestaPlanificacion.getPlanificacionCelula();
-    if (planificacionCelulaBD == null) {
+    planificacionCelula = respuestaPlanificacion.getPlanificacionCelula();
+    if (planificacionCelula == null) {
       System.out.println("Error en ServicioReporteCelula.getReporteCelula:planificacionCelulaBD = NULL");
       //+return new ReporteCelulaUtil();//error, objeto vacío
-      return generarReporteCelulaUtil(idCelula, new PlanificacionCelula(), ejecucionCelulaBD);
+      planificacionCelula = new PlanificacionCelula();
     }
     //**System.out.println("ServicioReporteCelula.getReporteCelula.ejecucionCelulaBD:" + planificacionCelulaBD.toString());
 
-    ReporteCelulaUtil reporteCelulaUtil = generarReporteCelulaUtil(idCelula, planificacionCelulaBD, ejecucionCelulaBD);
-    return reporteCelulaUtil;
+    return generarReporteCelulaUtil(idCelula, planificacionCelula, ejecucionCelula);
   }
 
-  ReporteCelulaUtil generarReporteCelulaUtil(int idCelula, PlanificacionCelula planifCelula, EjecucionCelula ejecucionCelula) {
+  public String getObservacionesReporte(int idCelula) {
+    RspEjecucionCelula respuestaEjecucion = saEjecucionCelula.getEjecucionCelula(idCelula, 1);
+    EjecucionCelula ejecucionCelula = respuestaEjecucion.getEjecucionCelula();
+    System.out.println("ejecucion celula. " + ejecucionCelula.toString());
+    return ejecucionCelula.getObservaciones();
+  }
+
+  ReporteCelulaUtil generarReporteCelulaUtil(int idCelula, PlanificacionCelula planificacion, EjecucionCelula ejecucion) {
     ReporteCelulaUtil reporte = new ReporteCelulaUtil();
 
-    //datos básicos de la célula
-    //-int idCelula = celula.getIdCelula();
+    //datos básicos de la célula:
+    reporte.setIdReporte(ejecucion.getIdEjecucionCelula());
     reporte.setIdCelula(idCelula);
 
-    //ofrendas sin comprobación:
-    reporte.setOfrendasMonto(ejecucionCelula.getOfrenda());
-    reporte.setOfrendasEntregadas(false);
+    //planificación:
+    reporte.setPlanificacionInvitados(planificacion.getNuevosInvitados());
+    reporte.setPlanificacionReconciliados(planificacion.getReconciliados());
+    reporte.setPlanificacionVisitas(planificacion.getVisitas());
+    reporte.setPlanificacionPersonasEnplanificacion(planificacion.getNumeroIntegrantes());
 
     //resultados:
-    reporte.setResultadoInvitados(ejecucionCelula.getNuevosInvitados());
-    reporte.setResultadoConvertidos(ejecucionCelula.getConvertidos());
-    reporte.setResultadoReconciliados(ejecucionCelula.getReconciliados());
-    reporte.setResultadoVisitas(ejecucionCelula.getVisitas());
-    reporte.setResultadoAmigosSoloAsistenCelula(ejecucionCelula.getAmigosSoloAsistenGrupo());
-    reporte.setResultadoCDO(ejecucionCelula.getIntegrantesCasaOracion());
-    reporte.setResultadoOtrasIglesias(ejecucionCelula.getIntegrantesOtrasIglesias());
-    reporte.setResultadoAsistenciaDomingoAnterior(ejecucionCelula.getAsistenciaDomingoAnterior());
-    reporte.setOfrendasMonto(ejecucionCelula.getOfrenda());
-    reporte.setEstatus(ejecucionCelula.getEstado());
-    reporte.setObservaciones(ejecucionCelula.getObservaciones());
+    reporte.setResultadoInvitados(ejecucion.getNuevosInvitados());
+    reporte.setResultadoConvertidos(ejecucion.getConvertidos());
+    reporte.setResultadoReconciliados(ejecucion.getReconciliados());
+    reporte.setResultadoVisitas(ejecucion.getVisitas());
+    reporte.setResultadoAmigosSoloAsistenCelula(ejecucion.getAmigosSoloAsistenGrupo());
+    reporte.setResultadoCDO(ejecucion.getIntegrantesCasaOracion());
+    reporte.setResultadoOtrasIglesias(ejecucion.getIntegrantesOtrasIglesias());
+    reporte.setResultadoAsistenciaDomingoAnterior(ejecucion.getAsistenciaDomingoAnterior());
+    reporte.setOfrendasMonto(ejecucion.getOfrenda());
+    reporte.setEstatus(ejecucion.getEstado());
+    reporte.setObservaciones(ejecucion.getObservaciones());
 
     reporte.setTotalAsistenciaCelula(
-            ejecucionCelula.getNuevosInvitados()
-            + ejecucionCelula.getAmigosSoloAsistenGrupo()
-            + ejecucionCelula.getIntegrantesCasaOracion()
-            + ejecucionCelula.getIntegrantesOtrasIglesias());
+            ejecucion.getNuevosInvitados()
+            + ejecucion.getAmigosSoloAsistenGrupo()
+            + ejecucion.getIntegrantesCasaOracion()
+            + ejecucion.getIntegrantesOtrasIglesias());
 
-    //planificación
-    reporte.setPlanificacionInvitados(planifCelula.getNuevosInvitados());
-    reporte.setPlanificacionReconciliados(planifCelula.getReconciliados());
-    reporte.setPlanificacionVisitas(planifCelula.getVisitas());
-    reporte.setPlanificacionPersonasEnplanificacion(planifCelula.getNumeroIntegrantes());
+    //ofrendas (sin comprobación):
+    reporte.setOfrendasMonto(ejecucion.getOfrenda());
+    reporte.setOfrendasEntregadas(false);
+
     return reporte;
   }
 
-  public boolean actualizarResultadoInvitados(int valor) {
+  public boolean actualizarResultadoInvitados(int idReporteCelula, int valor) {
     RspEjecucionCelula respuesta = saEjecucionCelula.updateNumeroInvitados(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarResultadoConvertidos(int valor) {
+  public boolean actualizarResultadoConvertidos(int idReporteCelula, int valor) {
     RspEjecucionCelula respuesta = saEjecucionCelula.updateConvertidos(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarResultadoReconciliados(int valor) {
+  public boolean actualizarResultadoReconciliados(int idReporteCelula, int valor) {
     RspEjecucionCelula respuesta = saEjecucionCelula.updateReconciliados(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarResultadoVisitas(int valor) {
+  public boolean actualizarResultadoVisitas(int idReporteCelula, int valor) {
     RspEjecucionCelula respuesta = saEjecucionCelula.updateVisitas(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarResultadoAmigos(int valor) {
+  public boolean actualizarResultadoAmigos(int idReporteCelula, int valor) {
     RspEjecucionCelula respuesta = saEjecucionCelula.updateAmigosSoloAsistenGrupo(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarResultadoIntegrantesEstaIglesia(int valor) {
+  public boolean actualizarResultadoIntegrantesEstaIglesia(int idReporteCelula, int valor) {
     RspEjecucionCelula respuesta = saEjecucionCelula.updateIntegrantesCasaOracion(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarResultadoIntegrantesOtrasIglesias(int valor) {
+  public boolean actualizarResultadoIntegrantesOtrasIglesias(int idReporteCelula, int valor) {
     RspEjecucionCelula respuesta = saEjecucionCelula.updateIntegrantesOtrasIglesias(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarResultadoAsistenciaDomingoAnterior(int valor) {
+  public boolean actualizarResultadoAsistenciaDomingoAnterior(int idReporteCelula, int valor) {
     RspEjecucionCelula respuesta = saEjecucionCelula.updateAsistenciaDomingoAnterior(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarResultadoTotalAsistencia(int valor) {
+  public boolean actualizarResultadoTotalAsistencia(int idReporteCelula, int valor) {
     RspEjecucionCelula respuesta = saEjecucionCelula.updateNumeroIntegrantes(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarResultadoOfrendas(double valor) {
+  public boolean actualizarResultadoOfrendas(int idReporteCelula, double valor) {
     RspEjecucionCelula respuesta = saEjecucionCelula.updateOfrenda(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarPlanificacionInvitados(int valor) {
+  public boolean actualizarPlanificacionInvitados(int idReporteCelula, int valor) {
     RspPlanificacionCelula respuesta = saPlanificacionCelula.updateNuevosInvitados(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarPlanificacionReconciliados(int valor) {
+  public boolean actualizarPlanificacionReconciliados(int idReporteCelula, int valor) {
     RspPlanificacionCelula respuesta = saPlanificacionCelula.updateReconciliados(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarPlanificacionVisitas(int valor) {
+  public boolean actualizarPlanificacionVisitas(int idReporteCelula, int valor) {
     RspPlanificacionCelula respuesta = saPlanificacionCelula.updateVisitas(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
 
-  public boolean actualizarPlanificacionNumeroIntegrantes(int valor) {
+  public boolean actualizarPlanificacionNumeroIntegrantes(int idReporteCelula, int valor) {
     RspPlanificacionCelula respuesta = saPlanificacionCelula.updateNumeroIntegrantes(idReporteCelula, valor);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
