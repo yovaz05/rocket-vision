@@ -15,7 +15,7 @@ public interface IsaPlanificacionCelula {
 
     public abstract RspPlanificacionCelula insertPlanificacionCelula(PlanificacionCelulaInsert planificacionCelula);
 
-    public abstract RspPlanificacionCelula insertPlanificacionCelulaDiaSemana(int idCelula);
+    public abstract RspPlanificacionCelula insertPlanificacionCelula(int idCelula);
 
     public abstract RspPlanificacionCelula updatePlanificacionCelula(PlanificacionCelulaUpdate planificacionCelula);
 

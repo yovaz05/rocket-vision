@@ -38,6 +38,9 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
     Semana semana = new Semana();
     semana = isaSemana.getSemanaPorIdSemana(rs.getInt("id_semana")).getSemana();
     ejecucionCelula.setIdSemana(semana);
+    ejecucionCelula.setObservaciones(rs.getString("observaciones"));
+    ejecucionCelula.setEstado(rs.getShort("estado"));
+    ejecucionCelula.setTraza(rs.getString("traza"));
     ejecucionCelula.setFecha(rs.getString("fecha"));
     ejecucionCelula.setNuevosInvitados(rs.getInt("nuevos_invitados"));
     ejecucionCelula.setReconciliados(rs.getInt("reconciliados"));
@@ -49,12 +52,7 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
     ejecucionCelula.setIntegrantesOtrasIglesias(rs.getInt("integrantes_otras_iglesias"));
     ejecucionCelula.setAsistenciaDomingoAnterior(rs.getInt("asistencia_domingo_anterior"));
     ejecucionCelula.setOfrenda(rs.getDouble("ofrenda"));
-    ejecucionCelula.setObservaciones(rs.getString("observaciones"));
-
     //**System.out.println("SaEjecucionCelula.estado=" + rs.getShort("estado"));
-
-    ejecucionCelula.setEstado(rs.getShort("estado"));
-    ejecucionCelula.setTraza(rs.getString("traza"));
     return ejecucionCelula;
   }
 
@@ -127,7 +125,7 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
       rspEjecucionCelula.setEsConexionAbiertaExitosamente(true);
       rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
       String consultaSQL = "SELECT * FROM ejecucion_celula"
-              + " WHERE id_ejecucion_celula = '" + idCelula + "'"
+              + " WHERE id_celula = '" + idCelula + "'"
               + " AND id_semana = '" + idSemana + "'";
       try {
         Statement sentencia = conectorBD.getConnection().createStatement();
@@ -436,6 +434,7 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
     }
   }
 
+  //TODO: agregar parámetro: idSemana
   @Override
   public RspEjecucionCelula insertEjecucionCelula(int idCelula, int estado) {
     String metodo = "insertEjecucionCelulaDiaSemana(int idCelula, int estado)";
@@ -478,7 +477,7 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
         stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
         stmt.setInt(1, 0);
         stmt.setInt(2, idCelula);
-        stmt.setInt(3, 1);  //TODO: buscar semana actual
+        stmt.setInt(3, 1);                //TODO: debe asignarse la semana actual
         stmt.setString(4, "1970-01-01");  //TODO: debe asignarse la fecha de hoy
         stmt.setInt(5, 0);
         stmt.setInt(6, 0);
