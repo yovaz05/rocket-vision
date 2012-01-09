@@ -455,7 +455,6 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
       try {
         conectorBD.getConnection().setAutoCommit(false);
         String consultaSQL = "INSERT INTO ejecucion_celula ("
-                + "id_ejecucion_celula,"
                 + "id_celula,"
                 + "id_semana,"
                 + "fecha,"
@@ -473,25 +472,27 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
                 + "asistencia_domingo_anterior,"
                 + "ofrenda)"
                 + " VALUES "
-                + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "("
+                + "?,?,?,?,?,?,?,?,?,?,"
+                + "?,?,?,?,?,?)";
         stmt = conectorBD.getConnection().prepareStatement(consultaSQL);
-        stmt.setInt(1, 0);
-        stmt.setInt(2, idCelula);
-        stmt.setInt(3, 1);                //TODO: debe asignarse la semana actual
-        stmt.setString(4, "1970-01-01");  //TODO: debe asignarse la fecha de hoy
-        stmt.setInt(5, 0);
-        stmt.setInt(6, 0);
-        stmt.setInt(7, 0);
-        stmt.setInt(8, 0);
-        stmt.setInt(9, 0);
-        stmt.setString(10, "NA");
-        stmt.setString(11, traza);
-        stmt.setShort(12, Short.valueOf("" + estado));
-        stmt.setInt(13, 0);
-        stmt.setInt(14, 0);
-        stmt.setInt(15, 0);
-        stmt.setInt(16, 0);
-        stmt.setDouble(17, 0);
+        int i = 1;
+        stmt.setInt(i++, idCelula);
+        stmt.setInt(i++, 1);                //TODO: debe asignarse la semana actual
+        stmt.setString(i++, "1970-01-01");  //TODO: debe asignarse la fecha de hoy
+        stmt.setInt(i++, 0);
+        stmt.setInt(i++, 0);
+        stmt.setInt(i++, 0);
+        stmt.setInt(i++, 0);
+        stmt.setInt(i++, 0);
+        stmt.setString(i++, "NA");
+        stmt.setString(i++, traza);
+        stmt.setShort(i++, Short.valueOf("" + estado));
+        stmt.setInt(i++, 0);
+        stmt.setInt(i++, 0);
+        stmt.setInt(i++, 0);
+        stmt.setInt(i++, 0);
+        stmt.setDouble(i++, 0);
         rows = stmt.executeUpdate();
         stmt.close();
         rspEjecucionCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(stmt.toString(), metodo, this.getClass().toString()));
