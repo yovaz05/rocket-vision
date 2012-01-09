@@ -78,9 +78,9 @@ public class CtrlCelulaListado extends GenericForwardComposer {
 
         CelulaListadoUtil celula = (CelulaListadoUtil) data;
 
-        System.out.println("CtrlCelulaListado.mostrarDatos.render(): celula=>" + celula.toString());
+        //**System.out.println("CtrlCelulaListado.mostrarDatos.render(): celula=>" + celula.toString());
 
-        //id's para navegación dinámica:
+        //parámetros para navegación dinámica:
         final int idCelula = celula.getId();
         final int idLider1 = celula.getIdLider1();
         final int idLider2 = celula.getIdLider2();

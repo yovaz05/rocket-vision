@@ -130,10 +130,11 @@ public class ServicioReporteCelula {
    * @param estado, 3: célula no realizada, 4: célula realizada
    * @return el id de la ejecución de célula insertada
    */
-  public int ingresarReporteCelula(int idCelula, int estado) {
+  public int ingresarReporteCelula(int idCelula, int status) {
     System.out.println("ServicioReporteCelula.ingresarReporteCelula. id célula=" + idCelula);
+    System.out.println("ServicioReporteCelula.ingresarReporteCelula. estado=" + status);
     //crear ejecución
-    RspEjecucionCelula respuesta = saEjecucionCelula.insertEjecucionCelula(idCelula, estado);
+    RspEjecucionCelula respuesta = saEjecucionCelula.insertEjecucionCelula(idCelula, status);
     if (respuesta.esSentenciaSqlEjecutadaExitosamente()) {
       idReporteCelula = respuesta.getEjecucionCelula().getIdEjecucionCelula();
       //crear planificación:

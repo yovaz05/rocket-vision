@@ -20,6 +20,7 @@ public class CelulaUtil {
   protected String nombreLider4 = "";
   protected String dia = "";
   protected String hora = "";
+  //dirección corta: "zona - ciudad"
   protected String direccionCorta = "";
   protected Direccion direccion = new Direccion("", "", "", "", "");
   protected String fechaApertura = "";
@@ -106,7 +107,6 @@ public class CelulaUtil {
   }
 
   /**
-   * dirección corta por ahora es la zona
    * @param direccionCorta 
    */
   public void setDireccionCorta(String direccionCorta) {
@@ -152,7 +152,7 @@ public class CelulaUtil {
 
   public void setDireccion(Direccion direccion) {
     this.direccion = direccion;
-    //- updateDireccionCorta();
+    updateDireccionCorta();
   }
 
   public String getFechaApertura() {

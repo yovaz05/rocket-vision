@@ -59,6 +59,15 @@ public class CtrlReporteCelulaListadoSemana extends GenericForwardComposer {
 
       public void render(Row row, Object data) throws Exception {
         ReporteCelulaListadoUtil reporte = (ReporteCelulaListadoUtil) data;
+        
+        //parámetros para navegación dinámica:
+        final int idCelula = reporte.getIdCelula();
+        int nroLideres = reporte.getNumeroLideres();
+        final int idLider1 = reporte.getIdLider1();
+        final int idLider2 = reporte.getIdLider2();
+        final int idLider3 = reporte.getIdLider3();
+        final int idLider4 = reporte.getIdLider4();
+        
         //se crean los widgets con la data
         etqNro = new EtqNro("" + reporte.getNroItem());
         etqDireccion = new Label("" + reporte.getDireccionCorta());
@@ -68,14 +77,11 @@ public class CtrlReporteCelulaListadoSemana extends GenericForwardComposer {
         tbbLider2 = new BotonLider("" + reporte.getNombreLider2());
         tbbLider3 = new BotonLider("" + reporte.getNombreLider3());
         tbbLider4 = new BotonLider("" + reporte.getNombreLider4());
+        tbbLider1.setIdLider(idLider1);
+        tbbLider2.setIdLider(idLider2);
+        tbbLider3.setIdLider(idLider3);
+        tbbLider4.setIdLider(idLider4);
 
-        //se establecen parámetros para navegación dinámica:
-        final int idCelula = reporte.getIdCelula();
-        int nroLideres = reporte.getNumeroLideres();
-        final int idLider1 = reporte.getIdLider1();
-        final int idLider2 = reporte.getIdLider2();
-        final int idLider3 = reporte.getIdLider3();
-        final int idLider4 = reporte.getIdLider4();
 
         //TODO: asociar eventos de acuerdo al estatus
         tbbEstatus = new Toolbarbutton();

@@ -30,7 +30,8 @@ public class CtrlLiderListado extends GenericForwardComposer {
   //widgets:
   Label etqNro, etqDireccion;
   BotonLider tbbNombre, tbbLider1, tbbLider2;
-  Toolbarbutton tbbTelefono, tbbEmail;
+  //en próximas versiones el teléfonoy correo permitirán opciones directas:
+  Label linkTelefono, linkEmail;
   Grid grid;
   //variable de control:
   String tipoUsuario; //{liderRed, liderCelula, administrador}
@@ -83,8 +84,8 @@ public class CtrlLiderListado extends GenericForwardComposer {
         etqNro = new EtqNro("" + lider.getNroItem());
         tbbNombre = new BotonLider("" + lider.getNombre());
         etqDireccion = new Label("" + lider.getDireccionCorta());
-        tbbTelefono = new Toolbarbutton("" + lider.getTelefono());
-        tbbEmail = new Toolbarbutton("" + lider.getEmail());
+        linkTelefono = new Label("" + lider.getTelefono());
+        linkEmail = new Label("" + lider.getEmail());
         tbbLider1 = new BotonLider("" + lider.getNombreLider1());
         tbbLider2 = new BotonLider("" + lider.getNombreLider2());
 
@@ -105,8 +106,8 @@ public class CtrlLiderListado extends GenericForwardComposer {
         etqNro.setParent(row);
         tbbNombre.setParent(row);
         etqDireccion.setParent(row);
-        tbbTelefono.setParent(row);
-        tbbEmail.setParent(row);
+        linkTelefono.setParent(row);
+        linkEmail.setParent(row);
         /*
         Vbox vbox = new Vbox();
         tbbLider1.setParent(vbox);

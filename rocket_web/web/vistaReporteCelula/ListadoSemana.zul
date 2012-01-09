@@ -6,8 +6,8 @@
   <style src="css/estilos1.css"/>
   <div apply="rocket.controladores.celula.reporte.CtrlReporteCelulaListadoSemana"
   width="650px">
-    <label id="tituloVentana" value="Reportes de Célula (esta semana)" sclass="titulo_ventana"/>
-    <grid id="grid"  style="border:normal; margin-right:10px" mold="paging" pageSize="5">
+    <label id="tituloVentana" value="Reportes de Célula » esta semana" sclass="titulo_ventana"/>
+    <grid id="grid"  style="border:normal; margin-right:10px" mold="paging" pageSize="10">
       <columns sizable="true">
         <column label="#" width="25px" align="center"/>
         <column label="Código" width="80px"/>        

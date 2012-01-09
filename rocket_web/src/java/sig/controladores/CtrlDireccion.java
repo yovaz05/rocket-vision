@@ -1,12 +1,3 @@
-/**
-TODO:
-resolver lo de "nueva ciudad" y "nueva zona"
-opción A: no usarlo por ahora
-opción B: usarlo. guardar en variables de sesión, los valores ingresados.
-cada controlador que use esto, debe grabar el nuevo registro? no me gusta esta opción
-opción C: cuando se eliga "nuevo item", se abre una ventana popup donde se debe ingresar el valor, 
-y esta ventana graba en la base de datos. la lista muestra el nuevo valor.
- */
 package sig.controladores;
 
 import java.util.ArrayList;
@@ -102,6 +93,7 @@ public class CtrlDireccion extends GenericForwardComposer {
   private int idLider = 0;
   ServicioCelula servicioCelula = new ServicioCelula();
   ServicioPersona servicioPersona = new ServicioPersona();
+  Label etqTituloVentana;
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -373,9 +365,12 @@ public class CtrlDireccion extends GenericForwardComposer {
 
       //Actualizar observaciones de célula
       if (actualizarZona()) {
-        mostrarMensaje("Se actualizó el sector");
+        mostrarMensaje("Se actualizó la dirección");
+        //TODO: chequear la actualización de título
+        ciudad = etqCiudad.getValue();
+        cambiarTitulo(zona, ciudad);
       } else {
-        mostrarMensaje("Error actualizando el sector");
+        mostrarMensaje("Error actualizando la dirección");
       }
 
       //activar edición de siguiente campo: detalle
@@ -688,9 +683,9 @@ public class CtrlDireccion extends GenericForwardComposer {
 
     //actualizar valor en la base de datos:
     if (actualizarDetalleDireccion()) {
-      mostrarMensaje("Se actualizó la dirección");
+      mostrarMensaje("Se actualizó el detalle de dirección");
     } else {
-      mostrarMensaje("Error actualizando la dirección");
+      mostrarMensaje("Error actualizando el detalle de dirección");
     }
 
     if (detalle.isEmpty()) {//quedó en blanco, se usa etiqueta que permita edición posterior
@@ -800,6 +795,7 @@ public class CtrlDireccion extends GenericForwardComposer {
    * muestra un mensaje en un label, para interacción con el usuario
    * @param msj 
    */
+  //TODO: pasar a clase utilitaria
   private void mostrarMensaje(String msj) {
     etqMensaje.setValue(msj);
     etqMensaje.setVisible(true);
@@ -810,16 +806,32 @@ public class CtrlDireccion extends GenericForwardComposer {
   /** 
    * limpia el mensaje de estado
    */
+  //TODO: pasar a clase utilitaria
   private void ocultarMensaje() {
     etqMensaje.setValue("");//TODO: CODIGO: línea parece redundante
     etqMensaje.setVisible(false);
     divMensaje.setVisible(false);
   }
+
+  /**
+   * cambia título de ventana actual, agregando la zona de la celula
+   * @param msj 
+   */
+  //TODO: pasar a clase utilitaria
+  private void cambiarTitulo(String zona, String ciudad) {
+    String direccionCorta = zona + " - " + ciudad;
+    String codigo = "" + Sesion.getVariable("celula.codigo");
+    etqTituloVentana.setValue("Célula: " + codigo + ", " + direccionCorta);
+  }
 }
 /**
  * TODO:
- * 1. grabar los nuevos valores en la base de datos: estado, ciudad, zona
- * 2. manejar los eventos para valores nuevos:
- *  si es nuevo estado, no se listan las ciudades ni zonas
- *  si es nueva ciudad, no se listan las zonas
+>. para próximas versiones: agregar opciones de "nuevo estado", "nueva ciudad" y "nueva zona".
+opción A: guardar en variables de sesión, los valores ingresados.
+cada controlador que use esto, debe grabar el nuevo registro? no me gusta esta opción
+opción B: cuando se eliga "nuevo item", se abre una ventana popup donde se debe ingresar el valor, 
+y esta ventana graba en la base de datos. la lista muestra el nuevo valor.
+>. manejar estos eventos para valores nuevos:
+si es nuevo estado, no se listan las ciudades ni zonas
+si es nueva ciudad, no se listan las zonas
  */

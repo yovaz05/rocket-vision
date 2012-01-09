@@ -678,7 +678,7 @@ public class CtrlLider extends GenericForwardComposer {
     idRed = getIdRed();
     System.out.println("CtrlLider.crearLider.Cedula=" + cedula);
     System.out.println("CtrlLider.crearLider.idRed=" + idRed);
-    idLider = servicio.crearLider(cedula, nombre, idRed);
+    idLider = servicio.ingresarLider(cedula, nombre, idRed);
     System.out.println("CtrlLider.crearLider.idLider=" + idLider);
     Sesion.setVariable("idLider", idLider);
     Sesion.setVariable("Lider.idRed", idRed);

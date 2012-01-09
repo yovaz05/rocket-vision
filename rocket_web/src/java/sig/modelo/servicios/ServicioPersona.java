@@ -176,7 +176,7 @@ public class ServicioPersona {
    * @param nuevaLider el objeto Lider con los datos
    * @return el id de la célula creada
    */
-  public int crearLider(String cedula, String nombre, int idRed) {
+  public int ingresarLider(String cedula, String nombre, int idRed) {
     System.out.println("ServicioLider.crearLider.Cedula=" + cedula);
     System.out.println("ServicioLider.crearLider.nombre=" + nombre);
     System.out.println("ServicioLider.crearLider.idRed=" + idRed);

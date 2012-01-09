@@ -6,7 +6,7 @@
   <style src="css/estilos1.css"/>
   <div apply="sig.controladores.celula.CtrlCelula" width="450px">
     <div>
-      <label id="tituloVentana" sclass="titulo_ventana"/>
+      <label id="etqTituloVentana" sclass="titulo_ventana"/>
     </div>
     <div id="divMensaje" align="center" style="margin:2px;padding:5px"
     onClick="self.visible=false">

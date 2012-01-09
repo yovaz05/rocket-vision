@@ -36,7 +36,7 @@ public class CtrlCelula extends GenericForwardComposer {
   Div divMensaje;
   Label etqMensaje;
   //widgets:
-  Label tituloVentana;
+  Label etqTituloVentana;
   //botones
   Toolbarbutton btnNew;
   Toolbarbutton btnGuardar;
@@ -135,7 +135,6 @@ public class CtrlCelula extends GenericForwardComposer {
   CelulaUtil celula = new CelulaUtil();
   //objeto con la data ingresada por el usuario
   CelulaUtil celulaActual = new CelulaUtil();
-
   ServicioCelula servicioCelula = new ServicioCelula();
   private int idCelula;
 
@@ -213,6 +212,7 @@ public class CtrlCelula extends GenericForwardComposer {
    */
   private void setVariablesSesion() {
     idRed = celula.getIdRed();
+    codigo = celula.getCodigo();
     nombreRed = celula.getNombreRed();
     nLideres = celula.getNumeroLideres();
     idLider1 = celula.getIdLider1();
@@ -227,6 +227,7 @@ public class CtrlCelula extends GenericForwardComposer {
     nombreZona = celula.getDireccion().getZona();
     //TODO: poner en sers
     Sesion.setVariable("idCelula", idCelula);
+    Sesion.setVariable("celula.codigo", codigo);
     Sesion.setVariable("celula.idRed", idRed);
     Sesion.setVariable("celula.nombreRed", nombreRed);
     Sesion.setVariable("celula.nLideres", nLideres);
@@ -237,9 +238,9 @@ public class CtrlCelula extends GenericForwardComposer {
     Sesion.setVariable("idEstado", idEstado);
     Sesion.setVariable("idCiudad", idCiudad);
     Sesion.setVariable("idZona", idZona);
-    Sesion.setVariable("celula.nombreEstado", nombreEstado);
-    Sesion.setVariable("celula.nombreCiudad", nombreCiudad);
-    Sesion.setVariable("celula.nombreZona", nombreZona);
+    Sesion.setVariable("celula.estado.nombre", nombreEstado);
+    Sesion.setVariable("celula.ciudad.nombre", nombreCiudad);
+    Sesion.setVariable("celula.zona.nombre", nombreZona);
   }
 
   /**
@@ -293,12 +294,16 @@ public class CtrlCelula extends GenericForwardComposer {
     //dirección:
     idZona = celula.getDireccion().getIdZona();
     String estado;
-    if (idZona == 1) {
+    if (idZona == 1) {//dirección no asignada
       estado = Constantes.VALOR_EDITAR;
+      descripcionCelula = codigo;
     } else {
       estado = celula.getDireccion().getEstado();
-      dir$etqCiudad.setValue(celula.getDireccion().getCiudad());
-      dir$etqZona.setValue(celula.getDireccion().getZona());
+      nombreZona = celula.getDireccion().getZona();
+      nombreCiudad = celula.getDireccion().getCiudad();
+      dir$etqCiudad.setValue(nombreCiudad);
+      dir$etqZona.setValue(nombreZona);
+      descripcionCelula = codigo + ", " + nombreZona + " - " + nombreCiudad;
     }
     dir$etqEstado.setValue(estado);
 
@@ -334,10 +339,18 @@ public class CtrlCelula extends GenericForwardComposer {
     obs$etqObservaciones.setValue(observaciones);
 
     //crear descripción de la célula, para el título:
-    //TODO: si hay direcció, agregarsela al título
     //+descripcionCelula = generarDescripcionCelula(celula.getCodigo(), celula.getDireccionCorta());
-    descripcionCelula = celula.getCodigo();
-
+    if (idZona == 1) {//dirección no asignada
+      estado = Constantes.VALOR_EDITAR;
+      descripcionCelula = codigo;
+    } else {//dirección asignada
+      estado = celula.getDireccion().getEstado();
+      nombreZona = celula.getDireccion().getZona();
+      nombreCiudad = celula.getDireccion().getCiudad();
+      dir$etqCiudad.setValue(nombreCiudad);
+      dir$etqZona.setValue(nombreZona);
+      descripcionCelula = codigo + ", " + nombreZona + " - " + nombreCiudad;
+    }
 
     //TODO: configurar parámetros para navegación dinámica:
     /*
@@ -390,7 +403,7 @@ public class CtrlCelula extends GenericForwardComposer {
    */
   private void actualizarEstado() {
     if (modo.equals("new")) {
-      tituloVentana.setValue(titulo + " » Ingresar");
+      etqTituloVentana.setValue(titulo + " » Ingresar");
       //- mostrarColumnasVisualizacion(false);
       mostrarWidgetsNew(true);
       mostrarTabsRestantes(false);
@@ -402,7 +415,7 @@ public class CtrlCelula extends GenericForwardComposer {
       setFocoEdicion();
       //- btnIngresarReporte.setVisible(false);
     } else if (modo.equals("edicion-dinamica")) {
-      tituloVentana.setValue(titulo + ": " + descripcionCelula);
+      etqTituloVentana.setValue(titulo + ": " + descripcionCelula);
       mostrarWidgetsNew(false);
       mostrarTabsRestantes(true);
       mostrarWidgetsEdit(true);
@@ -425,7 +438,7 @@ public class CtrlCelula extends GenericForwardComposer {
        */
       //modo editar, modificando, sólo mostrará columnas con botones de edición
     } else if (modo.equals("editar")) {
-      tituloVentana.setValue(titulo + ": " + descripcionCelula + " » Editando");
+      etqTituloVentana.setValue(titulo + ": " + descripcionCelula + " » Editando");
       getValoresEdit();
       mostrarWidgetsViewLink(false);
       mostrarWidgetsEdit(true);
@@ -968,6 +981,15 @@ public class CtrlCelula extends GenericForwardComposer {
     etqMensaje.setVisible(false);
     etqMensaje.setValue("");
   }
+
+  /**
+   * cambia título de ventana actual
+   * @param msj 
+   */
+  private void cambiarTitulo(String msj) {
+    etqTituloVentana.setValue(msj);
+    System.out.println(this.getClass().toString() + "nuevoTitulo='" + msj + "'");
+  }
 }
 //TAREAS: sacar estos métodos de validación a una utilería si hace falta:
 //TODO: MEJORACODIGO: sacar este método para una clase de utilería
@@ -1184,6 +1206,6 @@ horaNumero = (Integer) Sesion.getVariable("celula.hora.numero");
 private void mostrarOpcionLider1() {
 db$opcionLider1.setVisible(true);
 }
-   //objeto para insertar nueva célula
-  CelulaInsert celulaInsert;
+//objeto para insertar nueva célula
+CelulaInsert celulaInsert;
  */

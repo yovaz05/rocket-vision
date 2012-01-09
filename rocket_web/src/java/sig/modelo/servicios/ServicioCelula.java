@@ -49,16 +49,17 @@ public class ServicioCelula {
   int nLideresUsados = 1;
   //TODO: usar este id para las modificaciones
   int idCelula = 0;
-
+  Celula celula = new Celula();
+          
   public List getAll() {
     RspCelula rspCelula = saCelula.listCelulaActiva();
-    System.out.println("INICIO DE LA CONEXION " + rspCelula.getRespuestaInicioDeConexion());
+    System.out.println("ServicioCelula.INICIO DE LA CONEXION BD" + rspCelula.getRespuestaInicioDeConexion());
     celulas = rspCelula.getTodosLosCelulas();
     if (celulas == null) {
       System.out.println("ServicioCelula. rspCelula.getTodosLosCelulas(). devuelve null");
     }
     listarConsolaAll();
-    System.out.println("CIERRE DE LA CONEXION " + rspCelula.getRespuestaInicioDeConexion());
+    System.out.println("ServicioCelula.CIERRE DE LA CONEXION BD" + rspCelula.getRespuestaInicioDeConexion());
     return celulas;
   }
 
@@ -127,8 +128,15 @@ public class ServicioCelula {
     RspCelula respuesta = saCelula.insertCelula(celulaInsert);
     if (respuesta.esSentenciaSqlEjecutadaExitosamente()) {
       System.out.println("ServicioCelula.crearCelula.codigo=" + codigo);
-      idCelula = respuesta.getCelula().getIdCelula();
+      System.out.println("ServicioCelula.crearCelula.idRed=" + idRed);
+      celula = respuesta.getCelula();
+      if (celula == null) {
+        System.out.println("respuesta.celula == null");
+      }
+      idCelula = celula.getIdCelula();
     } else {
+      System.out.println("ERROR->ServicioCelula.crearCelula.codigo=");
+      System.out.println(respuesta.getRespuestaServicio());
       idCelula = 0;
     }
     return idCelula;

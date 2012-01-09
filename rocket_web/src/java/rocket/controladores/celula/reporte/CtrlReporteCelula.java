@@ -26,6 +26,7 @@ import org.zkoss.zul.Toolbarbutton;
 import sig.controladores.Constantes;
 import sig.modelo.servicios.ServicioCelula;
 import sig.modelo.servicios.ServicioReporteCelula;
+import waytech.utilidades.Util;
 import waytech.utilidades.UtilFechas;
 
 //TODO: MEJORAR EL MANEJO DE FOCOS DE LOS widgets
@@ -216,7 +217,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
       ocultarWidget(tabObservaciones);
     }
     notificarBarra();
-    descripcionTitulo = celula.getCodigo() + "; Semana: " + semana;
+    descripcionTitulo = celula.getCodigo() + ". Semana » " + semana;
     actualizarEstado();
   }
 
@@ -403,7 +404,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
       //btnGuardar.setVisible(true);
       setFocoEdicion();
     } else if (modo.equals("new")) {
-      tituloVentana.setValue(titulo + " » Ingresar: " + descripcionTitulo);
+      //-tituloVentana.setValue(titulo + " » Ingresar: " + descripcionTitulo);
       //camposModoEdicion(true);
       //-verElementosEntrada(true);
       //-mostrarElementosVisualizacion(false);
@@ -498,20 +499,18 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     actualizarEstado();
   }
 
-  //TODO: hacer el crear reporte
+  /*
+  //TODO: debe borrarse este botón
   public void onClick$btnGuardar() throws InterruptedException {
-    /**
-     * modoActual = "procesando";
-     * aquí va el procesamiento de los datos...
-     */
-    if (reporteNoIngresado()) {
-      reporte.setEstatus(ReporteCelulaUtil.REPORTE_INGRESADO);
-    }
-    //-copiarValoresDeEntradaAVisualizacion();
-    modo = "ver";
-    actualizarEstado();
+  if (reporteNoIngresado()) {
+  reporte.setEstatus(ReporteCelulaUtil.REPORTE_INGRESADO);
   }
-
+  //-copiarValoresDeEntradaAVisualizacion();
+  modo = "ver";
+  actualizarEstado();
+  }
+   * 
+   */
 //TODO: Mejorar: elegir automáticamente el tab más apropiado de acuerdo al modo y estatus del reporte
   //TODO: no usado
   public void onClick$btnEditar() {
@@ -777,13 +776,17 @@ public class CtrlReporteCelula extends GenericForwardComposer {
   private boolean ingresarReporteCelula() {
     //crear reporte vacío, con estado
     idReporte = servicioReporteCelula.ingresarReporteCelula(idCelula, estatusReporte);
+    System.out.println("ERROR-> CtrlReporteCelula.ingresarReporteCelula. idReporte " + idReporte);
     if (idReporte == 0) {
+      System.out.println("ERROR-> CtrlReporteCelula.ingresarReporteCelula. error ingresando reporte");
       return false;
     }
     //cambiar estado de célula, que refleja la ejecución de esta semana
     if (!servicioCelula.actualizarEstado(estatusReporte)) {
+      System.out.println("error actualizando estado de célula");
       return false;
     }
+    System.out.println("actualizado el estado de célula");
     setVarSesion();
     return true;
   }
@@ -852,11 +855,14 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     //TODO: poner mes en texto corto
     diaCelula = UtilFechas.getFechaTextoCortoSinAño(cal4) + ", " + UtilFechas.getAño(cal);
 
+    //**
+    /*
     System.out.println("hoy: " + hoy);
     System.out.println("domingo anterior: " + domingo);
     System.out.println("sabado: " + sabado);
     System.out.println("periodo mostrado a usuario: " + semana);
     System.out.println("dia-celula: " + diaCelula);
+     */
   }
 
   /**

@@ -81,9 +81,9 @@ public class CtrlMenu extends GenericForwardComposer {
 
   public void logout() {
     System.out.println("CtrlBarraMenu:logout - antes de cerrar sesión");
-    Sessions.getCurrent().setAttribute("menu", null);
-    Sessions.getCurrent().setAttribute("idUsuario", null);
-    Sessions.getCurrent().setAttribute("usuarioLogueado", null);
+    Sesion.setVariable("menu", null);
+    Sesion.setVariable("idUsuario", null);
+    Sesion.setVariable("usuarioLogueado", null);
     System.out.println("CtrlBarraMenu: - Sesión cerrada");
     Executions.sendRedirect("index.zul");
   }

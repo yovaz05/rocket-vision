@@ -7,7 +7,7 @@
   <div apply="cdo.sgd.controladores.CtrlReporteCelulaListadoAnteriores" width="845px">
 <!--  <div width="600px">-->
     <hbox>
-      <label id="tituloVentana" value="Reportes Anteriores" sclass="titulo_ventana"/>
+      <label id="tituloVentana" value="Reportes de Células » Semanas Anteriores" sclass="titulo_ventana"/>
       <space width="200px"/>
 <!--      <label id="etqMensajeSuperior" value="En construcción" sclass="mensajes" visible="true"/>    -->
     </hbox>

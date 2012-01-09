@@ -5,6 +5,10 @@
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
   <style src="css/estilos1.css"/>
   <div apply="cdo.sgd.controladores.CtrlContacto">
+    <iframe 
+    src="https://docs.google.com/a/waytech.com.ve/spreadsheet/embeddedform?formkey=dGp0aWpieU53SHlwRTZhOVpiZ19WU2c6MQ" 
+    width="1024" height="768">Loading...</iframe>
+    
     <label value="Contacto" sclass="titulo_ventana"/>   
     <panel border="mold" width="450px">
       <panelchildren>
@@ -38,3 +42,4 @@
     </zscript>
   </div>  
 </zk>
+

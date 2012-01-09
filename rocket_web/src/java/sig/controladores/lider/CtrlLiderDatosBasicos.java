@@ -375,7 +375,7 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
   boolean cedulaEnUso(String cedula) {
     //DOING
     if (servicioPersona.existeCedula(cedula)) {
-      mensaje("Esta cédula ya está registrada." + cedula);
+      mensaje("Esta cédula ya está registrada: " + cedula);
       return true;
     }
     return false;

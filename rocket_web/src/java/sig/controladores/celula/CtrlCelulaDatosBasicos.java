@@ -611,15 +611,18 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   private boolean procesarValorRed() {
     getVarSesionNombreRed();
     String nombreRedElegida = cmbRed.getValue();
-    if (nombreRedElegida.equals(nombreRed)) {//no se cambió el valor
+    if (nombreRedElegida.equals(nombreRed)) {//se dejó el valor anterior
       return false;
     }
     nombreRed = cmbRed.getValue();
-    //TODO: MEJORA. no graba si no está en modo editable
+    
+    //TODO: no actualiza variable de sesion, si no está en modo editable
     Sesion.setVariable("celula.red", nombreRed);
+    
     servicioRed.setNombreRed(nombreRed);
     idRed = servicioRed.getIdRed();
     setVarSesionRed();
+    
     return true;
     //** System.out.println("CtrlCelulaDatosBasicos - Red Seleccionada - nombre: " + nombreRed);
     //**System.out.println("CtrlCelulaDatosBasicos - Red seleccionada - id: " + cmbRed.getSelectedItem().getValue());
