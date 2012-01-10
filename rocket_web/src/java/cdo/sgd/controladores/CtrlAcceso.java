@@ -86,11 +86,9 @@ public class CtrlAcceso extends GenericForwardComposer {
      * Valida la información ingresada por el usuario para ingresar al sistema.
      * @throws InterruptedException 
      */
-    public void ingresarAlSistema() throws InterruptedException {
+    public void ingresarAlSistema(String login, String password) throws InterruptedException {
         if (camposLlenos()) {
-            limpiarMensajesError();
-            String login = txtLogin.getText();
-            String password = txtPassword.getText();
+            limpiarMensajesError();            
             if (!validarAcceso(login, password)) {
                 mostrarMensajeError(2, ERROR_MATCH);
                 txtPassword.setValue("");
@@ -107,6 +105,7 @@ public class CtrlAcceso extends GenericForwardComposer {
                 Sessions.getCurrent().setAttribute("idUsuario", idUsuario);
                 Sessions.getCurrent().setAttribute("nombreUsuario", nombreUsuario);
                 Sessions.getCurrent().setAttribute("usuarioLogueado", true);
+                //Sugiero colocar esta linea en otro método..
                 Sessions.getCurrent().setAttribute("idRed", idRed);
                 System.out.println("CtrlAcceso.login: idRed = " + idRed);
                 System.out.println("CtrlAcceso.login: idUsuario = " + idUsuario);
@@ -165,10 +164,10 @@ public class CtrlAcceso extends GenericForwardComposer {
         return true;
     }
 
-    public void onOK$txtLogin() throws InterruptedException {
+    public void validarLogin() throws InterruptedException {
         limpiarMensajesError();
         if (!txtPassword.getText().isEmpty() && !txtLogin.getText().isEmpty()) {
-            ingresarAlSistema();
+            ingresarAlSistema(txtLogin.getText(), txtPassword.getText());
         } else if (txtLogin.getText().isEmpty()) {
             mostrarMensajeError(1, INSTRUCCION_USUARIO);
         } else if (txtPassword.getText().isEmpty()) {
@@ -176,10 +175,10 @@ public class CtrlAcceso extends GenericForwardComposer {
         }
     }
 
-    public void onOK$txtPassword() throws InterruptedException {
+    public void validadPassword() throws InterruptedException {
         limpiarMensajesError();
         if (!txtPassword.getText().isEmpty() && !txtLogin.getText().isEmpty()) {
-            ingresarAlSistema();
+            ingresarAlSistema(txtLogin.getText(), txtPassword.getText());
         } else if (txtPassword.getText().isEmpty()) {
             mostrarMensajeError(2, INSTRUCCION_USUARIO);
         } else if (txtLogin.getText().equals("")) {
@@ -187,8 +186,17 @@ public class CtrlAcceso extends GenericForwardComposer {
         }
     }
 
+    public void onOK$txtLogin() throws InterruptedException {
+        validarLogin();
+    }
+
+    public void onOK$txtPassword() throws InterruptedException {
+
+        validadPassword();
+    }
+
     public void onClick$btnAcceso(Event event) throws InterruptedException {
-        ingresarAlSistema();
+        ingresarAlSistema(txtLogin.getText(), txtPassword.getText());
     }
 
     void limpiarEntradas() {

@@ -138,7 +138,7 @@ public class ServicioReporteCelula {
     if (respuesta.esSentenciaSqlEjecutadaExitosamente()) {
       idReporteCelula = respuesta.getEjecucionCelula().getIdEjecucionCelula();
       //crear planificación:
-      RspPlanificacionCelula respuesta2 = saPlanificacionCelula.insertPlanificacionCelula(idCelula);
+//      RspPlanificacionCelula respuesta2 = saPlanificacionCelula.insertPlanificacionCelula(idCelula);
       if (!respuesta.esSentenciaSqlEjecutadaExitosamente()) {
         System.out.println("ERROR -> ServicioReporteCelula.ingresarReporteCelula.planificación = ERROR ingresando registro en planificación");
         idReporteCelula = 0;

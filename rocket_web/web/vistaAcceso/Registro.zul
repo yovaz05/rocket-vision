@@ -43,7 +43,7 @@
                                 </row>
                                 <row>
                                     <label sclass="etiqueta_campo" value="Código Secreto:"/>
-                                    <textbox sclass="textbox_field" id="txtCodigoSecreto" width="140px" maxlength="13"/>                                
+                                    <textbox sclass="textbox_field" id="txtCodigoSecreto" width="140px" maxlength="13" type="password"/>                                
                                 </row>
                                 <row>
                                     <label sclass="etiqueta_campo" value="Contraseña:"/>
@@ -61,7 +61,7 @@
                 </div>                
                 <vbox style="margin:10px">                        
                     <div>
-                        <button id="btnPaso1" label="Continuar" sclass="boton_acceso"/>                        
+                        <button id="btnEnviar" label="Continuar" sclass="boton_acceso"/>                        
                     </div>
                 </vbox>
             </panelchildren>
