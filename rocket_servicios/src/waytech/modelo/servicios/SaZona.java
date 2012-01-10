@@ -92,7 +92,9 @@ public class SaZona implements IsaZona {
         if (conectorBD.iniciarConexion()) {
             rspZona.setEsConexionAbiertaExitosamente(true);
             rspZona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
-            String consultaSQL = "SELECT * FROM zona WHERE estado = 1";
+            String consultaSQL = "SELECT * FROM zona"
+                    + " WHERE estado = 1"
+                    + " ORDER BY nombre ASC";
             try {
                 Statement sentencia = conectorBD.getConnection().createStatement();
                 boolean bandera = sentencia.execute(consultaSQL);

@@ -135,7 +135,9 @@ public class SaCiudad implements IsaCiudad {
         if (conectorBD.iniciarConexion()) {
             rspCiudad.setEsConexionAbiertaExitosamente(true);
             rspCiudad.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
-            String consultaSQL = "SELECT * FROM ciudad WHERE estado = 1";
+            String consultaSQL = "SELECT * FROM ciudad"
+                    + " WHERE estado = 1"
+                    + " ORDER BY nombre ASC";
             try {
                 Statement sentencia = conectorBD.getConnection().createStatement();
                 boolean bandera = sentencia.execute(consultaSQL);
