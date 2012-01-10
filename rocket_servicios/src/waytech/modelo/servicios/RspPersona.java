@@ -24,6 +24,7 @@ public class RspPersona {
     private boolean esTelefonoMovilExistente;
     private boolean esTelefonoHabitacionExistente;
     private boolean esTelefonoTrabajoExistente;
+    private boolean esCorreoExistente;
     private boolean esLiderRed;
     private boolean esLiderPersona;
     private String respuestaInicioDeConexion;
@@ -31,6 +32,14 @@ public class RspPersona {
     private String respuestaServicio;
     private String respuestaRolledBack;
     private Persona persona;
+
+    public boolean esCorreoExistente() {
+        return esCorreoExistente;
+    }
+
+    public void setEsCorreoExistente(boolean esCorreoExistente) {
+        this.esCorreoExistente = esCorreoExistente;
+    }
 
     public boolean esLiderPersona() {
         return esLiderPersona;
@@ -47,8 +56,6 @@ public class RspPersona {
     public void setEsLiderRed(boolean esLiderRed) {
         this.esLiderRed = esLiderRed;
     }
-    
-    
 
     public boolean esCodigoExistente() {
         return esCodigoExistente;

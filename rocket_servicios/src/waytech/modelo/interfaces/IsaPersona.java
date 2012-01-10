@@ -71,6 +71,8 @@ public interface IsaPersona {
     public abstract RspPersona getPersonaPorCedula(String cedula);
 
     public abstract RspPersona esCedulaExistente(String cedula);
+    
+    public abstract RspPersona esCorreoExistente(String correo);
 
     public abstract RspPersona esCodigoSecretoExistente(String cedula, String codigoSecreto);
 
