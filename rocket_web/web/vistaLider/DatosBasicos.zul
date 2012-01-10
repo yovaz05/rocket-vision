@@ -31,7 +31,8 @@
           <hbox>
             <label id="etqRed" value="Red"/>
             <space width="15px"/>
-            <combobox id="cmbRed" autodrop="true" autocomplete="true" readonly="true"  visible="false"/>
+            <combobox id="cmbRed" autodrop="true" autocomplete="true" readonly="true"
+            width="220px" visible="false"/>
             <!--botón de edición-->
             <div align="left">
               <space width="5px"/>

@@ -48,12 +48,12 @@
       </row>  
       <!-- Red -->
       <row apply="sig.controladores.CtrlComboRed">
-        <label value="Red" sclass="etiqueta_campo" tooltiptext="Red a la que pertenece esta célula"/>
+       <label value="Red" sclass="etiqueta_campo" tooltiptext="Red a la que pertenece esta célula"/>
         <div>
           <hbox align="left">
             <a id="tbbRed" label=""/>
             <label id="etqRed" value="" visible="false"/>
-            <combobox id="cmbRed"
+            <combobox id="cmbRed" value=""
           autodrop="true" autocomplete="true" readonly="true"
           width="220px"
           visible="false"/>

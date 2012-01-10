@@ -33,9 +33,9 @@ public class ServicioRed {
 
   public List getTodas() {
     //**System.out.println("INICIO DE LA CONEXION " + rspRed.getRespuestaInicioDeConexion());
-    IsaRed isaRed = new SaRed();
+    SaRed saRed = new SaRed();
     RspRed rspRed = new RspRed();
-    rspRed = isaRed.listRed();
+    rspRed = saRed.listRed();
     redes = rspRed.getAllReds();
     //**System.out.println("CIERRE DE LA CONEXION " + rspRed.getRespuestaInicioDeConexion());
     //**listarRedesConsola();

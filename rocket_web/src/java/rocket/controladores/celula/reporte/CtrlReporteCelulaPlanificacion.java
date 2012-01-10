@@ -129,7 +129,7 @@ public class CtrlReporteCelulaPlanificacion extends GenericForwardComposer {
 
   //procesar eventos de actualización
   public void onClick$divInvitados() {
-    System.out.println("CtrlReporteCelulaResultados. click en divInvitados");
+    //**System.out.println("CtrlReporteCelulaResultados. click en divInvitados");
     activarEditInvitados();
   }
 
@@ -269,7 +269,7 @@ public class CtrlReporteCelulaPlanificacion extends GenericForwardComposer {
   }
 
   public void onClick$divPersonasEnPlanif() {
-    System.out.println("CtrlReporteCelulaResultados. click en divAmigos");
+    //**System.out.println("CtrlReporteCelulaResultados. click en divAmigos");
     activarEditPersonasEnPlanif();
   }
 
@@ -280,7 +280,7 @@ public class CtrlReporteCelulaPlanificacion extends GenericForwardComposer {
     ocultarMensaje();
     etqPersonasEnPlanif.setVisible(false);
     personasEnPlanif = getValorNumericoEtiqueta(etqPersonasEnPlanif);
-    spnPersonasEnPlanif.setValue(personasEnPlanif);
+    spnPersonasEnPlanif.setValue(2);
     spnPersonasEnPlanif.setVisible(true);
     spnPersonasEnPlanif.setFocus(true);
   }
@@ -344,7 +344,7 @@ public class CtrlReporteCelulaPlanificacion extends GenericForwardComposer {
   }
 
   public void onClick$divVisitas() {
-    System.out.println("CtrlReporteCelulaResultados. click en divAmigos");
+    //**System.out.println("CtrlReporteCelulaResultados. click en divAmigos");
     activarEditVisitas();
   }
 

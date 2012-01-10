@@ -21,8 +21,8 @@ title="Casa de Oración - Rocket"?>
         void loginConDatosPrecargados(){
           Sessions.getCurrent().setAttribute("accesoActivado", false);
           Sessions.getCurrent().setAttribute("usuarioLogueado", true);
-          Sessions.getCurrent().setAttribute("idUsuario", 2);
-          Sessions.getCurrent().setAttribute("nombreUsuario", "Gabriel Pérez");
+          Sessions.getCurrent().setAttribute("idUsuario", 1);
+          Sessions.getCurrent().setAttribute("nombreUsuario", "Administrador");
           Sessions.getCurrent().setAttribute("idRed", 1);
           Executions.sendRedirect("index2.zul");
        }
@@ -30,7 +30,7 @@ title="Casa de Oración - Rocket"?>
        vistaCentralDefecto  = "vistaAcceso/Acceso.zul";
        panelCentralDefecto  = "";
        //comentar línea siguiente, para mostrar la pantalla de login:
-       //loginConDatosPrecargados();
+       loginConDatosPrecargados();
     ]]>
   </zscript>
   <borderlayout>

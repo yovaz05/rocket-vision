@@ -715,6 +715,7 @@ public class CtrlLider extends GenericForwardComposer {
    * @return el resultado, true si no hay error, false si hay error
    */
   //TODO: MEJORACedula: sacar este método para una clase de utilería
+  //TODO: quitar método, no usado
   boolean textboxIngresado(Textbox textbox, String msjError) {
     boolean ok = true;//indica si hay algún error en la data a guardar
     String valor = textbox.getValue();
@@ -736,6 +737,7 @@ public class CtrlLider extends GenericForwardComposer {
    * valida un combo que se haya seleccionado un valor
    */
   //TODO: MEJORACedula: sacar este método para una clase de utilería
+  //TODO: quitar método, no usado
   private boolean comboSeleccionado(Combobox combo, String msjError) {
     String valor = combo.getValue();
     if ((valor != null) && !valor.equals("")) {

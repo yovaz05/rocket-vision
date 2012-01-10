@@ -109,6 +109,32 @@ public class CtrlMenu extends GenericForwardComposer {
     tbbUsuario.setLabel(nombreUsuario);
   }
 
+  public void onClick$itemLiderListado() {
+    cambiarVista(Vistas.LIDER_LISTADO);
+  }
+
+  public void onClick$itemCelulaListado() {
+    cambiarVista(Vistas.CELULA_LISTADO);
+  }
+
+  public void onClick$itemReporteCelulaListado() {
+    cambiarVista(Vistas.REPORTE_CELULA_LISTADO_SEMANA);
+  }
+
+  public void onClick$itemLiderNew(){
+    System.out.println("CtrlMenu.click itemLiderNew");
+    Sesion.setVistaSiguiente(Vistas.LIDER);
+    Sesion.setModo("new");
+    onClick$btnControl();//forzar cambio de vista
+  }
+  
+  public void onClick$itemCelulaNew(){
+    System.out.println("CtrlMenu.click itemCelulaNew");
+    Sesion.setVistaSiguiente(Vistas.CELULA);
+    Sesion.setModo("new");
+    onClick$btnControl();//forzar cambio de vista
+  }
+
   public void onClick$itemInicio() {
     cambiarVista(Vistas.REPORTE_CELULA_LISTADO_SEMANA);
   }
@@ -117,16 +143,8 @@ public class CtrlMenu extends GenericForwardComposer {
     cambiarVista(Vistas.RED);
   }
 
-  public void onClick$itemCelulaListado() {
-    cambiarVista(Vistas.CELULA_LISTADO);
-  }
-
   public void onClick$itemCelulaLiderListado() {
     cambiarVista(Vistas.CELULA_LIDER_LISTADO);
-  }
-
-  public void onClick$itemCelulaReporteListado() {
-    cambiarVista(Vistas.REPORTE_CELULA_LISTADO_SEMANA);
   }
 
   public void onClick$itemCelulaEstadisticas() {
@@ -135,7 +153,7 @@ public class CtrlMenu extends GenericForwardComposer {
   }
 
   public void onClick$itemDiscipuloLanzadoListado() {
-    cambiarVista(Vistas.DISCIPULO_LANZADO_LISTADO);
+    cambiarVista(Vistas.LIDER_LISTADO);
   }
 
   public void onClick$itemDiscipuloProcesoListado() {
@@ -421,7 +439,7 @@ public class CtrlMenu extends GenericForwardComposer {
       modo = "consulta";
     } else if (vistaActual.equals(Vistas.LIDER)) {
       modo = "ver";
-    } else if (vistaActual.equals(Vistas.DISCIPULO_LANZADO_LISTADO)) {
+    } else if (vistaActual.equals(Vistas.LIDER_LISTADO)) {
       modo = "listado";
     } else if (vistaActual.equals(Vistas.DISCIPULO_PROCESO_LISTADO)) {
       modo = "listado";

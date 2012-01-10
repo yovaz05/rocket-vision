@@ -19,7 +19,7 @@ public class Vistas{
   public static String CELULA_ESTADISTICAS_DETALLES = "vistaCelulaEstadisticas/CelulaEstadisticas.zul";
 
   //Menú Discípulos:
-  public static String DISCIPULO_LANZADO_LISTADO = "vistaLider/Listado.zul";
+  public static String LIDER_LISTADO = "vistaLider/Listado.zul";
   public static String DISCIPULO_PROCESO_LISTADO = "vistaDiscipuloProceso/Listado.zul";
   
 
@@ -48,8 +48,7 @@ public class Vistas{
   
   
   //Menú del HERR
-  public static String LISTADO_ACCESO = "vistaAcceso/ListadoAcceso.zul";
-  
+  public static String LISTADO_ACCESO = "vistaAcceso/ListadoAcceso.zul";  
   public static String LISTADO_TIPO_PERSONA = "vistaTipoUsuario/Listado.zul";
 
 }

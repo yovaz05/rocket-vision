@@ -123,13 +123,13 @@ public class CtrlLiderListado extends GenericForwardComposer {
    */
   private void notificarBarra() {
     vistaCentral = Sesion.getVistaCentral();
-    Sesion.setVistaActual(Vistas.DISCIPULO_LANZADO_LISTADO);
+    Sesion.setVistaActual(Vistas.LIDER_LISTADO);
     Sesion.setModo("listado");
     Toolbarbutton btnControl2 = (Toolbarbutton) vistaCentral.getFellow("btnControl2");
     Events.postEvent(1, "onClick", btnControl2, null);
   }
 
-  public void onClick$btnNew() throws InterruptedException {
+  public void onClick$btnNew() {
     Sesion.setVistaSiguiente(Vistas.LIDER);
     Sesion.setModo("new");
     ctrlVista.forzarCambioVista_btnControl();

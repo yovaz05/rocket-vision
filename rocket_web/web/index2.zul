@@ -6,25 +6,25 @@ title="Casa de Oración - Rocket"?>
     import org.zkoss.zk.ui.Sessions;    
     //CÓDIGO DE PRUEBAS:
     //TODO: QUITAR
-    void activarRed1(){
+    void activarUsuario1(){
     //usuario Gabriel:
       Sessions.getCurrent().setAttribute("idRed", 1);
-      Sessions.getCurrent().setAttribute("idUsuario", 2);
-      Sessions.getCurrent().setAttribute("nombreUsuario", "Gabriel Pérez");
+      Sessions.getCurrent().setAttribute("idUsuario", 1);
+      Sessions.getCurrent().setAttribute("nombreUsuario", "SuperUsuario");
     }
-    void activarRed1_2(){
+    void activarUsuario2(){
     //usuario Jairo:
       Sessions.getCurrent().setAttribute("idRed", 1);
       Sessions.getCurrent().setAttribute("idUsuario", 3);
       Sessions.getCurrent().setAttribute("nombreUsuario", "Jairo Rivera");
     }
-    void activarRed2(){
+    void activarUsuario3(){
       //usuario Juan Carlos:
       Sessions.getCurrent().setAttribute("idRed", 2);
       Sessions.getCurrent().setAttribute("idUsuario", 11);
       Sessions.getCurrent().setAttribute("nombreUsuario", "Juan Carlos Godoy");
     }
-    //activarRed1();
+    //activarUsuario1();
   ]]>
     </zscript>  
     <borderlayout height="100%" width="100%">
@@ -47,10 +47,10 @@ title="Casa de Oración - Rocket"?>
 <!--        <include id="panelCentral" src="vistaReusable/Direccion.zul"/>-->
 
 <!--PROGRAMADAS CON BASE DE DATOS:-->
-<!--        <include id="panelCentral" src="vistaCelula/Listado.zul"/>-->
 <!--        <include id="panelCentral" src="vistaLider/Listado.zul"/>-->
-<!--            <include id="panelCentral" src="vistaReporteCelula/ListadoSemana.zul"/>        -->
-                <include id="panelCentral" src="vistaAcceso/Registro.zul"/>        
+<!--        <include id="panelCentral" src="vistaCelula/Listado.zul"/>-->
+            <include id="panelCentral" src="vistaReporteCelula/ListadoSemana.zul"/>        
+<!--                <include id="panelCentral" src="vistaAcceso/Registro.zul"/>        -->
             </div>
         </center>
     </borderlayout>

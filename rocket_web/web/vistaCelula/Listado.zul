@@ -16,7 +16,7 @@
   ]]>
   </zscript>
 <!--  <div apply="sig.controladores.CtrlCelulaListado" width="675px">-->
-  <div apply="sig.controladores.celula.CtrlCelulaListado" width="760px"> 
+  <div apply="sig.controladores.celula.CtrlCelulaListado"> 
     <label id="tituloVentana" value="Células" sclass="titulo_ventana"/>
     <toolbar width="100%" height="20px" sclass="barraBotones"  visible="false">
       <toolbarbutton id="btnNew" label="Nueva" sclass="botonAccion" onClick="nuevaCelula()"/>
@@ -25,11 +25,10 @@
       <columns sizable="true">
         <column label="#" width="25px"/>
         <column label="Código" width="80px"/>
-        <column label="Líderes" width="120px"/>
-        <column label="Dirección" width="200px"/>
+        <column label="Líderes" width="175px"/>
+        <column label="Dirección" width="175px"/>
         <column label="Día y Hora" width="120px"/>
         <column label="Nombre" width="200px"/>
-<!--        <column label="Nivel"/>-->
       </columns>
     </grid>
   </div>
