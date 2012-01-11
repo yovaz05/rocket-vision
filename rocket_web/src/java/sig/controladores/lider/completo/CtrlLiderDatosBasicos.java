@@ -10,7 +10,7 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
-import sig.modelo.servicios.ServicioRed;
+import rocket.modelo.servicios.ServicioRed;
 import waytech.modelo.beans.sgi.Red;
 
 /**

@@ -11,11 +11,11 @@ import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
-import sig.modelo.servicios.ServicioCelula;
-import sig.modelo.servicios.ServicioCiudad;
-import sig.modelo.servicios.ServicioEstado;
-import sig.modelo.servicios.ServicioPersona;
-import sig.modelo.servicios.ServicioZona;
+import rocket.modelo.servicios.ServicioCelula;
+import rocket.modelo.servicios.ServicioCiudad;
+import rocket.modelo.servicios.ServicioEstado;
+import rocket.modelo.servicios.ServicioPersona;
+import rocket.modelo.servicios.ServicioZona;
 
 /**
  * controlador asociado a Direccion.zul
@@ -366,9 +366,6 @@ public class CtrlDireccion extends GenericForwardComposer {
       //Actualizar observaciones de célula
       if (actualizarZona()) {
         mostrarMensaje("Se actualizó la dirección");
-        //TODO: chequear la actualización de título
-        ciudad = etqCiudad.getValue();
-        cambiarTitulo(zona, ciudad);
       } else {
         mostrarMensaje("Error actualizando la dirección");
       }
@@ -388,6 +385,11 @@ public class CtrlDireccion extends GenericForwardComposer {
       //actualizar detalle de dirección de célula
       getIdCelula();
       ok = servicioCelula.actualizarIdZona(idCelula, idZona);
+      if (ok) {
+        //TODO: chequear la actualización de título
+        ciudad = etqCiudad.getValue();
+        cambiarTitulo(zona, ciudad);
+      }
     } else if (Sesion.esVistaLider()) {
       //actualizar detalle de dirección de líder
       getIdLider();

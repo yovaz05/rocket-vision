@@ -2,10 +2,10 @@ package cdo.sgd.controladores;
 
 import sig.controladores.Sesion;
 import sig.controladores.Vistas;
-import cdo.sgd.controladores.widgets.BotonCelula;
-import cdo.sgd.controladores.widgets.BotonDiscipulo;
-import cdo.sgd.controladores.widgets.BotonLider;
-import cdo.sgd.controladores.widgets.EtqNro;
+import rocket.controladores.widgets.BotonCelula;
+import rocket.controladores.widgets.BotonDiscipulo;
+import rocket.controladores.widgets.BotonLider;
+import rocket.controladores.widgets.EtqNro;
 import cdo.sgd.modelo.bd.simulador.*;
 import java.util.ArrayList;
 import org.zkoss.zk.ui.Component;
