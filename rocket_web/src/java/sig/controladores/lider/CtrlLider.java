@@ -1,9 +1,9 @@
 package sig.controladores.lider;
 
-import cdo.sgd.controladores.CtrlVista;
+import sig.controladores.CtrlVista;
 import sig.controladores.Sesion;
 import sig.controladores.Vistas;
-import cdo.sgd.modelo.bd.util.LiderUtil;
+import sig.modelo.bd.util.LiderUtil;
 import java.util.Date;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;

@@ -1,11 +1,11 @@
 package sig.controladores.lider;
 
-import cdo.sgd.controladores.CtrlVista;
+import sig.controladores.CtrlVista;
 import sig.controladores.Sesion;
 import sig.controladores.Vistas;
 import rocket.controladores.widgets.BotonLider;
 import rocket.controladores.widgets.EtqNro;
-import cdo.sgd.modelo.bd.util.*;
+import sig.modelo.bd.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import org.zkoss.zk.ui.Component;

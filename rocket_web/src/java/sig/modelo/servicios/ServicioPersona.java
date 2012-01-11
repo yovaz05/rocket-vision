@@ -6,10 +6,10 @@
 package sig.modelo.servicios;
 
 import sig.controladores.Sesion;
-import cdo.sgd.modelo.bd.util.Direccion;
-import cdo.sgd.modelo.bd.util.LiderListadoUtil;
-import cdo.sgd.modelo.bd.util.LiderUtil;
-import cdo.sgd.modelo.bd.util.LiderUtil;
+import sig.modelo.bd.util.Direccion;
+import sig.modelo.bd.util.LiderListadoUtil;
+import sig.modelo.bd.util.LiderUtil;
+import sig.modelo.bd.util.LiderUtil;
 import java.util.ArrayList;
 import java.util.List;
 import waytech.modelo.beans.sgi.Acceso;

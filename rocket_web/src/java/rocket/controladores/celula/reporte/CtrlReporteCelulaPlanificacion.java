@@ -1,6 +1,6 @@
 package rocket.controladores.celula.reporte;
 
-import cdo.sgd.modelo.bd.util.ReporteCelulaUtil;
+import sig.modelo.bd.util.ReporteCelulaUtil;
 import sig.controladores.Sesion;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.util.GenericForwardComposer;

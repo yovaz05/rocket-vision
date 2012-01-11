@@ -5,7 +5,7 @@ import sig.controladores.Vistas;
 import rocket.controladores.widgets.BotonCelula;
 import rocket.controladores.widgets.BotonLider;
 import rocket.controladores.widgets.EtqNro;
-import cdo.sgd.modelo.bd.util.CelulaListadoUtil;
+import sig.modelo.bd.util.CelulaListadoUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.zkoss.zk.ui.Component;

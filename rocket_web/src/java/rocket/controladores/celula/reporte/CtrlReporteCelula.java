@@ -1,7 +1,7 @@
 package rocket.controladores.celula.reporte;
 
-import cdo.sgd.modelo.bd.util.CelulaUtil;
-import cdo.sgd.modelo.bd.util.ReporteCelulaUtil;
+import sig.modelo.bd.util.CelulaUtil;
+import sig.modelo.bd.util.ReporteCelulaUtil;
 import sig.controladores.Sesion;
 import sig.controladores.Vistas;
 import java.util.ArrayList;

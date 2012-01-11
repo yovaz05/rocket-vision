@@ -5,9 +5,9 @@
  */
 package sig.modelo.servicios;
 
-import cdo.sgd.modelo.bd.simulador.ReporteCelula;
-import cdo.sgd.modelo.bd.util.ReporteCelulaListadoUtil;
-import cdo.sgd.modelo.bd.util.ReporteCelulaUtil;
+import sig.modelo.bd.simulador.ReporteCelula;
+import sig.modelo.bd.util.ReporteCelulaListadoUtil;
+import sig.modelo.bd.util.ReporteCelulaUtil;
 import java.util.ArrayList;
 import java.util.List;
 import waytech.modelo.beans.sgi.Celula;
