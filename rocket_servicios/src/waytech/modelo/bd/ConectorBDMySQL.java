@@ -17,130 +17,130 @@ import waytech.utilidades.UtilidadSistema;
  */
 public final class ConectorBDMySQL {
 
-  private UtilidadSistema utilidadSistema = new UtilidadSistema();
-  private AtributosConector atributosConector = new AtributosConector();
+    private UtilidadSistema utilidadSistema = new UtilidadSistema();
+    private AtributosConector atributosConector = new AtributosConector();
 
-  /**
-   * Obtiene los atributos de la base de datos
-   * @return AtributosConector
-   */
-  public AtributosConector getAtributosConector() {
-    return atributosConector;
-  }
-
-  /**
-   * Constructor de la clase
-   */
-  public ConectorBDMySQL() {
-    //Usa el método correspondiente de acuerdo a la base de datos
-    establecerElementosDeConexion3();
-  }
-
-  /**
-   * Establece los elementos para la conexión de la base de datos en el "hosting"
-   */
-  private void establecerElementosDeConexion1() {
-    atributosConector.setUser("waytech_root");
-    atributosConector.setPassword("Lux3.3Et7dm");
-    atributosConector.setHostname("localhost");
-    atributosConector.setDriver("com.mysql.jdbc.Driver");
-    atributosConector.setDatabaseName("waytech_rocket");
-    atributosConector.setUrl("jdbc:mysql://" + atributosConector.getHostname() + "/" + atributosConector.getDatabaseName());
-  }
-
-  /**
-   * Establece los elementos para la conexión de la base de datos "local" en wtdesktop02, PC de Gabriel
-   */
-  private void establecerElementosDeConexion2() {
-    atributosConector.setUser("root");
-    atributosConector.setPassword("wt.admin");
-    atributosConector.setHostname("192.168.1.101");
-    atributosConector.setDriver("com.mysql.jdbc.Driver");
-    atributosConector.setDatabaseName("rocket2");
-    atributosConector.setUrl("jdbc:mysql://" + atributosConector.getHostname() + "/" + atributosConector.getDatabaseName());
-  }
-
-  /**
-   * Establece los elementos para la conexión de la base de datos "local" en Casa de Oración
-   */
-  private void establecerElementosDeConexion3() {
-    atributosConector.setUser("root");
-    atributosConector.setPassword("");
-    atributosConector.setHostname("127.0.0.1");
-    atributosConector.setDriver("com.mysql.jdbc.Driver");
-    atributosConector.setDatabaseName("rocket");
-    atributosConector.setUrl("jdbc:mysql://" + atributosConector.getHostname() + "/" + atributosConector.getDatabaseName());
-  }
-
-  /**
-   * Intenta establecer una conexión con la base de datos
-   * @return boolean
-   */
-  public synchronized boolean iniciarConexion() {
-    //INICIA LA CONEXIÓN EN FALSO
-    boolean esConexionIniciadaExitosamente = true;
-    try {
-      //OBTIENE UNA NUEVA INSTANCIA DE UNA CONEXIÓN A TRAVÉS DEL DRIVER
-      Class.forName(atributosConector.getDriver()).newInstance();
-      //AJUSTA LA CONEXIÓN
-      atributosConector.setConnection(DriverManager.getConnection(atributosConector.getUrl(), atributosConector.getUser(), atributosConector.getPassword()));
-      //COLOCA UNA RESPUESTA DEL INICIO DE CONEXIÓN
-    } catch (Exception e) {
-      esConexionIniciadaExitosamente = false;
-      atributosConector.setRespuestaInicioConexion((utilidadSistema.imprimirExcepcion(e, "iniciarConexion()", this.getClass().toString())));
-    } finally {
-      //SI NO HAY EXCEPCIONES LA CONEXIÓN ES EXITOSA
-      if (esConexionIniciadaExitosamente) {
-        atributosConector.setRespuestaInicioConexion((utilidadSistema.imprimirConsulta(atributosConector.getConnection().toString(), "iniciarConexion()", this.getClass().toString())));
-        return true;
-      } else {
-        return false;
-      }
+    /**
+     * Obtiene los atributos de la base de datos
+     * @return AtributosConector
+     */
+    public AtributosConector getAtributosConector() {
+        return atributosConector;
     }
-  }
 
-  /**
-   * Verifica si la conexión a la base de datos está cerrada
-   * @return boolean
-   */
-  public synchronized boolean esConexionCerrada() {
-    if (atributosConector.getConnection() == null) {
-      return true;
-    } else {
-      return false;
+    /**
+     * Constructor de la clase
+     */
+    public ConectorBDMySQL() {
+        //Usa el método correspondiente de acuerdo a la base de datos
+        establecerElementosDeConexion1();
     }
-  }
 
-  /**
-   * Obtiene la conexión a la base de datos
-   * @return Connection
-   */
-  public synchronized Connection getConnection() {
-    return this.atributosConector.getConnection();
-  }
+    /**
+     * Establece los elementos para la conexión de la base de datos en el "hosting"
+     */
+    private void establecerElementosDeConexion1() {
+        atributosConector.setUser("waytech_root");
+        atributosConector.setPassword("Lux3.3Et7dm");
+        atributosConector.setHostname("localhost");
+        atributosConector.setDriver("com.mysql.jdbc.Driver");
+        atributosConector.setDatabaseName("waytech_rocket");
+        atributosConector.setUrl("jdbc:mysql://" + atributosConector.getHostname() + "/" + atributosConector.getDatabaseName());
+    }
 
-  /**
-   * Intenta cerrar la conexión a la base de datos
-   * @return boolean
-   */
-  public synchronized boolean cerrarConexion() {
-    boolean esConexionCerradaExitosamente = true;
-    if (atributosConector.getConnection() != null) {
-      try {
-        atributosConector.getConnection().close();
-      } catch (Exception e) {
-        atributosConector.setRespuestaCierreDeConexion((utilidadSistema.imprimirExcepcion(e, "cerrarConexion()", this.getClass().toString())));
-        esConexionCerradaExitosamente = false;
-      } finally {
-        if (esConexionCerradaExitosamente) {
-          atributosConector.setRespuestaCierreDeConexion((utilidadSistema.imprimirConsulta("Conexión cerrada", "cerrarConexion()", this.getClass().toString())));
-          return true;
-        } else {
-          return false;
+    /**
+     * Establece los elementos para la conexión de la base de datos "local" en wtdesktop02, PC de Gabriel
+     */
+    private void establecerElementosDeConexion2() {
+        atributosConector.setUser("root");
+        atributosConector.setPassword("wt.admin");
+        atributosConector.setHostname("192.168.1.101");
+        atributosConector.setDriver("com.mysql.jdbc.Driver");
+        atributosConector.setDatabaseName("rocket2");
+        atributosConector.setUrl("jdbc:mysql://" + atributosConector.getHostname() + "/" + atributosConector.getDatabaseName());
+    }
+
+    /**
+     * Establece los elementos para la conexión de la base de datos "local" en Casa de Oración
+     */
+    private void establecerElementosDeConexion3() {
+        atributosConector.setUser("root");
+        atributosConector.setPassword("");
+        atributosConector.setHostname("127.0.0.1");
+        atributosConector.setDriver("com.mysql.jdbc.Driver");
+        atributosConector.setDatabaseName("rocket");
+        atributosConector.setUrl("jdbc:mysql://" + atributosConector.getHostname() + "/" + atributosConector.getDatabaseName());
+    }
+
+    /**
+     * Intenta establecer una conexión con la base de datos
+     * @return boolean
+     */
+    public synchronized boolean iniciarConexion() {
+        //INICIA LA CONEXIÓN EN FALSO
+        boolean esConexionIniciadaExitosamente = true;
+        try {
+            //OBTIENE UNA NUEVA INSTANCIA DE UNA CONEXIÓN A TRAVÉS DEL DRIVER
+            Class.forName(atributosConector.getDriver()).newInstance();
+            //AJUSTA LA CONEXIÓN
+            atributosConector.setConnection(DriverManager.getConnection(atributosConector.getUrl(), atributosConector.getUser(), atributosConector.getPassword()));
+            //COLOCA UNA RESPUESTA DEL INICIO DE CONEXIÓN
+        } catch (Exception e) {
+            esConexionIniciadaExitosamente = false;
+            atributosConector.setRespuestaInicioConexion((utilidadSistema.imprimirExcepcion(e, "iniciarConexion()", this.getClass().toString())));
+        } finally {
+            //SI NO HAY EXCEPCIONES LA CONEXIÓN ES EXITOSA
+            if (esConexionIniciadaExitosamente) {
+                atributosConector.setRespuestaInicioConexion((utilidadSistema.imprimirConsulta(atributosConector.getConnection().toString(), "iniciarConexion()", this.getClass().toString())));
+                return true;
+            } else {
+                return false;
+            }
         }
-      }
-    } else {
-      return false;
     }
-  }
+
+    /**
+     * Verifica si la conexión a la base de datos está cerrada
+     * @return boolean
+     */
+    public synchronized boolean esConexionCerrada() {
+        if (atributosConector.getConnection() == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Obtiene la conexión a la base de datos
+     * @return Connection
+     */
+    public synchronized Connection getConnection() {
+        return this.atributosConector.getConnection();
+    }
+
+    /**
+     * Intenta cerrar la conexión a la base de datos
+     * @return boolean
+     */
+    public synchronized boolean cerrarConexion() {
+        boolean esConexionCerradaExitosamente = true;
+        if (atributosConector.getConnection() != null) {
+            try {
+                atributosConector.getConnection().close();
+            } catch (Exception e) {
+                atributosConector.setRespuestaCierreDeConexion((utilidadSistema.imprimirExcepcion(e, "cerrarConexion()", this.getClass().toString())));
+                esConexionCerradaExitosamente = false;
+            } finally {
+                if (esConexionCerradaExitosamente) {
+                    atributosConector.setRespuestaCierreDeConexion((utilidadSistema.imprimirConsulta("Conexión cerrada", "cerrarConexion()", this.getClass().toString())));
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
 }
