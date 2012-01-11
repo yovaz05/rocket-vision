@@ -8,7 +8,7 @@ import org.zkoss.zul.A;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
-import rocket.modelo.servicios.ServicioRed;
+import sig.modelo.servicios.ServicioRed;
 
 /**
  * Controlador asociado a Combobox cmbRed, usado en varias vistas

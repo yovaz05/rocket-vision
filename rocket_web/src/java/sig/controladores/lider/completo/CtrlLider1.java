@@ -21,7 +21,7 @@ import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 import sig.controladores.Constantes;
-import rocket.modelo.servicios.ServicioCelula;
+import sig.modelo.servicios.ServicioCelula;
 
 /**
  * controlador asociado a Lider.zul
