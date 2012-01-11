@@ -4,7 +4,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
   <style src="css/estilos1.css"/>
-  <div apply="sig.controladores.lider.CtrlLider" width="500px">
+  <div apply="rocket.controladores.lider.CtrlLider" width="500px">
     <label id="tituloVentana" height="20px" sclass="titulo_ventana"/>
     <div id="divMensaje" align="center" style="margin:2px;padding:5px"
     onClick="self.visible=false">

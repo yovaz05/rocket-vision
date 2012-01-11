@@ -28,8 +28,8 @@
       <tabs>
         <tab label="Célula" id="tabCelula"/>
         <tab label="Fechas" id="tabFechas" visible="false"/>
-        <tab label="Planificación" id="tabPlanificacion"/>
-        <tab label="Resultados" id="tabResultados"/>
+        <tab label="Planificación" id="tabPlanificacion" visible="false"/>
+        <tab label="Resultados" id="tabResultados" visible="false"/>
         <tab label="Ofrendas" id="tabOfrendas" visible="false"/>
         <tab label="Observaciones" id="tabObservaciones"/>
       </tabs>

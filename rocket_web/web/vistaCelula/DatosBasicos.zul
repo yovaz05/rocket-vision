@@ -20,7 +20,7 @@
       visible="false"/>
     </hbox>
   </div>-->
-  <grid style="border:0px" apply="sig.controladores.celula.CtrlCelulaDatosBasicos">
+  <grid style="border:0px" apply="rocket.controladores.celula.CtrlCelulaDatosBasicos">
     <columns>
       <column id="col1" width="100px"/>
       <column id="colData"/>
@@ -62,7 +62,8 @@
               <space width="5px"/>
               <a id="btnEditRed" tooltiptext="Editar"
             image="/img/iconos/edit_row.png"
-            hoverImage="/img/iconos/edit_row_hover.png"/>
+            hoverImage="/img/iconos/edit_row_hover.png"
+            visible="false"/>
 <!--            TODO: quitar botón cancelar-->
               <a id="btnCancelarEditRed"
             tooltiptext="Cancelar Edición"
