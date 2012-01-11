@@ -1,12 +1,25 @@
+<!-- Vista encargada de administrar los registros de acceso de
+     usuarios ya registrados por sus lideres, es probable que se cambie el 
+     modelo de negocio.
+     
+     Desarrollado por Gerardo Montilla 
+     gerardomontilla@waytech.com.ve
+     11/01/2012
+     Para el sistema Rocket.
+     Way Technologies Consulting Group C.A.
+     
+ -->       
+
 <?page id="testZul" title="Inicio" cacheable="false"
 	language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8" title="Acceso a Usuarios"?>
+
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:h="http://www.w3.org/1999/xhtml"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
     <style src="css/estilos1.css"/>
     <include src="vistaAcceso/Header.zul"/>
-    <div use="cdo.sgd.controladores.CtrlRegistro">
+    <div use="cdo.sgd.controladores.CtrlAccesoRegistro">
         <label value="Registro" sclass="titulo_ventana"/>
         <panel width="100%">
             <panelchildren>

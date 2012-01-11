@@ -49,7 +49,8 @@ title="Casa de Oración - Rocket"?>
 <!--PROGRAMADAS CON BASE DE DATOS:-->
 <!--        <include id="panelCentral" src="vistaLider/Listado.zul"/>-->
 <!--        <include id="panelCentral" src="vistaCelula/Listado.zul"/>-->
-            <include id="panelCentral" src="vistaReporteCelula/ListadoSemana.zul"/>        
+<!--            <include id="panelCentral" src="vistaReporteCelula/ListadoSemana.zul"/>        -->
+            <include id="panelCentral" src="vistaAcceso/CambioPassword.zul"/>        
 <!--                <include id="panelCentral" src="vistaAcceso/Registro.zul"/>        -->
             </div>
         </center>

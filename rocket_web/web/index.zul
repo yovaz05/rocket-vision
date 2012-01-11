@@ -24,7 +24,8 @@ title="Casa de Oración - Rocket"?>
           Sessions.getCurrent().setAttribute("idUsuario", 1);
           Sessions.getCurrent().setAttribute("nombreUsuario", "Administrador");
           Sessions.getCurrent().setAttribute("idRed", 1);
-          Executions.sendRedirect("index2.zul");
+          //Executions.sendRedirect("index2.zul");
+          Executions.sendRedirect("vistaAcceso/CambioPassword.zul");
        }
         
        vistaCentralDefecto  = "vistaAcceso/Acceso.zul";

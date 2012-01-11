@@ -4,23 +4,18 @@ import org.zkoss.zk.ui.Components;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.ext.AfterCompose;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
-import org.zkoss.zul.Vbox;
 import org.zkoss.zul.Window;
 import waytech.modelo.beans.sgi.Acceso;
 import waytech.modelo.beans.sgi.AccesoInsert;
-import waytech.modelo.beans.sgi.AccesoUpdate;
 import waytech.modelo.beans.sgi.Persona;
-import waytech.modelo.beans.sgi.PersonaInsert;
 import waytech.modelo.interfaces.IsaAcceso;
 import waytech.modelo.interfaces.IsaDiscipulo;
 import waytech.modelo.interfaces.IsaPareja;
 import waytech.modelo.interfaces.IsaPersona;
 import waytech.modelo.servicios.RspAcceso;
-import waytech.modelo.servicios.RspPersona;
 import waytech.modelo.servicios.SaAcceso;
 import waytech.modelo.servicios.SaDiscipulo;
 import waytech.modelo.servicios.SaPareja;
@@ -31,6 +26,7 @@ import waytech.utilidades.UtilidadValidacion;
 /**
  * @since Viernes 15/12/2011 02:35 PM.
  * @version 1.0 Viernes 15/12/2011 02:35 PM.
+ * @version 1.1 Viernes 11/01/2012 05:35 PM.
  * @author Gerardo José Montilla Virgüez
  * @author Gabriel Pérez 
  * @author Way Technologies Consulting Group C.A.
@@ -38,7 +34,7 @@ import waytech.utilidades.UtilidadValidacion;
  * @see gerardomontilla@waytech.com.ve
  * @see gabrielperez@waytech.com.ve 
  */
-public class CtrlRegistro extends Window implements AfterCompose {
+public class CtrlAccesoRegistro extends Window implements AfterCompose {
 
     protected Intbox txtCedula;
     protected Textbox txtTelefono;
