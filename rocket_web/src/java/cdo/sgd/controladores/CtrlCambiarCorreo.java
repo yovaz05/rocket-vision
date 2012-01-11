@@ -2,7 +2,7 @@ package cdo.sgd.controladores;
 
 import sig.controladores.Sesion;
 import sig.controladores.Vistas;
-import cdo.sgd.modelo.bd.simulador.*;
+import sig.modelo.bd.simulador.*;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;

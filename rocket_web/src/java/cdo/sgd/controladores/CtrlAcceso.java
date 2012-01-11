@@ -1,7 +1,7 @@
 package cdo.sgd.controladores;
 
-import cdo.sgd.modelo.bd.simulador.BD;
-import cdo.sgd.modelo.bd.simulador.Usuario;
+import sig.modelo.bd.simulador.BD;
+import sig.modelo.bd.simulador.Usuario;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
@@ -12,13 +12,14 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Label;
+import sig.controladores.Sesion;
 
 /**
  * @since Viernes 15/12/2011 02:35 PM.
  * @version 1.0 Viernes 15/12/2011 02:35 PM.
  * @author Gerardo José Montilla Virgüez, Gabriel Pérez Way Technologies Consulting Group C.A.
  * @see http://www.waytech.com.ve
- * Clase creada para el software SIG 
+ * Clase creada para el software Rocket 
  */
 public class CtrlAcceso extends GenericForwardComposer {
 
@@ -30,6 +31,7 @@ public class CtrlAcceso extends GenericForwardComposer {
     Label etqErrorPassword;
     Checkbox checkRecordarSesion;
     //datos:
+    //TODO: CODIGO: no usar la clase BD:
     BD bd;
     Usuario usuario;
     String menu = "";
@@ -98,18 +100,21 @@ public class CtrlAcceso extends GenericForwardComposer {
                 return;
             } else {
                 menu = buscarVistaMenu();
-                Sessions.getCurrent().setAttribute("menu", menu);
+                Sesion.setVariable("menu", menu);
                 int idUsuario = usuario.getId();
                 String nombreUsuario = usuario.getNombre();
                 int idRed = usuario.getIdRed();
-                Sessions.getCurrent().setAttribute("idUsuario", idUsuario);
-                Sessions.getCurrent().setAttribute("nombreUsuario", nombreUsuario);
-                Sessions.getCurrent().setAttribute("usuarioLogueado", true);
+                Sesion.setVariable("idUsuario", idUsuario);
+                Sesion.setVariable("nombreUsuario", nombreUsuario);
+                Sesion.setVariable("usuarioLogueado", true);
                 //Sugiero colocar esta linea en otro método..
-                Sessions.getCurrent().setAttribute("idRed", idRed);
+                Sesion.setVariable("idRed", idRed);
+                //**
+                /*
                 System.out.println("CtrlAcceso.login: idRed = " + idRed);
                 System.out.println("CtrlAcceso.login: idUsuario = " + idUsuario);
                 System.out.println("CtrlAcceso.login: nombreUsuario = " + nombreUsuario);
+                 */
                 //redirección a página principal del usuario:
                 Executions.sendRedirect("index2.zul");
             }
@@ -118,7 +123,7 @@ public class CtrlAcceso extends GenericForwardComposer {
 
     /**
      * Comprueba los datos de acceso, login y password con los valores de la base de datos
-     * NOTA: el login es convertido en minúscula
+     * NOTA: el login es convertido a minúscula
      * @param login
      * @param password
      * @return si es usuario válido

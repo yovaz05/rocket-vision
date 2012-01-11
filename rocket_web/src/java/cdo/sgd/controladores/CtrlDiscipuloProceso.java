@@ -2,9 +2,9 @@ package cdo.sgd.controladores;
 
 import sig.controladores.Sesion;
 import sig.controladores.Vistas;
-import cdo.sgd.modelo.bd.simulador.BD;
-import cdo.sgd.modelo.bd.simulador.DiscipuloProceso;
-import cdo.sgd.modelo.bd.simulador.Lider;
+import sig.modelo.bd.simulador.BD;
+import sig.modelo.bd.simulador.DiscipuloProceso;
+import sig.modelo.bd.simulador.Lider;
 import java.util.ArrayList;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Sessions;

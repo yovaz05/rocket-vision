@@ -2,8 +2,8 @@ package cdo.sgd.controladores;
 
 import sig.controladores.Sesion;
 import sig.controladores.Vistas;
-import cdo.sgd.modelo.bd.simulador.BD;
-import cdo.sgd.modelo.bd.simulador.Red;
+import sig.modelo.bd.simulador.BD;
+import sig.modelo.bd.simulador.Red;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;

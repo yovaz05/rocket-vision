@@ -3,7 +3,7 @@ package sig.controladores.lider.completo;
 import cdo.sgd.controladores.CtrlVista;
 import sig.controladores.Sesion;
 import sig.controladores.Vistas;
-import cdo.sgd.modelo.bd.util.CelulaUtil;
+import sig.modelo.bd.util.CelulaUtil;
 import java.util.Date;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;
@@ -21,7 +21,7 @@ import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 import sig.controladores.Constantes;
-import sig.modelo.servicios.ServicioCelula;
+import rocket.modelo.servicios.ServicioCelula;
 
 /**
  * controlador asociado a Lider.zul

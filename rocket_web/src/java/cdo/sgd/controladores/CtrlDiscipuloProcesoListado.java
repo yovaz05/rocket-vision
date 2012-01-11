@@ -6,7 +6,7 @@ import rocket.controladores.widgets.BotonCelula;
 import rocket.controladores.widgets.BotonDiscipulo;
 import rocket.controladores.widgets.BotonLider;
 import rocket.controladores.widgets.EtqNro;
-import cdo.sgd.modelo.bd.simulador.*;
+import sig.modelo.bd.simulador.*;
 import java.util.ArrayList;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;

@@ -1,6 +1,6 @@
 package sig.controladores;
 
-import cdo.sgd.modelo.bd.util.BD;
+import sig.modelo.bd.util.BD;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
