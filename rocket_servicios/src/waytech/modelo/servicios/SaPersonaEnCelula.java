@@ -433,4 +433,53 @@ public class SaPersonaEnCelula implements IsaPersonaEnCelula {
       return rspPersonaEnCelula;
     }
   }
+  
+@Override
+  public RspPersonaEnCelula listPorIdLider(int idLider) {
+  String metodo = "listCelulaPorIdLider(int idLider)";
+    //INSTANCIAS DE LAS CLASES                
+    ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+    RspPersonaEnCelula rspPersonaEnCelula = new RspPersonaEnCelula();
+    List<PersonaEnCelula> todosLosPersonaEnCelulas = new ArrayList<PersonaEnCelula>();
+    //INICIALIZAR VARIABLES
+    rspPersonaEnCelula.setEsConexionAbiertaExitosamente(false);
+    rspPersonaEnCelula.setEsConexionCerradaExitosamente(false);
+    rspPersonaEnCelula.setEsSentenciaSqlEjecutadaExitosamente(false);
+    //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+    if (conectorBD.iniciarConexion()) {
+      rspPersonaEnCelula.setEsConexionAbiertaExitosamente(true);
+      rspPersonaEnCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+      String consultaSQL =
+              "SELECT * FROM persona_en_celula"
+              + " WHERE estado = 1"
+              + " AND id_persona = '" + idLider + "'"
+              + " AND es_lider_celula = 1";
+      try {
+        Statement sentencia = conectorBD.getConnection().createStatement();
+        boolean bandera = sentencia.execute(consultaSQL);
+        if (bandera) {
+          ResultSet rs = sentencia.getResultSet();
+          rspPersonaEnCelula.setEsSentenciaSqlEjecutadaExitosamente(true);
+          rspPersonaEnCelula.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), metodo, this.getClass().toString()));
+          while (rs.next()) {
+            PersonaEnCelula personaEnCelula = new PersonaEnCelula();
+            personaEnCelula = rsPersonaEnCelula(rs, personaEnCelula);
+            todosLosPersonaEnCelulas.add(personaEnCelula);
+          }
+        }
+      } catch (SQLException e) {
+        rspPersonaEnCelula.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+      } finally {
+        if (conectorBD.cerrarConexion()) {
+          rspPersonaEnCelula.setEsConexionCerradaExitosamente(true);
+        }
+        rspPersonaEnCelula.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+        rspPersonaEnCelula.setAllPersonaEnCelulas(todosLosPersonaEnCelulas);
+        return rspPersonaEnCelula;
+      }
+    } else {
+      rspPersonaEnCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+      return rspPersonaEnCelula;
+    }
+  }  
 }
