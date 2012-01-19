@@ -68,8 +68,11 @@ public interface IsaCelula {
 
     public abstract RspCelula listCelulaActiva();
 
-    public abstract RspCelula listCelulaActivaOrdenadasPorEstatus();
+    public abstract RspCelula listCelulaActivaOrdenEstatus();
     
+    public abstract RspCelula listCelulaActivaOrdenEstatusPorRed(int idRed);
+
+    public abstract RspCelula listCelulaActivaOrdenEstatusPorLider(int idLider);
     
     /**
      * 1,2,3,4
@@ -77,4 +80,7 @@ public interface IsaCelula {
      * @return 
      */
     public abstract RspCelula listCelulaPorEstado(int estado);
+
+    public abstract RspCelula listCelulaPorRed(int idRed);    
+    
 }
