@@ -71,6 +71,6 @@ public interface IsaAcceso {
   public abstract RspAcceso updateCorreo(String correo);
 
   public abstract RspAcceso updateCorreo(int idPersona, String correo);
-  
+
   public abstract RspAcceso updatePassword(String correo, String password);
 }
