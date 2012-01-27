@@ -802,7 +802,8 @@ public class SaPersona implements IsaPersona {
       String consultaSQL = "SELECT * FROM persona"
               + " WHERE estado = 1"
               + " AND es_lider_lanzado = 1"
-              + " AND id_red = " + idRed;
+              + " AND id_red = " + idRed
+              + " ORDER BY nombre ASC";
       try {
         Statement sentencia = conectorBD.getConnection().createStatement();
         boolean bandera = sentencia.execute(consultaSQL);
@@ -1228,6 +1229,7 @@ public class SaPersona implements IsaPersona {
     }
   }
 
+  //TODO: OPTIMIZAR: no necesita devolver el mismo objeto que recibe
   @Override
   public RspPersona getLiderLanzadoPorIdPersona(int idPersona) {
     //INSTANCIAS DE LAS CLASES                
@@ -1287,7 +1289,10 @@ public class SaPersona implements IsaPersona {
     if (conectorBD.iniciarConexion()) {
       rspPersona.setEsConexionAbiertaExitosamente(true);
       rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
-      String consultaSQL = "SELECT * FROM persona WHERE estado = 1 AND ci = '" + cedula + "'";
+      String consultaSQL =
+              "SELECT * FROM persona"
+              + " WHERE estado = 1"
+              + " AND ci = '" + cedula + "'";
       try {
         Statement sentencia = conectorBD.getConnection().createStatement();
         boolean bandera = sentencia.execute(consultaSQL);
@@ -1297,6 +1302,10 @@ public class SaPersona implements IsaPersona {
           rspPersona.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), "esCedulaExistente(String cedula)", this.getClass().toString()));
           if (rs.next()) {
             rspPersona.setEsCedulaExistente(true);
+            Persona persona = new Persona();
+            //TODO: OPTIMIZAR: no necesita devolver el mismo objeto que recibe
+            persona = rsPersona(rs, persona);
+            rspPersona.setPersona(persona);
           }
         }
       } catch (SQLException e) {
@@ -1423,7 +1432,7 @@ public class SaPersona implements IsaPersona {
               + " WHERE estado = 1"
               + " AND"
               + " es_lider_lanzado = 1"
-              + " ORDER BY id_red ASC, nombre ASC";
+              + " ORDER BY nombre ASC";
       try {
         Statement sentencia = conectorBD.getConnection().createStatement();
         boolean bandera = sentencia.execute(consultaSQL);
@@ -1643,7 +1652,7 @@ public class SaPersona implements IsaPersona {
         stmt.setShort(i++, Short.valueOf("1"));
         stmt.setString(i++, traza);
         stmt.setBoolean(i++, false);
-        stmt.setBoolean(i++, false);
+        stmt.setBoolean(i++, true); //por defecto todos los registrados son líderes de célula. TODO: mejorar esto
         stmt.setBoolean(i++, false);
         stmt.setBoolean(i++, false);
         stmt.setBoolean(i++, false);
