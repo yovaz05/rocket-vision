@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="rocket.controladores.lider.CtrlLiderListado" width="750px">
+    <div align="left" style="padding: 5px 15px">
+      <label id="tituloVentana" value="Líderes" sclass="titulo_ventana"/>
+      <label value="Red: " sclass="etiqueta_campo"/>
+      <combobox id="cmbRed" value="Elegir..." autocomplete="true" readonly="true" width="200px">
+        <!--TODO: llenar esta lista desde el controlador, con datos en vivo-->
+        <comboitem  value="6"   label="Albert - Kevin"/>
+        <comboitem  value="9"   label="Álvaro Méndez"/>
+        <comboitem  value="3"   label="Andy - Marcos"/>
+        <comboitem  value="18"  label="Danny - Ricardo"/>
+        <comboitem  value="7"   label="Dayana - Fabiola"/>
+        <comboitem  value="12"  label="Deisy - Andreína"/>
+        <comboitem  value="11"  label="Fabiana - Olga"/>
+        <comboitem  value="17"  label="Ivonne - Ana"/>
+        <comboitem  value="2"   label="Jairo - Gabriel"/>
+        <comboitem  value="19"  label="Jhonny - Alexander"/>
+        <comboitem  value="4"   label="Juan - Hernán"/>
+<!--        <comboitem value="5" label="Julio - Francisco - Salvavidas"/>-->
+        <comboitem  value="16"  label="Lismary - Maryori"/>
+        <comboitem  value="21"  label="Mary Lucena"/>
+        <comboitem  value="13"  label="Matrimonios Jóvenes"/>
+        <comboitem  value="14"  label="Matrimonios Jóvenes Adultos"/>
+        <comboitem  value="10"  label="Moiran - Mayelis"/>
+        <comboitem  value="15"  label="Moraima - Carolina"/>
+        <comboitem  value="8"   label="Willy Barraez"/>
+<!--    <comboitem value="20" label="Yren y Blanca"/> -->
+        <comboitem label="Todas" value="*"/>
+      </combobox>
+      <label id="etqInstrucciones" value="Elige una red" sclass="mensajes"/>
+      <label id="etqMensajeNoData" sclass="mensajes"
+    value="Esta red no tiene líderes registrados"
+    visible="false"/>
+    </div>    
+    <toolbar width="100%" height="20px" sclass="barraBotones"  visible="false">
+      <toolbarbutton id="btnNew" label="Nuevo" sclass="botonAccion"/>
+    </toolbar>
+    <div align="center">
+      <grid id="grid" style="border:normal" mold="paging" pageSize="10">
+        <columns sizable="true">
+          <column label="#"         width="25px"/>
+          <column label="Nombre"    width="175px"/>
+          <column label="Dirección" width="200px"/>
+          <column label="Teléfono"  width="100px"/>
+          <column label="Email"/>
+<!--          TODO: será usado en próxima versión-->
+<!--          <column label="Líderes"/>-->
+        </columns>
+      </grid>
+    </div>
+  </div>
+</zk>

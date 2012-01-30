@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="cdo.sgd.controladores.CtrlDiscipuloProcesoListado" width="850px">
+    <label value="Discípulos en Proceso" sclass="titulo_ventana"/>
+    <toolbar height="20px" sclass="barraBotones" visible="false">
+      <toolbarbutton id="btnNew" label="Nuevo" sclass="botonAccion"/>
+    </toolbar>
+    <grid id="grid" style="border:normal" mold="paging" pageSize="5">
+      <columns sizable="true">
+        <column label="#" width="25px"/>
+        <column label="Nombre" width="120px"/>
+        <column label="Estatus" width="100px"/>
+        <column label="Dirección" width="100px"/>
+        <column label="Teléfono" width="100px"/>
+        <column label="Email" width="160px"/>
+        <column label="Líderes" tooltiptext="Algunos usuarios de bajos privilegios no tendrán que ver esta columna"/>
+        <column label="Célula" width="125px"/>
+      </columns>
+    </grid>
+  </div>
+</zk>

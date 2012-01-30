@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <grid id="grid" style="border:0px">      
+    <columns>
+      <column id="col1" width="120px"/>
+      <column id="col2"/>
+    </columns>
+    <rows>
+      <row>
+        <label value="Código" sclass="etiqueta_campo"/>
+        <label id="etqCodigo" value=""/>
+<!--  
+      <toolbarbutton id="tbbCodigo" label=""/>
+-->
+      </row>        
+      <row>
+        <label value="Dirección" sclass="etiqueta_campo"/>
+        <label id="etqDireccion"/>
+      </row>        
+      <row>
+        <label value="Red" sclass="etiqueta_campo"/>
+        <label id="etqRed" value=""/>
+<!--
+      <toolbarbutton id="tbbRed" label="" onClick='panelCentral.src="vistaRed/Red.zul"'/>
+-->
+      </row>           
+      <row>        
+        <label value="Líderes" sclass="etiqueta_campo"/>
+        <vbox>
+          <label id="etqLider1" value=""/>
+          <label id="etqLider2" value=""/>
+          <label id="etqLider3" value=""/>
+          <label id="etqLider4" value=""/>
+        </vbox>
+<!--        <vbox>
+          <toolbarbutton id="tbbLider1" label="" />
+          <toolbarbutton id="tbbLider2" label="" />
+        </vbox>-->
+      </row>
+      <row>        
+        <label value="Día y Hora" sclass="etiqueta_campo"/>
+        <label id="etqDiaHora"/>
+      </row> 
+<!--
+      <row>
+        <label value="Nombre" sclass="etiqueta_campo"/>
+        <label id="etqNombre" value="" />          
+      </row>
+-->
+    </rows>
+  </grid>
+
+</zk>

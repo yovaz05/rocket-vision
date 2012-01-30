@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+<!--  TODO: pasar este código al controlador-->
+  <zscript>
+  <![CDATA[
+  ]]>
+  </zscript>
+<!--  <div apply="cdo.sgd.controladores.CtrlCelulaListado" width="675px">-->
+  <div width="95%">
+    <label id="tituloVentana" value="Redes" sclass="titulo_ventana"/>
+    <div align="right" style="padding-right: 15px">
+      <hbox>
+        <hbox style="vertical-align:middle;">
+          <label value="Mostrar: " style="vertical-align:middle;" height="20px"/>
+          <combobox value="Todas" autocomplete="true" readonly="true" width="100px">
+            <comboitem label="Todas"/>
+            <comboitem label="Matrimonios"/>
+            <comboitem label="Mujeres"/>
+            <comboitem label="Hombres"/>
+          </combobox>
+          <combobox value="Todas" autocomplete="true" readonly="true" width="100px">
+            <comboitem label="Todas"/>
+            <comboitem label="Prejuveniles"/>
+            <comboitem label="Jóvenes"/>
+            <comboitem label="Adultos"/>
+          </combobox>
+        </hbox>
+      </hbox> 
+    </div>
+    <toolbar width="100%" height="20px" sclass="barraBotones"  visible="false">
+      <toolbarbutton id="btnNew" label="Nueva" sclass="botonAccion" onClick="nuevaCelula()"/>
+    </toolbar>
+    <space height="10px"/>
+    <div>
+      <grid id="grid" style="border:normal" mold="paging" pageSize="20">
+        <columns sizable="true">
+          <column label="#" width="25px"/>
+          <column label="Código" width="70px" sort="asc"/>
+          <column label="Nombre" width="180px"/>
+          <column label="Tipo" width="220px"/>
+          <column label="Líderes" width="220px"/>
+          <column label="Reunión Semanal"/>
+        </columns>
+        <rows>
+          <row>
+            <label value="1"/>
+            <a label="GMJ"/>
+            <a label="Matrimonios Jóvenes"/>
+            <a label="Matrimonios de 0 a 10 años"/>
+            <vbox>
+              <hbox>
+                <a label="Ricardo Barraez"/>
+                <label value=" - "/>
+                <a label="María de Barraez"/>
+              </hbox>
+              <hbox>
+                <a label="Johan Rivas"/>
+                <label value=" - "/>
+                <a label="Florennys de Rivas"/>
+              </hbox>
+            </vbox>
+            <label value="?"/>        
+          </row>
+          <row>
+            <label value="2"/>
+            <a label="GMJA"/>
+            <a label="Matrimonios Jóvenes Adultos"/>
+            <a label="Matrimonios Jóvenes Adultos"/>            
+            <vbox>
+              <hbox>
+                <a label="Julio Mujica"/>
+                <label value=" - "/>
+                <a label="Yren de Mujica"/>
+              </hbox>
+              <hbox>
+                <a label="Francisco Rojas"/>
+                <label value=" - "/>
+                <a label="Blanca Rojas"/>
+              </hbox>
+            </vbox>
+            <label value="?"/>
+          </row>
+          <row visible="false">
+            <label value="3"/>
+            <a label="GMF"/>
+            <a label="?"/>
+            <label value="Jóvenes y Prejuveniles"/>
+            <vbox>
+<!--              <label value="María de Barraez"/>
+              <label value="Florennys de Rivas"/>-->
+              <a label="María de Barraez"/>
+              <a label="Florennys de Rivas"/>
+            </vbox>
+            <label value="Sábados 9.00 a.m."/>        
+          </row>    
+             
+          <row visible="true">
+            <label value="4"/>
+            <a label="GMF"/>
+            <label value="?"/>
+            <a label="Prejuveniles y Jóvenes"/>
+            <vbox>
+              <a label="Dayana Zambrano"/>
+              <a label="Fabiola de García"/>
+            </vbox>
+            <label value="?"/>        
+          </row>    
+          <row>
+            <label value="5"/>
+            <label value="GDA"/>
+            <label value="?"/>
+            <a label="Jóvenes"/>
+            <vbox>
+              <a label="Deisy de Godoy"/>
+              <a label="Andreína de Zambrano"/>
+            </vbox>
+            <label value="?"/>        
+          </row>    
+          <row>
+            <label value="6"/>
+            <a label="GFO"/>
+            <a label="Jóvenes Profesionales"/>
+            <a label="Jóvenes"/>
+            <vbox>
+              <a label="Fabiana de Marchán"/>
+              <a label="Olga de Gil"/>
+            </vbox>
+            <label value="?"/>
+          </row>
+          <row>
+            <label value="7"/>
+            <a label="GYB"/>
+            <label value="?"/>
+            <a label="Jóvenes Adultas"/>
+            <vbox>
+<!--              
+          <label value="Yren de Mujica"/>
+              <label value="Blanca de Rojas"/>
+   -->
+              <a label="Yohanny Calles"/>
+              <a label="Gelimer de Rodríguez"/>
+            </vbox>
+            <a label="?"/>
+          </row>      
+          <row>
+            <a label="8"/>
+            <a label="GLM"/>
+            <label value="?"/>
+            <a label="Jóvenes Adultas"/>
+            <vbox>
+              <a label="Lismary de Torres"/>
+              <a label="Maryory de Colmenárez"/>
+            </vbox>
+            <label value="Martes 7.00 p.m."/>
+          </row>
+          <row>
+            <label value="9"/>
+            <a label="GML"/>
+            <label value="?"/>
+            <a label="Jóvenes"/>
+            <vbox>
+              <a label="Mary de Lucena"/>
+            </vbox>
+            <label value="?"/>
+          </row>      
+          <row>
+            <label value="10"/>
+            <a label="GMM"/>
+            <a label="?"/>
+            <a label="Damas Adultas"/>
+            <vbox>
+              <a label="Moiran Ángel"/>
+              <a label="Mayelis de Chanap"/>
+            </vbox>
+            <label value="?"/>
+          </row>
+          <row>
+            <label value="11"/>
+            <a label="GIA"/>
+            <label value="?"/>
+            <a label="Damas Adultas"/>
+            <vbox>
+              <a label="Ivonne Soto"/>
+              <a label="Ana Méndez"/>
+            </vbox>
+            <label value="?"/>
+          </row>         
+          <row>
+            <label value="12"/>
+            <a label="GMC"/>
+            <label value="?"/>
+            <a label="Damas Adultas"/>
+            <vbox>
+              <a label="Moraima Castañeda"/>
+              <a label="Carolina de Barraez"/>
+            </vbox>
+            <label value="?"/>
+          </row>
+          <row>
+            <label value="13"/>
+            <label value="GRJ"/>
+            <a label="Explosión Juvenil"/>
+            <a label="Caballeros Jóvenes y Prejuveniles"/>
+            <vbox>
+              <a label="Albert Gómez"/>
+              <a label="Kevin Bastidas"/>
+<!--              <label value="Ricardo Barraez"/>
+              <label value="Johan Rivas"/>-->
+            </vbox>
+            <label value="?"/>        
+          </row>          
+          <row>
+            <label value="14"/>
+            <a label="GJF"/>
+            <a label="Salvavidas"/>
+            <a label="Caballeros Jóvenes y Prejuveniles"/>
+            <vbox>
+              <a label="Julio Mujica"/>
+              <a label="Francisco Rojas"/>
+            </vbox>
+            <label value="?"/>        
+          </row>
+          <row>
+            <label value="15"/>
+            <a label="GJH"/>
+            <a label="Fuerza Vida"/>
+            <a label="Caballeros Jóvenes y Prejuveniles"/>
+            <vbox>
+              <a label="Juan Carlos Godoy"/>
+              <a label="Hernán Zambrano"/>
+            </vbox>
+            <label value="Jueves 7.00 p.m."/>        
+          </row>
+          <row>
+            <label value="16"/>
+            <a label="GDR"/>
+            <a label="Zona de Rescate"/>
+            <a label="Caballeros Jóvenes y Prejuveniles"/>
+            <vbox>
+              <a label="Danny Salazar"/>
+              <a label="Ricardo Martínez"/>
+            </vbox>
+            <label value="?"/>        
+          </row>          
+          <row>
+            <label value="17"/>
+            <a label="GJG"/>
+            <a label="Blood and Fire"/>
+            <a label="Caballeros Jóvenes y Prejuveniles"/>
+            <vbox>
+              <a label="Gabriel Pérez"/>
+              <a label="Jairo Rivera"/>
+            </vbox>
+            <label value="Viernes 7.00 p.m."/>        
+          </row>
+          <row>
+            <label value="18"/>
+            <a label="GAM"/>
+            <a label="Andy y Marcos"/>
+            <a label="Caballeros Jóvenes y Adultos"/>
+            <vbox>
+              <a label="Andy Marchán"/>
+              <a label="Marcos Gil"/>
+            </vbox>
+            <label value="?"/>        
+          </row>          
+          <row>
+            <label value="19"/>
+            <a label="GJA"/>
+            <label value="?"/>
+            <a label="Caballeros Adultos"/>
+            <vbox>
+              <a label="Jhonny Torres"/>
+              <a label="Alexander Colmenárez"/>
+            </vbox>
+            <label value="Lunes 8.00 p.m."/>        
+          </row>      
+          <row>
+            <label value="20"/>
+            <a label="GAA"/>
+            <label value="?"/>
+            <a label="Caballeros Adultos"/>
+            <vbox>
+              <a label="Álvaro Mendoza"/>
+            </vbox>
+            <label value="?"/>        
+          </row> 
+          <row>
+            <label value="21"/>
+            <a label="GW"/>
+            <label value="?"/>
+            <a label="Caballeros Adultos"/>
+            <vbox>
+              <a label="Willy Barraez"/>
+            </vbox>
+            <label value="?"/>        
+          </row>        
+        </rows>
+      </grid>
+    </div>
+    <space height="30px"/>
+  </div>
+</zk>

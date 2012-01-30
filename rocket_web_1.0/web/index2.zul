@@ -1,0 +1,62 @@
+<?page id="pagPrincipal" cacheable="false" language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8"
+title="Casa de Oración - Rocket"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <zscript>
+  <![CDATA[
+    import org.zkoss.zk.ui.Sessions;    
+    //CÓDIGO DE PRUEBAS:
+    //TODO: QUITAR
+    void activarUsuario1(){
+    //usuario Gabriel:
+      Sessions.getCurrent().setAttribute("idRed", 1);
+      Sessions.getCurrent().setAttribute("idUsuario", 1);
+      Sessions.getCurrent().setAttribute("nombreUsuario", "SuperUsuario");
+    }
+    void activarUsuario2(){
+    //usuario Jairo:
+      Sessions.getCurrent().setAttribute("idRed", 1);
+      Sessions.getCurrent().setAttribute("idUsuario", 3);
+      Sessions.getCurrent().setAttribute("nombreUsuario", "Jairo Rivera");
+    }
+    void activarUsuario3(){
+      //usuario Juan Carlos:
+      Sessions.getCurrent().setAttribute("idRed", 2);
+      Sessions.getCurrent().setAttribute("idUsuario", 11);
+      Sessions.getCurrent().setAttribute("nombreUsuario", "Juan Carlos Godoy");
+    }
+    //activarUsuario1();
+  ]]>
+    </zscript>  
+    <borderlayout height="100%" width="100%">
+        <north id="rnorte" border="0">
+            <div width="100%">
+<!-- TODO: activar cambio de menú, según tipo de usuario -->
+<!-- este include representa la barra superior: que incluye menú principal y barra de navegación -->
+                <include id="vistaCentral" src="Menu.zul"/>
+            </div>
+        </north>  
+<!--        <center id="rcenter" title="" flex="true" border="0" autoscroll="true">-->
+        <center id="rcenter" title="" flex="true" border="0">
+<!--este include será donde se mostrarán las vistas de datos o formularios-->
+            <div align="left" style="margin:5px 5px 5px 10px;" width="100%">
+<!--        <include id="panelCentral" src="vistaDiscipuloProceso/Listado.zul"/>-->
+<!--        <include id="panelCentral" src="vistaLiderCelula/Listado.zul"/>-->
+<!--        <include id="panelCentral" src="vistaCuenta/Perfil.zul"/>-->
+<!--        <include id="panelCentral" src="vistaReporteCelula/ListadoAnteriores.zul"/>        -->
+<!--        <include id="panelCentral" src="vistaCelulaEstadisticas/CelulaEstadisticasResumen.zul"/>-->
+<!--        <include id="panelCentral" src="vistaCelulaEstadisticas/CelulaEstadisticas.zul"/>-->
+<!--        <include id="panelCentral" src="vistaReusable/Direccion.zul"/>-->
+
+<!--PROGRAMADAS CON BASE DE DATOS:-->
+<!--        <include id="panelCentral" src="vistaLider/Listado.zul"/>-->
+<!--        <include id="panelCentral" src="vistaCelula/Listado.zul"/>-->
+<!--            <include id="panelCentral" src="vistaReporteCelula/ListadoSemana.zul"/>        -->
+<!--            <include id="panelCentral" src="vistaReporteCelula/ListadoSemanaAdministrador.zul"/>        -->
+<!--            <include id="panelCentral" src="vistaReporteCelula/ListadoSemanaLiderRed.zul"/>        -->
+<!--                <include id="panelCentral" src="vistaAcceso/Registro.zul"/>        -->
+                <include id="panelCentral" src="vistaSIG/Acercade.zul"/>        
+<!--TODO: hacer vista de bienvenida, y explicación de que debe hacer el usuario-->
+            </div>
+        </center>
+    </borderlayout>
+</zk>

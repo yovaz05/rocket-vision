@@ -1,0 +1,45 @@
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="cdo.sgd.controladores.CtrlContacto">
+    <iframe 
+    src="https://docs.google.com/a/waytech.com.ve/spreadsheet/embeddedform?formkey=dGp0aWpieU53SHlwRTZhOVpiZ19WU2c6MQ" 
+    width="1024" height="768">Loading...</iframe>
+    
+    <label value="Contacto" sclass="titulo_ventana"/>   
+    <panel border="mold" width="450px">
+      <panelchildren>
+        <hbox>
+          <vbox style="margin:5px">
+            <space height="20px"/>
+            <label value="Tu Comentario" sclass="etiqueta_campo"/>
+            <space height="85px"/>
+            <label value="Tipo" sclass="etiqueta_campo"/>
+          </vbox>
+          <vbox style="margin:10px">
+            <space height="3px"/>
+            <textbox id="txtComentario" value="" cols="50" rows="5" mold="rounded"/>
+            <space height="10x"/>
+            <combobox id="cmbTipo" width="100px" inplace="false" value="Comentario" autocomplete="true" mold="rounded">
+              <comboitem id="tipoComentario" label="Comentario" value="1"/>
+              <comboitem id="tipoSugerencia" label="Sugerencia" value="2"/>
+              <comboitem id="tipoError" label="Error" value="3"/>
+            </combobox>
+          </vbox>
+        </hbox>        
+        <div align="left" style="padding-left:15px;">
+          <toolbarbutton id="btnGuardar" label="Guardar Cambios" sclass="botonAccion" tooltiptext="En construcción" visible="false"/>
+        </div>
+      </panelchildren>
+    </panel>
+    <zscript>
+  <![CDATA[
+    txtComentario.setFocus(true);
+]]>
+    </zscript>
+  </div>  
+</zk>
+

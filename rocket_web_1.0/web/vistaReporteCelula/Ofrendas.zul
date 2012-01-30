@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <grid style="border:0px" width="100%">
+    <columns>
+      <column id="col1" width="180px"/>
+      <column id="colEdit" visible="false"/>
+      <column id="colView"/>
+    </columns>
+    <rows>
+      <row>
+        <label value="Monto Ofrendas (BsF.)" sclass="etiqueta_campo" tooltiptext="Monto en bolívares fuertes, por ejemplo: 10.00 BsF. equivalen a 10 mil Bs anteriores"/>
+        <decimalbox id="txtOfrendasMonto" cols="9" value="0.00" constraint="no empty,no negative" tooltiptext="Importante: El monto es en bolívares fuertes, asegúrate de ingresar el monto correcto."/>
+        <label id="etqOfrendasMonto" value="0.00" tooltiptext="Importante: El monto es en bolívares fuertes."/>
+        <!--TODO: al lado se debería colocar una ayuda para advertir al usuario que use montos en BS Fuertes, no valores en Bs de los viejos, y también validar los valores ingresados-->
+      </row>     
+<!--      TODO: se usará este campo en próximas versiones-->
+      <row visible="false">
+        <label value="Entregadas en la iglesia" sclass="etiqueta_campo"/>
+        <checkbox id="chkEntregadas" checked="false"/>
+        <label id="etqOfrendasEntregadas" value="No" sclass="checksi"/>
+      </row>
+    </rows>
+  </grid>
+
+</zk>

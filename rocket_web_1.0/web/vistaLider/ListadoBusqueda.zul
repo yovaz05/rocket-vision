@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="rocket.controladores.lider.CtrlLiderListado" width="750px">
+    <div align="left" style="padding: 5px 15px">
+      <label id="tituloVentana" value="Búsqueda de Líderes" sclass="titulo_ventana"/>
+      <label id="etqInstrucciones" value="Elige una red" sclass="mensajes"/>
+      <label id="etqMensajeNoData" sclass="mensajes"
+    value="Esta red no tiene líderes registrados"
+    visible="false"/>
+    </div>
+    <toolbar width="100%" height="20px" sclass="barraBotones"  visible="false">
+      <toolbarbutton id="btnNew" label="Nuevo" sclass="botonAccion"/>
+    </toolbar>
+    <div align="center">
+      <grid id="grid" style="border:normal" mold="paging" pageSize="6">
+        <columns sizable="true">
+          <column label="#"         width="25px"/>
+          <column label="Nombre"    width="175px"/>
+          <column label="Red"       width="175px"/>
+          <column label="Dirección" width="200px"/>
+          <column label="Teléfono"  width="100px"/>
+          <column label="Email"/>
+<!--          TODO: será usado en próxima versión-->
+<!--          <column label="Líderes"/>-->
+        </columns>
+      </grid>
+    </div>
+  </div>
+</zk>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div width="450px" apply="rocket.controladores.usuario.CtrlPerfil">
+    <label value="Mis datos" sclass="titulo_ventana"/>  
+    <grid>
+      <columns>
+        <column width="125px"/>
+        <column label=""/>
+      </columns>
+      <rows>
+        <row>
+          <label value="Nombre" sclass="etiqueta_campo"/>
+          <label id="etqNombre" value=""/>
+        </row>
+        <row>
+          <label value="Red" sclass="etiqueta_campo"/>
+          <label id="etqRed" value=""/>
+<!--          Enlace a red, será usado luego-->
+      <a id="tbbRed" label="" visible="false"/>
+        </row>        
+        <row visible="false">
+          <label value="Líderes" sclass="etiqueta_campo"/>
+          <vbox>
+            <a id="tbbLider1" label=""/>
+            <a id="tbbLider2" label=""/>
+            <a id="tbbLider3" label=""/>
+            <a id="tbbLider4" label=""/>
+          </vbox>
+        </row>
+        <row>        
+          <label value="Dirección" sclass="etiqueta_campo"/>
+          <label id="etqDireccion" value=""/>
+        </row> 
+        <row>        
+          <label value="Teléfono" sclass="etiqueta_campo"/>
+          <label id="etqTelefono" value=""/>
+<!-- Enlace a teléfono, será usado luego, para llamadas directas -->
+          <toolbarbutton id="tbbTelefono" label="" visible="false"/>
+        </row> 
+        <row>        
+          <label value="Email" sclass="etiqueta_campo"/>
+          <label id="etqEmail" value=""/>
+<!-- Enlace a email, será usado luego, para envío de correo directo -->
+          <toolbarbutton id="tbbEmail" label="" visible="false"/>
+        </row> 
+        <row visible="false">
+          <label value="Edad" sclass="etiqueta_campo"/>
+          <label id="etqEdad" value=""/>
+        </row>
+      </rows>
+    </grid>
+    <space height="10px"/>
+    <div align="right">
+      <a id="tbbVerMas" label="Editar »" sclass="botonAccion" tooltiptext="Ver datos completos y editar"/>
+    </div>
+    <toolbarbutton id="btnEditar" visible="false"/>
+  </div>
+</zk>

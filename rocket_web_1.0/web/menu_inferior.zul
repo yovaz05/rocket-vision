@@ -1,0 +1,25 @@
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <div sclass="barra_inferior">
+    <toolbar mold="panel" style="background-color: white;">
+      <label value="Rocket"/>
+      <label value="- Gestión de Células"/>
+      <label value="© 2012"/>
+      <a label="Casa de Oración" href="http://www.casadeoracion.com.ve/" target="_BLANK" tooltiptext="Ir al sitio web"/>
+      <separator orient="vertical" bar="true" visible="false"/>
+      <toolbarbutton label="Política de privacidad" visible="false"/>
+      <separator orient="vertical" bar="true" visible="false"/>
+      <toolbarbutton label="Compatibilidad" visible="false"/>
+      <separator orient="vertical" bar="true" visible="false"/>
+      <toolbarbutton label="Condiciones" visible="false"/>
+      <separator orient="vertical" bar="true" visible="false"/>
+      <toolbarbutton label="Contacto" visible="false"/>
+      <separator orient="vertical" bar="false"/>
+      <a label="Ayuda" onClick='Messagebox.show("En construcción", "Ayuda en Construcción", Messagebox.OK, Messagebox.INFORMATION)'
+      visible="false"/>
+    </toolbar>
+  </div>
+</zk>

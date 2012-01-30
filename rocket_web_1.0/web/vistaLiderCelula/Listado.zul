@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="cdo.sgd.controladores.CtrlLiderCelulaListado" width="825px">
+    <label id="tituloVentana" value="Líderes de Célula" sclass="titulo_ventana"/>
+    <toolbar width="100%" height="20px" sclass="barraBotones" visible="false">
+      <toolbarbutton id="btnNew" label="Nuevo" sclass="botonAccion" onClick="ingresar()"/>
+    </toolbar>
+    <grid id="grid" style="border:normal" mold="paging" pageSize="5">
+      <columns sizable="true">
+        <column label="#"         width="25px"/>
+        <column label="Nombre"    width="150px"/>
+        <column label="Dirección" width="225px"/>
+        <column label="Teléfono"  width="100px"/>
+        <column label="Email"     width="200px"/>
+        <column label="Célula" width="120px"/>
+      </columns>
+      <rows>
+        <row>
+          <label id="etqNro" value="1"/>
+          <toolbarbutton id="tbbNombre" label="" width="135px" />
+          <label  id="etqDireccion" value=""/>
+          <toolbarbutton id="tbbTelefono" label=""/>
+          <toolbarbutton id="tbEmail" label="" width="200px"/>
+          <toolbarbutton id="tbbCelula" label=""/>
+        </row>
+      </rows>
+    </grid>
+  </div>
+</zk>

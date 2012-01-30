@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="cdo.sgd.controladores.CtrlReporteCelulaListadoAnteriores" width="845px">
+<!--  <div width="600px">-->
+    <hbox>
+      <label id="tituloVentana" value="Reportes de Células » Semanas Anteriores" sclass="titulo_ventana"/>
+      <space width="200px"/>
+<!--      <label id="etqMensajeSuperior" value="En construcción" sclass="mensajes" visible="true"/>    -->
+    </hbox>
+    <grid id="grid" style="border:normal" width="100%" mold="paging" pageSize="5">
+      <auxhead>
+        <auxheader label="Célula" colspan="4" align="center"/>
+        <auxheader label="Reportes" colspan="5" align="center"/>
+      </auxhead>
+      <columns sizable="true">
+        <column label="#" width="20px" align="center"/>
+        <column label="Código" width="80px"/>
+        <column label="Dirección" width="120px"/>
+        <column label="Líderes" width="120px"/>        
+<!--        <column label="Día/Hora" width="110px"/>-->
+<!--        <column label="Nombre" width="180px" visible="false"/>-->
+        <column label="30 Oct - 5 Nov" id="colEstadoReporte1" width="100px"/>
+        <column label="6 - 12 Nov" id="colEstadoReporte2" width="100px" align="center"/>
+        <column label="13 - 19 Nov" id="colEstadoReporte3" width="100px" align="center"/>
+        <column label="20 - 26 Nov" id="colEstadoReporte4" width="100px" align="center"/>
+        <column label="27 Nov - 03 Dic" id="colEstadoReporte5" width="100px" align="center"/>
+      </columns>      
+      <rows>
+      </rows>
+    </grid>
+    <space height="15px"/>
+    <div id="divLeyenda" align="center"
+    style="font-size: 62.5%; font-family: Arial,sans-serif; display:inline-block; padding:10px">
+      <div style="background: url(img/iconos/status_ok_16.gif) no-repeat; display:inline-block;" height="20px">
+        <label style="padding: 0 20px" value="Reporte ingresado"/>
+      </div>
+      <div style="background: url(img/iconos/status_not_16.png) no-repeat; display:inline-block;" height="20px">
+        <label style="padding: 0 20px" value="Reporte NO ingresado"/>
+      </div>
+      <div style="background: url(img/iconos/status_alert_16.gif) no-repeat; display:inline-block;" height="20px">
+        <label style="padding: 0 20px" value="Célula NO realizada"/>
+      </div>
+    </div>    
+    <div align="right" style="display:inline-block;padding:5px;float:right">
+<!--      TODO: Mejorar presentación con imagenes de flechas-->
+<!--      <image onClick="" src="img/iconos/left_arrow.gif" width="16px" height="9px" tooltiptext="Ver reportes más recientes" sclass="barranaveg_fechas"/>-->
+      <a label="« Más Recientes" tooltiptext="Ver reportes más recientes"
+      sclass="botonAccion"
+      onClick='mensaje("En construcción");'/>
+      <a label="Anteriores »"
+      tooltiptext="Ver reportes más antiguos"
+      sclass="botonAccion"
+      onClick='mensaje("En construcción");'/>
+    </div>
+    <div align="right" style="marging:2px 10px">
+      <label id="etqMensaje" sclass="mensajes" style="padding:2px" value="" visible="false"/>
+    </div>    
+  </div>      
+<!--      <toolbarbutton label="« Más Recientes" sclass="botonAccion" onClick='mensaje("En construcción");'
+      style="background: url(img/iconos/left_arrow.gif) no-repeat scroll 0 0 #DDDDDD;" tooltiptext="Ver reportes más antiguos"/>-->
+
+<!--      <toolbarbutton id="btnMes" sclass="botonAccion"
+      label="Último Mes" tooltiptext="Ver reportes del último mes"       
+      onClick='mensaje("Reportes del mes: En construcción");mostrarBotonSemana(true);'/>
+      <space height="15px"/>-->
+<!--      <toolbarbutton id="btnTrimestre" sclass="botonAccion"
+      label="Último Trimestre" tooltiptext="Ver reportes del último mes"       
+      onClick='mensaje("Reportes del último trimestre: En construcción");mostrarBotonSemana(true);'/>-->
+<!--      <label value="Ver"/>
+      <spinner id="spnNumeroPeriodos" value="1" constraint="no empty, min 1 max 12" width="50px" readonly="true"/>
+      <combobox id="cmbTipoPeriodo" value="Semanas" autodrop="true" readonly="true" width="80px" onChange="">
+        <comboitem label="Semanas"/>
+        <comboitem label="Meses"/>
+        <comboitem label="Años" visible="false"/>
+      </combobox>      
+      <label value="anteriores"/>
+      <toolbarbutton id="btnAplicar" label="Aplicar" sclass="botonAccion" onClick='mensaje("En construcción");'/>-->
+
+<!--      <toolbarbutton id="btnAplicar" sclass="botonAccion"
+      label="Aplicar" tooltiptext="Ver reportes del último mes"       
+      onClick='mensaje("Reportes anteriores: En construcción")'/>-->
+<!--      <toolbarbutton id="btnSemana" sclass="botonAccion"
+      label="Esta semana" tooltiptext="Ver reportes de esta semana"       
+      onClick='reiniciar();'/>-->
+<!--      <toolbarbutton id="btnMes" sclass="botonAccion"
+      label="Último Mes" tooltiptext="Ver reportes de las últimas 4 semanas"       
+      onClick='ultimoMes()'/>    -->
+
+<!--    TODO: pasar esto al controlador-->
+  <zscript>
+    <![CDATA[
+    void mensaje(String msj){
+      etqMensaje.setVisible(true);
+      etqMensaje.setValue(msj);
+    }
+    //TODO: pasar a controlador
+    void mostrarBotonSemana(boolean status){
+      btnSemana.setVisible(status);
+    }
+    //TODO: pasar a controlador
+    void reiniciar(){
+      //opción A:
+      panelCentral.setSrc("");
+      panelCentral.setSrc("vistaReporteCelula/Listado.zul");
+      //colEstadosReporte
+      //opción B:
+      /*
+      spnNumeroPeriodos.setValue(1);
+      cmbTipoPeriodo.setValue("Semanas");
+      */
+    }
+    //TODO: pasar a controlador
+    void ultimoMes(){
+      spnNumeroPeriodos.setValue(4);
+      cmbTipoPeriodo.setValue("Semanas");
+      mensaje("Reportes del mes: En construcción");
+    }
+    ]]>        
+  </zscript> 
+</zk>

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page id="pagMenu" cacheable="false" language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8"
+title="SIG - Mejorando barra superior"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="rocket.controladores.acceso.CtrlMenu">
+<!-- barra superior -->
+    <div width="100%" align="center" height="29px"
+  style="display: block;
+  background: #D6EFFB;
+  border-bottom: 1px solid #8FB9D0;
+  margin:0px;
+  border-spacing:0px;
+  white-space: nowrap;"
+  >
+    
+<!-- barra de menú -->
+      <div id="divIzquierda" style="display:inline-block;float:left" width="0px">
+        
+<!--     Aquí están todas las opciones unidas, desarrollo
+        <menubar id="menuAll" orient="horizontal" height="24px" visible="false">
+          <menuitem label="Ingresar Líder" id="itemLiderNew"/>
+          <menuitem label="Ingresar Célula" id="itemCelulaNew"/>
+          <menuitem label="Líderes" id="itemLiderListado"/>
+          <menuitem label="Células" id="itemCelulaListado"/>
+          <menuitem label="Reportes" id="itemReporteCelulaListadoAdministrador"/>
+        </menubar>    
+        -->
+
+                <!-- menú separado por tipo de usuario-->
+        <menubar orient="horizontal" height="24px">
+          <menu id="menuUsuario" tooltiptext="Opciones">
+            <menupopup>
+<!--           <menuitem label="Mis datos"          id="itemPerfil"           image="/img/iconos/bullet.png"/>-->
+<!--           <menuitem label="Cambiar correo"     id="itemCambiarEmail"     image="/img/iconos/bullet.png" visible="false"/>-->
+              <menuitem label="Cambiar contraseña"  id="itemCambiarPassword"  image="/img/iconos/bullet.png"/>
+              <menuitem label="Salir"               id="itemCerrarSesion"     image="/img/iconos/bullet.png"/>
+            </menupopup>
+          </menu>
+          <menuitem id="itemPerfil" label="Nombre Usuario" tooltiptext="Perfil"/>
+
+          <menuitem id="itemReporteCelulaListado" label="Ingresar reportes" tooltiptext="Ingresar reportes de tu célula"
+          visible="false"/>
+          
+          <menu id="menuLiderRed" label="Mi Red" visible="false">
+            <menupopup>
+              <menuitem label="Líderes" id="itemLiderListadoRed" image="/img/iconos/bullet.png"/>
+              <menuitem label="Células" id="itemCelulaListadoRed" image="/img/iconos/bullet.png"/>
+              <menuitem label="Reportes" id="itemReporteCelulaListadoRed" image="/img/iconos/bullet.png"/>
+            </menupopup>
+          </menu>   
+          
+          <menu id="menuAdmin" label="Administrar" visible="false">
+            <menupopup>
+              <menuitem label="Ingresar Líder" id="itemLiderNew" image="/img/iconos/bullet.png"/>
+              <menuitem label="Ingresar Célula" id="itemCelulaNew" image="/img/iconos/bullet.png"/>
+              <menuitem label="Ver Líderes" id="itemLiderListadoAdmin" image="/img/iconos/bullet.png"/>
+              <menuitem label="Ver Células" id="itemCelulaListadoAdmin" image="/img/iconos/bullet.png"/> 
+              <menuitem label="Ver Reportes" id="itemReporteCelulaListadoAdmin" image="/img/iconos/bullet.png"/>
+<!--        TODO: crear estos links
+          <menuitem label="Ver Líderes" id="itemLiderListadoAdmin"/>
+          <menuitem label="Ver Células" id="itemCelulaListadoAdmin"/>
+-->
+            </menupopup>
+          </menu>
+          
+          <menuitem label="Buscar Líder" id="itemLiderBusqueda"/>
+          
+
+        </menubar>
+        
+<!-- Menú completo, prototipo inicial -->
+<!--          <menubar id="menubar" orient="horizontal" height="24px">
+                  DEBUG: items en desarrollo
+            <menuitem label="Células" id="itemCelulaListado" image="/img/iconos/bullet.png"/>
+            <menuitem label="Lanzados" id="itemDiscipuloLanzadoListado" image="/img/iconos/bullet.png"/>
+          <menuitem id="itemNombreSistema" label="SIG" height="22px"/>
+            <menuitem label="Mi Red" id="itemRed" visible="false"/>
+            <menu label="Mis Células" visible="false">
+              <menupopup>
+                <menuitem label="Células" id="itemCelulaListado" image="/img/iconos/bullet.png"/>
+                <menuitem label="Líderes" id="itemCelulaLiderListado" image="/img/iconos/bullet.png" visible="false"/>
+                <menuitem label="Reportes" id="itemCelulaReporteListado" image="/img/iconos/bullet.png" visible="false"/>
+                <menuitem label="Estadísticas" id="itemCelulaEstadisticas" image="/img/iconos/bullet.png" visible="false"/>
+              </menupopup>
+            </menu>
+            <menu label="Mis Discípulos" visible="false">
+              <menupopup>
+                <menuitem label="Lanzados" id="itemDiscipuloLanzadoListado" image="/img/iconos/bullet.png"/>
+                <menuitem label="En Proceso" id="itemDiscipuloProcesoListado" image="/img/iconos/bullet.png"/>
+              </menupopup>
+            </menu>
+            <menu label="Herr" visible="false">
+              <menupopup>
+                <menuitem label="Listado Acceso"           id="itemListadoAcceso"      image="/img/iconos/bullet.png"/>
+                <menuitem label="Cambiar Datos"            id="itemAccesoDatos"        image="/img/iconos/bullet.png"/>
+                <menuitem label="Listado Tipos de persona" id="itemListadoTipoPersona" image="/img/iconos/bullet.png"/>
+              </menupopup>
+            </menu>
+          </menubar>-->
+        
+        <hbox>
+
+    <!-- panel de búsqueda-->
+<!--          <div align="center"
+            style="display:inline-block;padding-left:10px">
+            <textbox value="Buscar..."
+        onFocus='self.value=""' onBlur='self.value="Buscar..."'
+        onOK='mensaje("Búsqueda: En construcción")'
+        style="color: #999;
+              border: 1px solid #4D90FE;
+              outline: none;
+              box-shadow: inset inset 0 1px 2px rgba(0,0,0,0.3);
+              -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);        
+              height: 24px;
+              margin: 2px;
+              padding: 0 10px 0 6px;
+              width: 200px;"
+        />
+          </div>  
+          -->
+        </hbox>
+      </div>
+<!-- panel del usuario -->
+<!--      <div id="divDerecho" style="display:inline-block;float:right" width="300px">-->
+      <div id="divDerecha" style="display:inline-block;float:right">
+        <menubar height="24px">
+          <menu id="menuCDO" label="Casa de Oración" visible="true">
+            <menupopup>
+              <menuitem label="Líderes" id="itemLiderListadoAll" image="/img/iconos/bullet.png"/>
+              <menuitem label="Células" id="itemCelulaListadoAll" image="/img/iconos/bullet.png"/>
+            </menupopup>
+          </menu>    
+<!--      
+          <menu label="Redes" tooltiptext="Redes de toda la iglesia">
+            <menupopup>
+              <menuitem label="Listado" id="itemRedListado"/>
+              <menuitem label="Líderes de Red" id="itemLiderRedListado"/>
+              <menuitem label="Células" id="itemCelulaListadoTodas"/>
+              <menuitem label="Líderes de Células" id="itemLiderCelulaListadoTodas"/>
+            </menupopup>
+          </menu>
+            -->
+          <menu label="Web" tooltiptext="enlaces">
+            <menupopup>
+              <menuitem label="Web Principal" href="http://www.casadeoracion.com.ve/" target="_BLANK" image="/img/iconos/open_apart.png"/>
+              <menuitem label="Facebook" href="http://www.facebook.com/PastorRogelioMora" target="_BLANK" image="/img/iconos/facebook16.png"/>
+              <menuitem label="Twitter" href="http://www.twitter.com/PrRogelioMora" target="_BLANK" image="/img/iconos/twitter16.png"/>
+              <menuitem label="Videos" href="http://www.youtube.com/casadeoracionenvenez" target="_BLANK" image="/img/iconos/youtube16.png"/>
+              <menuitem label="Fotos" href="https://picasaweb.google.com/111869476168340172902" target="_BLANK" image="/img/iconos/picasa16.png"/>
+            </menupopup>
+          </menu>         
+          <menu tooltiptext="Opciones del Sistema" image="/img/iconos/tuerca2.png" hoverImage="/img/iconos/tuerca-hover.png">
+            <menupopup>
+              <menuitem id="itemAyuda" label="Ayuda" image="/img/iconos/help_blue16.png" tooltiptext="En construcción"/>
+              <menuitem id="itemCompatibilidad" label="Compatibilidad" image="/img/iconos/bullet.png" visible="false"/>
+              <menuitem id="itemCondiciones" label="Condiciones" image="/img/iconos/bullet.png" visible="false"/>
+              <menuitem id="itemPrivacidad" label="Privacidad" image="/img/iconos/bullet.png" visible="false"/>
+              <menuitem id="itemContacto" label="Contacto" image="/img/iconos/bullet.png" visible="false"/>
+              <menuitem id="itemAcercaDe" label="Acerca de..." image="/img/iconos/bullet.png"/>
+            </menupopup>
+          </menu> 
+        </menubar>
+      </div>
+    </div>
+
+<!-- barra inferior: botonera y búsqueda -->
+    <div width="100%" height="40px"
+ style="display: block;  
+  background: #F1F1F1;
+  border-bottom: 1px solid #D2D2D2;
+  border-top: 1px solid #D2D2D2;  padding:0px;
+  margin:0px;
+  border-spacing:0px;
+  white-space: nowrap;"
+  >
+<!--    barra de botones-->
+      <div id="barraNaveg"
+    style="display:inline-block;margin: 5px;padding-left: 15px">
+<!--        <image id="itemNombreSistema" src="/img/logo/SIG.png" style="cursor: pointer;"/>-->
+<!--        <toolbarbutton id="btnAtras" tooltiptext="Vista Anterior" sclass="botonAccion" image="/img/iconos/previous24.png" disabled="true"/>
+        <toolbarbutton id="btnSiguiente" tooltiptext="Vista Siguiente" sclass="botonAccion" image="/img/iconos/next24.png" disabled="true"/>-->
+        <toolbarbutton id="btnPrint"    tooltiptext="Imprimir"        image="/img/iconos/printer24.png" visible="false"/>
+        <toolbarbutton id="btnRefresh"  tooltiptext="Refrescar"       image="/img/iconos/refresh24.png" visible="true"/>
+        <toolbarbutton id="btnEdit"     tooltiptext="Editar"          image="/img/iconos/edit24.png" visible="false"/>
+        <toolbarbutton id="btnSave"     tooltiptext="Guardar cambios" image="/img/iconos/ok22.png" visible="false"/>
+        <!-- TODO: falta botón cancelar -->
+        <toolbarbutton id="btnDelete"     tooltiptext="Eliminar" image="/img/iconos/delete22.png" visible="false"/>
+        <toolbarbutton id="btnNew"        tooltiptext="Ingresar" image="/img/iconos/add24.png" visible="false"/>
+        <!-- TODO: quitar este botón -->
+        <toolbarbutton id="btnConfirmar"  label="Confirmar" visible="false"/>
+      </div>
+
+      <div id="divStatus" align="left" style="display:inline-block;margin:2px; padding: 2px 5px;"
+      onClick="cerrarMensaje()">
+        <label id="etqStatus"
+          value="Para mensajes al usuario"
+          sclass="mensajes"
+          style="margin: 2px; padding:2px;"
+          visible="false"/>
+      </div>
+    </div>
+    <toolbarbutton id="btnControl"  label="" visible="false"/>
+    <toolbarbutton id="btnControl2" label="" visible="false"/>      
+  </div>
+  <zscript>
+    <![CDATA[
+     void mensaje(String msj){
+      etqStatus.setValue(msj);
+      etqStatus.setVisible(true);
+    }
+     void cerrarMensaje(){
+      etqStatus.setVisible(false);
+    }
+    ]]>        
+  </zscript>    
+</zk>

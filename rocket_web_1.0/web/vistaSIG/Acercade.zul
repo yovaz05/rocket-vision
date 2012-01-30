@@ -1,0 +1,37 @@
+<?page id="testZul" title="Inicio" cacheable="false"
+	language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8" title="Inicio del sistema"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">    
+  <style src="css/estilos1.css"/>
+  <div>
+    <label value="Casa de Oración - Gestión de Células" sclass="titulo_ventana"/>      
+    <div align="center">
+      <div align="left" style="padding: 0px 20px">
+        <html><![CDATA[
+<div>
+<!--<h3>Casa de Oración  »  Gestión de Células</h3>-->
+<p>Versión 1.0  »  23 Enero 2012</p>
+<br>
+<h3>Características Funcionales</h3>
+<p>Gestión de información de células</p>
+<p>Gestión de información de líderes</p>
+<p>Ingreso de reportes semanales.</p>
+<p>Supervisión de reportes semanales.</p>
+<br>
+<h3>Características en desarrollo</h3>
+<p>Estadísticas Automáticas</p>
+<p>Líderes y células por niveles (12, 72, 432,...).</p>
+<p>Notificaciones</p>
+<!--<p>
+<h4>Desarrolladores:</h4>
+<p style="color: #666;">Gabriel Pérez - gabrielperez@waytech.com.ve</p>
+<p style="color: #666;">Gerardo Montilla - gerardomontilla@waytech.com.ve</p>
+</p>-->
+]]>
+        </html>
+      </div>        
+    </div>
+  </div>
+</zk>

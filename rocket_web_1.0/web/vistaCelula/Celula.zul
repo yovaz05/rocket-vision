@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="rocket.controladores.celula.CtrlCelula" width="450px">
+    <div>
+      <label id="etqTituloVentana" sclass="titulo_ventana"/>
+    </div>
+    <div id="divMensaje" align="center" style="margin:2px;padding:5px"
+    onClick="self.visible=false">
+      <label id="etqMensaje" value="Mensajes al usuario:"
+      sclass="mensajes" style="margin: 2px; padding:2px;"
+      onClick="self.visible=false"
+      visible="false"/>
+    </div>
+<!--    botones no visibles, los eventos son ejecutados por CtrlMenu -->
+    <toolbar width="100%" height="20px" sclass="barraBotones" visible="false">
+      <toolbarbutton id="btnNew" label="Nueva" sclass="botonAccion" visible="false"/>
+      <toolbarbutton id="btnGuardar" label="Guardar" sclass="botonAccion" visible="false"/>
+      <toolbarbutton id="btnEditar" label="Editar" sclass="botonAccion" visible="false"/>
+      <toolbarbutton id="btnBorrar" label="Borrar" sclass="botonAccion" visible="false"/>
+      <toolbarbutton id="btnImprimir" label="Imprimir" sclass="botonAccion" visible="false"/>
+    </toolbar>
+    <tabbox id="tabbox" width="100%" mold="accordion">
+      <tabs>
+        <tab id="tabDB" label="Datos Básicos"/>
+        <tab id="tabDir" label="Dirección" visible="false"/>
+<!--        TODO: usar esta pestaña en futuras versiones-->
+        <tab id="tabOtros" label="Otros datos" visible="false"/>
+        <tab id="tabObs" label="Observaciones" visible="false"/>
+      </tabs>
+      <tabpanels>
+        <tabpanel>
+          <include id="db" src="vistaCelula/DatosBasicos.zul"/>
+        </tabpanel>
+        <tabpanel>
+          <include id="dir" src="vistaReusable/Direccion.zul"/>  
+        </tabpanel>
+<!--        TODO: usar esta pestaña en futuras versiones-->
+        <tabpanel>
+          <include id="otros" src="vistaCelula/OtrosDatos.zul" visible="false"/>  
+        </tabpanel>
+        <tabpanel visible="false">
+          <include id="obs" src="vistaReusable/Observaciones.zul"/>  
+        </tabpanel>
+      </tabpanels>
+    </tabbox>   
+<!--TODO: activar esta opción: ingreso/visualización directo del reporte-->
+<!--    <space height="15px"/>      
+    <div align="right">
+      <a id="btnIngresarReporte" label="Reporte Semana »" sclass="botonAccion" visible="false"/>
+    </div>-->
+  </div>
+</zk>

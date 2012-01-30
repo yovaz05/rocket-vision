@@ -1,0 +1,45 @@
+<?page id="testZul" title="Inicio" cacheable="false"
+	language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8" title="Inicio del sistema"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div>
+    <label value="Ayuda" sclass="titulo_ventana"/> 
+    <div align="left" style="padding: 0px 20px">
+      <html><![CDATA[
+<div style="color:#4682B4;">
+  <p>Versión 1.0  »  23 Enero 2012</p>
+  <ul>
+    <li>Para un líder de célula:</li>
+    <ul>
+      <li><a>Acceder al sistema.</a></li>
+      <li><a>Ingresar reporte de célula.</a></li>
+      <li><a>Ver y editar datos de tu célula.</a></li>
+      <li><a>Ver reportes.</a></li>
+    </ul>
+    <br>
+    <li>Para un líder de red:</li>
+    <ul>
+      <li><a>Acceder al sistema.</a></li>
+      <li><a>Ver y editar datos de tu red.</a></li>
+      <li><a>Ver las células de mi red.</a></li>
+      <li><a>Registrar una célula.</a></li>
+      <li><a>Ver reportes.</a></li>
+      <li><a>Ver estadísticas.</a></li>
+    </ul>
+    <br>
+    <li>Para cualquier usuario:</li>
+    <ul>
+      <li><a>He detectado un mal funcionamiento del sistema.</a></li>
+      <li><a>Tengo una pregunta.</a></li>
+      <li><a>Tengo una sugerencia.</a></li>
+    </ul>
+  </ul>
+</div>
+]]>
+      </html>
+    </div>        
+  </div>
+</zk>

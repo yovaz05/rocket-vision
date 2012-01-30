@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <style src="css/estilos1.css"/>  
+  <grid style="border:0px" apply="rocket.controladores.general.CtrlDireccion" >
+    <columns>
+      <column id="col1" width="90px"/>
+      <column id="colData"/>
+      <column id="colEdit" visible="false"/>
+    </columns>
+    <rows>
+<!--Estado-->
+      <row>
+        <label value="Estado" sclass="etiqueta_campo"/>
+        <hbox align="left">
+<!--          <label id="etqEstado" value="Lara"/>-->
+          <label id="etqEstado" value="Editar"/>
+          <combobox id="cmbEstado"
+          autocomplete="true" autodrop="true" readonly="true"
+          visible="false">
+          <!-- TODO: CODIGO: quitar la lista, los valores son traidos de la bd -->
+<!--            <comboitem label="Lara"/>
+            <comboitem label="Yaracuy"/>
+            <comboitem label="Carabobo"/>
+            <comboitem label="Agregar..."/>
+            -->
+          </combobox>        
+<!-- Este textbox permite al usuario agregar una ciudad -->
+          <textbox id="txtEstado"
+          tooltiptext="Ingresa el nombre del estado"
+          visible="false"/>
+        </hbox>
+<!--        <div align="left">
+          <a id="btnEditEstado" tooltiptext="Editar"
+            image="/img/iconos/edit_row.png"
+            hoverImage="/img/iconos/edit_row_hover.png"
+             visible="false"/>
+          <a id="btnCancelarEditEstado" visible="false"
+            tooltiptext="Cancelar Edición"
+            image="/img/iconos/cancel_row.png"
+            hoverImage="/img/iconos/cancel_row_hover.png"/>
+        </div>
+-->
+      </row>
+      
+<!--Ciudad-->
+      <row>
+        <label value="Ciudad" sclass="etiqueta_campo"/>
+        <hbox align="left">
+<!--          <label id="etqCiudad" value="Barquisimeto"/>-->
+          <label id="etqCiudad" value=""/>
+          <combobox id="cmbCiudad" autocomplete="true" autodrop="true" readonly="true"
+          visible="false">
+          <!-- TODO: CODIGO: quitar la lista, los valores son traidos de la bd -->
+<!--            <comboitem label="Barquisimeto"/>
+            <comboitem label="Cabudare"/>
+            <comboitem label="Duaca"/>
+            <comboitem label="Yaritagua"/>
+            <comboitem label="Agregar..."/>
+            -->
+          </combobox>
+          
+<!-- Este textbox permite al usuario agregar una ciudad -->
+          <textbox id="txtCiudad"
+          tooltiptext="Ingresa el nombre de la ciudad"
+          visible="false"/>
+        </hbox>
+<!--        <div align="left" visible="true">
+          <a id="btnEditCiudad" tooltiptext="Editar"
+            image="/img/iconos/edit_row.png"
+            hoverImage="/img/iconos/edit_row_hover.png"
+            visible="false"/>
+            <a id="btnCancelarEditCiudad"
+            tooltiptext="Cancelar Edición"
+            image="/img/iconos/cancel_row.png"
+            hoverImage="/img/iconos/cancel_row_hover.png"
+            visible="false"/>
+          </div>          
+-->
+      </row>
+      <row>
+        <label value="Sector" sclass="etiqueta_campo"/>
+        <hbox align="left">
+          <label id="etqZona" value=""/>          
+<!--          <combobox id="cmbZona" value="Centro" autocomplete="true" autodrop="true" readonly="true">-->
+          <combobox id="cmbZona" autocomplete="true" autodrop="true" readonly="true"
+          visible="false">
+          <!-- TODO: CODIGO: quitar la lista, los valores son traidos de la bd -->
+<!--            <comboitem label="Centro"/>
+            <comboitem label="Los Cerrajones"/>
+            <comboitem label="El Cercado"/>
+            <comboitem label="Macuto"/>
+            <comboitem label="Agua Viva"/>
+            <comboitem label="Atapaima"/>
+            <comboitem label="El Placer"/>
+            <comboitem label="Santa Inés"/>
+            <comboitem label="Veragacha"/>
+            <comboitem label="Yaritagua"/>
+            <comboitem label="Agregar..." id="itemZonaAdicional"/>
+            -->
+          </combobox>
+
+          <textbox id="txtZona"
+          tooltiptext="Ingrese el nombre del sector"
+          value="NUEVA ZONA"
+          visible="false"/>
+        </hbox>
+<!-- 
+        <div align="left" visible="false">
+            <a id="btnEditZona" tooltiptext="Editar"
+            onClick="activarEditZona()"
+            image="/img/iconos/edit_row.png"
+            hoverImage="/img/iconos/edit_row_hover.png"/>
+          <a id="btnCancelarEditZona"
+          tooltiptext="Cancelar"
+          image="/img/iconos/cancel_row.png"
+          hoverImage="/img/iconos/cancel_row_hover.png"
+          visible="false"
+          />
+        </div>
+-->
+      </row>           
+      <row id="filaDirDetalle" tooltiptext="Calle, Avenida, Número, Referencia, etc."> 
+        <label value="Detalle" sclass="etiqueta_campo"/>
+        <hbox align="left">
+          <label id="etqDetalle" value="Editar" multiline="true"/>
+          <textbox id="txtDetalle" rows="3" cols="50" multiline="true"
+          value="" visible="false"/>
+        </hbox>
+<!--          <div align="left" visible="false">
+            <a id="btnEditDirDetalle" tooltiptext="Editar"
+            onClick="activarEditZona()"
+            image="/img/iconos/edit_row.png"
+            hoverImage="/img/iconos/edit_row_hover.png"/>
+            <a id="btnCancelarEditDetalle" visible="false"
+            tooltiptext="Cancelar Edición"
+            onClick="cancelarEditZona()"
+            image="/img/iconos/cancel_row.png"
+            hoverImage="/img/iconos/cancel_row_hover.png"/>
+          </div>        
+-->
+      </row> 
+      <row visible="false">
+        <label value="Teléfono" sclass="etiqueta_campo"
+          tooltiptext="Teléfono de la casa o lugar donde se realiza la célula"/>
+        <hbox align="left">
+          <label id="etqTelefono" value="Editar"/>
+          <textbox id="txtTelefono" maxlength="15" value="" visible="false"/>
+        </hbox>
+<!--          <div align="left" visible="false">
+            <a id="btnEditTelefono" tooltiptext="Editar"
+            onClick="activarEditTelefono()"
+            image="/img/iconos/edit_row.png"
+            hoverImage="/img/iconos/edit_row_hover.png"
+            visible="false"/>
+            <a id="btnCancelarEditTelefono"
+            tooltiptext="Cancelar Edición"
+            onClick="cancelarEditTelefono()"
+            image="/img/iconos/cancel_row.png"
+            hoverImage="/img/iconos/cancel_row_hover.png"/>
+          </div>
+-->
+      </row>      
+    </rows>
+  </grid>
+  <label id="etqMensajes" value="Mensajes: " sclass="mensajes" visible="false"/>
+</zk>

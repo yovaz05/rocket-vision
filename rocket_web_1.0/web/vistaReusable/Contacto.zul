@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <grid id="gridView" style="border:0">
+    <columns>      
+      <column width="80px"/>
+      <column/>
+    </columns>
+    <rows>
+      <row>        
+        <label value="Celular" sclass="etiqueta_campo"/>
+        <toolbarbutton id="tbbTlfCelular" label=""/>
+      </row> 
+      <row visible="false">
+        <label value="Habitación" sclass="etiqueta_campo"/>
+        <toolbarbutton id="tbbTlfHabitacion" label=""/>
+      </row> 
+      <row visible="false">        
+        <label value="Trabajo" sclass="etiqueta_campo"/>
+        <toolbarbutton  id="tbbTlfTrabajo" label=""/>
+      </row> 
+      <row>        
+        <label value="Email" sclass="etiqueta_campo"/>
+        <toolbarbutton  id="tbbEmail" label=""/>
+      </row> 
+      <row visible="false">        
+        <label value="Facebook" sclass="etiqueta_campo"/>
+        <toolbarbutton  id="tbbFacebook" label=""/>
+      </row> 
+      <row visible="false">        
+        <label value="Twitter" sclass="etiqueta_campo"/>
+        <toolbarbutton  id="tbbTwitter" label=""/>
+      </row> 
+    </rows>
+  </grid>
+  
+  <grid id="gridEdit" visible="false" style="border:0">
+    <columns>
+      <column width="80px"/>
+      <column/>
+    </columns>
+    <rows>
+      <row>        
+        <label value="Celular" sclass="etiqueta_campo"/>
+        <textbox id="txtTlfCelular" value=""/>
+      </row> 
+      <row>        
+        <label value="Habitación" sclass="etiqueta_campo"/>
+        <textbox id="txtTlfHabitacion"  value=""/>
+      </row> 
+      <row>        
+        <label value="Trabajo" sclass="etiqueta_campo"/>
+        <textbox id="txtTlfTrabajo" value=""/>
+      </row> 
+      <row>        
+        <label value="Email" sclass="etiqueta_campo"/>
+        <textbox id="txtEmail" value="" cols="35"/>
+      </row> 
+      <row>        
+        <label value="Facebook" sclass="etiqueta_campo"/>
+        <textbox id="txtFacebook" value="" cols="35"/>
+      </row> 
+      <row>        
+        <label value="Twitter" sclass="etiqueta_campo"/>
+        <textbox id="txtTwitter" value="" cols="35"/>
+      </row> 
+    </rows>
+  </grid>  
+<!--<grid id="gridView">
+    <columns>      
+      <column width="80px"/>
+      <column/>
+    </columns>
+    <rows>
+      <row>
+        <grid style="border: 0px">
+          <columns>
+            <column width="70px"/>
+            <column width="90px"/>
+          </columns>
+          <rows>
+            <row>        
+              <label value="Celular" sclass="etiqueta_campo"/>
+              <toolbarbutton id="tbbTlfCelular" label=""/>
+            </row> 
+            <row>        
+              <label value="Habitación" sclass="etiqueta_campo"/>
+              <toolbarbutton id="tbbTlfHabitacion" label=""/>
+            </row> 
+            <row>        
+              <label value="Trabajo" sclass="etiqueta_campo"/>
+              <toolbarbutton  id="tbbTlfTrabajo" label=""/>
+            </row> 
+          </rows>
+        </grid>
+        <grid style="border: 0px">
+          <columns>
+            <column width="70px"/>
+            <column/>
+          </columns>
+          <rows>
+            <row>        
+              <label value="Email" sclass="etiqueta_campo"/>
+              <toolbarbutton  id="tbbEmail" label=""/>
+            </row> 
+            <row>        
+              <label value="Facebook" sclass="etiqueta_campo"/>
+              <toolbarbutton  id="tbbFacebook" label=""/>
+            </row> 
+            <row>        
+              <label value="Twitter" sclass="etiqueta_campo"/>
+              <toolbarbutton  id="tbbTwitter" label=""/>
+            </row> 
+          </rows>
+        </grid>
+      </row>
+    </rows>
+  </grid>-->
+  
+<!--  nuevo estilo -->
+<!--  <hbox id="hboxView">
+    <vbox width="90px">
+      <label value="Celular" sclass="etiqueta_campo"/>
+      <label value="Tlf. Habitación" sclass="etiqueta_campo"/>
+      <label value="Tlf. Trabajo" sclass="etiqueta_campo"/>
+      <label value="Email" sclass="etiqueta_campo"/>
+      <label value="Facebook" sclass="etiqueta_campo"/>
+      <label value="Twitter" sclass="etiqueta_campo"/>
+    </vbox>
+    <vbox width="100px">
+      <toolbarbutton id="tbbTlfCelular" label=""/>
+      <toolbarbutton id="tbbTlfHabitacion" label=""/>
+      <toolbarbutton id="tbbTlfTrabajo" label=""/>
+      <toolbarbutton id="tbbEmail" label=""/>
+      <toolbarbutton id="tbbFacebook" label=""/>
+      <toolbarbutton id="tbbTwitter" label=""/>
+    </vbox>
+  </hbox>
+  <grid id="gridEdit" visible="false">
+    <columns>
+      <column/>
+      <column/>
+    </columns>
+    <rows>
+      <row>
+        <grid style="border: 0px" >
+          <columns>
+            <column width="70px"/>
+            <column width="100px"/>
+          </columns>
+          <rows>
+            <row>        
+              <label value="Celular" sclass="etiqueta_campo"/>
+              <textbox id="txtTlfCelular" value=""/>
+            </row> 
+            <row>        
+              <label value="Habitación" sclass="etiqueta_campo"/>
+              <textbox id="txtTlfHabitacion"  value=""/>
+            </row> 
+            <row>        
+              <label value="Trabajo" sclass="etiqueta_campo"/>
+              <textbox id="txtTlfTrabajo" value=""/>
+            </row> 
+          </rows>
+        </grid>
+        <grid style="border: 0px">
+          <columns>
+            <column width="70px"/>
+            <column/>
+          </columns>
+          <rows>
+            <row>        
+              <label value="Email" sclass="etiqueta_campo"/>
+              <textbox id="txtEmail" value=""/>
+            </row> 
+            <row>        
+              <label value="Facebook" sclass="etiqueta_campo"/>
+              <textbox id="txtFacebook" value=""/>
+            </row> 
+            <row>        
+              <label value="Twitter" sclass="etiqueta_campo"/>
+              <textbox id="txtTwitter" value=""/>
+            </row> 
+          </rows>
+        </grid>
+      </row>
+    </rows>
+  </grid>
+  -->
+</zk>

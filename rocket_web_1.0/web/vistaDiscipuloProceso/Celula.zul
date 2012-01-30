@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <grid style="border:0px">      
+    <columns>
+      <column id="col1" width="150px"/>
+      <column id="col2"/>
+      <column id="col3"/>
+    </columns>
+    <!--TODO: usar imágenes para etiquetas "sí" y "no"-->
+    <rows>
+      <row>
+        <label value="Estaca" sclass="etiqueta_campo"/>
+        <checkbox id="checkEstacaCelula" checked="true"/>
+        <label id="etqEstacaCelula" value="" sclass="checksi"/>
+      </row>
+      <row>
+        <label value="Anfitrión" sclass="etiqueta_campo"/>
+        <checkbox id="checkAnfitrionCelula"/>
+        <label id="etqAnfitrionCelula" value="" sclass="checkno"/>
+      </row>
+    </rows>
+  </grid>
+
+</zk>

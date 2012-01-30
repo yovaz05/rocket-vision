@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--TODO: cambiar tabbox por filtros para cambiar el período-->
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="cdo.sgd.controladores.CtrlCelulaEstadisticasResumen">
+    <label value="Estadísticas » Resumen" sclass="titulo_ventana"/>
+    <space height="5px"/>
+    <hbox align="left">
+      <label id="etqFechaInicio" width="150px"/>
+      <label> - </label>
+      <label id="etqFechaFin" width="150px"/>
+      <label id="etqPeriodo" sclass="etiqueta_campo" value="" visible="false" style="marging-left:10px"/>
+      <a id="btnReporteDetallado" label="Más opciones »" sclass="botonAccion"/>     
+      <label id="etqMensaje" sclass="mensajes" value="" visible="false" style="marging-left:10px"/>
+    </hbox>
+    <space height="10px"/>
+<!--    TODO: cuando vaya a programar debo usar botones y un panel único, en vez de tabbox-->
+<!--    <toolbar>
+      <toolbarbutton id="btnSemana" label="Semana" tooltiptext="Ver última semana"/>
+      <toolbarbutton id="btnMes" label="Mes" tooltiptext="Ver último mes"/>
+      <toolbarbutton id="btnTriMestre" label="Trimestre" tooltiptext="Ver último trimestre"/>
+      <toolbarbutton id="btnAño" label="Año" tooltiptext="Ver último año"/>
+    </toolbar>    -->
+    <tabbox id="tabbox" width="900px">
+      <tabs>
+        <tab label="Semana" tooltiptext="Semana actual" selected="true"/>
+        <tab label="Mes" tooltiptext="Ver 4 semanas atrás"/>
+        <tab label="Trimestre" tooltiptext="Ver 12 semanas atrás"/>
+        <tab label="Año" tooltiptext="Ver 52 semanas atrás"/>
+        <tab label="Personalizado" visible="false" id="tabPersonalizado"/>
+      </tabs>
+      <tabpanels>
+        <tabpanel>
+          <include id="semana" src="vistaCelulaEstadisticas/Semana.zul"/>            
+        </tabpanel>
+        <tabpanel>
+          <include id="mes" src="vistaCelulaEstadisticas/Mes.zul"/>  
+        </tabpanel>
+        <tabpanel>
+          <include id="trimestre" src="vistaCelulaEstadisticas/Trimestre.zul"/>  
+        </tabpanel>
+        <tabpanel>
+          <include id="año" src="vistaCelulaEstadisticas/Año.zul"/>  
+        </tabpanel>
+        <tabpanel>
+          <include id="personal" src="vistaCelulaEstadisticas/PeriodoPersonalizado.zul"/>
+        </tabpanel>
+      </tabpanels>
+    </tabbox>
+    <space height="15px"/>
+    <div visible="false">
+      <div>
+        <a id="btnVerGrafica" label="Ver Gráfica" tooltiptext="En construcción"
+    sclass="botonAccion"
+    onClick='mensaje("Gráfica: En construcción");panelGrafica.visible=true;self.visible=false'
+    visible="false"/>
+      </div>
+      <div width="100%" id="panelGrafica" visible="false">
+        <a id="btnOcultarGrafica" label="Ocultar Gráfica" sclass="botonAccion"
+    tooltiptext="Ocultar gráfica"
+    onClick='panelGrafica.visible=false;btnVerGrafica.visible=true'/>
+        <include src="vistaEstadisticasGraficas/GraficaSemana.zul"/>
+      </div>
+    </div>
+  </div>
+<!--    TODO: pasar esto al controlador-->
+  <zscript>
+    <![CDATA[
+    void mensaje(String msj){
+      etqMensaje.setVisible(true);
+      etqMensaje.setValue(msj);
+    }
+    ]]>        
+  </zscript>  
+</zk>

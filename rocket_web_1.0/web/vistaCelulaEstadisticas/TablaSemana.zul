@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <zscript>
+  <![CDATA[
+      import org.zkoss.zk.ui.Sessions;
+      void goLiderResumen(int idLider){
+        Sessions.getCurrent().setAttribute("idLider",idLider);
+        Sessions.getCurrent().setAttribute("modo","ver");
+        panelCentral.src="vistaLider/Resumen.zul";
+      }
+      void goCelula(int idCelula){
+        Sessions.getCurrent().setAttribute("idCelula",idCelula);
+        Sessions.getCurrent().setAttribute("modo","ver");
+        panelCentral.src="vistaCelula/Celula.zul";
+      }
+  ]]>  
+  </zscript>  
+  <div>
+    <grid style="border:normal" width="">
+      <auxhead>
+        <auxheader label="Célula" colspan="5" align="center"/>
+        <auxheader label="Total" colspan="3" align="center"/>
+        <auxheader label="Promedio" colspan="5" align="center"/>
+      </auxhead>
+      <columns sizable="true">
+        <column id="colChequeo" label="Ver" width="30px" tooltiptext="Incluir en la gráfica"/>
+        <column label="#" width="20px"/>
+        <column label="Código" width="75px"/>
+        <column label="Dirección" width="90px"/>
+        <column label="Líderes" width="130px"/>
+        <column label="Invitados" width="65px" tooltiptext="Nuevos invitados"/>
+        <column label="Convertidos" width="85px"/>
+        <column label="Reconciliados" width="95px"/>
+        <column label="Amigos" width="60px" tooltiptext="Amigos que no asisten a la iglesia, sólo a la célula"/>
+        <column label="CDO" width="55px" tooltiptext="Cristianos de Casa de Oración"/>
+        <column label="Otras Iglesias" width="90px" tooltiptext="Cristianos de otras iglesias"/>
+        <column label="Visitas" width="55px" tooltiptext="Visitas realizadas"/>
+        <column label="Domingo"  width="65px" tooltiptext="Asistencia Domingo Anterior"/>
+      </columns>
+      <rows>
+        <row>
+          <checkbox checked="true" onCheck='mensaje("Inclusión o exclusión de células: En desarrollo")'/>
+          <label value="1"/>
+          <a label="GJG-I-01" onClick='goCelula(1)'/>
+          <label value="La Feria" id="etqDireccion"/>
+          <vbox>
+            <a label="David Di Patre" onClick='goLiderResumen(9)' />
+          </vbox>
+          <label value="4"/>
+          <label value="3"/>
+          <label value="1"/>
+          <label value="2"/>
+          <label value="6"/>
+          <label value="0"/>
+          <label value="3"/>
+          <label value="5"/>
+        </row>
+        <row>
+          <checkbox checked="true" onCheck='mensaje("Inclusión o exclusión de células: En desarrollo")'/>
+          <label value="2"/>
+          <a label="GJG-II-01" onClick='goCelula(2)'/> 
+          <label value="Ruezga Norte" id="etqDireccion2"/>
+          <vbox>
+            <a label="Wilmer Hernández" onClick='goLiderResumen(4)' />
+            <a label="Leo Alvarado" onClick='goLiderResumen(5)' />
+          </vbox>
+          <label value="3"/>
+          <label value="2"/>
+          <label value="0"/>
+          <label value="6"/>
+          <label value="5"/>
+          <label value="0"/>
+          <label value="1"/>
+          <label value="4"/>         
+        </row>
+        <row>
+          <checkbox checked="true"/>
+          <label value="3"/>
+          <a label="GJG-III-01" onClick='goCelula(3)'/>
+          <label value="El Cercado"/>
+          <vbox>
+            <a label="David Suárez" onClick='goLiderResumen(6)'/>
+            <a  label="José Alvarado" onClick='goLiderResumen(7)'/>
+          </vbox>
+          <label value="3"/>
+          <label value="2"/>
+          <label value="0"/>
+          <label value="6"/>
+          <label value="5"/>
+          <label value="0"/>
+          <label value="1"/>
+          <label value="4"/>         
+        </row>
+        <row>
+          <checkbox checked="true"/>
+          <label value="4"/>
+          <a label="GJG-III-02" onClick='goCelula(4)'/>
+          <label value="El Tostao"/>
+          <vbox>
+            <a label="Jorge Méndez" onClick='goLiderResumen(8)'/>
+          </vbox>
+          <label value="1"/>
+          <label value="1"/>
+          <label value="0"/>
+          <label value="2"/>
+          <label value="7"/>
+          <label value="0"/>
+          <label value="4"/>
+          <label value="4"/>
+        </row>        
+      </rows>
+      <foot style="font-weight:bold;">
+        <footer label=""></footer>
+        <footer label=""></footer>
+        <footer label=""></footer>
+        <footer label="Totales"></footer>
+        <footer label="11"></footer>
+        <footer label="8"></footer>
+        <footer label="1"></footer>
+        <footer label="14"></footer>
+        <footer label="23"></footer>
+        <footer label="0"></footer>
+        <footer label="9"></footer>
+        <footer label="17"></footer>
+      </foot>
+    </grid>
+  </div>
+</zk>

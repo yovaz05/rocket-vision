@@ -1,0 +1,17 @@
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div align="right" width="100%" height="25px"
+  style="border-bottom: 1px solid #D2D2D2;background: white;">
+<!--    <label id="etqNombreSistema" value="SGD" style="font-size:12px;"/>-->
+<!--    <separator orient="vertical" bar="true"/>-->
+    <a id="linkAcceso" label="Acceder" onClick='vistaCentral.src="vistaAcceso/Acceso.zul"'
+    height="20px" sclass="enlaceAccederSuperior"/>
+<!--    <label value=" | "/>
+    <a id="linkAyuda" label="Ayuda" onClick='vistaCentral.src="vistaInicio/Ayuda.zul"'
+    height="20px"/>-->
+  </div>
+</zk>

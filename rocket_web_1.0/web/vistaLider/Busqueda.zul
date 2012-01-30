@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <style src="css/estilos1.css"/>  
+  <div id="divMensaje" align="center" style="margin:2px;padding:5px"
+    onClick="self.visible=false">
+    <label id="etqMensaje" value="Mensajes al usuario:"
+      sclass="mensajes" style="margin: 2px; padding:2px;"
+      onClick="self.visible=false"
+      visible="false"/>
+  </div>  
+  <grid style="border:0px" apply="rocket.controladores.lider.CtrlLiderBusqueda">
+<!--<grid style="border:0px">-->
+    <columns>
+      <column id="col1" width="120px"/>
+      <column id="colData"/>
+    </columns>
+    <rows>
+      <!-- Cédula -->      
+      <row>
+        <label value="Buscar por Cédula" sclass="etiqueta_campo"/>
+        <div>
+          <textbox id="txtCedula" value="" maxlength="8" cols="10"/>
+          <label id="etqInstruccionesCedula" value="Escribe la cédula y presiona 'Enter'" sclass="mensajes" visible="false"/>
+<!--          <toolbarbutton id="btnBuscarCedula" label="Buscar" tooltiptext="Buscar por cédula"/>-->
+          <label id="etqCedula" value="cédula" visible="false"/>
+        </div>
+      </row> 
+      <!-- Nombre -->
+      <row>
+        <label value="Buscar por Nombre" sclass="etiqueta_campo"/>
+        <div>
+          <textbox id="txtNombre" value="" cols="35" maxlength="45"/>
+          <label id="etqInstruccionesNombre" value="Escribe el nombre y presiona 'Enter'" sclass="mensajes" visible="false"/>
+<!--          <toolbarbutton id="btnBuscarPorNombre" label="Buscar" tooltiptext="Buscar por nombre" visible="false"/>-->
+          <label id="etqNombre" value="" visible="false"/>
+        </div>
+      </row>   
+      <!-- Red -->
+      <row id="filaRed" visible="false">
+        <label value="Red" sclass="etiqueta_campo"/>
+        <div>
+          <hbox>
+            <label id="etqRed" value="Red"/>
+            <space width="15px"/>
+            <combobox id="cmbRed" autodrop="true" autocomplete="true" readonly="true"
+            width="220px" visible="false"/>
+            <!--botón de edición-->
+            <div align="left">
+              <space width="5px"/>
+              <a id="btnEditRed" tooltiptext="Editar"
+            image="/img/iconos/edit_row.png"
+            hoverImage="/img/iconos/edit_row_hover.png"/>
+            </div>          
+          </hbox>
+        </div>
+        <a id="tbbRed" label="Red elegida" visible="false"/>
+      </row>
+      <!--Teléfono Celular-->
+      <row id="rowTelefono" tooltiptext="Preferiblemente el teléfono celular" visible="false"> 
+        <label value="Teléfono" sclass="etiqueta_campo"/>
+        <div>
+          <label id="etqTelefono" value=""/>
+          <textbox id="txtTelefono" value="" cols="35" visible="false"/>
+        </div>
+      </row> 
+      <!--Correo-->
+      <row id="rowCorreo" visible="false">        
+        <label value="Correo" sclass="etiqueta_campo"/>
+        <div>
+          <label id="etqEmail" value=""/>
+          <textbox id="txtEmail" cols="35" visible="false"/>
+        </div>
+      </row> 
+      <!-- Líderes: se usará en próximas versiones -->
+      <row visible="false">
+        <label value="Líderes" sclass="etiqueta_campo"/>
+        <cell>
+          <vbox>
+          <!-- TODO: quitar label's -->
+            <label id="etqLider1" value="" visible="false"/>
+            <label id="etqLider2" value="" visible="false"/>
+            <label id="etqLider3" value="" visible="false"/>
+            <label id="etqLider4" value="" visible="false"/>
+          </vbox>
+          <hbox>
+            <space width="15px"/>         
+            <vbox>
+              <combobox id="cmbLider1" value="1er líder" autodrop="true" autocomplete="true" readonly="true"/>
+              <cell id="opcionLider2" visible="false">
+                <hbox>
+                  <combobox id="cmbLider2" value="2do líder" autodrop="true" autocomplete="true" readonly="true"/>
+                  <a image="/img/iconos/borrar.png" onClick="quitarOpcionLider(2)"/>
+                </hbox>
+              </cell>
+              <cell id="opcionLider3" visible="false">
+                <combobox id="cmbLider3" value="3er líder -opcional" autodrop="true" autocomplete="true" readonly="true"/>
+                <a image="/img/iconos/borrar.png" onClick="quitarOpcionLider(3)"/>
+              </cell>
+              <cell id="opcionLider4" visible="false">
+                <combobox id="cmbLider4" value="4to líder -opcional" autodrop="true" autocomplete="true" readonly="true"/>
+                <a image="/img/iconos/borrar.png" onClick="quitarOpcionLider(4)"/>
+              </cell>
+              <a label="Añadir" id="btnAddLider" onClick="añadirOpcionLider()"/>
+            </vbox>
+          </hbox>
+        </cell>
+        <vbox>
+          <a id="tbbLider1"/>
+          <a id="tbbLider2"/>
+          <a id="tbbLider3"/>
+          <a id="tbbLider4"/>
+        </vbox>
+      </row>            
+      <!-- Pareja: se usará en versiones posteriores -->      
+      <row visible="false">
+        <label value="Pareja Ministerial" sclass="etiqueta_campo"/>
+        <cell>
+          <label id="etqPareja" value=""/>
+          <space width="15px"/>
+          <combobox id="cmbPareja" autodrop="true" autocomplete="true" readonly="true"/>
+        </cell>        
+        <a id="tbbPareja" label=""/>        
+      </row>      
+    </rows>
+  </grid>
+  
+  <div align="center" style="top-padding: 25px">
+    <label id="etqInstrucciones" value="" sclass="mensajes" visible="false"/>
+    <label id="etqMensajeNoData" sclass="mensajes" value="No hay resultados de la búsqueda" visible="false"/>
+    <grid id="grid" style="border:normal" mold="paging" pageSize="6" visible="false">
+      <columns sizable="true">
+        <column label="#"         width="25px"/>
+        <column label="Nombre"    width="200px"/>
+        <column label="Red"       width="175px"/>
+        <column label="Teléfono"  width="100px"/>
+        <column label="Email"     width="200px"/>
+        <column label="Dirección"/>
+<!--          TODO: será usado en próxima versión-->
+<!--          <column label="Líderes"/>-->
+      </columns>
+    </grid>
+  </div>
+  <zscript>
+    <![CDATA[
+  ]]>
+  </zscript>    
+</zk>

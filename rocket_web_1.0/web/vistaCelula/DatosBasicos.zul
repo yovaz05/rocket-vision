@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <style src="css/estilos1.css"/>  
+<!--  <div align="center">
+    <hbox id="divMensaje"
+      align="right"
+      sclass="mensajes"
+      style="margin:0;padding:0"
+      visible="false">
+      <label id="etqMensaje"
+      value="Mensajes al usuario:"
+      sclass="mensajes"
+      style="display:inline-block;margin:2px; padding: 2px 15px;"
+      onClick="cerrarMensaje()"
+      visible="false"/>
+      <a id="btnCerrarMensaje"
+      label="OK"
+      style="margin: 2px; padding:2px;text-align:right"
+      onClick="cerrarMensaje()"      
+      visible="false"/>
+    </hbox>
+  </div>-->
+  <grid style="border:0px" apply="rocket.controladores.celula.CtrlCelulaDatosBasicos">
+    <columns>
+      <column id="col1" width="100px"/>
+      <column id="colData"/>
+      <!-- TODO: Quitar columna-->
+      <column id="colEdit" width="7%" align="rigth" visible="false"/>
+    </columns>
+    <rows>
+      <!-- Código -->
+      <row>
+        <label value="Código" sclass="etiqueta_campo"/>
+        <div>
+          <label id="etqCodigo" value=""/>
+          <textbox id="txtCodigo" value="" cols="25" maxlength="20" visible="false"/>
+        </div>
+        <!--TODO: QUITAR botón de edición-->
+        <div align="left" visible="false">
+          <a id="btnEditCodigo" tooltiptext="Editar"
+            onClick="activarEditCodigo()"
+            image="/img/iconos/edit_row.png" hoverImage="/img/iconos/edit_row_hover.png"/>
+          <a id="btnCancelarEditCodigo" visible="false"
+            tooltiptext="Cancelar Edición"
+            onClick="cancelarEditCodigo()"
+            image="/img/iconos/cancel_row.png" hoverImage="/img/iconos/cancel_row_hover.png"/>
+        </div>
+      </row>  
+      <!-- Red -->
+      <row apply="sig.controladores.CtrlComboRed">
+       <label value="Red" sclass="etiqueta_campo" tooltiptext="Red a la que pertenece esta célula"/>
+        <div>
+          <hbox align="left">
+            <a id="tbbRed" label=""/>
+            <label id="etqRed" value="" visible="false"/>
+            <combobox id="cmbRed" value=""
+          autodrop="true" autocomplete="true" readonly="true"
+          width="220px"
+          visible="false"/>
+            <!--botón de edición-->
+            <div align="left">
+              <space width="5px"/>
+              <a id="btnEditRed" tooltiptext="Editar"
+            image="/img/iconos/edit_row.png"
+            hoverImage="/img/iconos/edit_row_hover.png"
+            visible="false"/>
+<!--            TODO: quitar botón cancelar-->
+              <a id="btnCancelarEditRed"
+            tooltiptext="Cancelar Edición"
+            image="/img/iconos/cancel_row.png"
+            hoverImage="/img/iconos/cancel_row_hover.png"
+            visible="false"/>
+            </div>
+          </hbox>
+        </div>
+      </row>  
+      <!-- Líderes -->
+      <row>        
+        <label value="Líderes" sclass="etiqueta_campo" tooltiptext="Líderes de esta célula"/>
+        <!-- enlaces -->
+        <div>
+          <hbox>
+            <vbox>
+              <a id="tbbLider1" visible="false"/>
+              <a id="tbbLider2" visible="false"/>
+              <a id="tbbLider3" visible="false"/>
+              <a id="tbbLider4" visible="false"/>
+            </vbox>
+            <!--botón de edición-->
+            <div align="left">
+              <space width="5px"/>
+              <a id="btnEditLideres"
+             tooltiptext="Editar"
+             image="/img/iconos/edit_row.png"
+             hoverImage="/img/iconos/edit_row_hover.png"
+             visible="false"/>
+              <a id="btnCancelarEditLideres"             
+             tooltiptext="Cancelar Edición"
+             image="/img/iconos/cancel_row.png"
+             hoverImage="/img/iconos/cancel_row_hover.png"
+             visible="false"/>
+            </div>
+          </hbox>
+          <!-- Widgets para cambiar los líderes -->
+          <hbox>
+            <div id="divLideresEdit">
+              <vbox>
+                <!-- Líder 1 -->
+                <div id="opcionLider1" visible="false">
+                  <hbox>
+                    <a id="btnQuitarLider1" image="/img/iconos/remove_row.png" tooltiptext="Quitar"
+                    visible="false"/>
+                    <label id="etqLider1" value="Líder 1" visible="false"/>
+                    <combobox id="cmbLider1" value="" autodrop="true" autocomplete="true" readonly="true"
+                    visible="false"/>
+                  </hbox>
+                </div>
+                <!-- Líder 2 -->
+                <div id="opcionLider2" visible="false">
+                  <space height="5px"/>                
+                  <hbox>
+                    <a id="btnQuitarLider2" image="/img/iconos/remove_row.png" tooltiptext="Quitar"
+                    visible="false"/>
+                    <label id="etqLider2" value="Líder 2" visible="false"/>
+                    <combobox id="cmbLider2" value="" autodrop="true" autocomplete="true" readonly="true"
+                    visible="false"/>
+                  </hbox>
+                </div>
+                <!-- Líder 3: opcional -->
+                <div id="opcionLider3" visible="false">
+                  <space height="5px"/>
+                  <hbox>
+                    <a id="btnQuitarLider3" image="/img/iconos/remove_row.png" tooltiptext="Quitar"
+                    visible="false"/>
+                    <label id="etqLider3" value="Líder 3" visible="false"/>
+                    <combobox id="cmbLider3" value="" autodrop="true" autocomplete="true" readonly="true"
+                    visible="false"/>
+                  </hbox>
+                </div>
+                <!-- Líder 4: opcional -->
+                <div id="opcionLider4" visible="false">
+                  <space height="5px"/>
+                  <hbox>
+                    <a id="btnQuitarLider4" image="/img/iconos/remove_row.png" tooltiptext="Quitar"
+                  visible="false"/>
+                    <label id="etqLider4" value="Líder 4" visible="false"/>
+                    <combobox id="cmbLider4" value="" autodrop="true" autocomplete="true" readonly="true"
+                  visible="false"/>
+                  </hbox>
+                </div>
+                <div id="opcionAgregarLider" style="color: #36C;vertical-align: top;cursor: pointer;" width="75px"
+                visible="false">
+                  <image src="/img/iconos/add8x10.png" width="8px" height="8px" style="vertical-align:middle"/>
+                  <label value=" Añadir líder" id="btnAgregarLider"/>
+                </div>
+              </vbox>
+            </div>
+          </hbox>          
+          <label id="etqMensajeLideres" value="Mensajes relacionados a los líderes"
+                   visible="false"/>          
+        </div>
+      </row>
+      <!-- Día y Hora -->
+      <row>        
+        <label value="Día y Hora" sclass="etiqueta_campo"/>
+        <cell>
+          <hbox>
+            <label id="etqDia" value=""/>
+            <combobox id="cmbDia" value="Lunes"
+            autodrop="true" autocomplete="true" readonly="true" cols="8" width="80px"
+            visible="false">
+              <comboitem id="itemLunes"     value="1" label="Lunes"/>
+              <comboitem id="itemMartes"    value="2" label="Martes"/>
+              <comboitem id="itemMiercoles" value="3" label="Miércoles"/>
+              <comboitem id="itemJueves"    value="4" label="Jueves"/>
+              <comboitem id="itemViernes"   value="5" label="Viernes"/>
+              <comboitem id="itemSábado"    value="6" label="Sábado"/>
+              <comboitem id="itemDomingo"   value="7" label="Domingo"/>
+            </combobox>
+            <label id="etqSeparadorDiaHora" value=" - "/>
+            <label id="etqHora" value=""/>
+            <combobox id="cmbHora" value="7:30 p.m." 
+            autodrop="true" autocomplete="true" readonly="true" cols="10" width="90px"
+            visible="false">
+              <comboitem value="20"   label="8:00 p.m."/>
+              <comboitem value="1930" label="7:30 p.m."/>
+              <comboitem value="19"   label="7:00 p.m."/>
+              <comboitem value="1830" label="6:30 p.m."/>
+              <comboitem value="18"   label="6:00 p.m."/>
+              <comboitem value="1730" label="5:30 p.m."/>
+              <comboitem value="17"   label="5:00 p.m."/>
+              <comboitem value="1630" label="4:30 p.m."/>
+              <comboitem value="16"   label="4:00 p.m."/>
+              <comboitem value="1530" label="3:30 p.m."/>
+              <comboitem value="15"   label="3:00 p.m."/>
+              <comboitem value="1430" label="2:30 p.m."/>
+              <comboitem value="14"   label="2:00 p.m."/>
+              <comboitem value="1330" label="1:30 p.m."/>
+              <comboitem value="13"   label="1:00 p.m."/>
+              <comboitem value="1230" label="12:30 p.m."/>
+              <comboitem value="12"   label="12:00 p.m."/>
+              <comboitem value="1130" label="11:30 a.m."/>
+              <comboitem value="11"   label="11:00 a.m."/>
+              <comboitem value="1030" label="10:30 a.m."/>
+              <comboitem value="10"   label="10:00 a.m."/>
+              <comboitem value="930"  label="9:30 a.m."/>
+              <comboitem value="9"    label="9:00 a.m."/>
+              <comboitem value="830"  label="8:30 a.m."/>
+              <comboitem value="8"    label="8:00 a.m."/>
+            </combobox>
+          </hbox>
+        </cell>
+<!--botones de edición-->
+        <div align="left">
+          <a id="btnEditDiaHora"
+             tooltiptext="Editar"
+             onClick="activarEditDiaHora()"
+             image="/img/iconos/edit_row.png" hoverImage="/img/iconos/edit_row_hover.png"
+             visible="false"/>
+          <a id="btnCancelarEditDiaHora" 
+             tooltiptext="Cancelar Edición"
+             onClick="cancelarEditDiaHora()"
+             image="/img/iconos/cancel_row.png" hoverImage="/img/iconos/cancel_row_hover.png"
+             visible="false"/>
+        </div>
+      </row>
+      <!-- Nombre -->
+      <row>
+        <label value="Nombre" sclass="etiqueta_campo"/>
+        <div>
+          <label id="etqNombre" value="" />          
+          <textbox id="txtNombre" value="" cols="50" maxlength="40" visible="false"/>
+        </div>
+        <div align="left">
+          <a id="btnEditNombre" tooltiptext="Editar"
+            onClick="activarEditNombre()"
+            image="/img/iconos/edit_row.png"
+            hoverImage="/img/iconos/edit_row_hover.png"
+            visible="false"/>
+          <a id="btnCancelarEditNombre"
+            tooltiptext="Cancelar Edición"
+            onClick="cancelarEditNombre()"
+            image="/img/iconos/cancel_row.png"
+            hoverImage="/img/iconos/cancel_row_hover.png"
+            visible="false"/>
+        </div>        
+      </row>
+      
+    </rows>
+  </grid>
+  
+  <zscript>
+<!--TODO: pasar este código al controlador, y unificar al ya existente-->
+  <![CDATA[
+    void cerrarMensaje(){
+      etqMensaje.setVisible(false);
+      btnCerrarMensaje.setVisible(false);
+      divMensaje.setVisible(false);
+    }
+  ]]> 
+  </zscript>
+  
+<!-- 
+  TODO:
+  *cambiar modo new: 
+    1. sólo pedir código y red
+    2. al ingresar estos campos se ingresa la célula en la base de datos, con todos los valores vacíos
+    3. y luego el usuario puede modificar los otros valores
+  
+  -->
+</zk>

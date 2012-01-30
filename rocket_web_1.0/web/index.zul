@@ -1,0 +1,65 @@
+<!--
+  index.zul, vista de entrada del sistema, con login y opciones generales para usuario no logueado
+-->
+<?page id="pagAcceso" cacheable="false" language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8"
+title="Casa de Oración - Rocket"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<!--TODO: sacar el código de Zcript a otro archivo-->
+  <style src="css/estilos1.css"/>
+  <zscript>
+    <![CDATA[
+        import org.zkoss.zk.ui.Sessions;
+    
+        //sesión cerrada al comienzo:
+        //Sessions.getCurrent().setAttribute("idUsuario", null);
+        //Sessions.getCurrent().setAttribute("nombreUsuario", null);
+        
+        //datos de prueba: sólo usados para efectos de desarrollo rápido:
+        void loginAutomaticoAdmin(){
+          Sessions.getCurrent().setAttribute("accesoActivado", false);
+          Sessions.getCurrent().setAttribute("usuarioLogueado", true);
+          Sessions.getCurrent().setAttribute("idUsuario", 1);
+          Sessions.getCurrent().setAttribute("nombreUsuario", "Administrador");
+          Sessions.getCurrent().setAttribute("idRed", 1);
+          Executions.sendRedirect("index2.zul");
+       }
+        void loginAutomaticoLiderRed1(){
+          Sessions.getCurrent().setAttribute("accesoActivado", false);
+          Sessions.getCurrent().setAttribute("usuarioLogueado", true);
+          Sessions.getCurrent().setAttribute("idUsuario", 4);
+          Sessions.getCurrent().setAttribute("nombreUsuario", "Gabriel Pérez");
+          Sessions.getCurrent().setAttribute("idRed", 2);
+          Executions.sendRedirect("index2.zul");
+       }
+        void loginAutomaticoLiderRed2(){
+          Sessions.getCurrent().setAttribute("accesoActivado", false);
+          Sessions.getCurrent().setAttribute("usuarioLogueado", true);
+          Sessions.getCurrent().setAttribute("idUsuario", 3);
+          Sessions.getCurrent().setAttribute("nombreUsuario", "Juan Carlos Godoy");
+          Sessions.getCurrent().setAttribute("idRed", 4);
+          Executions.sendRedirect("index2.zul");
+       }
+        
+       vistaCentralDefecto  = "vistaAcceso/Acceso.zul";
+       panelCentralDefecto  = "";
+       //para mostrar la pantalla de login, comentar línea siguiente:
+       //loginAutomaticoAdmin();
+       //loginAutomaticoLiderRed1();
+       //loginAutomaticoLiderRed2();
+    ]]>
+  </zscript>
+  <borderlayout>
+    <center id="rcenter" flex="true" border="0">
+      <div align="left" style="padding:5px;">
+        <include id="vistaCentral" src="${vistaCentralDefecto}" />
+        <include id="panelCentral" src="${panelCentralDefecto}" />
+      </div>
+    </center>
+    <south id="rsur" border="0">
+      <include src="menu_inferior.zul"/>
+    </south>
+  </borderlayout>
+</zk>

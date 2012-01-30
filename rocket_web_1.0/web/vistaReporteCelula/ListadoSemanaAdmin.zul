@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div apply="rocket.controladores.reportecelula.CtrlReporteCelulaListadoSemanaAdmin"
+  width="720px">
+    <div id="filtroRed" align="left" style="padding: 5px 15px">
+      <label id="tituloVentana" value="Reportes de Célula » esta semana" sclass="titulo_ventana"/>
+      <label value="Red: " sclass="etiqueta_campo"/>
+          <combobox id="cmbRed" value="Elegir..." autocomplete="true" readonly="true" width="200px">
+        <!--TODO: llenar esta lista desde el controlador, con datos en vivo-->
+        <comboitem  value="6"   label="Albert - Kevin"/>
+        <comboitem  value="9"   label="Álvaro Méndez"/>
+        <comboitem  value="3"   label="Andy - Marcos"/>
+        <comboitem  value="18"  label="Danny - Ricardo"/>
+        <comboitem  value="7"   label="Dayana - Fabiola"/>
+        <comboitem  value="12"  label="Deisy - Andreína"/>
+        <comboitem  value="11"  label="Fabiana - Olga"/>
+        <comboitem  value="17"  label="Ivonne - Ana"/>
+        <comboitem  value="2"   label="Jairo - Gabriel"/>
+        <comboitem  value="19"  label="Jhonny - Alexander"/>
+        <comboitem  value="4"   label="Juan - Hernán"/>
+<!--        <comboitem value="5" label="Julio - Francisco - Salvavidas"/>-->
+        <comboitem  value="16"  label="Lismary - Maryori"/>
+        <comboitem  value="21"  label="Mary Lucena"/>
+        <comboitem  value="13"  label="Matrimonios Jóvenes"/>
+        <comboitem  value="14"  label="Matrimonios Jóvenes Adultos"/>
+        <comboitem  value="10"  label="Moiran - Mayelis"/>
+        <comboitem  value="15"  label="Moraima - Carolina"/>
+        <comboitem  value="8"   label="Willy Barraez"/>
+<!--    <comboitem value="20" label="Yren y Blanca"/> -->
+        <comboitem label="Todas" value="*"/>
+      </combobox>
+      <label id="etqInstrucciones" value="Elige una red" sclass="mensajes"/>
+      <label id="etqMensajeNoData" sclass="mensajes"
+    value="Esta red no tiene células registradas"
+    visible="false"/>
+    </div>    
+    
+    <div id="divDatos">
+      <grid id="grid" style="border:normal; margin-right:10px" mold="paging" pageSize="5">
+        <columns sizable="true">
+          <column label="#" width="25px" align="center"/>
+          <column label="Código" width="100px"/>        
+          <column label="Líderes" width="150px"/>
+          <column label="Dirección" width="200px"/>
+          <column label="Día y Hora" width="125px"/>
+          <column label="Reporte" id="colEstadosReporte" align="center"/>
+        </columns>      
+        <rows>
+        </rows>
+      </grid>
+      <space height="10px"/>
+      <div id="divLeyenda" align="center"
+    style="font-size: 10px; font-family: Arial,sans-serif;" visible="true">
+        <div style="background: url(img/iconos/status_ok_16.gif) no-repeat; display:inline-block;" height="20px">
+          <label style="padding: 0 20px" value="Reporte ingresado"/>
+        </div>
+        <div style="background: url(img/iconos/status_not_16.png) no-repeat; display:inline-block;" height="20px">
+          <label style="padding: 0 20px" value="Reporte NO ingresado"/>
+        </div>
+        <div style="background: url(img/iconos/status_alert_16.gif) no-repeat; display:inline-block;" height="20px">
+          <label style="padding: 0 20px" value="Célula NO realizada"/>
+        </div>
+      </div>
+    </div>
+    <div>
+    
+<!-- Será usado en próximas versiones, botón para ver semanas anteriores -->
+<!--
+<div align="right">
+      <space height="15px"/>
+      <a id="btnReportesAnteriores" sclass="botonAccion"
+      label="Ver Semanas Anteriores »" tooltiptext="Ver reportes de semanas anteriores"       
+      />
+    </div>
+-->
+      <div align="center" style="marging: 2px 10px" width="100%" height="25px">
+        <label id="etqMensaje" sclass="mensajes" style="padding:2px" value="" visible="false"/>
+      </div>    
+    </div>
+  </div>
+<!--TODO: pasar este bloque de código al controlador-->
+  <zscript>
+    <![CDATA[
+    ]]>        
+  </zscript> 
+</zk>
