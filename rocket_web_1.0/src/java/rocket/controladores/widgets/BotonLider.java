@@ -34,18 +34,9 @@ public class BotonLider extends A {
   public BotonLider(String etiqueta) {
     super(etiqueta);
     //- setEstilo();
+    //target y modo por defecto:
     vistaTarget = Vistas.LIDER;
     modo = Modo.EDICION_DINAMICA;
-  }
-
-  /**
-   * crea un botón de líder, puede variar el modo entre
-   * EDICION y CONSULTA
-   * @param etiqueta usado para el nombre del líder
-   */
-  public BotonLider(String etiqueta, String modo) {
-    super(etiqueta);
-    //- setEstilo();
   }
 
   private void programarEventoClick(final int id) {

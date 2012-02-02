@@ -50,7 +50,6 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
   /**
    * establece permisos de edición, según el usuario
    */
-  //*TODO: MEJORA CODIGO: usar clase aparte para Permisos
   private void setPermisosEdicion() {
     tipoUsuario = Util.buscarTipoUsuario(this.getClass());
     esLiderRed = (Boolean) Sesion.esLiderRed();
@@ -65,12 +64,6 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
       usuarioPuedeEditarCedula = false;
       usuarioPuedeEditarNombre = false;
     }
-    //TODO: si el usuario es líder de red, y la red del usuario en uso, es igual a la red del líder, puede editar el nombre y otros datos
-      /*
-    if (esLiderRed) {
-    Util.buscarIdRed(null);
-    }
-     */
   }
 
   /**
@@ -677,7 +670,7 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
     //quitar espacios en blanco
     nuevoValor = nuevoValor.trim();
 
-    if (nuevoValor.isEmpty() || nuevoValor.equals(email)) {//no se cambió el valor
+    if (nuevoValor.equals(email)) {//no se cambió el valor
       return;
     }
 
@@ -792,8 +785,7 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
   //? variable para evitar doble actualización de cédula
   private boolean cedulaProcesada;
   private int tipoUsuario;
-  private Boolean esLiderCelula;
-  private Boolean esLiderRed;
+  private boolean esLiderRed;
   private boolean usuarioPuedeEditarNombre;
   private boolean usuarioPuedeEditarCedula;
   private boolean usuarioPuedeEditarRed;

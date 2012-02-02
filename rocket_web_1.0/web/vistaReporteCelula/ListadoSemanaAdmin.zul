@@ -9,15 +9,14 @@
     <div id="filtroRed" align="left" style="padding: 5px 15px">
       <label id="tituloVentana" value="Reportes de Célula » esta semana" sclass="titulo_ventana"/>
       <label value="Red: " sclass="etiqueta_campo"/>
-          <combobox id="cmbRed" value="Elegir..." autocomplete="true" readonly="true" width="200px">
+      <combobox id="cmbRed" value="Elegir..." autocomplete="true" readonly="true" width="200px">
         <!--TODO: llenar esta lista desde el controlador, con datos en vivo-->
         <comboitem  value="6"   label="Albert - Kevin"/>
         <comboitem  value="9"   label="Álvaro Méndez"/>
-        <comboitem  value="3"   label="Andy - Marcos"/>
+<!--        <comboitem  value="3"   label="Andy - Marcos"/>-->
         <comboitem  value="18"  label="Danny - Ricardo"/>
         <comboitem  value="7"   label="Dayana - Fabiola"/>
         <comboitem  value="12"  label="Deisy - Andreína"/>
-        <comboitem  value="11"  label="Fabiana - Olga"/>
         <comboitem  value="17"  label="Ivonne - Ana"/>
         <comboitem  value="2"   label="Jairo - Gabriel"/>
         <comboitem  value="19"  label="Jhonny - Alexander"/>
@@ -30,10 +29,11 @@
         <comboitem  value="10"  label="Moiran - Mayelis"/>
         <comboitem  value="15"  label="Moraima - Carolina"/>
         <comboitem  value="8"   label="Willy Barraez"/>
+        <comboitem  value="22"  label="Red de Empresarios"/>
+        <comboitem  value="11"  label="Red del Norte"/>
 <!--    <comboitem value="20" label="Yren y Blanca"/> -->
         <comboitem label="Todas" value="*"/>
-      </combobox>
-      <label id="etqInstrucciones" value="Elige una red" sclass="mensajes"/>
+      </combobox>            <label id="etqInstrucciones" value="Elige una red" sclass="mensajes"/>
       <label id="etqMensajeNoData" sclass="mensajes"
     value="Esta red no tiene células registradas"
     visible="false"/>

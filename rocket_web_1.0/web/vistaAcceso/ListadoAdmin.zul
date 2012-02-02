@@ -4,16 +4,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
   <style src="css/estilos1.css"/>
-  <!--TODO: pasar este código al controlador-->
-<!--  <div apply="sig.controladores.CtrlCelulaListado" width="675px">-->
-  <div apply="rocket.controladores.celula.CtrlCelulaListadoAll" width="800px"> 
-    <div id="filtroRed" align="left" style="padding: 5px 15px">
-      <hbox>
-        <label id="tituloVentana" value="Ver Células" sclass="titulo_ventana"/>
-        <space width="50px"/>
-        <label id="etqInstrucciones" value="Elige una red" sclass="mensajes"/>
-      </hbox>
-      <space height="20px"/>
+  <div apply="rocket.controladores.acceso.CtrlAccesoListadoAdmin" width="750px">
+    <div align="left" style="padding: 5px 15px">
+      <label id="tituloVentana" value="Usuarios" sclass="titulo_ventana"/>
       <label value="Red: " sclass="etiqueta_campo"/>
       <combobox id="cmbRed" value="Elegir..." autocomplete="true" readonly="true" width="200px">
         <!--TODO: llenar esta lista desde el controlador, con datos en vivo-->
@@ -39,20 +32,22 @@
         <comboitem  value="11"  label="Red del Norte"/>
 <!--    <comboitem value="20" label="Yren y Blanca"/> -->
         <comboitem label="Todas" value="*"/>
-      </combobox>      
+      </combobox>            <label id="etqInstrucciones" value="Elige una red" sclass="mensajes"/>
       <label id="etqMensajeNoData" sclass="mensajes"
-    value="Esta red no tiene células registradas"
+    value="Esta red no tiene líderes registrados"
     visible="false"/>
     </div>    
-    <grid id="grid" style="border:normal; margin-right:10px" mold="paging" pageSize="5">
-      <columns sizable="true">
-        <column label="#" width="25px"/>
-        <column label="Código" width="80px"/>
-        <column label="Líderes" width="175px"/>
-        <column label="Dirección" width="200px"/>
-        <column label="Día y Hora" width="120px"/>
-        <column label="Nombre"/>
-      </columns>
-    </grid>
+    <toolbar width="100%" height="20px" sclass="barraBotones"  visible="false">
+      <toolbarbutton id="btnNew" label="Nuevo" sclass="botonAccion"/>
+    </toolbar>
+    <div align="center">
+      <grid id="grid" style="border:normal" mold="paging" pageSize="10">
+        <columns sizable="true">
+          <column label="#"         width="25px"/>
+          <column label="Nombre"    width="175px"/>
+          <column label="Acceso"/>
+        </columns>
+      </grid>
+    </div>
   </div>
 </zk>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
   <style src="css/estilos1.css"/>  
+  <label id="tituloVentana" value="Buscar líderes" height="20px" sclass="titulo_ventana"/>
   <div id="divMensaje" align="center" style="margin:2px;padding:5px"
     onClick="self.visible=false">
     <label id="etqMensaje" value="Mensajes al usuario:"

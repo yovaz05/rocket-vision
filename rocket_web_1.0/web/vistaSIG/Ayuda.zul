@@ -10,33 +10,42 @@
     <div align="left" style="padding: 0px 20px">
       <html><![CDATA[
 <div style="color:#4682B4;">
-  <p>Versión 1.0  »  23 Enero 2012</p>
+  <p>
   <ul>
-    <li>Para un líder de célula:</li>
-    <ul>
-      <li><a>Acceder al sistema.</a></li>
-      <li><a>Ingresar reporte de célula.</a></li>
-      <li><a>Ver y editar datos de tu célula.</a></li>
-      <li><a>Ver reportes.</a></li>
-    </ul>
-    <br>
-    <li>Para un líder de red:</li>
-    <ul>
-      <li><a>Acceder al sistema.</a></li>
-      <li><a>Ver y editar datos de tu red.</a></li>
-      <li><a>Ver las células de mi red.</a></li>
-      <li><a>Registrar una célula.</a></li>
-      <li><a>Ver reportes.</a></li>
-      <li><a>Ver estadísticas.</a></li>
-    </ul>
-    <br>
-    <li>Para cualquier usuario:</li>
-    <ul>
-      <li><a>He detectado un mal funcionamiento del sistema.</a></li>
-      <li><a>Tengo una pregunta.</a></li>
-      <li><a>Tengo una sugerencia.</a></li>
-    </ul>
+  <li>
+  <h3>Ayuda en línea</h3>
+  <p style="padding-left: 20px">
+  Puedes pedir ayuda a través de
+  <a target="_BLANK"
+  href="http://www.facebook.com/groups/238426666237610/"
+  >este grupo en facebook</a>
+  </p>
+  </li>
+  <li>
+  <h3>Ayuda por correo</h3>
+  <p style="padding-left: 20px">
+  Escríbenos a <a target="_BLANK">casadeoracionweb@gmail.com</a>
+  </p>
+  </li>
+  <li>
+  <h3>Atención teléfonica</h3>
+    <p style="padding-left: 20px">
+      Llama a los números: 0416-7715109, 0426-5538165.
+      <br>
+      Horario: Lunes a Sábado: 8.00 am - 10.00pm
+      <br>
+      Domingos: 3.00 pm - 9.00pm
+  </p>
+  </li>
+  <li>
+  <h3>Atención personal</h3>
+    <p style="padding-left: 20px">
+      Por varias semanas estaremos en un stand en la iglesia, los miércoles y domingos.
+      Allí te aclararemos cualquier duda.
+  </p>
+  </li>
   </ul>
+  </p>
 </div>
 ]]>
       </html>

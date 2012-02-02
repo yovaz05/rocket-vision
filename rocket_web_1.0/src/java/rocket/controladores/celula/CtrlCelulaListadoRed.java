@@ -152,7 +152,7 @@ public class CtrlCelulaListadoRed extends GenericForwardComposer {
   private void notificarBarra() {
     vistaCentral = Sesion.getVistaCentral();
     Sesion.setVistaActual(Vistas.CELULA_LISTADO_ALL);
-    Sesion.setModo("consulta");
+    Sesion.setModo("listado"); //puede ingresar nuevas células
     Toolbarbutton btnControl2 = (Toolbarbutton) vistaCentral.getFellow("btnControl2");
     Events.postEvent(1, "onClick", btnControl2, null);
   }

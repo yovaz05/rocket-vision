@@ -16,15 +16,15 @@
         <!--TODO: llenar esta lista desde el controlador, con datos en vivo-->
         <comboitem  value="6"   label="Albert - Kevin"/>
         <comboitem  value="9"   label="Álvaro Méndez"/>
-        <comboitem  value="3"   label="Andy - Marcos"/>
+<!--        <comboitem  value="3"   label="Andy - Marcos"/>-->
         <comboitem  value="18"  label="Danny - Ricardo"/>
         <comboitem  value="7"   label="Dayana - Fabiola"/>
         <comboitem  value="12"  label="Deisy - Andreína"/>
-        <comboitem  value="11"  label="Fabiana - Olga"/>
         <comboitem  value="17"  label="Ivonne - Ana"/>
         <comboitem  value="2"   label="Jairo - Gabriel"/>
         <comboitem  value="19"  label="Jhonny - Alexander"/>
         <comboitem  value="4"   label="Juan - Hernán"/>
+<!--        <comboitem value="5" label="Julio - Francisco - Salvavidas"/>-->
         <comboitem  value="16"  label="Lismary - Maryori"/>
         <comboitem  value="21"  label="Mary Lucena"/>
         <comboitem  value="13"  label="Matrimonios Jóvenes"/>
@@ -32,9 +32,11 @@
         <comboitem  value="10"  label="Moiran - Mayelis"/>
         <comboitem  value="15"  label="Moraima - Carolina"/>
         <comboitem  value="8"   label="Willy Barraez"/>
-<!--TODO: quitar esta opción, porque recarga el servidor-->
-<!--          <comboitem label="Todas" value="*"/>-->
-      </combobox>
+        <comboitem  value="22"  label="Red de Empresarios"/>
+        <comboitem  value="11"  label="Red del Norte"/>
+<!--    <comboitem value="20" label="Yren y Blanca"/> -->
+        <comboitem label="Todas" value="*"/>
+      </combobox>            
       <label id="etqMensajeNoData" sclass="mensajes"
     value="Esta red no tiene líderes registrados"
     visible="false"/>

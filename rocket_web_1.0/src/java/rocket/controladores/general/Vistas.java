@@ -30,8 +30,8 @@ public class Vistas{
   public static String LIDER_LISTADO_ADMIN = "vistaLider/ListadoAdmin.zul";
   public static String LIDER_LISTADO_ALL = "vistaLider/ListadoAll.zul";
   public static String LIDER_LISTADO_RED = "vistaLider/ListadoRed.zul";
-  
-  //Menú Usuario:
+
+  //Usuario:
   public static String CUENTA_PERFIL = "vistaUsuario/Perfil.zul";
   public static String CUENTA_CAMBIO_PASSWORD = "vistaAcceso/CambioPassword.zul";
   public static String CUENTA_CAMBIO_EMAIL = "vistaUsuario/CambioEmail.zul";
@@ -60,6 +60,7 @@ public class Vistas{
   //Acceso:
   public static String LISTADO_ACCESO = "vistaAcceso/ListadoAcceso.zul";  
   public static String LISTADO_TIPO_PERSONA = "vistaTipoUsuario/Listado.zul";
+  public static String ACCESO_LISTADO_ADMIN = "vistaAcceso/ListadoAdmin.zul";
   
   //Búsqueda:
   public static String LIDER_BUSQUEDA = "vistaLider/Busqueda.zul";

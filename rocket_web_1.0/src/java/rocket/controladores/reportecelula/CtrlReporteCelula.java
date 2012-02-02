@@ -26,7 +26,6 @@ import org.zkoss.zul.Toolbarbutton;
 import rocket.controladores.general.Constantes;
 import rocket.modelo.servicios.ServicioCelula;
 import rocket.modelo.servicios.ServicioReporteCelula;
-import waytech.utilidades.Util;
 import waytech.utilidades.UtilFechas;
 
 //TODO: MEJORAR EL MANEJO DE FOCOS DE LOS widgets
@@ -186,9 +185,10 @@ public class CtrlReporteCelula extends GenericForwardComposer {
       return;
     }
     buscarDataCelula();
+    mostrarTabCelula(true);
     mostrarDatosCelula();
     mostrarFechas();
-    mostrarTabsDatosReporte(false);
+    //- mostrarTabsDatosReporte(false);
     if (modo.equals("ver")) {
       ocultarPregunta();
       estatusReporte = celula.getEstatusReporteSemanaActual();
@@ -207,14 +207,14 @@ public class CtrlReporteCelula extends GenericForwardComposer {
         //**System.out.println("estatus = CELULA_NO_REALIZADA");
         ocultarPregunta();
         mensaje("Célula NO realizada");
-        mostrarTabsBasicos(true);
+        mostrarTabObservaciones(true);
         seleccionarTab(tabObservaciones);
         buscarDataObservaciones();
       }
       mostrarObservaciones();
     } else if (modo.equals("new-pregunta")) {
       mostrarPregunta();
-      ocultarWidget(tabObservaciones);
+      //- ocultarWidget(tabObservaciones);
     }
     notificarBarra();
     descripcionTitulo = celula.getCodigo() + ". Semana » " + semana;
@@ -402,7 +402,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
       //btnConfirmar.setVisible(false);
       //btnEditar.setVisible(false);
       //btnGuardar.setVisible(true);
-      setFocoEdicion();
+      //-setFocoEdicion();
     } else if (modo.equals("new")) {
       //-tituloVentana.setValue(titulo + " » Ingresar: " + descripcionTitulo);
       //camposModoEdicion(true);
@@ -411,7 +411,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
       //btnConfirmar.setVisible(false);
       //btnEditar.setVisible(false);
       //btnGuardar.setVisible(true);
-      setFocoEdicion();
+      //-setFocoEdicion();
     } else if (modo.equals("ver")) {
       //TODO: mostrar código en titulo
       //tituloVentana.setValue(titulo + " " + celula.getCodigo() + " << 'TAREA: Agregar fechas aquí'");
@@ -431,7 +431,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
       //-verElementosEntrada(true);
       //-mostrarElementosVisualizacion(false);
       //camposModoEdicion(true);
-      setFocoEdicion();
+      //-setFocoEdicion();
       //btnEditar.setVisible(false);
       //btnGuardar.setVisible(true);
       //btnConfirmar.setVisible(false);
@@ -899,12 +899,13 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     return (calDomingoAnterior.get(Calendar.YEAR) == calSabado.get(Calendar.YEAR));
   }
 
-  private void mostrarTabsBasicos(boolean visible) {
+  private void mostrarTabCelula(boolean visible) {
     mostrarWidget(tabCelula);
-    //+ mostrarWidget(tabFechas);
-    mostrarWidget(tabObservaciones);
     mostrarWidget(tabPanelCelula);
-    //+ mostrarWidget(tabPanelFechas);
+  }
+  
+  private void mostrarTabObservaciones(boolean visible) {
+    mostrarWidget(tabObservaciones);
     mostrarWidget(tabPanelObservaciones);
 
   }

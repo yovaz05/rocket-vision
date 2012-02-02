@@ -52,6 +52,9 @@ title="Casa de Oración - Rocket"?>
     ]]>
   </zscript>
   <borderlayout>
+<!--    <north>
+      <image src="img/logo/logo_rocket.png"/>
+    </north>-->
     <center id="rcenter" flex="true" border="0">
       <div align="left" style="padding:5px;">
         <include id="vistaCentral" src="${vistaCentralDefecto}" />

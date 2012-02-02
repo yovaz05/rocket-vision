@@ -14,13 +14,17 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Textbox;
+import rocket.controladores.general.Modo;
+import rocket.controladores.general.Sesion;
 import rocket.controladores.widgets.BotonLider;
 import rocket.controladores.widgets.EtqNro;
 import rocket.modelo.bd.util.LiderListadoUtil;
+import rocket.modelo.bd.util.UsuarioUtil;
 import rocket.modelo.servicios.ServicioPersona;
 import rocket.modelo.servicios.ServicioRed;
 import waytech.modelo.beans.sgi.Persona;
 import waytech.modelo.beans.sgi.Red;
+import waytech.utilidades.Util;
 
 /**
  *
@@ -70,14 +74,9 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
   private Include panelCentral;
   Label tituloVentana;
   String descripcionlider;
-  //? variable para evitar doble actualización de cédula
-  private boolean cedulaProcesada;
   private int tipoUsuario;
-  private Boolean esLiderCelula;
-  private Boolean esLiderRed;
-  private boolean usuarioPuedeEditarNombre;
-  private boolean usuarioPuedeEditarCedula;
-  private boolean usuarioPuedeEditarRed;
+  private boolean usuarioPuedeVerLiderCompleto = false;
+  private boolean esLiderRed = false;
   List<LiderListadoUtil> lista;
 
   @Override
@@ -90,6 +89,7 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
     System.out.println("CtrlLiderBusqueda.inicio");
     limpiarValores();
     txtCedula.setFocus(true);
+    setPermisos();
   }
 
   void limpiarValores() {
@@ -243,7 +243,6 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
     }
   }
 
-  //TODO: dependiendo de tipo de usuario buscar y mostrar data
   public void mostrarData() {
     ListModelList model = new ListModelList(lista);
     grid.setModel(model);
@@ -275,6 +274,12 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
         final int idLider1 = lider.getIdLider1();
         final int idLider2 = lider.getIdLider2();
          */
+
+        if (usuarioPuedeVerLiderCompleto) {
+          linkNombre.setModo(Modo.EDICION_DINAMICA);
+        } else {
+          linkNombre.setModo(Modo.CONSULTA);
+        }
 
         linkNombre.setIdRed(idRed);
         linkNombre.setIdLider(id);
@@ -368,5 +373,19 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
 
   private void mostrarNombre() {
     txtNombre.setValue(nombre);
+  }
+
+  /**
+   * establece permisos de lo que el usuario puede ver
+   */
+  private void setPermisos() {
+    tipoUsuario = Util.buscarTipoUsuario(this.getClass());
+    esLiderRed = (Boolean) Sesion.esLiderRed();
+    if (tipoUsuario == UsuarioUtil.ADMINISTRADOR_CELULAS || esLiderRed) {
+      usuarioPuedeVerLiderCompleto = true;
+    } else {
+      usuarioPuedeVerLiderCompleto = false;
+    }
+    System.out.println("CtrlLiderBusqueda.Permisos=usuarioPuedeVerLiderCompleto" + usuarioPuedeVerLiderCompleto);
   }
 }

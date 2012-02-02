@@ -1,5 +1,6 @@
-package rocket.controladores.lider;
+package rocket.controladores.acceso;
 
+import rocket.controladores.lider.*;
 import rocket.controladores.general.CtrlVista;
 import rocket.controladores.general.Sesion;
 import rocket.controladores.general.Vistas;
@@ -11,6 +12,7 @@ import java.util.List;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
@@ -25,7 +27,7 @@ import waytech.utilidades.Util;
  * controlador asociado a vistaDiscipuloLanzado/Listado
  * @author Gabriel
  */
-public class CtrlLiderListadoRed extends GenericForwardComposer {
+public class CtrlAccesoListadoAdmin extends GenericForwardComposer {
 
   //referencias:
   Include vistaCentral;
@@ -36,15 +38,17 @@ public class CtrlLiderListadoRed extends GenericForwardComposer {
   //en próximas versiones el teléfonoy correo permitirán opciones directas:
   Label linkTelefono, linkEmail;
   Grid grid;
-  Label etqMensajeNoData;
+  Label etqInstrucciones, etqMensajeNoData;
+  Combobox cmbRed; //para filtrar data por red
   //variable de control:
   String tipoUsuario; //{liderRed, liderCelula, Administrador}
   int idRedUsuario;
   CtrlVista ctrlVista = new CtrlVista();
   //gestión de datos:
   ServicioPersona servicioLider = new ServicioPersona();
-  List<LiderListadoUtil> lista = new ArrayList<LiderListadoUtil>();
+  List<LiderListadoUtil> listaLideres = new ArrayList<LiderListadoUtil>();
   //TODO: MEJORA CODIGO: No usar esta variable, está redundante:
+  ArrayList lista;
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -54,22 +58,53 @@ public class CtrlLiderListadoRed extends GenericForwardComposer {
 
   void inicio() {
     idRedUsuario = Util.buscarIdRed(this.getClass());
-    buscarDataPorRed(idRedUsuario);
-    if (lista.isEmpty()) {
-      etqMensajeNoData.setVisible(true);
-    } else {
-      etqMensajeNoData.setVisible(false);
-      mostrarData();
-    }
+    //- buscarData();
+    //-mostrarData();
+    mensajeInstrucciones(true);
+    mostrarGrid(false);
     notificarBarra();
   }
 
- /**
+  /**
+   * Obtiene todas los líderes lanzados de todas las redes
+   */
+  void buscarDataTodasRedes() {
+    listaLideres = servicioLider.getTodosLideresLanzadosListado();
+  }
+
+  /**
    * Obtiene todas los líderes lanzados de una red específica
    */
   void buscarDataPorRed(int red) {
-    lista = new ArrayList<LiderListadoUtil>();
-    lista = servicioLider.getTodosLideresLanzadosPorRed(red);
+    listaLideres = servicioLider.getTodosLideresLanzadosPorRed(red);
+  }
+
+  public void onSelect$cmbRed() {
+    Object red = cmbRed.getSelectedItem().getValue();
+    //**Messagebox.show("Filtro de red seleccionado = " + red);
+    if (red.equals("*")) {
+      buscarDataTodasRedes();
+    } else {
+      int idRed = Integer.parseInt("" + red);
+      buscarDataPorRed(idRed);
+    }
+    if (listaLideres.isEmpty()) {
+      System.out.println("CtrlLiderListado. no hay datos");
+      //no hay data
+      mensajeNoResultados(true);
+      mensajeInstrucciones(false);
+      mostrarGrid(false);
+      return;
+    } else {
+      //sí hay data
+      mensajeNoResultados(false);
+      mostrarGrid(true);
+      mostrarData();
+    }
+  }
+
+  public void onOpen$cmbRed() {
+    mensajeInstrucciones(false);
   }
 
   private void mostrarGrid(boolean visible) {
@@ -80,8 +115,16 @@ public class CtrlLiderListadoRed extends GenericForwardComposer {
     etqMensajeNoData.setVisible(visible);
   }
 
+  private void mensajeInstrucciones(boolean visible) {
+    etqInstrucciones.setVisible(visible);
+  }
+
   //TODO: dependiendo de tipo de usuario buscar y mostrar data
   public void mostrarData() {
+    lista = (ArrayList) listaLideres;
+    if (lista == null) {
+      System.out.println("lista de lideres celula listado nula");
+    }
     ListModelList model = new ListModelList(lista);
     grid.setModel(model);
     grid.setRowRenderer(new RowRenderer() {
@@ -123,8 +166,8 @@ public class CtrlLiderListadoRed extends GenericForwardComposer {
         //se anexan los widgets a la fila
         etqNro.setParent(row);
         tbbNombre.setParent(row);
-        etqDireccion.setParent(row);
-        linkTelefono.setParent(row);
+        //- etqDireccion.setParent(row);
+        //- linkTelefono.setParent(row);
         linkEmail.setParent(row);
         /*
         Vbox vbox = new Vbox();
@@ -142,7 +185,7 @@ public class CtrlLiderListadoRed extends GenericForwardComposer {
   private void notificarBarra() {
     vistaCentral = Sesion.getVistaCentral();
     Sesion.setVistaActual(Vistas.LIDER_LISTADO_ALL);
-    Sesion.setModo("listado");  //líder de red puede agregegar nuevos líderes
+    Sesion.setModo("consulta");
     Toolbarbutton btnControl2 = (Toolbarbutton) vistaCentral.getFellow("btnControl2");
     Events.postEvent(1, "onClick", btnControl2, null);
   }

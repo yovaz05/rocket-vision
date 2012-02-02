@@ -12,23 +12,31 @@
         <html><![CDATA[
 <div>
 <!--<h3>Casa de Oración  »  Gestión de Células</h3>-->
-<p>Versión 1.0  »  23 Enero 2012</p>
+<p>Versión 1.1  »  01 Feb 2012</p>
 <br>
-<h3>Características Funcionales</h3>
-<p>Gestión de información de células</p>
-<p>Gestión de información de líderes</p>
-<p>Ingreso de reportes semanales.</p>
-<p>Supervisión de reportes semanales.</p>
+<h3>Características en esta versión</h3>
+<p style="padding-left:20px">
+<p>Información de líderes</p>
+<p>Información de células</p>
+<p>Reportes semanales de células.</p>
+<p>Supervisión de reportes de la semana actual.</p>
+</p>
 <br>
-<h3>Características en desarrollo</h3>
-<p>Estadísticas Automáticas</p>
-<p>Líderes y células por niveles (12, 72, 432,...).</p>
+<h3>Características próximas:</h3>
+<p style="padding-left:20px">
+<p>Cambios en las redes de acuerdo a la nueva estructura.</p>
+<p>Líderes y células por niveles.</p>
+<p>Supervisión de reportes de semanas anteriores.</p>
+<p>Estadísticas</p>
 <p>Notificaciones</p>
-<!--<p>
+</p>
+<!--
+<p>
 <h4>Desarrolladores:</h4>
 <p style="color: #666;">Gabriel Pérez - gabrielperez@waytech.com.ve</p>
 <p style="color: #666;">Gerardo Montilla - gerardomontilla@waytech.com.ve</p>
-</p>-->
+</p>
+-->
 ]]>
         </html>
       </div>        

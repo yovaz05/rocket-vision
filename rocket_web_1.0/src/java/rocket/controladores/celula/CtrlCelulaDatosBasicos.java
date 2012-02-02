@@ -477,11 +477,13 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
 
   public void onOK$txtNombre() {
+    System.out.println("CtrlCelulaDB.txtNombre.onOK");
     procesarNombre();
     cancelarEditNombre();
   }
 
   public void onBlur$txtNombre() {
+    System.out.println("CtrlCelulaDB.txtNombre.onBlur");
     procesarNombre();
     cancelarEditNombre();
   }
@@ -492,14 +494,14 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     //quitar espacios en blanco
     nuevoValor = nuevoValor.trim();
 
-    if (nuevoValor.isEmpty() || nuevoValor.equals(nombre)) {//no se cambió el valor
+    if (nuevoValor.equals(nombre)) {//no se cambió el valor
       return;
     }
 
     nombre = nuevoValor;
 
-    //TODO: MEJORA: chequear si existe una célula con ese mismo nombre, y sugerir al usuario que use otro.
-    //No es obligatorio que sea único
+    //TODO - MEJORA: chequear si existe una célula con ese mismo nombre, y sugerir al usuario que use otro.
+    //No es obligatorio que sea único, pero es preferible
     if (Sesion.modoEditable()) {
       actualizarNombre();
     }
@@ -510,7 +512,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    * actualiza el nombre de la célula en la base de datos
    */
   void actualizarNombre() {
-    getIdCelula(); //TODO: quitar, se debe hacer al cargar la pantall
+    getIdCelula(); //TODO: MEJORAR CODIGO
     servicioCelula.setIdCelula(idCelula);
     if (servicioCelula.actualizarNombre(nombre)) {
       mensaje("Se actualizó el nombre");

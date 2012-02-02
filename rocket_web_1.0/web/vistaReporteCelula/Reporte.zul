@@ -31,7 +31,7 @@
         <tab label="Planificación" id="tabPlanificacion" visible="false"/>
         <tab label="Resultados" id="tabResultados" visible="false"/>
         <tab label="Ofrendas" id="tabOfrendas" visible="false"/>
-        <tab label="Observaciones" id="tabObservaciones"/>
+        <tab label="Observaciones" id="tabObservaciones" visible="false"/>
       </tabs>
       <tabpanels>
         <tabpanel id="tabPanelCelula">
@@ -40,16 +40,16 @@
         <tabpanel id="tabPanelFechas" visible="false">
           <include id="fechas" src="vistaReporteCelula/Fechas.zul"/>
         </tabpanel>
-        <tabpanel id="tabPanelPlanificacion">
+        <tabpanel id="tabPanelPlanificacion" visible="false">
           <include id="planif" src="vistaReporteCelula/Planificacion.zul"/>
         </tabpanel>
-        <tabpanel id="tabPanelResultados">
+        <tabpanel id="tabPanelResultados" visible="false">
           <include id="result" src="vistaReporteCelula/Resultados.zul"/>
         </tabpanel>
         <tabpanel id="tabPanelOfrendas" visible="false">
           <include id="ofrendas" src="vistaReporteCelula/Ofrendas.zul"/>
         </tabpanel>
-        <tabpanel id="tabPanelObservaciones">
+        <tabpanel id="tabPanelObservaciones" visible="false">
           <include id="obs" src="vistaReusable/Observaciones.zul"/>
         </tabpanel>
       </tabpanels>
