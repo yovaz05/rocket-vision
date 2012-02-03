@@ -8,28 +8,12 @@
       <column id="colData"/>
     </columns>
     <rows>
-      <!-- Cédula -->      
-      <row>
-        <label value="Cédula" sclass="etiqueta_campo"/>
-        <div>
-          <label id="etqCedula" value="cédula"/>
-          <textbox id="txtCedula" value="" maxlength="8" visible="false"/>
-        </div>
-      </row> 
-      <!-- Nombre -->
-      <row>
-        <label value="Nombre" sclass="etiqueta_campo"/>
-        <div>
-          <label id="etqNombre" value=""/>
-          <textbox id="txtNombre" value="" cols="60" maxlength="45" visible="false"/>
-        </div>
-      </row>   
       <!-- Red -->
       <row id="filaRed">
         <label value="Red" sclass="etiqueta_campo"/>
         <div>
           <hbox>
-            <label id="etqRed" value="Red"/>
+            <label id="etqRed" value="Elegir Red..."/>
             <space width="15px"/>
             <combobox id="cmbRed" autodrop="true" autocomplete="true" readonly="true"
             width="220px" visible="false"/>
@@ -43,7 +27,22 @@
           </hbox>
         </div>
         <a id="tbbRed" label="Red elegida" visible="false"/>
-      </row>
+      </row>      <!-- Cédula -->      
+      <row>
+        <label value="Cédula" sclass="etiqueta_campo"/>
+        <div>
+          <label id="etqCedula" value=""/>
+          <textbox id="txtCedula" value="" maxlength="8" visible="false"/>
+        </div>
+      </row> 
+      <!-- Nombre -->
+      <row>
+        <label value="Nombre" sclass="etiqueta_campo"/>
+        <div>
+          <label id="etqNombre" value=""/>
+          <textbox id="txtNombre" value="" cols="60" maxlength="45" visible="false"/>
+        </div>
+      </row>   
       <!--Teléfono Celular-->
       <row id="rowTelefono" tooltiptext="Preferiblemente el teléfono celular" visible="false"> 
         <label value="Teléfono" sclass="etiqueta_campo"/>

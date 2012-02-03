@@ -88,7 +88,7 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
   public void inicio() throws InterruptedException {
     System.out.println("CtrlLiderBusqueda.inicio");
     limpiarValores();
-    txtCedula.setFocus(true);
+    txtNombre.setFocus(true);
     setPermisos();
   }
 

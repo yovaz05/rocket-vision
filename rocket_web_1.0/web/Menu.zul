@@ -69,7 +69,7 @@ title="SIG - Mejorando barra superior"?>
             </menupopup>
           </menu>
           
-          <menuitem label="Buscar Líder" id="itemLiderBusqueda"/>
+          <menuitem label="Buscar Líderes" id="itemLiderBusqueda"/>
           
 
         </menubar>

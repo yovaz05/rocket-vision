@@ -28,31 +28,13 @@
       <column id="colEdit" width="7%" align="rigth" visible="false"/>
     </columns>
     <rows>
-      <!-- Código -->
-      <row>
-        <label value="Código" sclass="etiqueta_campo"/>
-        <div>
-          <label id="etqCodigo" value=""/>
-          <textbox id="txtCodigo" value="" cols="25" maxlength="20" visible="false"/>
-        </div>
-        <!--TODO: QUITAR botón de edición-->
-        <div align="left" visible="false">
-          <a id="btnEditCodigo" tooltiptext="Editar"
-            onClick="activarEditCodigo()"
-            image="/img/iconos/edit_row.png" hoverImage="/img/iconos/edit_row_hover.png"/>
-          <a id="btnCancelarEditCodigo" visible="false"
-            tooltiptext="Cancelar Edición"
-            onClick="cancelarEditCodigo()"
-            image="/img/iconos/cancel_row.png" hoverImage="/img/iconos/cancel_row_hover.png"/>
-        </div>
-      </row>  
       <!-- Red -->
       <row apply="sig.controladores.CtrlComboRed">
        <label value="Red" sclass="etiqueta_campo" tooltiptext="Red a la que pertenece esta célula"/>
         <div>
           <hbox align="left">
             <a id="tbbRed" label=""/>
-            <label id="etqRed" value="" visible="false"/>
+            <label id="etqRed" value="Elegir Red..." visible="false"/>
             <combobox id="cmbRed" value=""
           autodrop="true" autocomplete="true" readonly="true"
           width="220px"
@@ -74,7 +56,24 @@
           </hbox>
         </div>
       </row>  
-      <!-- Líderes -->
+      <!-- Código -->
+      <row>
+        <label value="Código" sclass="etiqueta_campo"/>
+        <div>
+          <label id="etqCodigo" value=""/>
+          <textbox id="txtCodigo" value="" cols="25" maxlength="20" visible="false"/>
+        </div>
+        <!--TODO: QUITAR botón de edición-->
+        <div align="left" visible="false">
+          <a id="btnEditCodigo" tooltiptext="Editar"
+            onClick="activarEditCodigo()"
+            image="/img/iconos/edit_row.png" hoverImage="/img/iconos/edit_row_hover.png"/>
+          <a id="btnCancelarEditCodigo" visible="false"
+            tooltiptext="Cancelar Edición"
+            onClick="cancelarEditCodigo()"
+            image="/img/iconos/cancel_row.png" hoverImage="/img/iconos/cancel_row_hover.png"/>
+        </div>
+      </row>        <!-- Líderes -->
       <row>        
         <label value="Líderes" sclass="etiqueta_campo" tooltiptext="Líderes de esta célula"/>
         <!-- enlaces -->

@@ -13,7 +13,7 @@
       <toolbarbutton id="btnNew" label="Nuevo" sclass="botonAccion"/>
     </toolbar>
     <div align="center">
-      <grid id="grid" style="border:normal" mold="paging" pageSize="5">
+      <grid id="grid" style="border:normal" mold="paging" pageSize="10">
         <columns sizable="true">
           <column label="#"         width="25px"/>
           <column label="Nombre"    width="175px"/>

@@ -13,22 +13,27 @@
 <div>
 <!--<h3>Casa de Oración  »  Gestión de Células</h3>-->
 <p>Versión 1.1  »  01 Feb 2012</p>
-<br>
+</br>
+<ul>
+<li>
 <h3>Características en esta versión</h3>
+</li>
 <p style="padding-left:20px">
-<p>Información de líderes</p>
-<p>Información de células</p>
+<p>Información de líderes.</p>
+<p>Información de células.</p>
 <p>Reportes semanales de células.</p>
-<p>Supervisión de reportes de la semana actual.</p>
+<p>Supervisión de reportes semana actual.</p>
 </p>
-<br>
+</br>
+<li>
 <h3>Características próximas:</h3>
+</li>
 <p style="padding-left:20px">
-<p>Cambios en las redes de acuerdo a la nueva estructura.</p>
+<p>Cambios en redes según nueva estructura.</p>
 <p>Líderes y células por niveles.</p>
 <p>Supervisión de reportes de semanas anteriores.</p>
-<p>Estadísticas</p>
-<p>Notificaciones</p>
+<p>Estadísticas.</p>
+<p>Notificaciones.</p>
 </p>
 <!--
 <p>
@@ -37,6 +42,7 @@
 <p style="color: #666;">Gerardo Montilla - gerardomontilla@waytech.com.ve</p>
 </p>
 -->
+</ul>
 ]]>
         </html>
       </div>        

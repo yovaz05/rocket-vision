@@ -369,8 +369,8 @@ public class CtrlLider extends GenericForwardComposer {
       //- mostrarOpcionLider1();
       verBotonesEdicion(false);
       selectTab(1);
-      db$txtCedula.setFocus(true);
-      mensaje("Ingresa la cédula y presiona 'Enter'");
+      db$cmbRed.setFocus(true);
+      db$cmbRed.select();
       //- btnIngresarReporte.setVisible(false);
     } else if (modo.equals("edicion-dinamica")) {
       tituloVentana.setValue(titulo + ": " + descripcionLider);
@@ -379,7 +379,7 @@ public class CtrlLider extends GenericForwardComposer {
       mostrarWidgetsEdit(true);
       mostrarWidgetsViewLink(true);
       //TODO: PERMISOS: aquí se debe comprobar el permiso de edición para activar la siguiente línea
-      verBotonesEdicion(true);
+      //- verBotonesEdicion(true);
       setFocoEdicion();
       //-mostrarWidgetsEdit(false);
       //TODO: permisos, chequeo si se tiene permiso de edición
@@ -411,7 +411,7 @@ public class CtrlLider extends GenericForwardComposer {
     modo = "new";
     Sesion.setModo(modo);
     Sesion.setVariable("idLider", 0);
-    mensaje("Ingresa el código:");
+    mensaje("Selecciona la red");
     actualizarEstado();
   }
 
@@ -812,17 +812,18 @@ public class CtrlLider extends GenericForwardComposer {
   /**
    * MUESTRA los widgets de los campos obligatorios para el registro
    */
+  //TODO: CODIGO MEJORA. separar este método en 2 partes: mostrarWidgets, ocultarWidgets
   private void mostrarWidgetsNew(boolean visible) {
+    db$cmbRed.setVisible(visible);
     db$txtCedula.setVisible(visible);
     db$txtNombre.setVisible(visible);
-    //TODO: se mostrará el campo de nombre deshabilitado, se habilita cuando ingresa la cédula
+    //se habilita la cédula cuando se elige la red
+    if (visible) {
+      db$txtCedula.setDisabled(true);
+    }
+    //se habilitará el nombre cuando se ingrese la cédula
     if (visible) {
       db$txtNombre.setDisabled(true);
-    }
-    db$cmbRed.setVisible(visible);
-    //TODO: se mostrará el campo de red deshabilitado, se habilita cuando ingresa el nombre
-    if (visible) {
-      db$cmbRed.setDisabled(true);
     }
   }
 

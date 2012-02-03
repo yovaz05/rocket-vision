@@ -28,6 +28,52 @@ import waytech.utilidades.Util;
  */
 public class CtrlLiderDatosBasicos extends GenericForwardComposer {
 
+  //widgets:
+  Div divMensaje;
+  Label etqMensaje;
+  //- A btnCerrarMensaje;
+  Label etqMensajeLideres;
+  Textbox txtCedula, txtNombre, txtTelefono, txtEmail;
+  A tbbRed;
+  A tbbLider1, tbbLider2, tbbLider3, tbbLider4;
+  Label etqRed;
+  Label etqCedula, etqLider1, etqLider2, etqLider3, etqLider4, etqNombre, etqTelefono, etqEmail;
+  Combobox cmbRed, cmbDia, cmbHora;
+  Combobox cmbLider1, cmbLider2, cmbLider3, cmbLider4;
+  Div opcionLider1, opcionLider2, opcionLider3, opcionLider4;
+  Div opcionAgregarLider;
+  //data:
+  ServicioPersona servicioPersona = new ServicioPersona();
+  ServicioRed servicioRed = new ServicioRed();
+  List redesNombres = new ArrayList();
+  //nombres de líderes lanzados disponibles para ser líderes de célula
+  List lideresLanzadosNombres = new ArrayList();
+  Red redSelecionada;
+  ListModelList modelRedes = new ListModelList();
+  ListModelList modelLideresLanzados = new ListModelList();
+  private int idLider = 0;
+  int idRed = 0;
+  String nombreRed = "";
+  private String cedula = "";
+  A btnEditCedula;
+  String nombre = "";
+  String telefono = "";
+  String email = "";
+  A btnEditNombre;
+  A btnEditRed;
+  //referencias:
+  private Include panelCentral;
+  Label tituloVentana;
+  String descripcionlider;
+  //TODO: MEJORA CODIGO: evaluar si esto hace falta
+  //? variable para evitar doble actualización de cédula
+  private boolean cedulaProcesada;
+  private int tipoUsuario;
+  private boolean usuarioEsLiderRed;
+  private boolean usuarioPuedeEditarRed;
+  private boolean usuarioPuedeEditarCedula;
+  private boolean usuarioPuedeEditarNombre;
+
   @Override
   public void doAfterCompose(Component comp) throws Exception {
     super.doAfterCompose(comp);
@@ -52,14 +98,12 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
    */
   private void setPermisosEdicion() {
     tipoUsuario = Util.buscarTipoUsuario(this.getClass());
-    esLiderRed = (Boolean) Sesion.esLiderRed();
+    usuarioEsLiderRed = (Boolean) Sesion.esLiderRed();
     if (tipoUsuario == UsuarioUtil.ADMINISTRADOR_CELULAS) {
-      System.out.println("CtrlLider.usuario es administrador");
       usuarioPuedeEditarRed = true;
       usuarioPuedeEditarCedula = true;
       usuarioPuedeEditarNombre = true;
     } else {
-      System.out.println("usuario no es administrador");
       usuarioPuedeEditarRed = false;
       usuarioPuedeEditarCedula = false;
       usuarioPuedeEditarNombre = false;
@@ -80,11 +124,13 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
    * y se activa la carga de líderes
    */
   public void onBlur$cmbRed() {
+    /*
     if (Sesion.modoIngresar()) {
-      if (!redSeleccionada()) {//validación
-        return;
-      }
+    if (!redSeleccionada()) {//validación
+    return;
     }
+    }
+     */
     //modo editable:
     cancelarEditRed();
   }
@@ -120,9 +166,15 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
      */
     //si está en modo ingresar se crea la célula con la cédula, el nombre y la red
     if (Sesion.modoIngresar()) {
-      System.out.println("CtrlliderDatosBasicos.procesarRed.modoIngresar");
+      //- System.out.println("CtrlliderDatosBasicos.procesarRed.modoIngresar");
       //chequear valores obligatorios: 
-      notificarEvento("btnGuardar");
+      //- notificarEvento("btnGuardar");
+      cedula = "";
+      nombre = "";
+      mostrarCedula();
+      mostrarNombre();
+      mensaje("Ingresa la cédula y presiona 'Enter'");
+      activarEditCedula();
     } else if (Sesion.modoEditable()) {
       //modo edición
       actualizarRed();
@@ -268,55 +320,54 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
   }
 
   public void onBlur$txtNombre() {
+    /*
     if (Sesion.modoIngresar() && !nombreIngresado(txtNombre.getValue())) {
-      nombre = Constantes.VALOR_EDITAR;
-      mostrarNombre();
-      cancelarEditNombre();
-      return;  //no se obliga que ingrese un valor... impide al usuario hacer otra cosa en el sistema
+    nombre = Constantes.VALOR_EDITAR;
+    mostrarNombre();
+    cancelarEditNombre();
+    return;  //no se obliga que ingrese un valor... impide al usuario hacer otra cosa en el sistema
     }
     if (Sesion.modoEditable()) {
-      //TODO: MEJORA: evitar actualizaciones duplicadas del nombre
-      procesarNombre();
-      cancelarEditNombre();
+    //TODO: MEJORA: evitar actualizaciones duplicadas del nombre
+    //- procesarNombre();
+    cancelarEditNombre();
     }
+     */
+    cancelarEditNombre();
   }
 
   //TODO: MEJORA: evitar actualizaciones duplicadas del nombre
   public void onOK$txtNombre() {
     procesarNombre();
-    cancelarEditNombre();
   }
 
   private void procesarNombre() {
     ocultarMensaje();
-    String nuevoValor = txtNombre.getValue();
+    String valor = txtNombre.getValue();
     //quitar espacios en blanco
-    nuevoValor = nuevoValor.trim();
-
-    if (Sesion.modoIngresar() && !nombreIngresado(nuevoValor)) {//en modo ingresar dejó campo en blanco
+    valor = valor.trim();
+    if (valor.equals(nombre)) { //no se cambió el valor
+      cancelarEditNombre();
+      return; // no se hace nada
+    }
+    if (Sesion.modoIngresar() && !nombreIngresado(valor)) {//en modo ingresar y dejó campo en blanco
       //forzar a usuario a tipear algo
       mensaje("Ingresa el nombre");
       txtNombre.setVisible(true);
       txtNombre.setFocus(true);
       return;
     }
-
-    if (nuevoValor.isEmpty() || nuevoValor.equals(nombre)) {//no se cambió el valor
-      return;
-    }
-
-    nombre = nuevoValor;
-
-    //TODO: MEJORA: chequear si existe una persona con ese mismo nombre, y sugerir al usuario que agregue el segundo nombre o algo así
-    if (Sesion.modoEditable()) {
+    nombre = valor;
+    if (Sesion.modoIngresar()) {
+      notificarEvento("btnGuardar");
+      cancelarEditNombre();
+    } //TODO: MEJORA: chequear si existe una persona con ese mismo nombre, y sugerir al usuario que agregue el segundo nombre o algo así
+    else if (Sesion.modoEditable()) {
       actualizarNombre();
+      cancelarEditNombre();
       tituloVentana.setValue("Líder: " + nombre);
     }
     mostrarNombre();
-    if (Sesion.modoIngresar()) {
-      mensaje("Selecciona la red");
-      activarEditRed();
-    }
   }
 
   /**
@@ -353,6 +404,7 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
   }
 
   public void onClick$etqCedula() {
+    cedula = etqCedula.getValue();
     if (Sesion.modoIngresar()) {
       activarEditCedula();
     }
@@ -365,8 +417,8 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
    * activa la edición de la cédula
    */
   private void activarEditCedula() {
-    cedula = etqCedula.getValue();
     etqCedula.setVisible(false);
+    txtCedula.setDisabled(false);
     txtCedula.setValue(cedula);
     txtCedula.setVisible(true);
     txtCedula.setFocus(true);
@@ -398,7 +450,6 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
     procesarCedula();
   }
 
-  //procesamiento de valor de código (nuevo y edición)
   private void procesarCedula() {
     cedulaProcesada = false;
     ocultarMensaje();
@@ -410,6 +461,7 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
       //validar cédula en uso
       if (!cedulaIngresada(valor) || cedulaEnUso(valor)) {//se ingresó valor vacío o repetido
         //forzar a usuario a tipear algo y que código no esté repetido
+        mensaje("Ingresa la cédula"); //obligar al usuario a tipear algo        
         txtCedula.setVisible(true);
         txtCedula.setFocus(true);
         return;
@@ -419,12 +471,11 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
       mostrarCedula();
       cedulaProcesada = true;
       cancelarEditCedula();
-      activarEditNombre();
       mensaje("Ingresa el nombre y presiona 'Enter'");
+      activarEditNombre();
       return;
-    }
-    //modo edición
-    if (Sesion.modoEditable()) {
+    } //modo edición
+    else if (Sesion.modoEditable()) {
       if (!cedulaIngresada(valor)) {//se ingresó valor vacío...
         cancelarEditCedula();//se deja el valor actual
         return;
@@ -451,13 +502,7 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
    * @return 
    */
   boolean cedulaIngresada(String cedula) {
-    if (cedula.isEmpty()) {
-      if (Sesion.modoIngresar()) {
-        mensaje("Ingresa la cédula"); //obligar al usuario a tipear algo
-      }
-      return false;
-    }
-    return true;
+    return !cedula.isEmpty();
   }
 
   /**
@@ -475,11 +520,13 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
       txtCedula.select();
       return true;
     } else {
-      //limpiar valores, por si fueron usados en búsqueda anteriormente
-      nombre = "";
-      nombreRed = "";
-      mostrarNombre();
-      mostrarRed();
+      if (Sesion.modoIngresar()) {
+        //limpiar valores, por si fueron usados en búsqueda anteriormente
+        nombre = "";
+        //- nombreRed = "";
+        mostrarNombre();
+        //- mostrarRed();
+      }
     }
     return false;
   }
@@ -549,7 +596,7 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
     if (Sesion.modoIngresar()) {
       activarEditRed();
     }
-    if (Sesion.modoEditable() && usuarioPuedeEditarRed) {
+    if (usuarioPuedeEditarRed && Sesion.modoEditable()) {
       activarEditRed();
     }
   }
@@ -745,48 +792,4 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
     //-btnCerrarMensaje.setVisible(false);
     divMensaje.setVisible(false);
   }
-  //widgets:
-  Div divMensaje;
-  Label etqMensaje;
-  //- A btnCerrarMensaje;
-  Label etqMensajeLideres;
-  Textbox txtCedula, txtNombre, txtTelefono, txtEmail;
-  A tbbRed;
-  A tbbLider1, tbbLider2, tbbLider3, tbbLider4;
-  Label etqRed;
-  Label etqCedula, etqLider1, etqLider2, etqLider3, etqLider4, etqNombre, etqTelefono, etqEmail;
-  Combobox cmbRed, cmbDia, cmbHora;
-  Combobox cmbLider1, cmbLider2, cmbLider3, cmbLider4;
-  Div opcionLider1, opcionLider2, opcionLider3, opcionLider4;
-  Div opcionAgregarLider;
-  //data:
-  ServicioPersona servicioPersona = new ServicioPersona();
-  ServicioRed servicioRed = new ServicioRed();
-  List redesNombres = new ArrayList();
-  //nombres de líderes lanzados disponibles para ser líderes de célula
-  List lideresLanzadosNombres = new ArrayList();
-  Red redSelecionada;
-  ListModelList modelRedes = new ListModelList();
-  ListModelList modelLideresLanzados = new ListModelList();
-  private int idLider = 0;
-  int idRed = 0;
-  String nombreRed = "";
-  private String cedula = "";
-  A btnEditCedula;
-  String nombre = "";
-  String telefono = "";
-  String email = "";
-  A btnEditNombre;
-  A btnEditRed;
-  //referencias:
-  private Include panelCentral;
-  Label tituloVentana;
-  String descripcionlider;
-  //? variable para evitar doble actualización de cédula
-  private boolean cedulaProcesada;
-  private int tipoUsuario;
-  private boolean esLiderRed;
-  private boolean usuarioPuedeEditarNombre;
-  private boolean usuarioPuedeEditarCedula;
-  private boolean usuarioPuedeEditarRed;
 }

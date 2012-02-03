@@ -264,6 +264,7 @@ public class CtrlCelula extends GenericForwardComposer {
     db$etqNombre.setValue(nombre);
 
     db$tbbRed.setLabel(celula.getNombreRed());
+    db$etqRed.setValue(celula.getNombreRed());
 
     diaTexto = celula.getDia();
     if (diaTexto.isEmpty()) {
@@ -406,7 +407,7 @@ public class CtrlCelula extends GenericForwardComposer {
     if (modo.equals(Modo.INGRESAR)) {
       etqTituloVentana.setValue(titulo + " » Ingresar");
       //- mostrarColumnasVisualizacion(false);
-      mostrarWidgetsNew(true);
+      habilitarWidgetsNew(true);
       mostrarTabsRestantes(false);
       mostrarWidgetsViewLink(false);
       mostrarWidgetsEdit(false);
@@ -417,12 +418,12 @@ public class CtrlCelula extends GenericForwardComposer {
       //- btnIngresarReporte.setVisible(false);
     } else if (modo.equals(Modo.EDICION_DINAMICA)) {
       etqTituloVentana.setValue(titulo + ": " + descripcionCelula);
-      mostrarWidgetsNew(false);
+      habilitarWidgetsNew(false);
       mostrarTabsRestantes(true);
       mostrarWidgetsEdit(true);
       mostrarWidgetsViewLink(true);
       //TODO: PERMISOS: se debe comprobar el permiso de edición para activar la siguiente línea
-      verBotonesEdicion(true);
+      //- verBotonesEdicion(true);
       setFocoEdicion();
       //-mostrarWidgetsEdit(false);
       //TODO: permisos, chequeo si se tiene permiso de edición
@@ -521,7 +522,8 @@ public class CtrlCelula extends GenericForwardComposer {
    **/
   public void setFocoEdicion() {
     if (tabSeleccionado == 1) {
-      db$txtCodigo.setFocus(true);
+      db$cmbRed.setFocus(true);
+      //db$txtCodigo.setFocus(true);
       //-db$txtCodigo.select();
     } else if (tabSeleccionado == 2) {
       dir$cmbEstado.setFocus(true);
@@ -616,7 +618,8 @@ public class CtrlCelula extends GenericForwardComposer {
    */
   private void mostrarWidgetsEdit(boolean status) {
     //datos básicos:
-    db$etqRed.setVisible(status);
+    // TODO: se muestra cuando se activa la edición de red
+    //- db$etqRed.setVisible(status);
     if (seUsaLider(1)) {
       db$opcionLider1.setVisible(status);
     }
@@ -945,12 +948,12 @@ public class CtrlCelula extends GenericForwardComposer {
    * MUESTRA EL CÓDIGO Y LA RED, que son los datos obligatorios para crear la célula,
    * pero la red está deshabilitada
    */
-  private void mostrarWidgetsNew(boolean visible) {
-    db$txtCodigo.setVisible(visible);
+  private void habilitarWidgetsNew(boolean visible) {
     db$cmbRed.setVisible(visible);
-    //TODO: se mostrará el combo de red sólo cuando ingresa el código
+    db$txtCodigo.setVisible(visible);
+    //TODO: se mostrará txtCodigo cuando se selecciona la red
     if (visible) {
-      db$cmbRed.setDisabled(true);
+      db$txtCodigo.setDisabled(visible);
     }
   }
 
