@@ -60,18 +60,14 @@ title="SIG - Mejorando barra superior"?>
               <menuitem label="Ver Líderes" id="itemLiderListadoAdmin" image="/img/iconos/bullet.png"/>
               <menuitem label="Ver Células" id="itemCelulaListadoAdmin" image="/img/iconos/bullet.png"/> 
               <menuitem label="Ver Reportes" id="itemReporteCelulaListadoAdmin" image="/img/iconos/bullet.png"/>
-<!--              LISTADO DE USUARIOS: EN PROCESO-->
+              <menuitem label="Estadística Semanal" id="itemResultadosCelulaSemanaAdmin" image="/img/iconos/bullet.png"/>
+<!--          LISTADO DE USUARIOS: EN PROCESO-->
 <!--              <menuitem label="Usuarios" id="itemUsuarioListadoAdmin" image="/img/iconos/bullet.png"/>-->
-<!--        TODO: crear estos links
-          <menuitem label="Ver Líderes" id="itemLiderListadoAdmin"/>
-          <menuitem label="Ver Células" id="itemCelulaListadoAdmin"/>
--->
             </menupopup>
           </menu>
           
           <menuitem label="Buscar Líderes" id="itemLiderBusqueda"/>
           
-
         </menubar>
         
 <!-- Menú completo, prototipo inicial -->

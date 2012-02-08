@@ -42,6 +42,7 @@ public class ServicioReporteCelula {
   SaPersonaEnCelula saPersonaCelula = new SaPersonaEnCelula();
   ServicioCelula servicioCelula = new ServicioCelula();
   List<ReporteCelulaListadoUtil> listadoReportes = new ArrayList();
+  List<EjecucionCelula> reportes = new ArrayList();
   String nombreLider1 = "";
   String nombreLider2 = "";
   String nombreLider3 = "";
@@ -107,7 +108,7 @@ public class ServicioReporteCelula {
    * @return listado de células
    */
   public List<ReporteCelulaListadoUtil> getReporteCelulaPorRed(int idRed) {
-    System.out.println("getReporteCelulaPorRed.idRed="+idRed);
+    System.out.println("getReporteCelulaPorRed.idRed=" + idRed);
     RspCelula rspCelula = saCelula.listCelulaActivaOrdenEstatusPorRed(idRed);
     celulas = rspCelula.getTodosLosCelulas();
 
@@ -127,12 +128,12 @@ public class ServicioReporteCelula {
     }
     return listadoReportes;
   }
-  
- /**
+
+  /**
    * Devuelve la lista de células a cargo de un líder específico
    * @return listado de células
    */
-  public List<ReporteCelulaListadoUtil> getReporteCelulaPorLider(int idLider) {    
+  public List<ReporteCelulaListadoUtil> getReporteCelulaPorLider(int idLider) {
     //ver si el líder tiene células a su cargo:
     RspPersonaEnCelula rspPersonaCelula = saPersonaCelula.listPorIdLider(idLider);
     celulasLider = rspPersonaCelula.getAllPersonaEnCelulas();
@@ -140,10 +141,10 @@ public class ServicioReporteCelula {
       //no hay datos que procesar, el líder no tiene células
       return listadoReportes;
     }
-    
+
     //procesar datos
     //buscar la data de las células:
-    for (PersonaEnCelula celulaLider: celulasLider) {
+    for (PersonaEnCelula celulaLider : celulasLider) {
       idCelula = celulaLider.getIdCelula().getIdCelula();
       RspCelula rspCelula = saCelula.getCelulaPorIdCelula(idCelula);
       Celula celula = rspCelula.getCelula();
@@ -159,7 +160,7 @@ public class ServicioReporteCelula {
       listadoReportes.add(reporte);
     }
     return listadoReportes;
-  }  
+  }
 
   /**
    * genera objeto ReporteCelulaListadoUtil a partir de un objeto Celula
@@ -422,5 +423,27 @@ public class ServicioReporteCelula {
   public boolean actualizarObservaciones(int idReporteCelula, String observaciones) {
     RspEjecucionCelula respuesta = saEjecucionCelula.updateObservaciones(idReporteCelula, observaciones);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }
+
+  public List getResultadosCelulaTodasRedes() {
+      //ojo: se debe calcular la semana actual antes de hacer este llamado:
+    RspEjecucionCelula respuesta = saEjecucionCelula.getEjecucionTodasRedesPorSemana(1);
+    reportes = respuesta.getTodosLosEjecucionCelulas();
+      return reportes;
+      /*
+
+    if (reportes.isEmpty()) {
+      //no hay datos que procesar
+      return reportes;
+    }
+
+    //procesar datos
+    List listadoResultados = new ArrayList<EjecucionCelula>();    
+    int n = 0;
+    for (EjecucionCelula reporte : reportes) {
+      listadoResultados.add(reporte);
+    }
+    return listadoResultados;
+       */
   }
 }

@@ -33,7 +33,8 @@
         <comboitem  value="11"  label="Red del Norte"/>
 <!--    <comboitem value="20" label="Yren y Blanca"/> -->
         <comboitem label="Todas" value="*"/>
-      </combobox>            <label id="etqInstrucciones" value="Elige una red" sclass="mensajes"/>
+      </combobox>            
+      <label id="etqInstrucciones" value="Elige una red" sclass="mensajes"/>
       <label id="etqMensajeNoData" sclass="mensajes"
     value="Esta red no tiene células registradas"
     visible="false"/>

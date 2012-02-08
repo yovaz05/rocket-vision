@@ -148,12 +148,16 @@ public class CtrlMenu extends GenericForwardComposer {
     cambiarVista(Vistas.REPORTE_CELULA_LISTADO_SEMANA);
   }
 
+  public void onClick$itemResultadosCelulaSemanaAdmin() {
+    cambiarVista(Vistas.RESULTADOS_CELULA_SEMANA_ADMIN);
+  }
+
   public void onClick$itemLiderNew() {
     Sesion.setVistaSiguiente(Vistas.LIDER);
     Sesion.setModo(Modo.INGRESAR);
     onClick$btnControl();//forzar cambio de vista
   }
-  
+
   public void onClick$itemLiderBusqueda() {
     Sesion.setVistaSiguiente(Vistas.LIDER_BUSQUEDA);
     Sesion.setModo(Modo.CONSULTA);
@@ -166,10 +170,10 @@ public class CtrlMenu extends GenericForwardComposer {
     Sesion.setModo(Modo.INGRESAR);
     onClick$btnControl();//forzar cambio de vista
   }
-  
+
   public void onClick$itemUsuarioListadoAdmin() {
     cambiarVista(Vistas.ACCESO_LISTADO_ADMIN);
-  } 
+  }
 
   public void onClick$itemInicio() {
     cambiarVista(Vistas.REPORTE_CELULA_LISTADO_SEMANA);

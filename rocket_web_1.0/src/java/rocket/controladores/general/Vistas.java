@@ -23,6 +23,9 @@ public class Vistas{
   public static String REPORTE_CELULA_LISTADO_SEMANA_ADMINISTRADOR = "vistaReporteCelula/ListadoSemanaAdmin.zul";
   public static String REPORTE_CELULA_LISTADO_SEMANA_RED = "vistaReporteCelula/ListadoSemanaRed.zul";
   
+  //Resultados células Semana
+  public static String RESULTADOS_CELULA_SEMANA_ADMIN = "vistaEstadisticas/ListadoResultadosSemanaAdmin.zul";
+  
   //Reportes Célula >> Semanas Anteriores:  
   public static String REPORTE_CELULA_LISTADO_ANTERIORES = "vistaReporteCelula/ListadoAnteriores.zul";
   
