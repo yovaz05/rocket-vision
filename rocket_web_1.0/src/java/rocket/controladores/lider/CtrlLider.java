@@ -21,7 +21,7 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 import rocket.controladores.general.Constantes;
 import rocket.controladores.general.Modo;
-import rocket.modelo.servicios.ServicioPersona;
+import rocket.modelo.servicios.ServicioLider;
 
 /**
  * controlador asociado a LiderSimulador.zul
@@ -116,7 +116,7 @@ public class CtrlLider extends GenericForwardComposer {
   private String anfitrion;
   //objeto con la data de la base de datos
   LiderUtil lider = new LiderUtil();
-  ServicioPersona servicio = new ServicioPersona();
+  ServicioLider servicio = new ServicioLider();
   private int idLider;
   /*+
   //IDs de personas elegidas como líderes de célula

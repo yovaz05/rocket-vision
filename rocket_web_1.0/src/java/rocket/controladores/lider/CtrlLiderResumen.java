@@ -13,7 +13,7 @@ import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Toolbarbutton;
 import rocket.controladores.general.Modo;
-import rocket.modelo.servicios.ServicioPersona;
+import rocket.modelo.servicios.ServicioLider;
 import rocket.modelo.bd.util.LiderUtil;
 
 /**
@@ -45,7 +45,7 @@ public class CtrlLiderResumen extends GenericForwardComposer {
   String nombreCiudad = "";
   String nombreZona = "";  //gestión de datos:
   //-BD datos;
-  ServicioPersona servicio = new ServicioPersona();
+  ServicioLider servicio = new ServicioLider();
   LiderUtil lider = new LiderUtil();
 
   @Override

@@ -19,7 +19,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Toolbarbutton;
-import rocket.modelo.servicios.ServicioPersona;
+import rocket.modelo.servicios.ServicioLider;
 import waytech.utilidades.Util;
 
 /**
@@ -44,7 +44,7 @@ public class CtrlLiderListadoAdmin extends GenericForwardComposer {
   int idRedUsuario;
   CtrlVista ctrlVista = new CtrlVista();
   //gestión de datos:
-  ServicioPersona servicioLider = new ServicioPersona();
+  ServicioLider servicioLider = new ServicioLider();
   List<LiderListadoUtil> listaLideres = new ArrayList<LiderListadoUtil>();
   //TODO: MEJORA CODIGO: No usar esta variable, está redundante:
   ArrayList lista;

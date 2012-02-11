@@ -426,24 +426,24 @@ public class ServicioReporteCelula {
   }
 
   public List getResultadosCelulaTodasRedes() {
-      //ojo: se debe calcular la semana actual antes de hacer este llamado:
+    //ojo: se debe calcular la semana actual antes de hacer este llamado:
     RspEjecucionCelula respuesta = saEjecucionCelula.getEjecucionTodasRedesPorSemana(1);
     reportes = respuesta.getTodosLosEjecucionCelulas();
-      return reportes;
-      /*
-
+    return reportes;
+    /*
+    
     if (reportes.isEmpty()) {
-      //no hay datos que procesar
-      return reportes;
+    //no hay datos que procesar
+    return reportes;
     }
-
+    
     //procesar datos
     List listadoResultados = new ArrayList<EjecucionCelula>();    
     int n = 0;
     for (EjecucionCelula reporte : reportes) {
-      listadoResultados.add(reporte);
+    listadoResultados.add(reporte);
     }
     return listadoResultados;
-       */
+     */
   }
 }

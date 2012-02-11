@@ -4,30 +4,49 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
   <style src="css/estilos1.css"/>
-  <div id="winAcceso" apply="rocket.controladores.acceso.CtrlAcceso">
-    <div sclass="login_box">
+  <div id="winAcceso" apply="rocket.controladores.acceso.CtrlAcceso" align="left">
+    <label value="Casa de Oración - Sistema"  sclass="login_label" style="font: 20px bold; margin-left: 50px"/>
+    <div sclass="login_box" align="left" style="margin-left:50px">
       <div style="padding:5px;" align="left">
         <vbox>
-          <vbox style="padding:7px;" align="right">
-            <vbox>
-              <label value="Usuario" sclass="login_label" />
-              <textbox id="txtLogin" cols="30" sclass="textbox"/>
-              <label id="etqErrorLogin" value="" sclass="login_error"  visible="false"/>
+          <vbox style="padding:7px;">
+            <vbox align="left">
+              <label value="Cédula de Identidad" sclass="login_label"/>
+              <hbox align="left">
+                <textbox id="txtLogin" cols="30" sclass="textbox" maxlength="8" constraint="" onFocus="helpLogin.visible=true;helpPassword.visible=false"
+                onChanging="etqAyudaLogin.visible=false"
+                onBlur="etqAyudaLogin.visible=false"/>
+                <image id="helpLogin" src="img/iconos/help16.png"
+                tooltiptext="Ayuda"
+                visible="false"
+                onClick="etqAyudaLogin.visible=true;etqErrorLogin.visible=false;txtLogin.focus()"/>
+              </hbox>
+              <label id="etqAyudaLogin" value="Usa sólo números. Ejemplo: 16594651" visible="false"/>
+              <label id="etqErrorLogin" value="" sclass="login_error" visible="false"/>
             </vbox>
-            <vbox>
+            <vbox align="left">
               <label value="Contraseña" sclass="login_label"/>
-              <textbox id="txtPassword" type="password" cols="30" sclass="textbox"/>
-              <label id="etqErrorPassword" value="" sclass="login_error" width="200px" visible="false"/>
+              <hbox align="left">
+                <textbox id="txtPassword" type="password" cols="30" sclass="textbox"
+                tooltiptext="Inicialmente tu contraseña es tu cédula de identidad"
+                onFocus="helpLogin.visible=false;helpPassword.visible=true"
+                onBlur="etqAyudaPassword.visible=false"/>
+                <image id="helpPassword" src="img/iconos/help16.png" 
+                tooltiptext="Ayuda"
+                onClick="etqAyudaPassword.visible=true;etqErrorPassword.visible=false;txtPassword.focus()"/>
+              </hbox>
+              <label id="etqAyudaPassword" value="Al comienzo la contraseña es tu cédula de identidad. Luego la puedes cambiar" visible="false"/>
+              <label id="etqErrorPassword" value="Ingresa la constraseña" sclass="login_error" width="200px" visible="false"/>
             </vbox>
-            <hbox>
-              <button id="btnAcceso" label="Acceso" sclass="boton_acceso"/>
+            <hbox align="right" style="padding-left:120px">
+              <button id="btnAcceso" label="Acceder" sclass="boton_acceso"/>
               <div>
                 <checkbox id="checkRecordarSesion" label="Recordarme" sclass="recordar_sesion"
                 visible="false"/>
 <!--                <label id="etqRecordarSesion" value="No cerrar sesión" sclass="recordar_sesion"/>-->
               </div>
             </hbox>
-            <a id="linkAyudaAcceso" label="¿No puedes acceder?" onClick='vistaCentral.src="vistaAcceso/AyudaAcceso.zul"'/>
+<!--            <a id="linkAyudaAcceso" label="¿No puedes acceder?" onClick='vistaCentral.src="vistaAcceso/AyudaAcceso.zul"'/>-->
           </vbox>
         </vbox>
       </div>

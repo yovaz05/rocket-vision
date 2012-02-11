@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
   <style src="css/estilos1.css"/>
   <div width="450px" apply="rocket.controladores.usuario.CtrlPerfil">
-    <label value="Mis datos" sclass="titulo_ventana"/>  
+    <label value="Mi Perfil" sclass="titulo_ventana"/>  
     <grid>
       <columns>
         <column width="125px"/>
@@ -54,9 +54,15 @@
       </rows>
     </grid>
     <space height="10px"/>
-    <div align="right">
-      <a id="tbbVerMas" label="Editar »" sclass="botonAccion" tooltiptext="Ver datos completos y editar"/>
+<!--    <div align="right">
+      <button id="tbbVerMas" label="Editar »" sclass="botonAccion" tooltiptext="Ver datos completos y editar"/>
+    </div>-->
+    
+    <div style="margin:10px;padding: 5px 15px" align="right">
+      <button id="tbbVerMas" label="Editar »" sclass="boton_acceso"/>                        
     </div>
+    
+    
     <toolbarbutton id="btnEditar" visible="false"/>
   </div>
 </zk>

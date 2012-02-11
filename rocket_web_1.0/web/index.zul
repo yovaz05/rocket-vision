@@ -2,7 +2,7 @@
   index.zul, vista de entrada del sistema, con login y opciones generales para usuario no logueado
 -->
 <?page id="pagAcceso" cacheable="false" language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8"
-title="Casa de Oración - Rocket"?>
+title="Casa de Oración - Sistema"?>
 <zk xmlns="http://www.zkoss.org/2005/zul"
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -61,7 +61,7 @@ title="Casa de Oración - Rocket"?>
        panelCentralDefecto  = "";
        //para mostrar la pantalla de login, comentar línea siguiente:
        //loginAutomaticoAdmin();
-       loginAutomaticoLiderRed1();
+       //loginAutomaticoLiderRed1();
        //loginAutomaticoLiderRed2();
     ]]>
   </zscript>

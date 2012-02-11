@@ -16,7 +16,7 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 import rocket.controladores.general.Constantes;
 import rocket.modelo.bd.util.UsuarioUtil;
-import rocket.modelo.servicios.ServicioPersona;
+import rocket.modelo.servicios.ServicioLider;
 import rocket.modelo.servicios.ServicioRed;
 import waytech.modelo.beans.sgi.Persona;
 import waytech.modelo.beans.sgi.Red;
@@ -43,7 +43,7 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
   Div opcionLider1, opcionLider2, opcionLider3, opcionLider4;
   Div opcionAgregarLider;
   //data:
-  ServicioPersona servicioPersona = new ServicioPersona();
+  ServicioLider servicioPersona = new ServicioLider();
   ServicioRed servicioRed = new ServicioRed();
   List redesNombres = new ArrayList();
   //nombres de líderes lanzados disponibles para ser líderes de célula

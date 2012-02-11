@@ -50,6 +50,7 @@ public class ServicioCelula {
   int nLideresUsados = 1;
   //TODO: usar este id para las modificaciones
   int idCelula = 0;
+  Celula celula = new Celula();
 
   /**
    * obtiene de la base de datos, todas las células de una red específica
@@ -93,9 +94,9 @@ public class ServicioCelula {
     getAll();
     listadoCelulas = new ArrayList();
     int n = 1;
-    for (Celula celula : celulas) {
+    for (Celula c : celulas) {
       CelulaListadoUtil celulaListado = new CelulaListadoUtil();
-      celulaListado = generarCelulaListadoUtil(celula);
+      celulaListado = generarCelulaListadoUtil(c);
       celulaListado.setNroItem(n++);
       listadoCelulas.add(celulaListado);
     }
@@ -116,15 +117,15 @@ public class ServicioCelula {
 
     //procesar datos
     int n = 1;
-    for (Celula celula : celulas) {
+    for (Celula c : celulas) {
       CelulaListadoUtil celulaListado = new CelulaListadoUtil();
-      celulaListado = generarCelulaListadoUtil(celula);
+      celulaListado = generarCelulaListadoUtil(c);
       celulaListado.setNroItem(n++);
       listadoCelulas.add(celulaListado);
     }
     return listadoCelulas;
   }
-
+  
   public List getNombres() {
     getAll();
     nombres = new ArrayList();
@@ -141,8 +142,8 @@ public class ServicioCelula {
     }
     //**
     System.out.println("NOMBRE DE TODAS LAS Células:");
-    for (Celula celula : celulas) {
-      System.out.println("Celula: " + celula.getNombre());
+    for (Celula c : celulas) {
+      System.out.println("Celula: " + c.getNombre());
     }
   }
 
@@ -193,11 +194,11 @@ public class ServicioCelula {
     if (respuesta.esSentenciaSqlEjecutadaExitosamente()) {
       System.out.println("ServicioCelula.crearCelula.codigo=" + codigo);
       System.out.println("ServicioCelula.crearCelula.idRed=" + idRed);
-      Celula celula = respuesta.getCelula();
-      if (celula == null) {
+      Celula c = respuesta.getCelula();
+      if (c == null) {
         System.out.println("respuesta.celula == null");
       }
-      idCelula = celula.getIdCelula();
+      idCelula = c.getIdCelula();
     } else {
       System.out.println("ERROR->ServicioCelula.crearCelula.codigo=");
       System.out.println(respuesta.getRespuestaServicio());
@@ -521,6 +522,7 @@ public class ServicioCelula {
     boolean existe = false;
     if (respuesta.esSentenciaSqlEjecutadaExitosamente()) {
       existe = respuesta.esCodigoCelulaExistente();
+      celula = respuesta.getCelula();
     }
     return existe;
   }
@@ -529,4 +531,5 @@ public class ServicioCelula {
     RspCelula respuesta = saCelula.updateEstadoCelula(idCelula, estatus);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
+  
 }

@@ -1,4 +1,4 @@
-package rocket.controladores.acceso;
+package rocket.controladores.general;
 
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
@@ -13,9 +13,6 @@ import org.zkoss.zul.Menu;
 import org.zkoss.zul.Menuitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Toolbarbutton;
-import rocket.controladores.general.Modo;
-import rocket.controladores.general.Sesion;
-import rocket.controladores.general.Vistas;
 import rocket.modelo.bd.util.UsuarioUtil;
 import waytech.utilidades.Util;
 
@@ -146,6 +143,12 @@ public class CtrlMenu extends GenericForwardComposer {
 
   public void onClick$itemReporteCelulaListado() {
     cambiarVista(Vistas.REPORTE_CELULA_LISTADO_SEMANA);
+    //- mostrarStatus("Atención: Estamos trabajando para que en Marzo puedas ver los grupos de tus discípulos");
+  }
+
+  public void onClick$itemBusquedaCelulasPorLider() {
+    cambiarVista(Vistas.BUSQUEDA_LISTADO_CELULAS_POR_LIDER);
+    //- mostrarStatus("Atención: Se está trabajando para que en Marzo se puedan ver los grupos de los discípulos");
   }
 
   public void onClick$itemResultadosCelulaSemanaAdmin() {
@@ -159,7 +162,13 @@ public class CtrlMenu extends GenericForwardComposer {
   }
 
   public void onClick$itemLiderBusqueda() {
-    Sesion.setVistaSiguiente(Vistas.LIDER_BUSQUEDA);
+    Sesion.setVistaSiguiente(Vistas.BUSQUEDA_LIDER);
+    Sesion.setModo(Modo.CONSULTA);
+    onClick$btnControl();//forzar cambio de vista
+  }
+  
+  public void onClick$itemBusqueda() {
+    Sesion.setVistaSiguiente(Vistas.BUSQUEDA);
     Sesion.setModo(Modo.CONSULTA);
     onClick$btnControl();//forzar cambio de vista
   }
@@ -170,13 +179,18 @@ public class CtrlMenu extends GenericForwardComposer {
     Sesion.setModo(Modo.INGRESAR);
     onClick$btnControl();//forzar cambio de vista
   }
+  
+  public void onClick$itemCerrarSemanaAdmin() {
+    cambiarVista(Vistas.CIERRE_SEMANA_ADMIN);
+  }
+  
 
   public void onClick$itemUsuarioListadoAdmin() {
     cambiarVista(Vistas.ACCESO_LISTADO_ADMIN);
   }
 
   public void onClick$itemInicio() {
-    cambiarVista(Vistas.REPORTE_CELULA_LISTADO_SEMANA);
+    cambiarVista(Vistas.BIENVENIDA);
   }
 
   public void onClick$itemRed() {

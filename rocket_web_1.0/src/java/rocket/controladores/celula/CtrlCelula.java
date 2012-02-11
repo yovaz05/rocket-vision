@@ -101,6 +101,7 @@ public class CtrlCelula extends GenericForwardComposer {
   //variables de control:
   int tabSeleccionado;
   String modo;  //modo={new,edicion,ver,imprimir}
+  //El objetivo de esta variable es luego gestionar los título desde 1 sólo controlador, y también la i18n
   String titulo = "Célula";
   CtrlVista ctrlVista = new CtrlVista();
   private String descripcionCelula;
@@ -405,7 +406,7 @@ public class CtrlCelula extends GenericForwardComposer {
    */
   private void actualizarEstado() {
     if (modo.equals(Modo.INGRESAR)) {
-      etqTituloVentana.setValue(titulo + " » Ingresar");
+      etqTituloVentana.setValue("Ingresar " + titulo);
       //- mostrarColumnasVisualizacion(false);
       habilitarWidgetsNew(true);
       mostrarTabsRestantes(false);

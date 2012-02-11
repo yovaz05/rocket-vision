@@ -32,26 +32,25 @@ title="SIG - Mejorando barra superior"?>
 
                 <!-- menú separado por tipo de usuario-->
         <menubar orient="horizontal" height="24px">
-          <menu id="menuCDO" label="Casa de Oración" visible="true">
+          <menu id="menuUsuario" tooltiptext="Opciones">
             <menupopup>
-              <menuitem label="Todas las Células" id="itemCelulaListadoAll" image="/img/iconos/bullet.png"/>
-              <menuitem label="Todos los Líderes" id="itemLiderListadoAll" image="/img/iconos/bullet.png"/>
-<!--              <menu label="Web" tooltiptext="enlaces">
-                <menupopup>-->
-              <menuitem label="Web Principal" href="http://www.casadeoracion.com.ve/" target="_BLANK" image="/img/iconos/open_apart.png"/>
-              <menuitem label="Facebook" href="http://www.facebook.com/PastorRogelioMora" target="_BLANK" image="/img/iconos/facebook16.png"/>
-              <menuitem label="Twitter" href="http://www.twitter.com/PrRogelioMora" target="_BLANK" image="/img/iconos/twitter16.png"/>
-              <menuitem label="Videos" href="http://www.youtube.com/casadeoracionenvenez" target="_BLANK" image="/img/iconos/youtube16.png"/>
-              <menuitem label="Fotos" href="https://picasaweb.google.com/111869476168340172902" target="_BLANK" image="/img/iconos/picasa16.png"/>
-<!--                </menupopup>
-              </menu>   -->
+              <menuitem label="Cambiar contraseña"  id="itemCambiarPassword"  image="/img/iconos/bullet.png"/>
+              <menuitem label="Salir"               id="itemCerrarSesion"     image="/img/iconos/bullet.png"/>
             </menupopup>
-          </menu>    
-          
-          <menuitem label="Buscar" id="itemBusqueda"/>
-<!--          PRUEBA-->
-<!--          <menuitem label="prueba" id="itemBusquedaCelulasPorLider"/>-->
+          </menu>
+          <menuitem id="itemPerfil" label="Nombre Usuario" tooltiptext="Perfil"/>
 
+          <menuitem id="itemReporteCelulaListado" label="Ingresar reportes" tooltiptext="Ingresar reportes de tu célula"
+          visible="false"/>
+          
+          <menu id="menuLiderRed" label="Mi Red" visible="false">
+            <menupopup>
+              <menuitem label="Líderes" id="itemLiderListadoRed" image="/img/iconos/bullet.png"/>
+              <menuitem label="Células" id="itemCelulaListadoRed" image="/img/iconos/bullet.png"/>
+              <menuitem label="Reportes" id="itemReporteCelulaListadoRed" image="/img/iconos/bullet.png"/>
+            </menupopup>
+          </menu>   
+          
         </menubar>
         
 <!-- Menú completo, prototipo inicial -->
@@ -111,36 +110,28 @@ title="SIG - Mejorando barra superior"?>
       <div id="divDerecha" style="display:inline-block;float:right">
         <menubar height="24px">
           
-            <menu id="menuAdmin" label="Administrar" visible="false">
+          <menuitem label="Buscar Líder" id="itemLiderBusqueda"/>
+
+          <menu id="menuAdmin" label="Administrar" visible="false">
             <menupopup>
               <menuitem label="Ingresar Líder" id="itemLiderNew" image="/img/iconos/bullet.png"/>
               <menuitem label="Ingresar Célula" id="itemCelulaNew" image="/img/iconos/bullet.png"/>
               <menuitem label="Ver Líderes" id="itemLiderListadoAdmin" image="/img/iconos/bullet.png"/>
               <menuitem label="Ver Células" id="itemCelulaListadoAdmin" image="/img/iconos/bullet.png"/> 
               <menuitem label="Ver Reportes" id="itemReporteCelulaListadoAdmin" image="/img/iconos/bullet.png"/>
-<!--              EN DESARROLLO-->
-<!--              <menuitem label="Estadística Semanal" id="itemResultadosCelulaSemanaAdmin" image="/img/iconos/bullet.png"/>
-              <menuitem label="Cerrar Semana" id="itemCerrarSemanaAdmin" image="/img/iconos/bullet.png"/>-->
+              <menuitem label="Estadística Semanal" id="itemResultadosCelulaSemanaAdmin" image="/img/iconos/bullet.png"/>
+              <menuitem label="Cerrar Semana" id="itemCerrarSemanaAdmin" image="/img/iconos/bullet.png"/>
 <!--          LISTADO DE USUARIOS: EN PROCESO-->
 <!--              <menuitem label="Usuarios" id="itemUsuarioListadoAdmin" image="/img/iconos/bullet.png"/>-->
             </menupopup>
           </menu>
           
-<!--          <menu id="menuCDO" label="Casa de Oración" visible="true">
+          <menu id="menuCDO" label="Casa de Oración" visible="true">
             <menupopup>
               <menuitem label="Líderes" id="itemLiderListadoAll" image="/img/iconos/bullet.png"/>
               <menuitem label="Células" id="itemCelulaListadoAll" image="/img/iconos/bullet.png"/>
-              <menu label="Web" tooltiptext="enlaces">
-                <menupopup>
-                  <menuitem label="Web Principal" href="http://www.casadeoracion.com.ve/" target="_BLANK" image="/img/iconos/open_apart.png"/>
-                  <menuitem label="Facebook" href="http://www.facebook.com/PastorRogelioMora" target="_BLANK" image="/img/iconos/facebook16.png"/>
-                  <menuitem label="Twitter" href="http://www.twitter.com/PrRogelioMora" target="_BLANK" image="/img/iconos/twitter16.png"/>
-                  <menuitem label="Videos" href="http://www.youtube.com/casadeoracionenvenez" target="_BLANK" image="/img/iconos/youtube16.png"/>
-                  <menuitem label="Fotos" href="https://picasaweb.google.com/111869476168340172902" target="_BLANK" image="/img/iconos/picasa16.png"/>
-                </menupopup>
-              </menu>   
             </menupopup>
-          </menu>    -->
+          </menu>    
 <!--      
           <menu label="Redes" tooltiptext="Redes de toda la iglesia">
             <menupopup>
@@ -151,7 +142,7 @@ title="SIG - Mejorando barra superior"?>
             </menupopup>
           </menu>
             -->
-<!--          <menu label="Web" tooltiptext="enlaces">
+          <menu label="Web" tooltiptext="enlaces">
             <menupopup>
               <menuitem label="Web Principal" href="http://www.casadeoracion.com.ve/" target="_BLANK" image="/img/iconos/open_apart.png"/>
               <menuitem label="Facebook" href="http://www.facebook.com/PastorRogelioMora" target="_BLANK" image="/img/iconos/facebook16.png"/>
@@ -159,37 +150,17 @@ title="SIG - Mejorando barra superior"?>
               <menuitem label="Videos" href="http://www.youtube.com/casadeoracionenvenez" target="_BLANK" image="/img/iconos/youtube16.png"/>
               <menuitem label="Fotos" href="https://picasaweb.google.com/111869476168340172902" target="_BLANK" image="/img/iconos/picasa16.png"/>
             </menupopup>
-          </menu>         -->
-          
-          <menu id="menuLiderRed" label="Mi Red" visible="false">
+          </menu>         
+          <menu tooltiptext="Opciones del Sistema" image="/img/iconos/tuerca2.png" hoverImage="/img/iconos/tuerca-hover.png">
             <menupopup>
-              <menuitem label="Líderes" id="itemLiderListadoRed" image="/img/iconos/bullet.png"/>
-              <menuitem label="Células" id="itemCelulaListadoRed" image="/img/iconos/bullet.png"/>
-              <menuitem label="Reportes" id="itemReporteCelulaListadoRed" image="/img/iconos/bullet.png"/>
-            </menupopup>
-          </menu>   
-                    
-          <menuitem id="itemReporteCelulaListado" label="Mis células" tooltiptext="Ingresar reportes de tu célula"
-          visible="false"/>
-          
-          <menuitem id="itemPerfil" label="*NOMBRE DE USUARIO*" tooltiptext="Perfil"/>
-
-          <menuitem id="itemInicio" src="img/iconos/home_black_20.png" tooltiptext="Inicio" />
-
-          <menuitem id="itemAyuda" label="Ayuda" image="/img/iconos/help_blue16.png" tooltiptext="Ayuda"/>
-
-          <menu id="menuUsuario" tooltiptext="Opciones" image="/img/iconos/tuerca2.png" hoverImage="/img/iconos/tuerca-hover.png">
-            <menupopup>
-              <menuitem label="Cambiar contraseña"  id="itemCambiarPassword"  image="/img/iconos/bullet.png"/>
-              <menuitem label="Salir"               id="itemCerrarSesion"     image="/img/iconos/bullet.png"/>
-              <menuseparator/>
-              <menuitem id="itemAcercaDe" label="Acerca de..." image="/img/iconos/bullet.png"/>
               <menuitem id="itemCompatibilidad" label="Compatibilidad" image="/img/iconos/bullet.png" visible="false"/>
               <menuitem id="itemCondiciones" label="Condiciones" image="/img/iconos/bullet.png" visible="false"/>
               <menuitem id="itemPrivacidad" label="Privacidad" image="/img/iconos/bullet.png" visible="false"/>
               <menuitem id="itemContacto" label="Contacto" image="/img/iconos/bullet.png" visible="false"/>
+              <menuitem id="itemAcercaDe" label="Acerca de..." image="/img/iconos/bullet.png"/>
             </menupopup>
           </menu> 
+          <menuitem id="itemAyuda" label="" image="/img/iconos/help_blue16.png" tooltiptext="Ayuda"/>
         </menubar>
       </div>
     </div>

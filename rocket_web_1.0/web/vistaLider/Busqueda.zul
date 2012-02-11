@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
   <style src="css/estilos1.css"/>  
-  <label id="tituloVentana" value="Buscar líderes" height="20px" sclass="titulo_ventana"/>
+  <label id="tituloVentana" value="Buscar Líder" height="20px" sclass="titulo_ventana"/>
   <div id="divMensaje" align="center" style="margin:2px;padding:5px"
     onClick="self.visible=false">
     <label id="etqMensaje" value="Mensajes al usuario:"
@@ -18,7 +18,7 @@
     <rows>
       <!-- Cédula -->      
       <row>
-        <label value="Buscar por Cédula" sclass="etiqueta_campo"/>
+        <label value="Buscar cédula" sclass="etiqueta_campo"/>
         <div>
           <textbox id="txtCedula" value="" maxlength="8" cols="10"/>
           <label id="etqInstruccionesCedula" value="Escribe la cédula y presiona 'Enter'" sclass="mensajes" visible="false"/>
@@ -28,7 +28,7 @@
       </row> 
       <!-- Nombre -->
       <row>
-        <label value="Buscar por Nombre" sclass="etiqueta_campo"/>
+        <label value="Buscar por nombre" sclass="etiqueta_campo"/>
         <div>
           <textbox id="txtNombre" value="" cols="35" maxlength="45"/>
           <label id="etqInstruccionesNombre" value="Escribe el nombre y presiona 'Enter'" sclass="mensajes" visible="false"/>

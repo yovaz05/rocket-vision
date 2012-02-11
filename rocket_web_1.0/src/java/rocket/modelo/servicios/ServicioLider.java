@@ -21,7 +21,7 @@ import waytech.modelo.servicios.SaPersona;
  *
  * @author Gabriel
  */
-public class ServicioPersona {
+public class ServicioLider {
 
   List<Persona> lideresLanzados = new ArrayList();
   List<String> nombres = new ArrayList();

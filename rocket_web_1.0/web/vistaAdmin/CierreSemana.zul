@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+<!--  <div apply="rocket.controladores.reportecelula.CtrlReporteCelula" width="500px">-->
+  <div>
+    <label id="tituloVentana" sclass="titulo_ventana" value="Cierre de Semana"/>
+    <div id="divMensaje" align="center" style="margin:2px;padding:5px"
+    onClick="self.visible=false">
+      <label id="etqMensaje" value="Esta operación cerrará la semana actual y abre la siguiente para ingreso de reportes."
+      sclass="mensajes" style="margin: 2px; padding:2px;"
+      onClick="self.visible=false"
+      visible="true"/>
+    </div>    
+    <hbox id="hboxPreguntaCelulaRealizada" sclass="mensajes" visible="true">
+      <label id="etqPregunta" value="¿Seguro que desea cerrar la semana?"/>
+      <toolbarbutton id="btnCelulaRealizada" label="Sí"/>
+      <toolbarbutton id="btnCelulaNoRealizada" label="No"/>
+      <space height="5px"/>
+    </hbox>
+    <toolbar visible="false" height="20px">
+      <toolbarbutton id="btnGuardar" label="Guardar" visible="false"/>
+      <toolbarbutton id="btnEditar" label="Editar" sclass="botonAccion" visible="false"/>
+      <toolbarbutton id="btnConfirmar" label="Confirmar Reporte" visible="false"/>
+    </toolbar>
+    <tabbox id="tabbox" width="100%" mold="accordion">
+      <tabs>
+        <tab label="Estadísticas" id="tabCelula"/>
+      </tabs>
+      <tabpanels>
+        <tabpanel id="tabPanelCelula">
+          <include id="db" src="vistaReporteCelula/Celula.zul"/>
+        </tabpanel>
+      </tabpanels>
+    </tabbox>
+  </div>
+</zk>

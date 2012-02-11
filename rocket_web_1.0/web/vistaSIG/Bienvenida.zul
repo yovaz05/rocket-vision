@@ -1,0 +1,37 @@
+<?page id="testZul" title="Inicio" cacheable="false"
+	language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8" title="Inicio del sistema"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <style src="css/estilos1.css"/>
+  <div>
+    <label value="Bienvenido al Sistema" sclass="titulo_ventana"/> 
+    <div align="left" style="padding: 0px 20px">
+      <html><![CDATA[
+<div style="color:#4682B4;">
+  <p style="font: 16px">
+  <h4>Ver tus grupos e Ingresa tu Reporte:</h4>
+  <p style="padding-left:20px">
+  Haz click en la opción 'Mis células'.
+  <br><br>
+  Chequea la información de tu(s) grupo(s).
+  <br><br>
+  Allí puedes ingresar los reportes cada semana, hasta el domingo a las 10:00 p.m.
+  <br>
+  </p>
+  <h4>Modifica tus datos personales:</h4>
+  <p style="padding-left:20px">
+  Haz click sobre tu nombre en la parte superior.
+  </p>
+  <h4>Modifica tu contraseña:</h4>
+  <p style="padding-left:20px">
+  Click a la tuerca en la esquina superior derecha, y elegir 'cambiar contraseña'.
+  </p>
+  </p>
+</div>
+]]>
+      </html>
+    </div>        
+  </div>
+</zk>

@@ -16,7 +16,7 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
 import rocket.modelo.servicios.ServicioCelula;
-import rocket.modelo.servicios.ServicioPersona;
+import rocket.modelo.servicios.ServicioLider;
 import rocket.modelo.servicios.ServicioReporteCelula;
 
 /**
@@ -41,7 +41,7 @@ public class CtrlObservaciones extends GenericForwardComposer {
   //variables de control:
   private String observaciones = "";
   ServicioCelula servicioCelula = new ServicioCelula();
-  ServicioPersona servicioPersona = new ServicioPersona();
+  ServicioLider servicioPersona = new ServicioLider();
   ServicioReporteCelula servicioReporteCelula = new ServicioReporteCelula();
 
   @Override

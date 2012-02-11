@@ -709,19 +709,19 @@ public class CtrlReporteCelula extends GenericForwardComposer {
 
   private void mostrarTabsDatosReporte(boolean visible) {
     if (visible) {
-      mostrarWidget(tabPlanificacion);
+      //+ mostrarWidget(tabPlanificacion);
+      //+ mostrarWidget(tabPanelPlanificacion);
       mostrarWidget(tabResultados);
-      //+ mostrarWidget(tabOfrendas);
-      mostrarWidget(tabPanelPlanificacion);
       mostrarWidget(tabPanelResultados);
+      //+ mostrarWidget(tabOfrendas);
       //+ mostrarWidget(tabPanelOfrendas);
     } else {
-      ocultarWidget(tabPlanificacion);
+      //+ ocultarWidget(tabPlanificacion);
+      //+ ocultarWidget(tabPanelPlanificacion);
       ocultarWidget(tabResultados);
-      //-ocultarWidget(tabOfrendas);
-      ocultarWidget(tabPanelPlanificacion);
       ocultarWidget(tabPanelResultados);
-      //-ocultarWidget(tabPanelOfrendas);
+      //+ ocultarWidget(tabOfrendas);
+      //+ ocultarWidget(tabPanelOfrendas);
     }
   }
 
@@ -739,9 +739,9 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     estatusReporte = 4;
     if (ingresarReporteCelula()) {
       ocultarPregunta();
-      mensaje("Ingrese la planificación y los resultados de la célula");
+      mensaje("Ingresa los resultados de la célula");
       mostrarTabsDatosReporte(true);
-      mostrarWidget(tabObservaciones);
+      //+ mostrarWidget(tabObservaciones);
       reporte.setEstatus(ReporteCelulaUtil.REPORTE_NO_INGRESADO);
       seleccionarTab(tabResultados);//Resultados
       activarEditDatosReporte();

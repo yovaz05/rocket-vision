@@ -10,11 +10,12 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.A;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Toolbarbutton;
 import rocket.controladores.general.Modo;
-import rocket.modelo.servicios.ServicioPersona;
+import rocket.modelo.servicios.ServicioLider;
 import rocket.modelo.bd.util.LiderUtil;
 
 /**
@@ -31,7 +32,7 @@ public class CtrlPerfil extends GenericForwardComposer {
   A tbbRed, tbbLider1, tbbLider2;
   Toolbarbutton tbbTelefono, tbbEmail;
   //TODO: MEJORA CODIGO: usar clase BotonLider
-  A tbbVerMas;
+  Button tbbVerMas;
   //variables de control:
   CtrlVista ctrlVista = new CtrlVista();
   private int idUsuario = 0;
@@ -46,7 +47,7 @@ public class CtrlPerfil extends GenericForwardComposer {
   String nombreCiudad = "";
   String nombreZona = "";  //gestión de datos:
   //-BD datos;
-  ServicioPersona servicio = new ServicioPersona();
+  ServicioLider servicio = new ServicioLider();
   LiderUtil usuario = new LiderUtil();
 
   @Override

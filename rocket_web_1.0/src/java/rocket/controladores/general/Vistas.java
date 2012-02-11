@@ -23,7 +23,7 @@ public class Vistas{
   public static String REPORTE_CELULA_LISTADO_SEMANA_ADMINISTRADOR = "vistaReporteCelula/ListadoSemanaAdmin.zul";
   public static String REPORTE_CELULA_LISTADO_SEMANA_RED = "vistaReporteCelula/ListadoSemanaRed.zul";
   
-  //Resultados células Semana
+  //Resultados células >> Semana
   public static String RESULTADOS_CELULA_SEMANA_ADMIN = "vistaEstadisticas/ListadoResultadosSemanaAdmin.zul";
   
   //Reportes Célula >> Semanas Anteriores:  
@@ -59,6 +59,7 @@ public class Vistas{
   public static String SISTEMA_PRIVACIDAD = "vistaSIG/Privacidad.zul";
   public static String SISTEMA_COMPATIBILIDAD = "vistaSIG/Compatibilidad.zul";
   public static String SISTEMA_ACERCADE = "vistaSIG/Acercade.zul";
+  public static String BIENVENIDA = "vistaSIG/Bienvenida.zul";
   
   //Acceso:
   public static String LISTADO_ACCESO = "vistaAcceso/ListadoAcceso.zul";  
@@ -66,7 +67,11 @@ public class Vistas{
   public static String ACCESO_LISTADO_ADMIN = "vistaAcceso/ListadoAdmin.zul";
   
   //Búsqueda:
-  public static String LIDER_BUSQUEDA = "vistaLider/Busqueda.zul";
-
+  public static String BUSQUEDA = "vistaBusqueda/Busqueda.zul";
+  public static String BUSQUEDA_LIDER = "vistaLider/Busqueda.zul";
+  public static String BUSQUEDA_LISTADO_CELULAS_POR_LIDER = "vistaBusqueda/ListadoCelulasPorLider.zul";
+  
+  //Operaciones:
+  public static String CIERRE_SEMANA_ADMIN = "vistaAdmin/CierreSemana.zul";  
 
 }

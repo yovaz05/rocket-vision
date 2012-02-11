@@ -1,6 +1,5 @@
-package rocket.controladores.lider;
+package rocket.controladores.busqueda;
 
-import rocket.controladores.busqueda.*;
 import java.util.ArrayList;
 import java.util.List;
 import org.zkoss.zk.ui.Component;
@@ -19,10 +18,13 @@ import rocket.controladores.general.Modo;
 import rocket.controladores.general.Sesion;
 import rocket.controladores.widgets.BotonLider;
 import rocket.controladores.widgets.EtqNro;
+import rocket.modelo.bd.util.CelulaListadoUtil;
 import rocket.modelo.bd.util.LiderListadoUtil;
 import rocket.modelo.bd.util.UsuarioUtil;
+import rocket.modelo.servicios.ServicioCelula;
 import rocket.modelo.servicios.ServicioLider;
 import rocket.modelo.servicios.ServicioRed;
+import waytech.modelo.beans.sgi.Celula;
 import waytech.modelo.beans.sgi.Persona;
 import waytech.modelo.beans.sgi.Red;
 import waytech.utilidades.Util;
@@ -31,19 +33,19 @@ import waytech.utilidades.Util;
  *
  * @author Gabriel
  */
-public class CtrlLiderBusqueda extends GenericForwardComposer {
+public class CtrlBusquedaCelula extends GenericForwardComposer {
 
   Grid grid;
   Label etqInstrucciones;
-  Label etqInstruccionesCedula;
-  Label etqInstruccionesNombre;
+  Label etqInstruccionesCodigo;
+  Label etqInstruccionesNombreLider;
   Label etqMensajeNoData;
   //widgets:
   Div divMensaje;
   Label etqMensaje;
   //- A btnCerrarMensaje;
   Label etqMensajeLideres;
-  Textbox txtCedula, txtNombre, txtTelefono, txtEmail;
+  Textbox txtCodigo, txtNombreLider, txtTelefono, txtEmail;
   A tbbRed;
   A tbbLider1, tbbLider2, tbbLider3, tbbLider4;
   Label etqRed;
@@ -53,7 +55,7 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
   Div opcionLider1, opcionLider2, opcionLider3, opcionLider4;
   Div opcionAgregarLider;
   //data:
-  ServicioLider servicioPersona = new ServicioLider();
+  ServicioCelula servicioCelula = new ServicioCelula();
   ServicioRed servicioRed = new ServicioRed();
   List redesNombres = new ArrayList();
   //nombres de líderes lanzados disponibles para ser líderes de célula
@@ -66,7 +68,7 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
   String nombreRed = "";
   private String cedula = "";
   A btnEditCedula;
-  String nombre = "";
+  String codigo = "";
   String telefono = "";
   String email = "";
   A btnEditNombre;
@@ -78,7 +80,7 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
   private int tipoUsuario;
   private boolean usuarioPuedeVerLiderCompleto = false;
   private boolean esLiderRed = false;
-  List<LiderListadoUtil> lista;
+  List<CelulaListadoUtil> lista;
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -89,58 +91,58 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
   public void inicio() throws InterruptedException {
     System.out.println("CtrlLiderBusqueda.inicio");
     limpiarValores();
-    txtNombre.setFocus(true);
+    txtNombreLider.setFocus(true);
     setPermisos();
   }
 
   void limpiarValores() {
-    txtCedula.setValue("");
-    txtNombre.setValue("");
+    txtCodigo.setValue("");
+    txtNombreLider.setValue("");
   }
 
-  public void onFocus$txtNombre() {
-    ocultarMensajes();
-    limpiarValores();
-    mensajeInstruccionesNombre(true);
+  public void onFocus$txtNombreLider() {
+    //- ocultarMensajes();
+    //- limpiarValores();
+    //- mensajeInstruccionesNombreLider(true);
   }
 
-  public void onFocus$txtCedula() {
-    ocultarMensajes();
-    limpiarValores();
-    mensajeInstruccionesCedula(true);
+  public void onFocus$txtCodigo() {
+    //- ocultarMensajes();
+    //- limpiarValores();
+    //- mensajeInstruccionesCedula(true);
   }
 
-  public void onBlur$txtCedula() {
-    mensajeInstruccionesCedula(false);
+  public void onBlur$txtCodigo() {
+    //-mensajeInstruccionesCodigo(false);
   }
 
-  public void onBlur$txtNombre() {
-    mensajeInstruccionesNombre(false);
+  public void onBlur$txtNombreLider() {
+    mensajeInstruccionesNombreLider(false);
   }
 
-  public void onOK$txtNombre() {
+  public void onOK$txtNombreLider() {
     procesarNombre();
   }
 
   private void procesarNombre() {
     ocultarMensajes();
-    String valor = txtNombre.getValue();
+    String valor = txtNombreLider.getValue();
     //quitar espacios en blanco
     valor = valor.trim();
 
     if (!nombreIngresado(valor)) {//en modo ingresar dejó campo en blanco
-      mensaje("Ingresa el nombre");
+      mensaje("Escribe el nombre del líder");
       return;
     }
 
-    if (valor.isEmpty() || valor.equals(nombre)) {//no se cambió el valor
+    if (valor.isEmpty() || valor.equals(codigo)) {//no se cambió el valor
       return;
     }
 
-    nombre = valor;
+    codigo = valor;
     //buscar persona por nombre:
 
-    buscarPorNombre(nombre);
+    buscarPorNombre(codigo);
 
     //- mostrarNombre();
   }
@@ -155,7 +157,7 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
     return !valor.isEmpty();
   }
 
-  public void onOK$txtCedula() {
+  public void onOK$txtCodigo() {
     procesarCedula();
   }
 
@@ -166,7 +168,7 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
   //procesamiento de valor de código (nuevo y edición)
   private void procesarCedula() {
     ocultarMensajes();
-    String valor = txtCedula.getValue();
+    String valor = txtCodigo.getValue();
     //quitar espacios en blanco
     valor = valor.trim();
     //modo edición
@@ -177,15 +179,15 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
       return;
     }
     cedula = valor.toUpperCase();
-    if (cedulaEncontrada(valor)) {
+    if (codigoEncontrada(valor)) {
       //- mensajeNoResultados("Cédula encontrada");
       //+ mostrar datos básicos: nombre, red, teléfono, correo
       //+ mostrar link que lleva a ver y editar registro completo...
     } else {
       mensajeNoResultados(true);
     }
-    txtCedula.select();
-    mensajeInstruccionesCedula(false);
+    txtCodigo.select();
+    mensajeInstruccionesCodigo(false);
   }
 
   /**
@@ -208,15 +210,17 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
    * además muestra mensaje de error cuando aplica.
    * @return 
    */
-  boolean cedulaEncontrada(String cedula) {
-    if (servicioPersona.existeCedula(cedula)) {
+  boolean codigoEncontrada(String codigo) {
+    if (servicioCelula.existeCelula(codigo)) {
       //mostrar datos de líder, con la cédula ingresada:
-      Persona p = servicioPersona.getPersona();
-      mostrarDatosPersonaRegistrada(p);
+      /*DOING TODO: TERMINAR
+      Celula c = servicioCelula.getCelula();
+      mostrarDatosCelulaRegistrada(c);
+       **/
       return true;
     } else {
       //limpiar valores, por si fueron usados en búsqueda anteriormente
-      nombre = "";
+      this.codigo = "";
     }
     return false;
   }
@@ -228,7 +232,7 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
    * @return 
    */
   private void buscarPorNombre(String nombre) {
-    lista = servicioPersona.getTodosLideresLanzadosPorNombreListado(nombre);
+    lista = servicioCelula.getCelulasPorRed(idRed);
     if (lista.isEmpty()) {
       System.out.println("CtrlLiderListado. no hay datos");
       //no hay data
@@ -319,12 +323,12 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
     etqInstrucciones.setVisible(visible);
   }
 
-  private void mensajeInstruccionesCedula(boolean visible) {
-    etqInstruccionesCedula.setVisible(visible);
+  private void mensajeInstruccionesCodigo(boolean visible) {
+    etqInstruccionesCodigo.setVisible(visible);
   }
 
-  private void mensajeInstruccionesNombre(boolean visible) {
-    etqInstruccionesNombre.setVisible(visible);
+  private void mensajeInstruccionesNombreLider(boolean visible) {
+    etqInstruccionesNombreLider.setVisible(visible);
   }
 
   /**
@@ -333,13 +337,11 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
    * (B): usar los widgets de view -más trabajo, xq hay q jugar con el valor ingresado
    **/
   //DOING
-  private void mostrarDatosPersonaRegistrada(Persona p) {
-    //txtNombre.setValue(p.getNombre());
-    //cmbRed.setValue(p.getRed().getNombre());
-    nombre = p.getNombre();
-    nombreRed = p.getRed().getNombre();
-    System.out.println("CtrlLiderDB. nombre = " + nombre);
-    System.out.println("CtrlLiderDB. red = " + nombreRed);
+  private void mostrarDatosCelulaRegistrada(Celula c) {
+    codigo = c.getCodigo();
+    //- nombreRed = c.getRed().getNombre();
+    //** System.out.println("CtrlLiderDB. nombre = " + codigo);
+    //** System.out.println("CtrlLiderDB. red = " + nombreRed);
     mostrarNombre();
   }
 
@@ -368,12 +370,12 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
   private void ocultarMensajes() {
     ocultarMensaje();
     mensajeNoResultados(false);
-    mensajeInstruccionesCedula(false);
-    mensajeInstruccionesNombre(false);
+    mensajeInstruccionesCodigo(false);
+    mensajeInstruccionesNombreLider(false);
   }
 
   private void mostrarNombre() {
-    txtNombre.setValue(nombre);
+    txtNombreLider.setValue(codigo);
   }
 
   /**

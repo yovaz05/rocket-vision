@@ -4,36 +4,37 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
   <style src="css/estilos1.css"/>
-  <div apply="rocket.controladores.reportecelula.CtrlReporteCelulaListadoSemana"
-  width="755px">
-    <label id="tituloVentana" value="Mis Células" sclass="titulo_ventana"/>
-    <label id="etqMensajeNoData" sclass="mensajes" value="No eres líder directo de ninguna célula" visible="false"/>
+  <div apply="rocket.controladores.busqueda.CtrlListadoCelulasPorLider"
+  width="95%">
+    <label id="tituloVentana" value="Células directas de *NOMBRE DEL LIDER*" sclass="titulo_ventana"/>
+    <label id="etqMensajeNoData" sclass="mensajes" style="margin-left:100px" value="Actualmente NO tiene células" visible="false"/>
     <div id="divDatos">
       <grid id="grid" style="border:normal; margin-right:10px" mold="paging" pageSize="5">
         <columns sizable="true">
           <column label="#" width="25px" align="center"/>
-          <column label="Código" width="85px"/>        
+          <column label="Código" width="100px"/>        
           <column label="Líderes" width="150px"/>
-          <column label="Dirección" width="200px"/>
-          <column label="Día y Hora" width="125px"/>
-          <column label="Reporte » esta semana" id="colEstadosReporte" align="center" width="158px"/>
+          <column label="Dirección" width="250px"/>
+          <column label="Día y Hora"/>
+<!--          <column label="Reporte » esta semana" id="colEstadosReporte" align="center"/>-->
         </columns>      
         <rows>
         </rows>
       </grid>
-      <space height="10px"/>
+<!--      <space height="10px"/>
       <div id="divLeyenda" align="center"
     style="font-size: 10px; font-family: Arial,sans-serif;" visible="true">
-        <div style="background: url(img/iconos/status_not_16.png) no-repeat; display:inline-block;" height="20px">
-          <label style="padding: 0 20px" value="Reporte NO ingresado"/>
-        </div>
         <div style="background: url(img/iconos/status_ok_16.gif) no-repeat; display:inline-block;" height="20px">
           <label style="padding: 0 20px" value="Reporte ingresado"/>
+        </div>
+        <div style="background: url(img/iconos/status_not_16.png) no-repeat; display:inline-block;" height="20px">
+          <label style="padding: 0 20px" value="Reporte NO ingresado"/>
         </div>
         <div style="background: url(img/iconos/status_alert_16.gif) no-repeat; display:inline-block;" height="20px">
           <label style="padding: 0 20px" value="Célula NO realizada"/>
         </div>
       </div>
+      -->
     </div>
     
 <!-- Será usado en próximas versiones, botón para ver semanas anteriores -->

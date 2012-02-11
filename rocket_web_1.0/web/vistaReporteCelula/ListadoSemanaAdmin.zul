@@ -6,7 +6,7 @@
   <style src="css/estilos1.css"/>
   <div apply="rocket.controladores.reportecelula.CtrlReporteCelulaListadoSemanaAdmin"
   width="720px">
-    <div id="filtroRed" align="left" style="padding: 5px 15px">
+    <div id="filtroRed" style="padding: 5px 15px">
       <label id="tituloVentana" value="Reportes de Célula » esta semana" sclass="titulo_ventana"/>
       <label value="Red: " sclass="etiqueta_campo"/>
       <combobox id="cmbRed" value="Elegir..." autocomplete="true" readonly="true" width="200px">
@@ -40,7 +40,7 @@
     visible="false"/>
     </div>    
     
-    <div id="divDatos">
+    <div id="divDatos" align="center">
       <grid id="grid" style="border:normal; margin-right:10px" mold="paging" pageSize="5">
         <columns sizable="true">
           <column label="#" width="25px" align="center"/>
@@ -54,7 +54,7 @@
         </rows>
       </grid>
       <space height="10px"/>
-      <div id="divLeyenda" align="center"
+      <div id="divLeyenda" align="right"
     style="font-size: 10px; font-family: Arial,sans-serif;" visible="true">
         <div style="background: url(img/iconos/status_ok_16.gif) no-repeat; display:inline-block;" height="20px">
           <label style="padding: 0 20px" value="Reporte ingresado"/>
@@ -83,9 +83,4 @@
       </div>    
     </div>
   </div>
-<!--TODO: pasar este bloque de código al controlador-->
-  <zscript>
-    <![CDATA[
-    ]]>        
-  </zscript> 
 </zk>

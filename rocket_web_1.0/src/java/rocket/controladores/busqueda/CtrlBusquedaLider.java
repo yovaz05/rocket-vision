@@ -1,6 +1,5 @@
-package rocket.controladores.lider;
+package rocket.controladores.busqueda;
 
-import rocket.controladores.busqueda.*;
 import java.util.ArrayList;
 import java.util.List;
 import org.zkoss.zk.ui.Component;
@@ -17,6 +16,7 @@ import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Textbox;
 import rocket.controladores.general.Modo;
 import rocket.controladores.general.Sesion;
+import rocket.controladores.widgets.BotonCelulasLider;
 import rocket.controladores.widgets.BotonLider;
 import rocket.controladores.widgets.EtqNro;
 import rocket.modelo.bd.util.LiderListadoUtil;
@@ -31,9 +31,9 @@ import waytech.utilidades.Util;
  *
  * @author Gabriel
  */
-public class CtrlLiderBusqueda extends GenericForwardComposer {
+public class CtrlBusquedaLider extends GenericForwardComposer {
 
-  Grid grid;
+  Grid gridBusquedaLider;
   Label etqInstrucciones;
   Label etqInstruccionesCedula;
   Label etqInstruccionesNombre;
@@ -246,8 +246,8 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
 
   public void mostrarData() {
     ListModelList model = new ListModelList(lista);
-    grid.setModel(model);
-    grid.setRowRenderer(new RowRenderer() {
+    gridBusquedaLider.setModel(model);
+    gridBusquedaLider.setRowRenderer(new RowRenderer() {
 
       public void render(Row row, Object data) throws Exception {
         //se extrae la data
@@ -255,11 +255,13 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
 
         //se crean los widgets con la data
         Label etqNro = new EtqNro("" + lider.getNroItem());
-        BotonLider linkNombre = new BotonLider("" + lider.getNombre());
-        Label etqRed = new Label("" + lider.getNombreRed());
-        Label etqDireccion = new Label("" + lider.getDireccionCorta());
-        Label etqTelefono = new Label("" + lider.getTelefono());
-        Label etqEmail = new Label("" + lider.getEmail());
+        String nombreLider = lider.getNombre();
+        BotonLider linkNombre = new BotonLider(nombreLider);
+        Label etqRed = new Label(lider.getNombreRed());
+        //- Label etqDireccion = new Label("" + lider.getDireccionCorta());
+        Label etqTelefono = new Label(lider.getTelefono());
+        Label etqEmail = new Label(lider.getEmail());
+        BotonCelulasLider btnVerCelulasLider = new BotonCelulasLider("Ver células");
         /*+
         tbbLider1 = new BotonLider("" + lider.getNombreLider1());
         tbbLider2 = new BotonLider("" + lider.getNombreLider2());
@@ -268,7 +270,7 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
         //TODO: establecer atributos de estilo a los widgets
 
         //se establecen parámetros para navegación dinámica:
-        final int id = lider.getId();
+        final int idLider = lider.getId();
         final int idRed = lider.getIdRed();
 
         /*+
@@ -281,9 +283,11 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
         } else {
           linkNombre.setModo(Modo.CONSULTA);
         }
-
         linkNombre.setIdRed(idRed);
-        linkNombre.setIdLider(id);
+        linkNombre.setIdLider(idLider);
+        
+        btnVerCelulasLider.setNombreLider(nombreLider);
+        btnVerCelulasLider.setIdLider(idLider);
 
         /*+
         tbbLider1.setIdLider(idLider1);
@@ -296,7 +300,8 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
         etqRed.setParent(row);
         etqTelefono.setParent(row);
         etqEmail.setParent(row);
-        etqDireccion.setParent(row);
+        btnVerCelulasLider.setParent(row);
+        //- etqDireccion.setParent(row);
         /*
         Vbox vbox = new Vbox();
         tbbLider1.setParent(vbox);
@@ -308,7 +313,7 @@ public class CtrlLiderBusqueda extends GenericForwardComposer {
   }
 
   private void mostrarGrid(boolean visible) {
-    grid.setVisible(visible);
+    gridBusquedaLider.setVisible(visible);
   }
 
   private void mensajeNoResultados(boolean visible) {

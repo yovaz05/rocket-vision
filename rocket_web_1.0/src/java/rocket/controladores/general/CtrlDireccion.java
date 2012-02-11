@@ -14,7 +14,7 @@ import org.zkoss.zul.Textbox;
 import rocket.modelo.servicios.ServicioCelula;
 import rocket.modelo.servicios.ServicioCiudad;
 import rocket.modelo.servicios.ServicioEstado;
-import rocket.modelo.servicios.ServicioPersona;
+import rocket.modelo.servicios.ServicioLider;
 import rocket.modelo.servicios.ServicioZona;
 
 /**
@@ -92,7 +92,7 @@ public class CtrlDireccion extends GenericForwardComposer {
   private int idCelula = 0;
   private int idLider = 0;
   ServicioCelula servicioCelula = new ServicioCelula();
-  ServicioPersona servPersona = new ServicioPersona();
+  ServicioLider servPersona = new ServicioLider();
   Label etqTituloVentana;
 
   @Override
