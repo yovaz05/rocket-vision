@@ -13,9 +13,10 @@
             <vbox align="left">
               <label value="Cédula de Identidad" sclass="login_label"/>
               <hbox align="left">
-                <textbox id="txtLogin" cols="30" sclass="textbox" maxlength="8" constraint="" onFocus="helpLogin.visible=true;helpPassword.visible=false"
+                <textbox id="txtLogin" cols="30" sclass="textbox" maxlength="8" onFocus="helpLogin.visible=true;helpPassword.visible=false"
                 onChanging="etqAyudaLogin.visible=false"
-                onBlur="etqAyudaLogin.visible=false"/>
+                onBlur="etqAyudaLogin.visible=false"
+                constraint=""/>
                 <image id="helpLogin" src="img/iconos/help16.png"
                 tooltiptext="Ayuda"
                 visible="false"

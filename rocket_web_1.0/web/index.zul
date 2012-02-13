@@ -70,13 +70,70 @@ title="Casa de Oración - Sistema"?>
       <image src="img/logo/logo_rocket.png"/>
     </north>-->
     <center id="rcenter" flex="true" border="0">
-      <div align="left" style="padding:5px;">
-        <include id="vistaCentral" src="${vistaCentralDefecto}" />
-        <include id="panelCentral" src="${panelCentralDefecto}" />
+      <div>
+        <div align="left" style="padding:5px;">
+          <include id="vistaCentral" src="${vistaCentralDefecto}" />
+          <include id="panelCentral" src="${panelCentralDefecto}" />
+        </div>
+<!--        TODO: sacar el contenido de este div para otro archivo .zul-->
+        <div align="left" style="margin-left: 60px">
+          <vbox>
+          
+            <html><![CDATA[
+<div style="color:#4682B4;">
+  <p style="font: 16px">
+  <h4>Ayuda</h4>
+  <p>
+          Accede con tu número de cédula. Usa sólo números. Ejemplo: 16594651
+          <br><br>
+          Tu contraseña es tu cédula de identidad, al inicio. Luego que ingreses deberías cambiarla.
+<!--    <p>
+  Consigue más ayuda
+  <a href="vistaSIG/Ayuda.zul">aquí</a>
+  </p><br><br>
+  </p>-->
+    <p>
+  Puedes solicitar ayuda mediante
+  <a target="_BLANK"
+  href="http://www.facebook.com/groups/238426666237610/"
+  >nuestro grupo en facebook</a>
+  </p>
+  </p>
+</div>
+]]>
+            </html>          
+          </vbox>
+        </div>
       </div>
     </center>
-    <south id="rsur" border="0">
+    <south id="rsur" border="0" style="padding:0">
       <include src="menu_inferior.zul"/>
     </south>
+<!--    <east width="475px" border="0">
+      <div>
+        <space height="60px"/>
+        <vbox>
+          
+          <html><![CDATA[
+<div style="color:#4682B4;">
+  <p style="font: 16px">
+  <h4>Ayuda</h4>
+  <p style="padding-left:15px">
+          Accede con tu número de cédula. Usa sólo números. Ejemplo: 16594651
+          <br><br>
+          Tu contraseña es tu cédula de identidad, al inicio. Luego que ingreses la deberías cambiar.
+    <p style="padding-left: 20px">
+  Puedes pedir ayuda a través de
+  <a target="_BLANK"
+  href="http://www.facebook.com/groups/238426666237610/"
+  >este grupo en facebook</a>
+  </p><br><br>
+  </p>
+</div>
+]]>
+          </html>          
+        </vbox>
+      </div>
+    </east>-->
   </borderlayout>
 </zk>

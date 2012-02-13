@@ -40,7 +40,7 @@ public class CtrlListadoCelulasPorLider extends GenericForwardComposer {
   Grid grid;
   Label etqNro, etqDireccion, etqDiaHora;
   Label etqMensajeNoData;
-  BotonCelula tbbCodigo;
+  BotonCelula enlaceCodigoCelula;
   BotonLider tbbLider1, tbbLider2, tbbLider3, tbbLider4;
   Toolbarbutton tbbEstatus;
   //variable de control:
@@ -61,7 +61,7 @@ public class CtrlListadoCelulasPorLider extends GenericForwardComposer {
     //- idLider = 6; // datos de prueba
     idLider = (Integer) Sesion.getVariable("idLider");
     nombreLider = "" + Sesion.getVariable("lider.nombre");
-    tituloVentana.setValue(nombreLider + "» Células");
+    tituloVentana.setValue(nombreLider + " » Células");
     System.out.println("CtrlReporteCelulaListadoSemana.idUsuario=" + idLider);
     buscarData();
     if (lista.isEmpty()) {
@@ -110,7 +110,9 @@ public class CtrlListadoCelulasPorLider extends GenericForwardComposer {
         etqNro = new EtqNro("" + reporte.getNroItem());
         etqDireccion = new Label("" + reporte.getDireccionCorta());
         etqDiaHora = new Label(Util.getDiaHora(reporte.getDia(), reporte.getHora()));
-        tbbCodigo = new BotonCelula("" + reporte.getCodigo());
+        
+        //TODO: el enlace a la célula debe aplicarsele privilegios: para mandar a resumen o formulario completo.
+        enlaceCodigoCelula = new BotonCelula("" + reporte.getCodigo());
         tbbLider1 = new BotonLider("" + reporte.getNombreLider1());
         tbbLider2 = new BotonLider("" + reporte.getNombreLider2());
         tbbLider3 = new BotonLider("" + reporte.getNombreLider3());
@@ -177,11 +179,11 @@ public class CtrlListadoCelulasPorLider extends GenericForwardComposer {
         }
          */
         
-        tbbCodigo.setIdCelula(idCelula);
+        enlaceCodigoCelula.setIdCelula(idCelula);
 
         //se anexan los widgets a la fila
         etqNro.setParent(row);
-        tbbCodigo.setParent(row);
+        enlaceCodigoCelula.setParent(row);
         if (nroLideres == 0) {//célula no tiene líderes          
           Label etqNoTieneLideres = new Label("No asignados");
           etqNoTieneLideres.setParent(row);
