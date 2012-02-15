@@ -44,7 +44,8 @@
         </div>
       </row>   
       <!--Teléfono Celular-->
-      <row id="rowTelefono" tooltiptext="Preferiblemente el teléfono celular" visible="false"> 
+      <row id="rowTelefono" tooltiptext="Preferiblemente el teléfono celular"
+      visible="false"> 
         <label value="Teléfono" sclass="etiqueta_campo"/>
         <div>
           <label id="etqTelefono" value=""/>

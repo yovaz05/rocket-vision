@@ -441,6 +441,19 @@ public class UtilFechas {
     }
     return cal;
   }
+  
+  /**
+   * calcula lunes anterior basado en el día de hoy
+   * @return cal con fecha del lunes anterior al día de hoy
+   */
+  public static Calendar calcularLunesAnterior() {
+    Calendar cal = Calendar.getInstance();
+    int diaSemana = cal.get(Calendar.DAY_OF_WEEK);
+    if (diaSemana != 2) { // 1= domingo   
+      cal.add(Calendar.DAY_OF_MONTH, - (diaSemana - 2));
+    }
+    return cal;
+  }
 
   /**
    * calcula sábado siguiente basado en el día de hoy
@@ -452,6 +465,28 @@ public class UtilFechas {
     if (diaSemana != 7) { //7 = sabado
       cal.add(Calendar.DAY_OF_MONTH, (7 - diaSemana));
     }
+    return cal;
+  }
+  
+  /**
+   * calcula domingo siguiente basado en el día de hoy
+   * @return cal con fecha del domingo siguiente al día de hoy
+   */
+  public static Calendar calcularDomingoSiguiente() {
+    Calendar cal = Calendar.getInstance();
+    int diaSemana = cal.get(Calendar.DAY_OF_WEEK);
+    if (diaSemana != 1) { //1 = domingo
+      cal.add(Calendar.DAY_OF_MONTH, (8 - diaSemana));
+    }
+    /**
+     * 1:dom
+     * 2:lun
+     * 3:mart
+     * 4:juev
+     * 5:vier
+     * 6:sab
+     * 7:dom
+     */
     return cal;
   }
 

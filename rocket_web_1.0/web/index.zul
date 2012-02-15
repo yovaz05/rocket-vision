@@ -34,7 +34,7 @@ title="Casa de Oración - Sistema"?>
           Sessions.getCurrent().setAttribute("idRed", 2);
           Sessions.getCurrent().setAttribute("usuarioEsLiderRed", true);
           Sessions.getCurrent().setAttribute("usuarioEsLiderCelula", true);
-          Sessions.getCurrent().setAttribute("tipoUsuario", 3);
+          Sessions.getCurrent().setAttribute("tipoUsuario", 4);
           Executions.sendRedirect("index2.zul");
        }
         void loginAutomaticoLiderRed1(){
@@ -60,7 +60,7 @@ title="Casa de Oración - Sistema"?>
        vistaCentralDefecto  = "vistaAcceso/Acceso.zul";
        panelCentralDefecto  = "";
        //para mostrar la pantalla de login, comentar línea siguiente:
-       //loginAutomaticoAdmin();
+       loginAutomaticoAdmin();
        //loginAutomaticoLiderRed1();
        //loginAutomaticoLiderRed2();
     ]]>

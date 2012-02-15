@@ -16,6 +16,7 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Row;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
@@ -139,6 +140,8 @@ public class CtrlCelula extends GenericForwardComposer {
   CelulaUtil celulaActual = new CelulaUtil();
   ServicioCelula servicioCelula = new ServicioCelula();
   private int idCelula;
+  private Row db$rowDiaHora;
+  private Row db$rowNombre;
 
   @Override
   public void doAfterCompose(Component comp) throws Exception {
@@ -270,14 +273,14 @@ public class CtrlCelula extends GenericForwardComposer {
     diaTexto = celula.getDia();
     if (diaTexto.isEmpty()) {
       //si no hay valor, mostrar una etiqueta para permitir edición
-      diaTexto = Constantes.VALOR_EDITAR;
+      diaTexto = Constantes.VALOR_EDITAR_DIA;
     }
     db$etqDia.setValue(diaTexto);
 
     horaTexto = celula.getHora();
     if (horaTexto.isEmpty()) {
       //si no hay valor, mostrar una etiqueta para permitir edición
-      horaTexto = Constantes.VALOR_EDITAR;
+      horaTexto = Constantes.VALOR_EDITAR_HORA;
     }
     db$etqHora.setValue(horaTexto);
 
@@ -312,16 +315,17 @@ public class CtrlCelula extends GenericForwardComposer {
 
     String detalle = celula.getDireccion().getDirDetallada();
     if (detalle.isEmpty()) {
-      detalle = Constantes.VALOR_EDITAR;
+      detalle = Constantes.VALOR_EDITAR_DIRECCION_DETALLE;
     }
     dir$etqDetalle.setValue(detalle);
 
     String telefono = celula.getDireccion().getTelefono();
     if (telefono.isEmpty()) {
-      telefono = Constantes.VALOR_EDITAR;
+      telefono = Constantes.VALOR_EDITAR_TELEFONO;
     }
     dir$etqTelefono.setValue(telefono);
 
+    //TODO: quitar mientras se usa en las versiones posteriores
     fechaApertura = celula.getFechaApertura();
     if (fechaApertura.isEmpty()) {
       fechaApertura = Constantes.VALOR_EDITAR;
@@ -329,6 +333,7 @@ public class CtrlCelula extends GenericForwardComposer {
     //TODO: convertir fecha a formato legible: 'día mes, año'
     otros$etqFechaApertura.setValue(fechaApertura);
 
+    //TODO: quitar mientras se usa en las versiones posteriores
     anfitrion = celula.getAnfitrion();
     if (anfitrion.isEmpty()) {
       anfitrion = Constantes.VALOR_EDITAR;
@@ -421,10 +426,11 @@ public class CtrlCelula extends GenericForwardComposer {
       etqTituloVentana.setValue(titulo + ": " + descripcionCelula);
       habilitarWidgetsNew(false);
       mostrarTabsRestantes(true);
+      mostrarWidgetsRestantes(true);
       mostrarWidgetsEdit(true);
       mostrarWidgetsViewLink(true);
       //TODO: PERMISOS: se debe comprobar el permiso de edición para activar la siguiente línea
-      //- verBotonesEdicion(true);
+      verBotonesEdicion(true);
       setFocoEdicion();
       //-mostrarWidgetsEdit(false);
       //TODO: permisos, chequeo si se tiene permiso de edición
@@ -697,17 +703,17 @@ public class CtrlCelula extends GenericForwardComposer {
     //datos básicos
     //-db$etqCodigo.setValue(codigo);
     db$tbbRed.setLabel(nombreRed);
-    db$etqDia.setValue("Editar Día");
-    db$etqHora.setValue("Editar Hora");
-    db$etqNombre.setValue(Constantes.VALOR_EDITAR);
+    db$etqDia.setValue(Constantes.VALOR_EDITAR_DIA);
+    db$etqHora.setValue(Constantes.VALOR_EDITAR_HORA);
+    db$etqNombre.setValue(Constantes.VALOR_EDITAR_NOMBRE_CELULA);
     dir$etqEstado.setValue(Constantes.VALOR_EDITAR);
     dir$etqCiudad.setValue("");
     dir$etqZona.setValue("");
     dir$etqDetalle.setValue(Constantes.VALOR_EDITAR);
-    dir$etqTelefono.setValue(Constantes.VALOR_EDITAR);
+    dir$etqTelefono.setValue(Constantes.VALOR_EDITAR_TELEFONO);
+    obs$etqObservaciones.setValue(Constantes.VALOR_EDITAR);
     otros$etqFechaApertura.setValue(Constantes.VALOR_EDITAR);
     otros$etqAnfitrion.setValue(Constantes.VALOR_EDITAR);
-    obs$etqObservaciones.setValue(Constantes.VALOR_EDITAR);
     /*
     db$tbbLider1.setLabel(db$cmbLider1.getValue());
     //TODO:mostrar los otros líderes sólo si son usados
@@ -764,7 +770,7 @@ public class CtrlCelula extends GenericForwardComposer {
     if (modo.equals("new")) {
       if (ingresarCelula()) {
         //-Sesion.setVariable("resultOperacion", 1);//indica éxito
-        Sesion.setModo(modo = "edicion-dinamica");
+        Sesion.setModo(modo = Modo.EDICION_DINAMICA);
         mostrarValoresViewRecienCreada();
         actualizarEstado();
       } else {
@@ -965,6 +971,17 @@ public class CtrlCelula extends GenericForwardComposer {
   private void mostrarTabsRestantes(boolean visible) {
     tabDir.setVisible(visible);
     //+ tabOtros.setVisible(visible);
+    //+ tabObs.setVisible(visible);
+  }
+
+  /**
+   * mostrar widgets no usados en 'ingresar'
+   * @param visible 
+   */
+  private void mostrarWidgetsRestantes(boolean visible) {
+    db$rowDiaHora.setVisible(visible);
+    db$rowNombre.setVisible(visible);
+    tabDir.setVisible(visible);
     //+ tabObs.setVisible(visible);
   }
 

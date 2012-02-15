@@ -21,8 +21,7 @@
 <p style="padding-left:20px">
 <p>Información de líderes.</p>
 <p>Información de células.</p>
-<p>Reportes semanales de células.</p>
-<p>Supervisión de reportes semana actual.</p>
+<p>Reportes de grupo, semana actual.</p>
 </p>
 </br>
 <li>
@@ -32,7 +31,7 @@
 <p>Cambios en redes según nueva estructura.</p>
 <p>Líderes y células por niveles.</p>
 <p>Supervisión de reportes de semanas anteriores.</p>
-<p>Estadísticas.</p>
+<p>Estadísticas de resultados.</p>
 <p>Notificaciones.</p>
 </p>
 <!--

@@ -488,7 +488,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   private void activarEditNombre() {
     etqNombre.setVisible(false);
     nombre = etqNombre.getValue();
-    if (nombre.equals(Constantes.VALOR_EDITAR)) {
+    if (nombre.equals(Constantes.VALOR_EDITAR_NOMBRE_CELULA)) {
       nombre = "";
     }
     txtNombre.setValue(nombre);
@@ -535,6 +535,10 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
     if (Sesion.modoEditable()) {
       actualizarNombre();
     }
+    if (nombre.equals("")) {
+      nombre = Constantes.VALOR_EDITAR;
+    }
+    
     etqNombre.setValue(nombre);
   }
 
@@ -1108,6 +1112,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
 
     //se habilita el combo de red
     cmbRed.setDisabled(false);
+    
     cmbRed.setValue(nombreRed);
     cmbRed.setVisible(true);
     cmbRed.select();
@@ -1184,7 +1189,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
 
   //TODO: MEJORAR: si usuario no puede editar red, sólo puede aparecer el link, etqRed no aparecerá
   public void onClick$etqRed() {
-    if (usuarioPuedeEditarRed && Sesion.modoEditable()) {
+    if (usuarioPuedeEditarRed) {
       getVarSesionNombreRed();
       activarEditRed();
     }

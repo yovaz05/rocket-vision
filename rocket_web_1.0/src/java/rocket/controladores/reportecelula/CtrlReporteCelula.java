@@ -147,8 +147,8 @@ public class CtrlReporteCelula extends GenericForwardComposer {
   String modo;
   String titulo = "Reporte de Célula";
   String hoy;
-  String domingo_anterior;
-  String sabado;
+  String lunes;
+  String domingo_siguiente;
   String semana;
   String diaCelula;
   String observaciones = "";
@@ -828,23 +828,24 @@ public class CtrlReporteCelula extends GenericForwardComposer {
     hoy = UtilFechas.getFechaLarga(cal);
 
     //buscar domingo anterior y domingo siguiente:
-    Calendar calDomingoAnterior = UtilFechas.calcularDomingoAnterior();
-    Calendar calSabado = UtilFechas.calcularSabadoSiguiente();
+    //-Calendar calLunes = UtilFechas.calcularDomingoAnterior();
+    Calendar calLunes = UtilFechas.calcularLunesAnterior();
+    Calendar calDomingoSiguiente = UtilFechas.calcularSabadoSiguiente();
 
-    if (igualMes(calDomingoAnterior, calSabado)) {
-      domingo_anterior = "" + UtilFechas.getDia(calDomingoAnterior);
-      sabado = "" + UtilFechas.getDia(calSabado);
-      semana = domingo_anterior + " - " + sabado + " "
+    if (igualMes(calLunes, calDomingoSiguiente)) {
+      lunes = "" + UtilFechas.getDia(calLunes);
+      domingo_siguiente = "" + UtilFechas.getDia(calDomingoSiguiente);
+      semana = lunes + " - " + domingo_siguiente + " "
               + UtilFechas.getMesTextoCorto(cal) + ", " + UtilFechas.getAño(cal);
     } else {//semana abarca 2 meses diferentes
-      if (igualAño(calDomingoAnterior, calSabado)) {
-        domingo_anterior = UtilFechas.getFechaTextoDiaMes(calDomingoAnterior);
-        sabado = UtilFechas.getFechaTextoDiaMes(calSabado);
-        semana = domingo_anterior + " — " + sabado + ", " + UtilFechas.getAño(cal);
+      if (igualAño(calLunes, calDomingoSiguiente)) {
+        lunes = UtilFechas.getFechaTextoDiaMes(calLunes);
+        domingo_siguiente = UtilFechas.getFechaTextoDiaMes(calDomingoSiguiente);
+        semana = lunes + " — " + domingo_siguiente + ", " + UtilFechas.getAño(cal);
       } else {//semana abarca 2 años diferentes
-        domingo_anterior = UtilFechas.getFechaTextoDiaMesAñoAbreviado(calDomingoAnterior);
-        sabado = UtilFechas.getFechaTextoDiaMesAñoAbreviado(calSabado);
-        semana = domingo_anterior + " — " + sabado;
+        lunes = UtilFechas.getFechaTextoDiaMesAñoAbreviado(calLunes);
+        domingo_siguiente = UtilFechas.getFechaTextoDiaMesAñoAbreviado(calDomingoSiguiente);
+        semana = lunes + " — " + domingo_siguiente;
       }
     }
 
@@ -871,8 +872,8 @@ public class CtrlReporteCelula extends GenericForwardComposer {
   void mostrarFechas() {
     calcularFechas();
     fechas$etqHoy.setValue(hoy);
-    fechas$etqSemanaInicio.setValue(domingo_anterior);
-    fechas$etqSemanaFin.setValue(sabado);
+    fechas$etqSemanaInicio.setValue(lunes);
+    fechas$etqSemanaFin.setValue(domingo_siguiente);
     fechas$etqDiaCelula.setValue(diaCelula);
     fechas$etqSemana.setValue(semana);
   }

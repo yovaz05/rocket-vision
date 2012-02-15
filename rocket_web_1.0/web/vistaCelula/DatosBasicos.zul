@@ -42,7 +42,7 @@
             <!--botón de edición-->
             <div align="left">
               <space width="5px"/>
-              <a id="btnEditRed" tooltiptext="Editar"
+              <a id="btnEditRed" tooltiptext="Cambiar grupo a otra red"
             image="/img/iconos/edit_row.png"
             hoverImage="/img/iconos/edit_row_hover.png"
             visible="false"/>
@@ -65,7 +65,7 @@
         </div>
         <!--TODO: QUITAR botón de edición-->
         <div align="left" visible="false">
-          <a id="btnEditCodigo" tooltiptext="Editar"
+          <a id="btnEditCodigo" tooltiptext="Editar líderes"
             onClick="activarEditCodigo()"
             image="/img/iconos/edit_row.png" hoverImage="/img/iconos/edit_row_hover.png"/>
           <a id="btnCancelarEditCodigo" visible="false"
@@ -160,7 +160,7 @@
         </div>
       </row>
       <!-- Día y Hora -->
-      <row>        
+      <row id="rowDiaHora" visible="false">        
         <label value="Día y Hora" sclass="etiqueta_campo"/>
         <cell>
           <hbox>
@@ -224,14 +224,14 @@
         </div>
       </row>
       <!-- Nombre -->
-      <row>
-        <label value="Nombre" sclass="etiqueta_campo"/>
+      <row id="rowNombre" visible="false">
+        <label value="Nombre Célula" sclass="etiqueta_campo"/>
         <div>
           <label id="etqNombre" value="" />          
           <textbox id="txtNombre" value="" cols="50" maxlength="40" visible="false"/>
         </div>
         <div align="left">
-          <a id="btnEditNombre" tooltiptext="Editar"
+          <a id="btnEditNombre" tooltiptext="Editar nombre de grupo"
             onClick="activarEditNombre()"
             image="/img/iconos/edit_row.png"
             hoverImage="/img/iconos/edit_row_hover.png"
