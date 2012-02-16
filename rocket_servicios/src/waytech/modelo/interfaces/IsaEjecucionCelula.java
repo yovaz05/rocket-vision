@@ -13,55 +13,57 @@ import waytech.modelo.servicios.RspEjecucionCelula;
  */
 public interface IsaEjecucionCelula {
 
-    public abstract RspEjecucionCelula insertEjecucionCelula(EjecucionCelulaInsert ejecucionCelula);
+  public abstract RspEjecucionCelula insertEjecucionCelula(EjecucionCelulaInsert ejecucionCelula);
 
-    /**
-     * Ingresar reporte celula (idCelula). el servicio debe determinar cuál es la semana actual del sistema.
-     * Por ahora solo inserta con la semana 1
-     * @return 
-     */
-    public abstract RspEjecucionCelula insertEjecucionCelula(int idCelula, int estado);
+  /**
+   * Ingresar reporte celula (idCelula). el servicio debe determinar cuál es la semana actual del sistema.
+   * Por ahora solo inserta con la semana 1
+   * @return 
+   */
+  public abstract RspEjecucionCelula insertEjecucionCelula(int idCelula, int estado);
 
-    public abstract RspEjecucionCelula updateEjecucionCelula(EjecucionCelulaUpdate ejecucionCelula);
+  public abstract RspEjecucionCelula updateEjecucionCelula(EjecucionCelulaUpdate ejecucionCelula);
 
-    public abstract RspEjecucionCelula updateIdCelula(int idEjecucionCelula, int idCelula);
+  public abstract RspEjecucionCelula updateIdCelula(int idEjecucionCelula, int idCelula);
 
-    public abstract RspEjecucionCelula updateIdSemana(int idEjecucionCelula, int idSemana);
+  public abstract RspEjecucionCelula updateIdSemana(int idEjecucionCelula, int idSemana);
 
-    public abstract RspEjecucionCelula updateNumeroInvitados(int idEjecucionCelula, int nuevosInvitados);
+  public abstract RspEjecucionCelula updateNumeroInvitados(int idEjecucionCelula, int nuevosInvitados);
 
-    public abstract RspEjecucionCelula updateReconciliados(int idEjecucionCelula, int reconciliados);
+  public abstract RspEjecucionCelula updateReconciliados(int idEjecucionCelula, int reconciliados);
 
-    public abstract RspEjecucionCelula updateVisitas(int idEjecucionCelula, int visitas);
+  public abstract RspEjecucionCelula updateVisitas(int idEjecucionCelula, int visitas);
 
-    public abstract RspEjecucionCelula updateNumeroIntegrantes(int idEjecucionCelula, int numeroIntegrantes);
+  public abstract RspEjecucionCelula updateNumeroIntegrantes(int idEjecucionCelula, int numeroIntegrantes);
 
-    public abstract RspEjecucionCelula updateConvertidos(int idEjecucionCelula, int convertidos);
+  public abstract RspEjecucionCelula updateConvertidos(int idEjecucionCelula, int convertidos);
 
-    public abstract RspEjecucionCelula updateObservaciones(int idEjecucionCelula, String observaciones);
+  public abstract RspEjecucionCelula updateObservaciones(int idEjecucionCelula, String observaciones);
 
-    public abstract RspEjecucionCelula updateAmigosSoloAsistenGrupo(int idEjecucionCelula, int amigosSoloAsistenGrupo);
+  public abstract RspEjecucionCelula updateAmigosSoloAsistenGrupo(int idEjecucionCelula, int amigosSoloAsistenGrupo);
 
-    public abstract RspEjecucionCelula updateIntegrantesCasaOracion(int idEjecucionCelula, int integrantesCasaOracion);
+  public abstract RspEjecucionCelula updateIntegrantesCasaOracion(int idEjecucionCelula, int integrantesCasaOracion);
 
-    public abstract RspEjecucionCelula updateIntegrantesOtrasIglesias(int idEjecucionCelula, int integrantesOtrasIglesias);
+  public abstract RspEjecucionCelula updateIntegrantesOtrasIglesias(int idEjecucionCelula, int integrantesOtrasIglesias);
 
-    public abstract RspEjecucionCelula updateAsistenciaDomingoAnterior(int idEjecucionCelula, int asistenciaDomingoAnterior);
+  public abstract RspEjecucionCelula updateAsistenciaDomingoAnterior(int idEjecucionCelula, int asistenciaDomingoAnterior);
 
-    public abstract RspEjecucionCelula updateOfrenda(int idEjecucionCelula, Double ofrenda);
+  public abstract RspEjecucionCelula updateOfrenda(int idEjecucionCelula, Double ofrenda);
 
-    /**
-     * Elimina un registro lógicamente
-     * @param idEjecucionCelula
-     * @return 
-     */
-    public abstract RspEjecucionCelula deleteEjecucionCelula(int idEjecucionCelula);
+  /**
+   * Elimina un registro lógicamente
+   * @param idEjecucionCelula
+   * @return 
+   */
+  public abstract RspEjecucionCelula deleteEjecucionCelula(int idEjecucionCelula);
 
-    public abstract RspEjecucionCelula getEjecucionCelulaPorIdEjecucionCelula(int idEjecucionCelula);
+  public abstract RspEjecucionCelula getEjecucionCelulaPorIdEjecucionCelula(int idEjecucionCelula);
 
-    public abstract RspEjecucionCelula getEjecucionCelulaPorTraza(String traza);
+  public abstract RspEjecucionCelula getEjecucionCelulaPorTraza(String traza);
 
-    public abstract RspEjecucionCelula getEjecucionCelula(int idCelula, int idSemana);
+  public abstract RspEjecucionCelula getEjecucionCelula(int idCelula, int idSemana);
 
-    public abstract RspEjecucionCelula listEjecucionCelula();
+  public abstract RspEjecucionCelula listEjecucionCelula();
+
+  public abstract RspEjecucionCelula getEjecucionTodasRedesPorSemana(int idSemana);
 }

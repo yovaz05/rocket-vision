@@ -52,7 +52,6 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
     ejecucionCelula.setIntegrantesOtrasIglesias(rs.getInt("integrantes_otras_iglesias"));
     ejecucionCelula.setAsistenciaDomingoAnterior(rs.getInt("asistencia_domingo_anterior"));
     ejecucionCelula.setOfrenda(rs.getDouble("ofrenda"));
-    //**System.out.println("SaEjecucionCelula.estado=" + rs.getShort("estado"));
     return ejecucionCelula;
   }
 
@@ -1222,5 +1221,74 @@ public class SaEjecucionCelula implements IsaEjecucionCelula {
       rspEjecucionCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
       return rspEjecucionCelula;
     }
+  }
+
+  @Override
+  public RspEjecucionCelula getEjecucionTodasRedesPorSemana(int idSemana) {
+    String metodo = "getEjecucionTodasRedesPorSemana(int semana)";
+    //CREAR OBJETOS
+    ConectorBDMySQL conectorBD = new ConectorBDMySQL();
+    RspEjecucionCelula respuesta = new RspEjecucionCelula();
+    List<EjecucionCelula> resultadosCelulas = new ArrayList<EjecucionCelula>();
+    //INICIALIZAR VARIABLES
+    respuesta.setEsConexionAbiertaExitosamente(false);
+    respuesta.setEsConexionCerradaExitosamente(false);
+    respuesta.setEsSentenciaSqlEjecutadaExitosamente(false);
+    //INTENTA ESTABLECER LA CONEXIÓN CON LA BASE DE DATOS
+    if (conectorBD.iniciarConexion()) {
+      respuesta.setEsConexionAbiertaExitosamente(true);
+      respuesta.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+      String consultaSQL =
+              "SELECT R.nombre AS 'observaciones',"
+              + " SUM( EJ.ofrenda ) AS 'ofrenda',"
+              + " SUM( EJ.convertidos ) AS 'convertidos',"
+              + " SUM( EJ.reconciliados ) AS 'reconciliados',"
+              + " SUM( EJ.nuevos_invitados ) AS 'invitados',"
+              + " SUM( EJ.visitas ) AS 'visitas',"
+              + " SUM( EJ.numero_integrantes ) AS 'numero_integrantes',"
+              + " SUM( EJ.amigos_solo_asisten_grupo ) AS 'amigos_solo_asisten_grupo',"
+              + " SUM( EJ.integrantes_casa_oracion ) AS 'integrantes_casa_oracion',"
+              + " SUM( EJ.integrantes_otras_iglesias ) AS 'integrantes_otras_iglesias',"
+              + " SUM( EJ.asistencia_domingo_anterior ) AS 'asistencia_domingo_anterior',"
+              + " COUNT(id_ejecucion_celula) AS 'id_ejecucion_celula',"
+              + " fecha, "
+              + idSemana + " AS 'id_semana',"
+              + " " + 1 + " AS 'estado',"
+              + " '' AS 'traza'"
+              + " FROM red AS R, celula AS C, ejecucion_celula AS EJ"
+              + " WHERE R.id_red = C.id_red"
+              + " AND C.id_celula = EJ.id_celula"
+              + " AND EJ.id_semana = " + idSemana
+              + " AND EJ.estado = 4"
+              + " GROUP BY C.id_red"
+              + " ORDER BY R.nombre ASC";
+      try {
+        Statement sentencia = conectorBD.getConnection().createStatement();
+        boolean bandera = sentencia.execute(consultaSQL);
+        if (bandera) {
+          ResultSet rs = sentencia.getResultSet();
+          respuesta.setEsSentenciaSqlEjecutadaExitosamente(true);
+          respuesta.setRespuestaServicio(utilidadSistema.imprimirConsulta(sentencia.toString(), metodo, this.getClass().toString()));
+          while (rs.next()) {
+            EjecucionCelula ejecucionCelula = new EjecucionCelula();
+            ejecucionCelula = rsEjecucionCelula(rs, ejecucionCelula);
+            resultadosCelulas.add(ejecucionCelula);
+          }
+        }
+      } catch (SQLException e) {
+        respuesta.setRespuestaServicio(utilidadSistema.imprimirExcepcion(e, metodo, this.getClass().toString()));
+      } finally {
+        if (conectorBD.cerrarConexion()) {
+          respuesta.setEsConexionCerradaExitosamente(true);
+        }
+        respuesta.setRespuestaCierreDeConexion(conectorBD.getAtributosConector().getRespuestaCierreDeConexion());
+        respuesta.setTodosLosEjecucionCelulas(resultadosCelulas);
+        return respuesta;
+      }
+    } else {
+      respuesta.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
+      return respuesta;
+    }
+
   }
 }

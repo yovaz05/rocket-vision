@@ -69,7 +69,8 @@ public class SaCelula implements IsaCelula {
       rspCelula.setEsConexionAbiertaExitosamente(true);
       rspCelula.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
       String consultaSQL = "SELECT * FROM celula"
-              + " WHERE id_celula= '" + idCelula + "'";
+              + " WHERE id_celula= '" + idCelula + "'"
+              + "AND estado >= 2";
       try {
         Statement sentencia = conectorBD.getConnection().createStatement();
         boolean bandera = sentencia.execute(consultaSQL);

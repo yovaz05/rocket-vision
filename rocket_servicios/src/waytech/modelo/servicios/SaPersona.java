@@ -1476,7 +1476,11 @@ public class SaPersona implements IsaPersona {
     if (conectorBD.iniciarConexion()) {
       rspPersona.setEsConexionAbiertaExitosamente(true);
       rspPersona.setRespuestaInicioDeConexion(conectorBD.getAtributosConector().getRespuestaInicioConexion());
-      String consultaSQL = "SELECT * FROM persona WHERE estado = 1 AND(es_lider_red = 'TRUE' OR es_lider_celula = 'TRUE' OR es_supervisor  = 'TRUE' OR es_estaca  = 'TRUE' OR es_maestro_academia  = 'TRUE' OR es_anfitrion  = 'TRUE' OR es_lider_lanzado  = 'TRUE' OR es_lider_supervisor  = 'TRUE') AND nombre LIKE '%" + nombre + "%'";
+      String consultaSQL = "SELECT * FROM persona "
+              + " WHERE estado = 1"
+              + " AND es_lider_lanzado = 1"
+              + " AND nombre LIKE '%" + nombre + "%'"
+              + " ORDER BY nombre ASC";
       try {
         Statement sentencia = conectorBD.getConnection().createStatement();
         boolean bandera = sentencia.execute(consultaSQL);
