@@ -4,7 +4,7 @@
   <grid style="border:0px" apply="rocket.controladores.lider.CtrlLiderDatosBasicos">
 <!--<grid style="border:0px">-->
     <columns>
-      <column id="col1" width="135px"/>
+      <column id="col1" width="80px"/>
       <column id="colData"/>
     </columns>
     <rows>
@@ -14,20 +14,20 @@
         <div>
           <hbox>
             <label id="etqRed" value="Elegir Red..."/>
-            <space width="15px"/>
             <combobox id="cmbRed" autodrop="true" autocomplete="true" readonly="true"
             width="220px" visible="false"/>
             <!--botón de edición-->
             <div align="left">
               <space width="5px"/>
-              <a id="btnEditRed" tooltiptext="Editar"
+              <a id="btnEditRed" tooltiptext="Cambiar a otra red"
             image="/img/iconos/edit_row.png"
             hoverImage="/img/iconos/edit_row_hover.png"/>
             </div>          
           </hbox>
         </div>
         <a id="tbbRed" label="Red elegida" visible="false"/>
-      </row>      <!-- Cédula -->      
+      </row>      
+      <!-- Cédula -->      
       <row>
         <label value="Cédula" sclass="etiqueta_campo"/>
         <div>
@@ -43,7 +43,7 @@
           <textbox id="txtNombre" value="" cols="60" maxlength="45" visible="false"/>
         </div>
       </row>   
-      <!--Teléfono Celular-->
+      <!-- Teléfono Celular -->
       <row id="rowTelefono" tooltiptext="Preferiblemente el teléfono celular"
       visible="false"> 
         <label value="Teléfono" sclass="etiqueta_campo"/>
@@ -52,7 +52,7 @@
           <textbox id="txtTelefono" value="" cols="35" visible="false"/>
         </div>
       </row> 
-      <!--Correo-->
+      <!-- Correo -->
       <row id="rowCorreo" visible="false">        
         <label value="Correo" sclass="etiqueta_campo"/>
         <div>

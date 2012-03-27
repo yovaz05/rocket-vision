@@ -29,6 +29,7 @@ public class ServicioRed {
   String nombreRed = "";
   Red red;
   int nroLideresLanzados = 0;
+  String nombrePersona;
 
   public List getTodas() {
     //**System.out.println("INICIO DE LA CONEXION " + rspRed.getRespuestaInicioDeConexion());
@@ -111,7 +112,7 @@ public class ServicioRed {
    * devuelve el id del líder lanzado cuyo nombre es  pasado como parámetro
    * @return id del líder, devuelve 0 si la persona no existe
    */
-  public int getIdPersona(String nombrePersona) {
+  public int getIdPersonaRed(String nombrePersona) {
     for (Persona p : lideresLanzados) {
       if (p.getNombre().equals(nombrePersona)) {
         return p.getIdPersona();

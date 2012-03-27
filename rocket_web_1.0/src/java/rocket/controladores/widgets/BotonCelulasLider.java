@@ -10,7 +10,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.A;
-import rocket.controladores.general.Modo;
+import rocket.controladores.general.Modos;
 
 /**
  *
@@ -37,7 +37,7 @@ public class BotonCelulasLider extends A {
     //- setEstilo();
     //target y modo por defecto:
     vistaTarget = Vistas.BUSQUEDA_LISTADO_CELULAS_POR_LIDER;
-    modo = Modo.CONSULTA;
+    modo = Modos.CONSULTA;
   }
 
   private void programarEventoClick(final int id) {

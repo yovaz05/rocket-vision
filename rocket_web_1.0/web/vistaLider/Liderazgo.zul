@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <style src="css/estilos1.css"/>
+<!--  <div align="center">
+    <hbox id="divMensaje"
+      align="right"
+      sclass="mensajes"
+      style="margin:0;padding:0"
+      visible="false">
+      <label id="etqMensaje"
+      value="Mensajes al usuario:"
+      sclass="mensajes"
+      style="display:inline-block;margin:2px; padding: 2px 15px;"
+      onClick="cerrarMensaje()"
+      visible="false"/>
+      <a id="btnCerrarMensaje"
+      label="OK"
+      style="margin: 2px; padding:2px;text-align:right"
+      onClick="cerrarMensaje()"
+      visible="false"/>
+    </hbox>
+  </div>-->
+  <grid style="border:0px" apply="rocket.controladores.lider.CtrlLiderLiderazgo">
+    <columns>
+      <column id="col1" width="120px"/>
+      <column id="colData"/>
+      <!-- TODO: Quitar columna-->
+      <column id="colEdit" width="7%" align="rigth" visible="false"/>
+    </columns>
+    <!-- Pareja: se usará en desarrollo, para versión 2 -->
+    <rows>
+      <row>
+        <label value="Pareja Ministerial" sclass="etiqueta_campo"/>
+        <cell>
+          <label id="etqPareja" value="No tiene"/>
+          <combobox id="cmbPareja" autodrop="true" autocomplete="true" readonly="true" visible="false"/>
+          <a id="linkPareja" label=""/>
+          <space width="5px"/>
+          <a id="btnEditPareja"
+             tooltiptext="Editar pareja ministerial"
+             image="/img/iconos/edit_row.png"
+             hoverImage="/img/iconos/edit_row_hover.png"/>
+<!--          <a id="btnCancelarEditPareja"
+             tooltiptext="Cancelar Edición"
+             image="/img/iconos/cancel_row.png"
+             hoverImage="/img/iconos/cancel_row_hover.png"
+             visible="false"/>
+-->
+        </cell>
+      </row>   
+      <!-- Líderes -->
+      <row visible="false">
+        <label value="Líderes" sclass="etiqueta_campo" tooltiptext="Líderes de esta célula"/>
+        <!-- enlaces -->
+        <div>
+          <hbox>
+            <vbox>
+              <a id="tbbLider1" visible="false"/>
+              <a id="tbbLider2" visible="false"/>
+              <a id="tbbLider3" visible="false"/>
+              <a id="tbbLider4" visible="false"/>
+            </vbox>
+            <!--botón de edición-->
+            <div align="left">
+              <space width="5px"/>
+              <a id="btnEditLideres"
+             tooltiptext="Editar"
+             image="/img/iconos/edit_row.png"
+             hoverImage="/img/iconos/edit_row_hover.png"
+             visible="false"/>
+              <a id="btnCancelarEditLideres"
+             tooltiptext="Cancelar Edición"
+             image="/img/iconos/cancel_row.png"
+             hoverImage="/img/iconos/cancel_row_hover.png"
+             visible="false"/>
+            </div>
+          </hbox>
+          <!-- Widgets para cambiar los líderes -->
+          <hbox>
+            <div id="divLideresEdit">
+              <vbox>
+                <!-- Líder 1 -->
+                <div id="opcionLider1" visible="false">
+                  <hbox>
+                    <a id="btnQuitarLider1" image="/img/iconos/remove_row.png" tooltiptext="Quitar"
+                    visible="false"/>
+                    <label id="etqLider1" value="Líder 1" visible="false"/>
+                    <combobox id="cmbLider1" value="" autodrop="true" autocomplete="true" readonly="true"
+                    visible="false"/>
+                  </hbox>
+                </div>
+                <!-- Líder 2 -->
+                <div id="opcionLider2" visible="false">
+                  <space height="5px"/>                
+                  <hbox>
+                    <a id="btnQuitarLider2" image="/img/iconos/remove_row.png" tooltiptext="Quitar"
+                    visible="false"/>
+                    <label id="etqLider2" value="Líder 2" visible="false"/>
+                    <combobox id="cmbLider2" value="" autodrop="true" autocomplete="true" readonly="true"
+                    visible="false"/>
+                  </hbox>
+                </div>
+                <!-- Líder 3: opcional -->
+                <div id="opcionLider3" visible="false">
+                  <space height="5px"/>
+                  <hbox>
+                    <a id="btnQuitarLider3" image="/img/iconos/remove_row.png" tooltiptext="Quitar"
+                    visible="false"/>
+                    <label id="etqLider3" value="Líder 3" visible="false"/>
+                    <combobox id="cmbLider3" value="" autodrop="true" autocomplete="true" readonly="true"
+                    visible="false"/>
+                  </hbox>
+                </div>
+                <!-- Líder 4: opcional -->
+                <div id="opcionLider4" visible="false">
+                  <space height="5px"/>
+                  <hbox>
+                    <a id="btnQuitarLider4" image="/img/iconos/remove_row.png" tooltiptext="Quitar"
+                  visible="false"/>
+                    <label id="etqLider4" value="Líder 4" visible="false"/>
+                    <combobox id="cmbLider4" value="" autodrop="true" autocomplete="true" readonly="true"
+                  visible="false"/>
+                  </hbox>
+                </div>
+                <div id="opcionAgregarLider" style="color: #36C;vertical-align: top;cursor: pointer;" width="75px"
+                visible="false">
+                  <image src="/img/iconos/add8x10.png" width="8px" height="8px" style="vertical-align:middle"/>
+                  <label value=" Añadir líder" id="btnAgregarLider"/>
+                </div>
+              </vbox>
+            </div>
+          </hbox>          
+          <label id="etqMensajeLideres" value="Mensajes relacionados a los líderes"
+                   visible="false"/>          
+        </div>
+      </row>
+    </rows>
+  </grid>
+  
+  <zscript>
+<!--TODO: pasar este código al controlador, y unificar al ya existente-->
+  <![CDATA[
+    void cerrarMensaje(){
+      etqMensaje.setVisible(false);
+      btnCerrarMensaje.setVisible(false);
+      divMensaje.setVisible(false);
+    }
+  ]]> 
+  </zscript>
+  
+<!-- 
+  TODO:
+  *cambiar modo new: 
+    1. sólo pedir código y red
+    2. al ingresar estos campos se ingresa la célula en la base de datos, con todos los valores vacíos
+    3. y luego el usuario puede modificar los otros valores
+  
+  -->
+</zk>

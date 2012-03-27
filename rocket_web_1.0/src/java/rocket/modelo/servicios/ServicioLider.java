@@ -10,15 +10,20 @@ import rocket.modelo.bd.util.LiderListadoUtil;
 import rocket.modelo.bd.util.LiderUtil;
 import java.util.ArrayList;
 import java.util.List;
+import waytech.modelo.beans.sgi.ParejaInsert;
+import waytech.modelo.beans.sgi.ParejaUpdate;
 import waytech.modelo.beans.sgi.Persona;
 import waytech.modelo.beans.sgi.Zona;
 import waytech.modelo.servicios.RspAcceso;
+import waytech.modelo.servicios.RspPareja;
 import waytech.modelo.servicios.RspPersona;
 import waytech.modelo.servicios.SaAcceso;
+import waytech.modelo.servicios.SaPareja;
 import waytech.modelo.servicios.SaPersona;
 
 /**
- *
+ * Clase del controlador que se comunica con los servicios
+ * Para que el controlador de cada vista sea más entendible
  * @author Gabriel
  */
 public class ServicioLider {
@@ -44,6 +49,7 @@ public class ServicioLider {
   //TODO: usar este id para las modificaciones
   int idLider = 0;
   private Persona persona;
+  private SaPareja saPareja;
 
   public List getTodosLideresLanzados() {
     RspPersona respuesta = saPersona.listPersonaLiderLanzado();
@@ -293,6 +299,25 @@ public class ServicioLider {
     RspPersona respuesta = saPersona.updateTelefonoMovil(idPersona, telefono);
     return respuesta.esSentenciaSqlEjecutadaExitosamente();
   }
+  
+  
+  /**
+   * actualiza la pareja ministerial de un líder
+   * @param idPersona
+   * @param idRed
+   * @return 
+   */
+  public boolean actualizarParejaMinisterial(int idLider, int idPareja) {
+    ParejaInsert pareja = new ParejaInsert();
+    pareja.setIdPersona1(idLider);
+    pareja.setIdPersona2(idPareja);
+    pareja.setFechaInicio("1990-01-01");
+    pareja.setEsMatrimonio(false);
+    saPareja = new SaPareja();
+    RspPareja respuesta = saPareja.insertPareja(pareja);
+    //TODO: mejorar respuesta, con varias posibilidades
+    return respuesta.esSentenciaSqlEjecutadaExitosamente();
+  }  
   
   /**
    * actualiza el correo

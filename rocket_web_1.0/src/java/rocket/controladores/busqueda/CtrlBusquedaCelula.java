@@ -14,7 +14,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Textbox;
-import rocket.controladores.general.Modo;
+import rocket.controladores.general.Modos;
 import rocket.controladores.general.Sesion;
 import rocket.controladores.widgets.BotonLider;
 import rocket.controladores.widgets.EtqNro;
@@ -281,9 +281,9 @@ public class CtrlBusquedaCelula extends GenericForwardComposer {
          */
 
         if (usuarioPuedeVerLiderCompleto) {
-          linkNombre.setModo(Modo.EDICION_DINAMICA);
+          linkNombre.setModo(Modos.EDICION_DINAMICA);
         } else {
-          linkNombre.setModo(Modo.CONSULTA);
+          linkNombre.setModo(Modos.CONSULTA);
         }
 
         linkNombre.setIdRed(idRed);

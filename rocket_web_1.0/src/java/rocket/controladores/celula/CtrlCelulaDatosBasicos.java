@@ -111,7 +111,7 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
   }
 
   public void inicio() throws InterruptedException {
-    System.out.println("CtrlCelulaDatosBasicos.inicio");
+    //** System.out.println("CtrlCelulaDatosBasicos.inicio");
     cargarRedes();
 
     /**/
@@ -123,7 +123,6 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
       setPermisosEdicion();
       actualizarEstado();
     }
-    /**/
   }
 
   /**
@@ -131,7 +130,6 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    */
   private void setPermisosEdicion() {
     tipoUsuario = Util.buscarTipoUsuario(this.getClass());
-    usuarioEsLiderRed = (Boolean) Sesion.esLiderRed();
     if (tipoUsuario == UsuarioUtil.ADMINISTRADOR_CELULAS) {
       usuarioPuedeEditarRed = true;
       usuarioPuedeEditarCodigo = true;
@@ -1239,12 +1237,12 @@ public class CtrlCelulaDatosBasicos extends GenericForwardComposer {
    */
   //TODO: MEJORA: evaluar forma de obtener este valor si viniera en el URL
   private void getIdCelula() {
-    System.out.println("CtrlCelulaDatosBasicos.getIdCelula");
+    //**System.out.println("CtrlCelulaDatosBasicos.getIdCelula");
     idCelula = (Integer) Sesion.getVariable("idCelula");
   }
 
   private void getVarSesionIdRed() {
-    System.out.println("CtrlCelulaDatosBasicos.getIdRed");
+    //** System.out.println("CtrlCelulaDatosBasicos.getIdRed");
     idRed = (Integer) Sesion.getVariable("celula.idRed");
   }
 

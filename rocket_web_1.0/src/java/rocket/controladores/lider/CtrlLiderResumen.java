@@ -12,7 +12,7 @@ import org.zkoss.zul.A;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Toolbarbutton;
-import rocket.controladores.general.Modo;
+import rocket.controladores.general.Modos;
 import rocket.modelo.servicios.ServicioLider;
 import rocket.modelo.bd.util.LiderUtil;
 
@@ -235,7 +235,7 @@ public class CtrlLiderResumen extends GenericForwardComposer {
         System.out.println("CtrlPerfilDatos -> idLider = " + idUsuario);
          */
         Sesion.setVistaSiguiente(Vistas.LIDER);
-        Sesion.setModo(Modo.EDICION_DINAMICA);
+        Sesion.setModo(Modos.EDICION_DINAMICA);
         Sesion.setVariable("idLider", id);
         Sesion.setVariable("lider.idRed", idRed);
         ctrlVista.forzarCambioVista_btnControl();

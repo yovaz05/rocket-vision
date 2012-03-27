@@ -8,7 +8,7 @@ package rocket.controladores.general;
  *
  * @author root
  */
-public class Modo {
+public class Modos {
   
   //TODO: CODIGO: pasar estos valores a clase Constantes
   //TODO: CODIGO: cambiar tipo de estas constantes a int: comparación es más eficiente

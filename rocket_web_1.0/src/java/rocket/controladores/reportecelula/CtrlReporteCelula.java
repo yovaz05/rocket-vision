@@ -210,10 +210,10 @@ public class CtrlReporteCelula extends GenericForwardComposer {
         //**System.out.println("estatus = CELULA_NO_REALIZADA");
         ocultarPregunta();
         mensaje("Célula NO realizada");
-        mostrarTabObservaciones(true);
         seleccionarTab(tabObservaciones);
         buscarDataObservaciones();
       }
+      mostrarTabObservaciones(true);
       mostrarObservaciones();
     }
     notificarBarra();
@@ -741,7 +741,7 @@ public class CtrlReporteCelula extends GenericForwardComposer {
       ocultarPregunta();
       mensaje("Ingresa los resultados de la célula");
       mostrarTabsDatosReporte(true);
-      mostrarWidget(tabObservaciones);      
+      mostrarWidget(tabObservaciones);
       reporte.setEstatus(ReporteCelulaUtil.REPORTE_NO_INGRESADO);
       seleccionarTab(tabResultados);//Resultados
       activarEditDatosReporte();

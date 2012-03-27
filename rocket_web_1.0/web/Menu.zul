@@ -176,7 +176,7 @@ title="SIG - Mejorando barra superior"?>
 
           <menuitem id="itemInicio" src="img/iconos/home_black_20.png" tooltiptext="Inicio" />
 
-          <menuitem id="itemAyuda" label="Ayuda" image="/img/iconos/help16.png" tooltiptext="Ayuda"/>
+          <menuitem id="itemAyuda" label="" image="/img/iconos/help16.png" tooltiptext="Ayuda"/>
 
           <menu id="menuUsuario" tooltiptext="Opciones" image="/img/iconos/tuerca2.png" hoverImage="/img/iconos/tuerca-hover.png">
             <menupopup>

@@ -9,29 +9,36 @@
       <label id="tituloVentana" value="Líderes" sclass="titulo_ventana"/>
       <label value="Red: " sclass="etiqueta_campo"/>
       <combobox id="cmbRed" value="Elegir..." autocomplete="true" readonly="true" width="200px">
+<!--        Antigua Estructura de Redes Hasta Feb 2012 -->
         <!--TODO: llenar esta lista desde el controlador, con datos en vivo-->
-        <comboitem  value="6" label="Albert y Kevin"/>
-        <comboitem value="3" label="Andy y Marcos"/>
-        <comboitem value="18" label="Danny y Ricardo"/>
-        <comboitem  value="7" label="Dayana y Fabiola"/>
-        <comboitem value="12" label="Deisy y Andreína"/>
-        <comboitem value="11" label="Fabiana y Olga"/>
-        <comboitem value="17" label="Ivonne y Ana"/>
-        <comboitem value="2" label="Jairo y Gabriel"/>
-        <comboitem value="19" label="Jhonny y Alexander"/>
-        <comboitem value="4" label="Juan y Hernán"/>
-        <comboitem value="5" label="Julio y Francisco - Salvavidas"/>
-        <comboitem value="16" label="Lismary y Maryori"/>
-        <comboitem value="21" label="Mary Lucena"/>
-        <comboitem value="13" label="Matrimonios Jóvenes"/>
-        <comboitem value="14" label="Matrimonios Jóvenes Adultos"/>
-        <comboitem value="10" label="Moiran y Mayelis"/>
-        <comboitem value="15" label="Moraima y Carolina"/>
-        <comboitem value="8" label="Willy Barraez"/>
-        <comboitem value="20" label="Yren y Blanca"/>
-        <comboitem value="9" label="Álvaro Méndez"/>
-        <comboitem label="Todas" value="*"/>
-      </combobox>
+<!--        <comboitem  value="6"   label="Albert - Kevin"/>-->
+<!--        <comboitem  value="9"   label="Álvaro Méndez"/>-->
+<!--        <comboitem  value="3"   label="Andy - Marcos"/>-->
+<!--        <comboitem  value="18"  label="Danny - Ricardo"/>-->
+<!--        <comboitem  value="12"  label="Deisy - Andreína"/>-->
+<!--        <comboitem  value="17"  label="Ivonne - Ana"/>-->
+<!--        <comboitem  value="2"   label="Jairo - Gabriel"/>-->
+<!--        <comboitem  value="4"   label="Juan - Hernán"/>-->
+<!--        <comboitem  value="19"  label="Jhonny - Alexander"/>-->
+<!--        <comboitem value="5" label="Julio - Francisco - Salvavidas"/>-->
+<!--        <comboitem  value="16"  label="Lismary - Maryori"/>-->
+<!--        <comboitem  value="21"  label="Mary Lucena"/>-->
+<!--        <comboitem  value="10"  label="Moiran - Mayelis"/>
+        <comboitem  value="15"  label="Moraima - Carolina"/>-->
+<!--        <comboitem  value="8"   label="Willy Barraez"/>-->
+<!--    <comboitem value="20" label="Yren y Blanca"/> -->
+        
+<!--        Nueva Estructura de Redes, a partir de Feb 2012-->
+        <comboitem  value="22"  label="Empresarios"/>
+        <comboitem  value="25"  label="Familiar - Hombres"/>
+        <comboitem  value="26"  label="Familiar - Mujeres"/>
+        <comboitem  value="24"   label="Jóvenes Adultos"/>
+        <comboitem  value="7"   label="Juvenil y Prejuvenil"/>
+        <comboitem  value="13"  label="Matrimonios Jóvenes"/>
+        <comboitem  value="14"  label="Matrimonios Jóvenes Adultos"/>
+        <comboitem  value="11"  label="Norte"/>
+        <comboitem  value="*"   label="Todas las Redes"/>
+      </combobox>            
       <label id="etqInstrucciones" value="Elige una red" sclass="mensajes"/>
       <label id="etqMensajeNoData" sclass="mensajes"
     value="Esta red no tiene líderes registrados"

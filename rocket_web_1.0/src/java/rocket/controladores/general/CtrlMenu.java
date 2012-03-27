@@ -157,26 +157,26 @@ public class CtrlMenu extends GenericForwardComposer {
 
   public void onClick$itemLiderNew() {
     Sesion.setVistaSiguiente(Vistas.LIDER);
-    Sesion.setModo(Modo.INGRESAR);
+    Sesion.setModo(Modos.INGRESAR);
     onClick$btnControl();//forzar cambio de vista
   }
 
   public void onClick$itemLiderBusqueda() {
     Sesion.setVistaSiguiente(Vistas.BUSQUEDA_LIDER);
-    Sesion.setModo(Modo.CONSULTA);
+    Sesion.setModo(Modos.CONSULTA);
     onClick$btnControl();//forzar cambio de vista
   }
 
   public void onClick$itemBusqueda() {
     Sesion.setVistaSiguiente(Vistas.BUSQUEDA);
-    Sesion.setModo(Modo.CONSULTA);
+    Sesion.setModo(Modos.CONSULTA);
     onClick$btnControl();//forzar cambio de vista
   }
 
   public void onClick$itemCelulaNew() {
     System.out.println("CtrlMenu.click itemCelulaNew");
     Sesion.setVistaSiguiente(Vistas.CELULA);
-    Sesion.setModo(Modo.INGRESAR);
+    Sesion.setModo(Modos.INGRESAR);
     onClick$btnControl();//forzar cambio de vista
   }
 
@@ -292,8 +292,8 @@ public class CtrlMenu extends GenericForwardComposer {
     borrarVariablesSesionResultado();
     ocultarStatus();
     //notificar evento a ventana actual:
-    modo = Modo.INGRESAR;
-    Sesion.setModo(Modo.INGRESAR);
+    modo = Modos.INGRESAR;
+    Sesion.setModo(Modos.INGRESAR);
     notificarEvento("btnNew");
     //actualizar estados de botones:
     actualizarEstadoBarra();
@@ -610,37 +610,37 @@ public class CtrlMenu extends GenericForwardComposer {
         btnNew.setVisible(false);
         btnEdit.setVisible(true);
         btnSave.setVisible(false);
-        btnDelete.setVisible(true);
+        //+ btnDelete.setVisible(true);
       } else if (modo.equals("edicion-dinamica")) {
         btnNew.setVisible(false);
         btnEdit.setVisible(false);
         btnSave.setVisible(false);
-        btnDelete.setVisible(true);
+        //+ btnDelete.setVisible(true);
       } else if (modo.equals("editar")) {
         btnNew.setVisible(false);
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
-        btnDelete.setVisible(false);
+        //+ btnDelete.setVisible(false);
       } else if (modo.equals("consulta")) {
         btnNew.setVisible(false);
         btnEdit.setVisible(false);
         btnSave.setVisible(false);
-        btnDelete.setVisible(false);
+        //+ btnDelete.setVisible(false);
       } else if (modo.equals("listado")) {
         btnNew.setVisible(true);
         btnEdit.setVisible(false);
         btnSave.setVisible(false);
-        btnDelete.setVisible(false);
+        //+ btnDelete.setVisible(false);
       } else if (modo.equals("permitir_edicion")) {
         btnNew.setVisible(false);
         btnEdit.setVisible(true);
         btnSave.setVisible(false);
-        btnDelete.setVisible(false);
+        //+ btnDelete.setVisible(false);
       } else if (modo.equals("operacion")) {
         btnNew.setVisible(false);
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
-        btnDelete.setVisible(false);
+        //+ btnDelete.setVisible(false);
       }
     }
   }

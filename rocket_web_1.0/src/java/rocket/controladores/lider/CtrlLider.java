@@ -20,7 +20,7 @@ import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 import rocket.controladores.general.Constantes;
-import rocket.controladores.general.Modo;
+import rocket.controladores.general.Modos;
 import rocket.modelo.servicios.ServicioLider;
 
 /**
@@ -45,6 +45,7 @@ public class CtrlLider extends GenericForwardComposer {
   Tabbox tabbox;
   Tab tabDB;
   Tab tabDir;
+  Tab tabLiderazgo;
   Tab tabOtros;
   Tab tabObs;
   A btnIngresarReporte;
@@ -138,16 +139,16 @@ public class CtrlLider extends GenericForwardComposer {
     System.out.println("CtrlLider.INICIO()");
     modo = Sesion.getModo();
     if (modo == null) {
-      modo = Modo.INGRESAR;
+      modo = Modos.INGRESAR;
     }
-    if (modo.equals(Modo.EDICION_DINAMICA)) {
+    if (modo.equals(Modos.EDICION_DINAMICA)) {
       System.out.println("CtrlLider.modoActual = ver");
       getID();
       System.out.println("CtrlLider.inicio().id = " + idLider);
       buscarData();
       setVariablesSesion();
       mostrarData();
-      selectTab(1);
+      selectTab(1); // valor por defecto = 1
     }
     actualizarEstado();
     notificarBarra();
@@ -839,6 +840,7 @@ public class CtrlLider extends GenericForwardComposer {
     db$rowTelefono.setVisible(visible);
     db$rowCorreo.setVisible(visible);
     tabDir.setVisible(visible);
+    //+ tabLiderazgo.setVisible(visible);
     //+ tabObs.setVisible(visible);
   }
 

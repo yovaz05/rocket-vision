@@ -13,7 +13,7 @@
     <rows>      
       <row height="32px">
         <!--Nuevos invitados-->
-        <label value="Nuevos Invitados" sclass="etiqueta_campo"/>
+        <label value="Invitados" sclass="etiqueta_campo" tooltip="Invitados que fueron a tu grupo, sean no creyentes o por reconciliarse"/>
         <div>
           <div id="divInvitados" tooltiptext="Click para editar">
             <label id="etqInvitados" value="0"/>
@@ -23,7 +23,7 @@
 <!--        onChange="calcularTotalAsistencia();validarDesgloseInvitados();"-->
         </div>
         <!--Convertidos-->
-        <label value="Convertidos" sclass="etiqueta_campo" tooltiptext="Líderes + Estacas"/>
+        <label value="Convertidos" sclass="etiqueta_campo" tooltiptext="Los que se entregaron al Señor en el grupo"/>
         <div>
           <div id="divConvertidos" tooltiptext="Click para editar">
             <label id="etqConvertidos" value="0"/>
@@ -43,7 +43,7 @@
 
       <row height="32px" >
         <!--Amigos que sólo asisten al grupo-->
-        <label value="Amigos que sólo asisten al grupo" sclass="etiqueta_campo" tooltiptext="Ya se entregaron en la célula, pero aún no han asistido a la iglesia por primera vez"/>
+        <label value="Discípulos que no asisten a la iglesia" sclass="etiqueta_campo" tooltiptext="Ya se entregaron en la célula, pero aún no han asistido a la iglesia por primera vez"/>
         <div>
           <div id="divAmigos" tooltiptext="Click para editar">
             <label id="etqAmigos" value="0"/>
@@ -98,7 +98,7 @@
         </div>
         
         <!--Asistencia Domingo Anterior-->
-        <label value="Asistencia Domingo Anterior" sclass="etiqueta_campo"/>
+        <label value="Asistencia del domingo pasado" sclass="etiqueta_campo"/>
         <div>
           <div id="divAsistenciaDomingoAnterior" tooltiptext="Click para editar">            
             <label id="etqAsistenciaDomingoAnterior" value="0"/>
@@ -111,7 +111,7 @@
       <!--Total Asistencia-->
       <row height="32px" tooltiptext="Suma de los 4 valores de arriba">
         <div align="right">
-          <label value="Total Asistencia" sclass="total"/>
+          <label value="Total Asistencia de Grupo" sclass="total"/>
         </div>
         <cell colspan="3">
           <label id="etqTotalAsistencia" value="0" sclass="total"/>

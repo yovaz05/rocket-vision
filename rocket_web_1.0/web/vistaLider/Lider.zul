@@ -22,7 +22,7 @@
       <tabs>
         <tab label="Datos Básicos" id="tabDB"/>
         <tab label="Dirección" id="tabDir"/>
-<!--        <tab label="Contacto"/>-->
+        <tab label="Liderazgo" id="tabLiderazgo" visible="false"/>
         <tab label="Observaciones" id="tabObs" visible="false"/>
       </tabs>
       <tabpanels>
@@ -31,6 +31,9 @@
         </tabpanel>
         <tabpanel>
           <include id="dir" src="vistaReusable/Direccion.zul"/>
+        </tabpanel>
+        <tabpanel>
+          <include id="liderazgo" src="vistaLider/Liderazgo.zul" visible="false"/>
         </tabpanel>
 <!--        <tabpanel>
           <include id="contacto" src="vistaReusable/Contacto.zul"/>

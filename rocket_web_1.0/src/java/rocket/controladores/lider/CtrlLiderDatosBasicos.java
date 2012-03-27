@@ -103,6 +103,9 @@ public class CtrlLiderDatosBasicos extends GenericForwardComposer {
       usuarioPuedeEditarRed = true;
       usuarioPuedeEditarCedula = true;
       usuarioPuedeEditarNombre = true;
+    } else if (tipoUsuario == UsuarioUtil.LIDER_RED) {
+      usuarioPuedeEditarCedula = true;
+      usuarioPuedeEditarNombre = true;
     } else {
       usuarioPuedeEditarRed = false;
       usuarioPuedeEditarCedula = false;

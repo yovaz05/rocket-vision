@@ -19,7 +19,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Toolbarbutton;
-import rocket.controladores.general.Modo;
+import rocket.controladores.general.Modos;
 import rocket.modelo.servicios.ServicioLider;
 import waytech.utilidades.Util;
 
@@ -156,7 +156,7 @@ public class CtrlLiderListadoAll extends GenericForwardComposer {
          */
 
         tbbNombre.setIdRed(idRed);
-        tbbNombre.setModo(Modo.CONSULTA);        
+        tbbNombre.setModo(Modos.CONSULTA);        
         tbbNombre.setIdLider(id);
 
         /*+

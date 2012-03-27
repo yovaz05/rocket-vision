@@ -10,7 +10,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.A;
-import rocket.controladores.general.Modo;
+import rocket.controladores.general.Modos;
 
 /**
  *
@@ -36,7 +36,7 @@ public class BotonLider extends A {
     //- setEstilo();
     //target y modo por defecto:
     vistaTarget = Vistas.LIDER;
-    modo = Modo.EDICION_DINAMICA;
+    modo = Modos.EDICION_DINAMICA;
   }
 
   private void programarEventoClick(final int id) {
@@ -79,9 +79,9 @@ public class BotonLider extends A {
 
   public void setModo(String modo) {
     this.modo = modo;
-    if (modo.equals(Modo.EDICION_DINAMICA)) {
+    if (modo.equals(Modos.EDICION_DINAMICA)) {
       setVistaTarget(Vistas.LIDER); //maestro líder que permite edición
-    } else if (modo.equals(Modo.CONSULTA)) {
+    } else if (modo.equals(Modos.CONSULTA)) {
       setVistaTarget(Vistas.LIDER_RESUMEN); //sólo resumen
     }
   }

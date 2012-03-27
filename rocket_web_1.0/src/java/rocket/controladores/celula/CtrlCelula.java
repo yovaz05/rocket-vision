@@ -22,7 +22,7 @@ import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 import rocket.controladores.general.Constantes;
-import rocket.controladores.general.Modo;
+import rocket.controladores.general.Modos;
 import rocket.modelo.servicios.ServicioCelula;
 
 /**
@@ -410,7 +410,7 @@ public class CtrlCelula extends GenericForwardComposer {
    * actualiza el estado de los widgets, título de ventana y setea el foco
    */
   private void actualizarEstado() {
-    if (modo.equals(Modo.INGRESAR)) {
+    if (modo.equals(Modos.INGRESAR)) {
       etqTituloVentana.setValue("Ingresar " + titulo);
       //- mostrarColumnasVisualizacion(false);
       habilitarWidgetsNew(true);
@@ -422,7 +422,7 @@ public class CtrlCelula extends GenericForwardComposer {
       selectTab(1);
       setFocoEdicion();
       //- btnIngresarReporte.setVisible(false);
-    } else if (modo.equals(Modo.EDICION_DINAMICA)) {
+    } else if (modo.equals(Modos.EDICION_DINAMICA)) {
       etqTituloVentana.setValue(titulo + ": " + descripcionCelula);
       habilitarWidgetsNew(false);
       mostrarTabsRestantes(true);
@@ -770,7 +770,7 @@ public class CtrlCelula extends GenericForwardComposer {
     if (modo.equals("new")) {
       if (ingresarCelula()) {
         //-Sesion.setVariable("resultOperacion", 1);//indica éxito
-        Sesion.setModo(modo = Modo.EDICION_DINAMICA);
+        Sesion.setModo(modo = Modos.EDICION_DINAMICA);
         mostrarValoresViewRecienCreada();
         actualizarEstado();
       } else {

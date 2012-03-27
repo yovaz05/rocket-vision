@@ -20,7 +20,7 @@ import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Vbox;
-import rocket.controladores.general.Modo;
+import rocket.controladores.general.Modos;
 import rocket.modelo.servicios.ServicioCelula;
 import waytech.utilidades.Util;
 
@@ -167,10 +167,10 @@ public class CtrlCelulaListadoAll extends GenericForwardComposer {
         tbbLider2 = new BotonLider(celula.getNombreLider2());
         tbbLider3 = new BotonLider(celula.getNombreLider3());
         tbbLider4 = new BotonLider(celula.getNombreLider4());
-        tbbLider1.setModo(Modo.CONSULTA);
-        tbbLider2.setModo(Modo.CONSULTA);
-        tbbLider3.setModo(Modo.CONSULTA);
-        tbbLider4.setModo(Modo.CONSULTA);
+        tbbLider1.setModo(Modos.CONSULTA);
+        tbbLider2.setModo(Modos.CONSULTA);
+        tbbLider3.setModo(Modos.CONSULTA);
+        tbbLider4.setModo(Modos.CONSULTA);
         tbbLider1.setIdLider(idLider1);
         tbbLider2.setIdLider(idLider2);
         tbbLider3.setIdLider(idLider3);
